@@ -38,4 +38,16 @@ Route::group(['middleware' => 'auth:api', 'prefix' => 'auth'], function() {
     // Area
     Route::apiResources(['area'=>'API\AreaController']);
 
+    // Category
+    Route::apiResources(['category'=>'API\CategoryController']);
+
+    // Brand
+    Route::apiResources(['brand'=>'API\BrandController']);
+
+    // Unit
+    Route::apiResources(['unit'=>'API\UnitController']);
+
+    // Product
+    Route::apiResources(['product'=>'API\ProductController']);
+
 });

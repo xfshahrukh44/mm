@@ -2,34 +2,34 @@
 
 namespace App\Repositories;
 
-use App\Exceptions\Area\AllAreaException;
-use App\Exceptions\Area\CreateAreaException;
-use App\Exceptions\Area\UpdateAreaException;
-use App\Exceptions\Area\DeleteAreaException;
-use App\Models\Area;
+use App\Exceptions\Unit\AllUnitException;
+use App\Exceptions\Unit\CreateUnitException;
+use App\Exceptions\Unit\UpdateUnitException;
+use App\Exceptions\Unit\DeleteUnitException;
+use App\Models\Unit;
 use Illuminate\Support\Facades\DB;
 use Hash;
 use JWTAuth;
 use Tymon\JWTAuth\Exceptions\JWTException;
 use Illuminate\Support\Str;
 
-abstract class AreaRepository implements RepositoryInterface
+abstract class UnitRepository implements RepositoryInterface
 {
     private $model;
     
-    public function __construct(Area $area)
+    public function __construct(Unit $unit)
     {
-        $this->model = $area;
+        $this->model = $unit;
     }
     
     public function create(array $data)
     {
         try 
         {    
-            $area = $this->model->create($data);
+            $unit = $this->model->create($data);
             
             return [
-                'area' => $this->find($area->id)
+                'unit' => $this->find($unit->id)
             ];
         }
         catch (\Exception $exception) {
@@ -44,7 +44,7 @@ abstract class AreaRepository implements RepositoryInterface
             {
                 return [
                     'success' => false,
-                    'message' => 'Could`nt find area',
+                    'message' => 'Could`nt find unit',
                 ];
             }
 
@@ -53,11 +53,11 @@ abstract class AreaRepository implements RepositoryInterface
             return [
                 'success' => true,
                 'message' => 'Deleted successfully',
-                'deletedArea' => $temp,
+                'deletedUnit' => $temp,
             ];
         }
         catch (\Exception $exception) {
-            throw new DeletedAreaException($exception->getMessage());
+            throw new DeletedUnitException($exception->getMessage());
         }
     }
     
@@ -68,7 +68,7 @@ abstract class AreaRepository implements RepositoryInterface
             {
                 return [
                     'success' => false,
-                    'message' => 'Could`nt find area',
+                    'message' => 'Could`nt find unit',
                 ];
             }
 
@@ -78,11 +78,11 @@ abstract class AreaRepository implements RepositoryInterface
             return [
                 'success' => true,
                 'message' => 'Updated successfully!',
-                'updated_area' => $this->find($temp->id),
+                'updated_unit' => $this->find($temp->id),
             ];
         }
         catch (\Exception $exception) {
-            throw new UpdateAreaException($exception->getMessage());
+            throw new UpdateUnitException($exception->getMessage());
         }
     }
     
@@ -90,17 +90,17 @@ abstract class AreaRepository implements RepositoryInterface
     {
         try 
         {
-            $area = $this->model::with('markets.customers')->find($id);
-            if(!$area)
+            $unit = $this->model::with('products')->find($id);
+            if(!$unit)
             {
                 return [
                     'success' => false,
-                    'message' => 'Could`nt find area',
+                    'message' => 'Could`nt find unit',
                 ];
             }
             return [
                 'success' => true,
-                'area' => $area,
+                'unit' => $unit,
             ];
         }
         catch (\Exception $exception) {
@@ -111,10 +111,10 @@ abstract class AreaRepository implements RepositoryInterface
     public function all()
     {
         try {
-            return $this->model::with('markets.customers')->get();
+            return $this->model::with('products')->get();
         }
         catch (\Exception $exception) {
-            throw new AllAreaException($exception->getMessage());
+            throw new AllUnitException($exception->getMessage());
         }
     }
 }

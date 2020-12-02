@@ -2,34 +2,34 @@
 
 namespace App\Repositories;
 
-use App\Exceptions\Area\AllAreaException;
-use App\Exceptions\Area\CreateAreaException;
-use App\Exceptions\Area\UpdateAreaException;
-use App\Exceptions\Area\DeleteAreaException;
-use App\Models\Area;
+use App\Exceptions\Brand\AllBrandException;
+use App\Exceptions\Brand\CreateBrandException;
+use App\Exceptions\Brand\UpdateBrandException;
+use App\Exceptions\Brand\DeleteBrandException;
+use App\Models\Brand;
 use Illuminate\Support\Facades\DB;
 use Hash;
 use JWTAuth;
 use Tymon\JWTAuth\Exceptions\JWTException;
 use Illuminate\Support\Str;
 
-abstract class AreaRepository implements RepositoryInterface
+abstract class BrandRepository implements RepositoryInterface
 {
     private $model;
     
-    public function __construct(Area $area)
+    public function __construct(Brand $brand)
     {
-        $this->model = $area;
+        $this->model = $brand;
     }
     
     public function create(array $data)
     {
         try 
         {    
-            $area = $this->model->create($data);
+            $brand = $this->model->create($data);
             
             return [
-                'area' => $this->find($area->id)
+                'brand' => $this->find($brand->id)
             ];
         }
         catch (\Exception $exception) {
@@ -44,7 +44,7 @@ abstract class AreaRepository implements RepositoryInterface
             {
                 return [
                     'success' => false,
-                    'message' => 'Could`nt find area',
+                    'message' => 'Could`nt find brand',
                 ];
             }
 
@@ -53,11 +53,11 @@ abstract class AreaRepository implements RepositoryInterface
             return [
                 'success' => true,
                 'message' => 'Deleted successfully',
-                'deletedArea' => $temp,
+                'deletedBrand' => $temp,
             ];
         }
         catch (\Exception $exception) {
-            throw new DeletedAreaException($exception->getMessage());
+            throw new DeletedBrandException($exception->getMessage());
         }
     }
     
@@ -68,7 +68,7 @@ abstract class AreaRepository implements RepositoryInterface
             {
                 return [
                     'success' => false,
-                    'message' => 'Could`nt find area',
+                    'message' => 'Could`nt find brand',
                 ];
             }
 
@@ -78,11 +78,11 @@ abstract class AreaRepository implements RepositoryInterface
             return [
                 'success' => true,
                 'message' => 'Updated successfully!',
-                'updated_area' => $this->find($temp->id),
+                'updated_brand' => $this->find($temp->id),
             ];
         }
         catch (\Exception $exception) {
-            throw new UpdateAreaException($exception->getMessage());
+            throw new UpdateBrandException($exception->getMessage());
         }
     }
     
@@ -90,17 +90,17 @@ abstract class AreaRepository implements RepositoryInterface
     {
         try 
         {
-            $area = $this->model::with('markets.customers')->find($id);
-            if(!$area)
+            $brand = $this->model::with('products')->find($id);
+            if(!$brand)
             {
                 return [
                     'success' => false,
-                    'message' => 'Could`nt find area',
+                    'message' => 'Could`nt find brand',
                 ];
             }
             return [
                 'success' => true,
-                'area' => $area,
+                'brand' => $brand,
             ];
         }
         catch (\Exception $exception) {
@@ -111,10 +111,10 @@ abstract class AreaRepository implements RepositoryInterface
     public function all()
     {
         try {
-            return $this->model::with('markets.customers')->get();
+            return $this->model::with('products')->get();
         }
         catch (\Exception $exception) {
-            throw new AllAreaException($exception->getMessage());
+            throw new AllBrandException($exception->getMessage());
         }
     }
 }

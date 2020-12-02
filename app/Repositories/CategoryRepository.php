@@ -2,34 +2,34 @@
 
 namespace App\Repositories;
 
-use App\Exceptions\Area\AllAreaException;
-use App\Exceptions\Area\CreateAreaException;
-use App\Exceptions\Area\UpdateAreaException;
-use App\Exceptions\Area\DeleteAreaException;
-use App\Models\Area;
+use App\Exceptions\Category\AllCategoryException;
+use App\Exceptions\Category\CreateCategoryException;
+use App\Exceptions\Category\UpdateCategoryException;
+use App\Exceptions\Category\DeleteCategoryException;
+use App\Models\Category;
 use Illuminate\Support\Facades\DB;
 use Hash;
 use JWTAuth;
 use Tymon\JWTAuth\Exceptions\JWTException;
 use Illuminate\Support\Str;
 
-abstract class AreaRepository implements RepositoryInterface
+abstract class CategoryRepository implements RepositoryInterface
 {
     private $model;
     
-    public function __construct(Area $area)
+    public function __construct(Category $category)
     {
-        $this->model = $area;
+        $this->model = $category;
     }
     
     public function create(array $data)
     {
         try 
         {    
-            $area = $this->model->create($data);
+            $category = $this->model->create($data);
             
             return [
-                'area' => $this->find($area->id)
+                'category' => $this->find($category->id)
             ];
         }
         catch (\Exception $exception) {
@@ -44,7 +44,7 @@ abstract class AreaRepository implements RepositoryInterface
             {
                 return [
                     'success' => false,
-                    'message' => 'Could`nt find area',
+                    'message' => 'Could`nt find category',
                 ];
             }
 
@@ -53,11 +53,11 @@ abstract class AreaRepository implements RepositoryInterface
             return [
                 'success' => true,
                 'message' => 'Deleted successfully',
-                'deletedArea' => $temp,
+                'deletedCategory' => $temp,
             ];
         }
         catch (\Exception $exception) {
-            throw new DeletedAreaException($exception->getMessage());
+            throw new DeletedCategoryException($exception->getMessage());
         }
     }
     
@@ -68,7 +68,7 @@ abstract class AreaRepository implements RepositoryInterface
             {
                 return [
                     'success' => false,
-                    'message' => 'Could`nt find area',
+                    'message' => 'Could`nt find category',
                 ];
             }
 
@@ -78,11 +78,11 @@ abstract class AreaRepository implements RepositoryInterface
             return [
                 'success' => true,
                 'message' => 'Updated successfully!',
-                'updated_area' => $this->find($temp->id),
+                'updated_category' => $this->find($temp->id),
             ];
         }
         catch (\Exception $exception) {
-            throw new UpdateAreaException($exception->getMessage());
+            throw new UpdateCategoryException($exception->getMessage());
         }
     }
     
@@ -90,17 +90,17 @@ abstract class AreaRepository implements RepositoryInterface
     {
         try 
         {
-            $area = $this->model::with('markets.customers')->find($id);
-            if(!$area)
+            $category = $this->model::with('products')->find($id);
+            if(!$category)
             {
                 return [
                     'success' => false,
-                    'message' => 'Could`nt find area',
+                    'message' => 'Could`nt find category',
                 ];
             }
             return [
                 'success' => true,
-                'area' => $area,
+                'category' => $category,
             ];
         }
         catch (\Exception $exception) {
@@ -111,10 +111,10 @@ abstract class AreaRepository implements RepositoryInterface
     public function all()
     {
         try {
-            return $this->model::with('markets.customers')->get();
+            return $this->model::with('products')->get();
         }
         catch (\Exception $exception) {
-            throw new AllAreaException($exception->getMessage());
+            throw new AllCategoryException($exception->getMessage());
         }
     }
 }

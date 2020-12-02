@@ -72,6 +72,10 @@ return [
             'driver' => 'local',
             'root' => storage_path('shopkeepers'),
         ],
+        'products' => [
+            'driver' => 'local',
+            'root' => storage_path('products'),
+        ],
     ],
 
 ];
