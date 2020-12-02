@@ -12,6 +12,7 @@ use Hash;
 use JWTAuth;
 use Tymon\JWTAuth\Exceptions\JWTException;
 use Illuminate\Support\Str;
+use Storage;
 
 abstract class CustomerRepository implements RepositoryInterface
 {
@@ -25,7 +26,22 @@ abstract class CustomerRepository implements RepositoryInterface
     public function create(array $data)
     {
         try 
-        {    
+        {
+            // shop_picture
+            if(array_key_exists('shop_picture', $data)){
+                $image = explode(',', $data['shop_picture'])[1];
+                $imageName = Str::random(10).'.'.'png';
+                Storage::disk('shops')->put($imageName, base64_decode($image));
+                $data['shop_picture'] = $imageName;
+            }
+            // shop_keeper_picture
+            if(array_key_exists('shop_keeper_picture', $data)){
+                $image = explode(',', $data['shop_keeper_picture'])[1];
+                $imageName = Str::random(10).'.'.'png';
+                Storage::disk('shopkeepers')->put($imageName, base64_decode($image));
+                $data['shop_keeper_picture'] = $imageName;
+            }
+
             $customer = $this->model->create($data);
             
             return [
@@ -70,6 +86,23 @@ abstract class CustomerRepository implements RepositoryInterface
                     'success' => false,
                     'message' => 'Could`nt find customer',
                 ];
+            }
+
+            // shop_picture
+            if(array_key_exists('shop_picture', $data)){
+                Storage::disk('shops')->delete($temp->shop_picture);
+                $image = explode(',', $data['shop_picture'])[1];
+                $imageName = Str::random(10).'.'.'png';
+                Storage::disk('shops')->put($imageName, base64_decode($image));
+                $data['shop_picture'] = $imageName;
+            }
+            // shop_keeper_picture
+            if(array_key_exists('shop_keeper_picture', $data)){
+                Storage::disk('shopkeepers')->delete($temp->shop_keeper_picture);
+                $image = explode(',', $data['shop_keeper_picture'])[1];
+                $imageName = Str::random(10).'.'.'png';
+                Storage::disk('shopkeepers')->put($imageName, base64_decode($image));
+                $data['shop_keeper_picture'] = $imageName;
             }
 
             $temp->update($data);

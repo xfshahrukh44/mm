@@ -64,7 +64,14 @@ return [
             'url' => env('AWS_URL'),
             'endpoint' => env('AWS_ENDPOINT'),
         ],
-
+        'shops' => [
+            'driver' => 'local',
+            'root' => storage_path('shops'),
+        ],
+        'shopkeepers' => [
+            'driver' => 'local',
+            'root' => storage_path('shopkeepers'),
+        ],
     ],
 
 ];
