@@ -50,4 +50,10 @@ Route::group(['middleware' => 'auth:api', 'prefix' => 'auth'], function() {
     // Product
     Route::apiResources(['product'=>'API\ProductController']);
 
+    // Order
+    Route::apiResources(['order'=>'API\OrderController']);
+
+    // OrderProduct
+    Route::apiResources(['order_product'=>'API\OrderProductController']);
+
 });
