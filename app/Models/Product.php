@@ -40,4 +40,9 @@ class Product extends Model
     {
         return $this->belongsTo('App\Models\Unit');
     }
+
+    public function order_products()
+    {
+        return $this->hasMany('App\Models\OrderProduct');
+    }
 }

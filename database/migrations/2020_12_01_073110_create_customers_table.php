@@ -17,8 +17,8 @@ class CreateCustomersTable extends Migration
             $table->bigIncrements('id');
             $table->string('name');
             $table->integer('market_id');
-            $table->string('business_to_date')->nullable();
-            $table->string('outstanding_balance')->nullable();
+            $table->bigInteger('business_to_date')->nullable();
+            $table->bigInteger('outstanding_balance')->nullable();
             $table->string('contact_number')->nullable();
             $table->string('whatsapp_number')->nullable();
             $table->string('floor')->nullable();
@@ -30,8 +30,8 @@ class CreateCustomersTable extends Migration
             $table->string('cash_on_delivery')->nullable();
             $table->string('visiting_days')->nullable();
             $table->string('status')->nullable();
-            $table->string('opening_balance')->nullable();
-            $table->string('special_discount')->nullable();
+            $table->bigInteger('opening_balance')->nullable();
+            $table->bigInteger('special_discount')->nullable();
             $table->timestamps();
             $table->softDeletes()->nullable();
         });

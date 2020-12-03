@@ -35,4 +35,9 @@ class Customer extends Model
     {
         return $this->belongsTo('App\Models\Market');
     }
+
+    public function orders()
+    {
+        return $this->hasMany('App\Models\Order');
+    }
 }
