@@ -31,14 +31,6 @@ abstract class UserRepository implements RepositoryInterface
                 $data['password'] = Hash::make($data['password']);
             }
 
-            // if(array_key_exists('profile_picture', $data)) {
-            //     $image_data = $data['profile_picture'];  // your base64 encoded
-            //     $image = explode(',',$image_data);
-            //     $imageName = Str::random(10).'.'.'png';
-            //     \File::put(storage_path('customer/profile_picture/'). $imageName, base64_decode($image[1]));
-            //     // $data['profile_picture'] = $this->model->getProfilePictureAttribute($imageName);
-            //     $data['profile_picture'] = env('APP_URL') . "/app_portal/storage/customer/profile_picture/" . $imageName;
-            // }
             $user = $this->model->create($data);
 
             $token = JWTAuth::fromUser($user);
@@ -142,6 +134,16 @@ abstract class UserRepository implements RepositoryInterface
     {
         try {
             return $this->model::all();
+        }
+        catch (\Exception $exception) {
+            throw new AllUserException($exception->getMessage());
+        }
+    }
+
+    public function paginate_staff($pagination)
+    {
+        try {
+            return $this->model::where('type', '!=', 'rider')->paginate($pagination);
         }
         catch (\Exception $exception) {
             throw new AllUserException($exception->getMessage());
