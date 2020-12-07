@@ -13,7 +13,12 @@
     <!-- whatsapp_number -->
     <div class="form-group col-md-6">
         <label for="">Whatsapp #</label>
-        <input id="whatsapp_number" type="text" name="whatsapp_number" placeholder="Enter Contact #" class="form-control contact_number" required max="50">
+        <input id="whatsapp_number" type="text" name="whatsapp_number" placeholder="Enter Contact #" class="form-control whatsapp_number" required max="50">
+    </div>
+    <!-- floor -->
+    <div class="form-group col-md-6">
+        <label for="">Enter Floor #</label>
+        <input id="floor" type="text" name="floor" placeholder="Enter Contact #" class="form-control floor" required max="50">
     </div>
     <!-- area_id -->
     <div class="form-group col-md-6">
