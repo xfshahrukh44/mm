@@ -120,6 +120,46 @@
             </a>
           </li>
 
+          <!-- Stock Management -->
+          <li class="nav-item">
+            <a href="{{route('customer.index')}}" class="nav-link">
+              <i class="nav-icon fa fa-truck"></i>
+              <p>
+                Stock Management
+              </p>
+            </a>
+          </li>
+
+          <!-- Accouting -->
+          <li class="nav-item">
+            <a href="{{route('customer.index')}}" class="nav-link">
+              <i class="nav-icon fa fa-credit-card"></i>
+              <p>
+                Accouting
+              </p>
+            </a>
+          </li>
+
+          <!-- Order Management -->
+          <li class="nav-item">
+            <a href="{{route('customer.index')}}" class="nav-link">
+              <i class="nav-icon fa fa-clipboard"></i>
+              <p>
+                Order Management
+              </p>
+            </a>
+          </li>
+
+          <!-- Marketing Plan -->
+          <li class="nav-item">
+            <a href="{{route('customer.index')}}" class="nav-link">
+              <i class="nav-icon fa fa-cart-arrow-down"></i>
+              <p>
+                Marketing Plan
+              </p>
+            </a>
+          </li>
+
           <!-- users -->
           <li class="nav-item has-treeview">
             <a href="#" class="nav-link">

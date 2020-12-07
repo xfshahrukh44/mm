@@ -129,7 +129,7 @@ class CustomerController extends Controller
 
         // shop_picture
         if($request->shop_picture){
-            Storage::disk('store')->delete($customer->shop_picture);
+            Storage::disk('shops')->delete($customer->shop_picture);
             $image = $request->shop_picture;
             $imageName = Str::random(10).'.png';
             Storage::disk('shops')->put($imageName, \File::get($image));
@@ -138,7 +138,7 @@ class CustomerController extends Controller
         
         // shop_keeper_picture
         if($request->shop_keeper_picture){
-            Storage::disk('store')->delete($customer->shop_keeper_picture);
+            Storage::disk('shopkeepers')->delete($customer->shop_keeper_picture);
             $image = $request->shop_keeper_picture;
             $imageName = Str::random(10).'.png';
             Storage::disk('shopkeepers')->put($imageName, \File::get($image));
@@ -154,9 +154,13 @@ class CustomerController extends Controller
         return redirect()->route('customer.index');
     }
     
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
-        
+        $id = $request->hidden;
+
+        $this->customerService->delete($id);
+
+        return redirect()->route('customer.index');
     }
 
     public function search_customers(Request $request)
@@ -164,7 +168,9 @@ class CustomerController extends Controller
         $query = $request['query'];
         
         $customers = $this->customerService->search_customers($query);
+        $areas = $this->areaService->all();
+        $markets = $this->marketService->all();
 
-        return view('admin.customer.customer', compact('customers'));
+        return view('admin.customer.customer', compact('customers', 'areas', 'markets'));
     }
 }

@@ -136,7 +136,7 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <form id="editForm" method="POST" action="{{route('customer.update', 1)}}">
+      <form id="editForm" method="POST" action="{{route('customer.update', 1)}}" enctype="multipart/form-data">
         <!-- hidden input -->
         @method('PUT')
         <input id="hidden" type="hidden" name="hidden">
@@ -175,8 +175,8 @@
 
 <script>
 $(document).ready(function(){
-  $('#area_id').select2();
-  $('#market_id').select2();
+  // $('#area_id').select2();
+  // $('#market_id').select2();
   // datatable
   // $('#example1').DataTable();
   $('#example1').dataTable({
@@ -186,7 +186,6 @@ $(document).ready(function(){
     "bInfo": false,
     "searching":false
   });
-  // $('.js-example-basic-multiple').select2();
 
   // fetch markets by area id
   function fetch_specific_markets(area_id){
@@ -200,13 +199,13 @@ $(document).ready(function(){
           for(var i = 0; i < data.length; i++){
             $('.market_id').append('<option value="'+ data[i].id +'">'+ data[i].name +'</option>');
           }
-          $('#market_id').select2({
-            dropdownParent: $('#addCustomerModal')
-          });
+          // $('#market_id').select2({
+          //   dropdownParent: $('#addCustomerModal')
+          // });
         },
         error: function(data){
           $('.market_id').html('<option value="">Select market</option>');
-          $('.market_id').select2();
+          // $('.market_id').select2();
         }
     });
   }
@@ -260,11 +259,26 @@ $(document).ready(function(){
     
     $('#editForm #name').val($('.name' + id).html());
     $('#editForm #contact_number').val($('.contact_number' + id).html());
+    $('#editForm #whatsapp_number').val(customer.whatsapp_number);
+
+    $('#editForm #shop_name').val(customer.shop_name);
+    $('#editForm #shop_number').val(customer.shop_number);
+    $('#editForm #floor').val(customer.floor);
+
     $('#editForm #area_id option[value="'+ customer.market.area.id +'"]').prop('selected', true);
     fetch_specific_markets(customer.market.area.id);
     $('#editForm #market_id option[value="'+ customer.market.id +'"]').prop('selected', true);
-    $('#editForm #business_to_date').val($('.business_to_date' + id).html());
-    $('#editForm #outstanding_balance').val($('.outstanding_balance' + id).html());
+
+    $('#editForm #status option[value="'+ customer.status +'"]').prop('selected', true);
+    $('#editForm #visiting_days option[value="'+ customer.visiting_days +'"]').prop('selected', true);
+    $('#editForm #cash_on_delivery option[value="'+ customer.cash_on_delivery +'"]').prop('selected', true);
+
+    $('#editForm #opening_balance').val(customer.opening_balance);
+    $('#editForm #business_to_date').val(customer.business_to_date);
+    $('#editForm #outstanding_balance').val(customer.outstanding_balance);
+    $('#editForm #special_discount').val(customer.special_discount);
+
+    $('#editForm #payment_terms').val(customer.payment_terms);
 
     
 

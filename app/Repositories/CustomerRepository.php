@@ -7,6 +7,8 @@ use App\Exceptions\Customer\CreateCustomerException;
 use App\Exceptions\Customer\UpdateCustomerException;
 use App\Exceptions\Customer\DeleteCustomerException;
 use App\Models\Customer;
+use App\Models\Area;
+use App\Models\Market;
 use Illuminate\Support\Facades\DB;
 use Hash;
 use JWTAuth;
@@ -129,15 +131,28 @@ abstract class CustomerRepository implements RepositoryInterface
         }
     }
 
-    public function search_customers($query, $customer_type)
+    public function search_customers($query)
     {
+        // foreign fields
+        // markets
+        $markets = Market::select('id')->where('name', 'LIKE', '%'.$query.'%')->get();
+        $market_ids = [];
+        foreach($markets as $market){
+            array_push($market_ids, $market->id);
+        }
+        // areas
+        $areas = Area::select('id')->where('name', 'LIKE', '%'.$query.'%')->get();
+        $area_ids = [];
+        foreach($areas as $area){
+            array_push($area_ids, $area->id);
+        }
+
         // search block
-        $customers = Customer::where('type', 'rider')
-                        ->where(function($q) use($query){
-                            $q->orWhere('phone', 'LIKE', '%'.$query.'%');
-                            $q->orWhere('name', 'LIKE', '%'.$query.'%');
-                            $q->orWhere('email', 'LIKE', '%'.$query.'%');
-                        })
+        $customers = Customer::where('name', 'LIKE', '%'.$query.'%')
+                        ->orWhere('contact_number', 'LIKE', '%'.$query.'%')
+                        ->orWhere('shop_name', 'LIKE', '%'.$query.'%')
+                        ->orWhereIn('market_id', $market_ids)
+                        ->orWhereIn('area_id', $area_ids)
                         ->paginate(env('PAGINATION'));
 
         return $customers;
