@@ -50,13 +50,13 @@
       <ul class="navbar-nav ml-auto">
         <li class="nav-item dropdown">
           <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-            <img src="#" class="img-circle elevation-2" alt="User Image" width="20px"><span class="caret"></span> {{ucfirst(Auth::user()->name)}}
+            <img src="{{ asset('img/profile.png') }}" class="img-circle elevation-2" alt="User Image" width="20px"><span class="caret"></span> {{ucfirst(Auth::user()->name)}}
           </a>
 
           <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-            <a class="dropdown-item" href="#">
+            <!-- <a class="dropdown-item" href="#">
               Profile
-            </a>
+            </a> -->
             <a class="dropdown-item" href="{{ route('logout') }}"
             onclick="event.preventDefault();
             document.getElementById('logout-form').submit();">
@@ -79,7 +79,7 @@
     <a href="#" class="brand-link" id="topSidebar">
       <img src="{{ asset('img/logo.png') }}" alt="LaraStart Logo" class="brand-image img-circle elevation-3"
       style="opacity: .8">
-      <span class="brand-text font-weight-light">Faizy Admin Panel</span>
+      <span class="brand-text font-weight-light">Master Materials</span>
     </a>
 
     <!-- Sidebar -->
@@ -110,12 +110,22 @@
             </a>
           </li>
 
+          <!-- Customer Database -->
+          <li class="nav-item">
+            <a href="{{route('dashboard')}}" class="nav-link">
+              <i class="nav-icon fas fa-users"></i>
+              <p>
+                Customer Database
+              </p>
+            </a>
+          </li>
+
           <!-- users -->
           <li class="nav-item has-treeview">
             <a href="#" class="nav-link">
-              <i class="nav-icon fas fa-users "></i>
+              <i class="nav-icon fas fa-user "></i>
               <p>
-                Users
+                User Management
                 <i class="right fas fa-angle-left"></i>
               </p>
             </a>

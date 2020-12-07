@@ -76,23 +76,6 @@ abstract class UserRepository implements RepositoryInterface
                     'message' => 'Could`nt find user',
                 ]);
             }
-            
-            // if(array_key_exists('profile_picture', $data)) {
-            //     $image_data = $data['profile_picture'];  // your base64 encoded
-            //     $image = explode(',',$image_data);
-            //     $imageName = Str::random(10).'.'.'png';
-            //     \File::put(storage_path('customer/profile_picture/'). $imageName, base64_decode($image[1]));
-            //     // $data['profile_picture'] = $this->model->getProfilePictureAttribute($imageName);
-            //     $data['profile_picture'] = env('APP_URL') . "/app_portal/storage/customer/profile_picture/" . $imageName;;
-            // }
-
-            // if(array_key_exists('profile_picture', $data) && !filter_var($data['profile_picture'], FILTER_VALIDATE_URL))
-            // {
-            //     return response()->json([
-            //         'success' => false,
-            //         'message' => 'Could not update user.',
-            //     ]);
-            // }
 
             $temp->update($data);
             $temp->save();
@@ -148,5 +131,39 @@ abstract class UserRepository implements RepositoryInterface
         catch (\Exception $exception) {
             throw new AllUserException($exception->getMessage());
         }
+    }
+
+    public function paginate_riders($pagination)
+    {
+        try {
+            return $this->model::where('type', '=', 'rider')->paginate($pagination);
+        }
+        catch (\Exception $exception) {
+            throw new AllUserException($exception->getMessage());
+        }
+    }
+
+    public function search_users($query, $user_type)
+    {
+        // search block
+        if($user_type == 'rider'){
+            $users = User::where('type', 'rider')
+                            ->where(function($q) use($query){
+                                $q->orWhere('phone', 'LIKE', '%'.$query.'%');
+                                $q->orWhere('name', 'LIKE', '%'.$query.'%');
+                                $q->orWhere('email', 'LIKE', '%'.$query.'%');
+                            })
+                            ->paginate(env('PAGINATION'));
+        }
+        else{
+            $users = User::where(function($q) use($query){
+                                $q->orWhere('phone', 'LIKE', '%'.$query.'%');
+                                $q->orWhere('name', 'LIKE', '%'.$query.'%');
+                                $q->orWhere('email', 'LIKE', '%'.$query.'%');
+                            })
+                            ->paginate(env('PAGINATION'));
+        }
+
+        return $users;
     }
 }

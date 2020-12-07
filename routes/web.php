@@ -25,8 +25,8 @@ Route::group(['middleware' => 'auth', 'prefix' => 'admin'], function() {
 
     // blade indexes
     Route::get('/dashboard', 'Admin\DashboardController@index')->name('dashboard');
-    Route::get('/users/rider', 'API\UserController@getRiders')->name('rider');
-    Route::get('/users/staff', 'API\UserController@index')->name('staff');
+    Route::get('/user/rider', 'Admin\UserController@getRiders')->name('rider');
+    Route::get('/user/staff', 'Admin\UserController@index')->name('staff');
 
     // api resources
     Route::apiResources(['user'=>'Admin\UserController']);

@@ -5,10 +5,8 @@
   <div class="col-sm-6">
     @if($user_type == 'staff')
     <h1 class="m-0 text-dark">Staff</h1>
-    @elseif($user_type == 'rider')
-    <h1 class="m-0 text-dark">Riders</h1>
     @else
-    <h1 class="m-0 text-dark">Customers</h1>
+    <h1 class="m-0 text-dark">Riders</h1>
     @endif
     
 </div>
@@ -19,10 +17,8 @@
       <li class="breadcrumb-item"><a href="#">Users</a></li>
       @if($user_type == 'staff')
       <li class="breadcrumb-item active">Staff</li>
-      @elseif($user_type == 'rider')
-      <li class="breadcrumb-item active">Riders</li>
       @else
-      <li class="breadcrumb-item active">Customers</li>
+      <li class="breadcrumb-item active">Riders</li>
       @endif  
   </ol>
 </div>
@@ -47,15 +43,11 @@
                             <i class="fas fa-plus"></i> Add New Staff
                         </button>
                     @endcan
-                @elseif($user_type == 'rider')
+                @else
                     <button class="btn btn-success" id="add_item" data-toggle="modal" data-target="#addUserModal">
                         <i class="fas fa-plus"></i> Add New Rider
                     </button>
-                @else
-                    <button class="btn btn-success" id="add_item" data-toggle="modal" data-target="#addUserModal">
-                        <i class="fas fa-plus"></i> Add New Customer
-                    </button>
-                 @endif
+                @endif
              </div>
              <!-- search bar -->
              <form action="{{route('search_users')}}" class="form-wrapper">
@@ -65,10 +57,8 @@
                         <input name="query" class="form-control" id="search_content" type="text" placeholder="Search..">
                         @if($user_type == 'staff')
                             <input name="user_type" type="hidden" value="staff">
-                        @elseif($user_type == 'rider')
-                            <input name="user_type" type="hidden" value="rider">
                         @else
-                            <input name="user_type" type="hidden" value="customer">
+                            <input name="user_type" type="hidden" value="rider">
                         @endif
                     </div>
                     <!-- search button-->
@@ -84,22 +74,11 @@
                 <table id="example1" class="table table-bordered table-striped dataTable dtr-inline" role="grid" aria-describedby="example1_info">
                     <thead>
                         <tr role="row">
-                            <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Profile picture: activate to sort column ascending">Profile Picture</th>
                             <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Full Name: activate to sort column ascending">Full Name</th>
-                            <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Phone: activate to sort column ascending">Phone</th>
-                            <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Address: activate to sort column ascending">Address</th>
-                            @if($user_type == 'customer')
-                            <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Zone: activate to sort column ascending">Zone</th>
-                            @endif
                             <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Email Address: activate to sort column ascending">Email Address</th>
-                            @if($user_type == 'customer')
-                            <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Baskets: activate to sort column ascending">Baskets</th>
-                            @endif
+                            <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Phone: activate to sort column ascending">Phone</th>
                             @if($user_type == 'staff')
-                            <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Baskets: activate to sort column ascending">Role</th>
-                            @endif
-                            @if($user_type == 'rider')
-                            <th class="sorting" tabindex="1" aria-controls="example1" rowspan="1" colspan="1" aria-label="Baskets: activate to sort column ascending">Zones</th>
+                                <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Baskets: activate to sort column ascending">Role</th>
                             @endif
                             <th class="sorting" tabindex="1" aria-controls="example1" rowspan="1" colspan="1" aria-label="Registration Date: activate to sort column ascending">Registration Date</th>
                             <th class="sorting" tabindex="1" aria-controls="example1" rowspan="1" colspan="1" aria-label="Actions: activate to sort column ascending">Actions</th>
@@ -110,74 +89,36 @@
                         @if(count($users) > 0)
                         @foreach($users as $user)
                         <tr role="row" class="odd">
-                            <!-- picture -->
-                            @if($user->profile_picture == null)
-                            <td class="{{'profile_picture'.$user->id}}"><img width="50" src="{{asset('img/logo.png')}}"/></td>
-                            @else
-                            <td class="{{'profile_picture'.$user->id}}"><img width="50" src="{{asset($user->profile_picture)}}"/></td>
-                            @endif
-
                             <!-- name -->
                             <td class="{{'name'.$user->id}}">{{$user->name}}</td>
 
-                            <!-- phone -->
-                            @if($user->phone == null)
-                            <td class="{{'phone'.$user->id}}">---</td>
-                            @else
-                            <td class="{{'phone'.$user->id}}">{{$user->phone}}</td>
-                            @endif
-
-                            <!-- address -->
-                            @if($user->address == null)
-                            <td class="{{'address'.$user->id}}">---</td>
-                            @else
-                            <td class="{{'address'.$user->id}}">{{$user->address}}</td>
-                            @endif
-
-                            <!-- zone_id -->
-                            @if($user_type == 'customer')
-                            <td class="{{'zone'.$user->id}}" data-id="{{$user->zone ? $user->zone->id : 0}}">
-                                {{$user->zone ? $user->zone->name : 0}}
-                            </td>
-                            @endif
-
                             <!-- email -->
                             @if($user->email == null)
-                            <td class="{{'email'.$user->id}}">---</td>
+                                <td class="{{'email'.$user->id}}">---</td>
                             @else
-                            <td class="{{'email'.$user->id}}">{{$user->email}}</td>
+                                <td class="{{'email'.$user->id}}">{{$user->email}}</td>
                             @endif
 
-                            <!-- customer's baskets -->
-                            @if($user_type == 'customer')
-                            <td class="{{'customer'.$user->id}}">
-                                <a href="#">{{count($user->baskets)}}</a>
-                            </td>
+                            <!-- phone -->
+                            @if($user->phone == null)
+                                <td class="{{'phone'.$user->id}}">---</td>
+                            @else
+                                <td class="{{'phone'.$user->id}}">{{$user->phone}}</td>
                             @endif
 
                             <!-- staff's type -->
                             @if($user_type == 'staff')
-                            <td class="{{'type'.$user->id}}">{{$user->type}}</td>
+                                <td class="{{'type'.$user->id}}">{{$user->type}}</td>
                             @endif
 
-                            <!-- riders' zones -->
-                            @if($user_type == 'rider')
-                            <td class="{{'type'.$user->id}}">
-                                @foreach($user->user_zones as $user_zone)
-                                {{$user_zone->zone->name}}
-                                @if (!$loop->last)
-                                ,
-                                @endif
-                                @endforeach
-                            </td>
-                            @endif
-
+                            <!-- registration date -->
                             @if($user->created_at == null)
                             <td class="{{'created_at'.$user->id}}">---</td>
                             @else
                             <td class="{{'created_at'.$user->id}}">{{return_date($user->created_at)}}</td>
                             @endif
 
+                            <!-- actions -->
                             <td>
                                 <!-- View Profile -->
                                 <a href="#" class="viewProfileButton" data-id="{{$user->id}}" data-type="{{$user_type}}" data-route="{{route('user.show',$user->id)}}">
@@ -238,12 +179,11 @@
         <div class="modal-content">
             <div class="modal-header">
                 @if($user_type == 'staff')
-                <h5 class="modal-title">Staff Profile</h5>
-                @elseif($user_type == 'rider')
-                <h5 class="modal-title">Rider Profile</h5>
+                    <h5 class="modal-title">Staff Profile</h5>
                 @else
-                <h5 class="modal-title">Customer Profile</h5>
+                    <h5 class="modal-title">Rider Profile</h5>
                 @endif
+
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -258,33 +198,23 @@
                             <td class="fullname"></td>
                         </tr>
                         <tr role="row" class="odd">
-                            <td class="">Phone</td>
-                            <td class="phone"></td>
-                        </tr>
-                        <tr role="row" class="odd">
-                            <td class="">Address</td>
-                            <td class="address"></td>
-                        </tr>
-                        <tr role="row" class="odd">
                             <td class="">Email Address</td>
                             <td class="emailAddress"></td>
                         </tr>
                         <tr role="row" class="odd">
+                            <td class="">Phone</td>
+                            <td class="phone"></td>
+                        </tr>
+                        @if($user_type == 'staff')
+                            <tr role="row" class="odd">
+                                <td class="">Type</td>
+                                <td class="type"></td>
+                            </tr>
+                        @endif
+                        <tr role="row" class="odd">
                             <td class="">Registration Date</td>
                             <td class="registrationDate"></td>
                         </tr>
-                        @if($user_type == 'rider')
-                        <tr role="row" class="odd">
-                            <td class="">Zones</td>
-                            <td class="zones"></td>
-                        </tr>
-                        @endif
-                        @if($user_type == 'customer')
-                        <tr role="row" class="odd">
-                            <td class="">Zone</td>
-                            <td class="zone"></td>
-                        </tr>
-                        @endif
                     </tbody>
                 </table>
             </div>
@@ -300,12 +230,10 @@
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
-                @if($user_type == 'customer')
-                <h5 class="modal-title" id="addUserModalLabel">Add New Customer</h5>
-                @elseif($user_type == 'rider')
-                <h5 class="modal-title" id="addUserModalLabel">Add New Rider</h5>
+                @if($user_type == 'staff')
+                    <h5 class="modal-title" id="addUserModalLabel">Add New Staff</h5>
                 @else
-                <h5 class="modal-title" id="addUserModalLabel">Add New User</h5>
+                    <h5 class="modal-title" id="addUserModalLabel">Add New Rider</h5>
                 @endif
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
@@ -326,12 +254,10 @@
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
         <div class="modal-header">
-            @if($user_type == 'customer')
-            <h5 class="modal-title" id="editUserModalLabel">Edit Customer</h5>
-            @elseif($user_type == 'rider')
-            <h5 class="modal-title" id="editUserModalLabel">Edit Rider</h5>
+            @if($user_type == 'staff')
+                <h5 class="modal-title" id="editUserModalLabel">Edit Staff</h5>
             @else
-            <h5 class="modal-title" id="editUserModalLabel">Edit User</h5>
+                <h5 class="modal-title" id="editUserModalLabel">Edit Rider</h5>
             @endif
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
@@ -344,7 +270,7 @@
             <input class="user_type" type="hidden" name="user_type">
             @include('admin.user.user_master')
             <div class="modal-footer">
-                <button type="submit" class="btn btn-primary" id="createButton">Update</button>
+                <button type="submit" class="btn btn-primary" id="updateButton">Update</button>
             </div>
         </form>
     </div>
@@ -356,12 +282,10 @@
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
         <div class="modal-header">
-            @if($user_type == 'customer')
-            <h5 class="modal-title" id="deleteUserModalLabel">Delete Customer</h5>
-            @elseif($user_type == 'rider')
-            <h5 class="modal-title" id="deleteUserModalLabel">Delete Rider</h5>
+            @if($user_type == 'staff')
+                <h5 class="modal-title" id="deleteUserModalLabel">Delete Staff</h5>
             @else
-            <h5 class="modal-title" id="deleteUserModalLabel">Delete User</h5>
+                <h5 class="modal-title" id="deleteUserModalLabel">Delete Rider</h5>
             @endif
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
@@ -409,79 +333,50 @@
                     // alert(response['name']);
                     $('#viewUserModal').modal('show');
                     // console.log(response);fullname
-                    $('.fullname').html(response['name']);
+                    $('.fullname').html(response.user.name);
                     if(response['profile_picture'] == null){
                         $(".profile").attr("src","{{asset('img/logo.png')}}");
                     }
                     else{
                         $('.profile').attr("src",response['profile_picture']);
                     }
-                    if(response['phone'] == null){
+                    if(response.user.phone == null){
                         $('.phone').html('---');
                     }
                     else{
-                        $('.phone').html(response['phone']);
+                        $('.phone').html(response.user.phone);
                     }
-                    if(response['address'] == null){
-                        $('.address').html('---');
-                    }
-                    else{
-                        $('.address').html(response['address']);
-                    }
-                    if(response['email'] == null){
+                    if(response.user.email == null){
                         $('.emailAddress').html('---');
                     }
                     else{
-                        $('.emailAddress').html(response['email']);
+                        $('.emailAddress').html(response.user.email);
                     }
-                    if(response['created_at'] == null){
+                    if(response.user.type == null){
+                        $('.type').html('---');
+                    }
+                    else{
+                        $('.type').html(response.user.type);
+                    }
+                    if(response.user.created_at == null){
                         $('.registrationDate').html('---');
                     }
                     else{
                         $('.registrationDate').html($('.created_at' + id).html());
                     }
-                    // zones
-                    if(type == 'rider'){
-                        if(response['user_zones'] == null){
-                            $('.zones').html('---');
-                        }
-                        else{
-                            var string = ""
-                            for(var i = 0; i < response['user_zones'].length; i++){
-                                string += response['user_zones'][i].zone.name;
-                                if(i != response['user_zones'].length - 1)
-                                {
-                                    string += ", "
-                                }
-                            }
-                        }
-                        $('.zones').html(string);
-                    }
-                    else if (type == 'customer'){
-                     if(response['zone'] == null){
-                        $('.zone').html('---');
-                    }
-                    else{
-                        $('.zone').html(response['zone'].name);
-                    }
-
                 }
-
-            },
-        });
+            });
         });
 
         // create
         $('#add_item').on('click', function(){
-            fetch_all_zones();
+            // fetch_all_zones();
         });
 
         //*** edit ***//
         $('.editButton').on('click', function(){
             var id = $(this).data('id');
             var user_type = $(this).data('type');
-
-            fetch_specific_zones(id);
 
             $('#editForm').attr('action', "{{route('user.update', 1)}}");
             $('#hidden').val(id);
@@ -491,7 +386,6 @@
             $('#editForm #name').val($('.name' + id).html());
             $('#editForm #email').val($('.email' + id).html());
             $('#editForm #phone').val($('.phone' + id).html());
-            $('#editForm #address').val($('.address' + id).html());
             $('#editForm #zone_id').val($('.zone' + id).data('id'));
             $('#editForm #type').val($('.type' + id).html());
             $('#editForm #created_at').val($('.created_at' + id).html());
