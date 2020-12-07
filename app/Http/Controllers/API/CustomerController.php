@@ -14,6 +14,8 @@ use App\Services\MarketService;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
+use Storage;
 
 class CustomerController extends Controller
 {
@@ -65,6 +67,21 @@ class CustomerController extends Controller
             ]);
         }
 
+        // shop_picture
+        if(($request->shop_picture != NULL)){
+            $image = explode(',', $request->shop_picture)[1];
+            $imageName = Str::random(10).'.'.'png';
+            Storage::disk('shops')->put($imageName, base64_decode($image));
+            $request['shop_picture'] = $imageName;
+        }
+        // shop_keeper_picture
+        if(($request->shop_keeper_picture != NULL)){
+            $image = explode(',', $request->shop_keeper_picture)[1];
+            $imageName = Str::random(10).'.'.'png';
+            Storage::disk('shopkeepers')->put($imageName, base64_decode($image));
+            $request['shop_keeper_picture'] = $imageName;
+        }
+
         $data = $this->customerService->create($request->all());
 
         return response()->json($data);
@@ -83,6 +100,10 @@ class CustomerController extends Controller
                 'success' => false,
                 'message' => 'Not allowed.'
             ]);
+        }
+
+        if($this->customerService->find($id)['success'] == false){
+            return ['message' => 'Could`nt find customer'];
         }
 
         $validator = Validator::make($request->all(), [
@@ -117,6 +138,23 @@ class CustomerController extends Controller
                     'message' => 'Market not found.'
                 ]);
             }
+        }
+        
+        // shop_picture
+        if(($request->shop_picture)){
+            Storage::disk('shops')->delete(($this->customerService->find($id))['customer']['shop_picture']);
+            $image = explode(',', $request->shop_picture)[1];
+            $imageName = Str::random(10).'.'.'png';
+            Storage::disk('shops')->put($imageName, base64_decode($image));
+            $request['shop_picture'] = $imageName;
+        }
+        // shop_keeper_picture
+        if(($request->shop_keeper_picture)){
+            Storage::disk('shopkeepers')->delete(($this->customerService->find($id))['customer']['shop_keeper_picture']);
+            $image = explode(',', $request->shop_keeper_picture)[1];
+            $imageName = Str::random(10).'.'.'png';
+            Storage::disk('shopkeepers')->put($imageName, base64_decode($image));
+            $request['shop_keeper_picture'] = $imageName;
         }
 
         $data = $this->customerService->update($request->all(), $id);

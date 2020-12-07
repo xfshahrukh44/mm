@@ -117,4 +117,9 @@ abstract class MarketRepository implements RepositoryInterface
             throw new AllMarketException($exception->getMessage());
         }
     }
+
+    public function fetch_specific_markets($area_id)
+    {
+        return $this->model::with('area', 'customers')->where('area_id', $area_id)->get();
+    }
 }

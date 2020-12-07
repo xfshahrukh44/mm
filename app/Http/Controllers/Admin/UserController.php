@@ -11,6 +11,7 @@ use Illuminate\Support\Arr;
 
 class UserController extends Controller
 {
+    private $userService;
 
     public function __construct(UserService $userService)
     {
@@ -45,7 +46,7 @@ class UserController extends Controller
         if($validator->fails())
             return response()->json($validator->errors()->toArray(), 400);
         
-        $data = $this->userService->create($request->all());
+        $this->userService->create($request->all());
         
         if($request->identifier == 'rider'){
             return $this->getRiders($request);
@@ -89,7 +90,7 @@ class UserController extends Controller
             $request['type'] = 'customer';
         }
 
-        $data = $this->userService->update($request->all(), $id);
+        $this->userService->update($request->all(), $id);
 
         if($request->identifier == 'rider'){
             return $this->getRiders($request);

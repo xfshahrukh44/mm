@@ -48795,3 +48795,8 @@ a.text-dark:focus {
     .menu-open{
         border-left: white solid 2px;
     }
+
+    /* *:focus{
+      outline: none;
+      border: none;
+    } */

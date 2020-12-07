@@ -112,7 +112,7 @@
 
           <!-- Customer Database -->
           <li class="nav-item">
-            <a href="{{route('dashboard')}}" class="nav-link">
+            <a href="{{route('customer.index')}}" class="nav-link">
               <i class="nav-icon fas fa-users"></i>
               <p>
                 Customer Database

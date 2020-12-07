@@ -27,21 +27,6 @@ abstract class CustomerRepository implements RepositoryInterface
     {
         try 
         {
-            // shop_picture
-            if(array_key_exists('shop_picture', $data)){
-                $image = explode(',', $data['shop_picture'])[1];
-                $imageName = Str::random(10).'.'.'png';
-                Storage::disk('shops')->put($imageName, base64_decode($image));
-                $data['shop_picture'] = $imageName;
-            }
-            // shop_keeper_picture
-            if(array_key_exists('shop_keeper_picture', $data)){
-                $image = explode(',', $data['shop_keeper_picture'])[1];
-                $imageName = Str::random(10).'.'.'png';
-                Storage::disk('shopkeepers')->put($imageName, base64_decode($image));
-                $data['shop_keeper_picture'] = $imageName;
-            }
-
             $customer = $this->model->create($data);
             
             return [
@@ -88,23 +73,6 @@ abstract class CustomerRepository implements RepositoryInterface
                 ];
             }
 
-            // shop_picture
-            if(array_key_exists('shop_picture', $data)){
-                Storage::disk('shops')->delete($temp->shop_picture);
-                $image = explode(',', $data['shop_picture'])[1];
-                $imageName = Str::random(10).'.'.'png';
-                Storage::disk('shops')->put($imageName, base64_decode($image));
-                $data['shop_picture'] = $imageName;
-            }
-            // shop_keeper_picture
-            if(array_key_exists('shop_keeper_picture', $data)){
-                Storage::disk('shopkeepers')->delete($temp->shop_keeper_picture);
-                $image = explode(',', $data['shop_keeper_picture'])[1];
-                $imageName = Str::random(10).'.'.'png';
-                Storage::disk('shopkeepers')->put($imageName, base64_decode($image));
-                $data['shop_keeper_picture'] = $imageName;
-            }
-
             $temp->update($data);
             $temp->save();
             
@@ -149,5 +117,29 @@ abstract class CustomerRepository implements RepositoryInterface
         catch (\Exception $exception) {
             throw new AllCustomerException($exception->getMessage());
         }
+    }
+
+    public function paginate($pagination)
+    {
+        try {
+            return $this->model::paginate($pagination);
+        }
+        catch (\Exception $exception) {
+            throw new AllUserException($exception->getMessage());
+        }
+    }
+
+    public function search_customers($query, $customer_type)
+    {
+        // search block
+        $customers = Customer::where('type', 'rider')
+                        ->where(function($q) use($query){
+                            $q->orWhere('phone', 'LIKE', '%'.$query.'%');
+                            $q->orWhere('name', 'LIKE', '%'.$query.'%');
+                            $q->orWhere('email', 'LIKE', '%'.$query.'%');
+                        })
+                        ->paginate(env('PAGINATION'));
+
+        return $customers;
     }
 }
