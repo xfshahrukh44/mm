@@ -70,6 +70,11 @@
                     <td class="{{'business_to_date'.$customer->id}}">{{$customer->business_to_date ? $customer->business_to_date : NULL}}</td>
                     <td class="{{'outstanding_balance'.$customer->id}}">{{$customer->outstanding_balance ? $customer->outstanding_balance : NULL}}</td>
                     <td>
+                      <!-- Detail -->
+                      <a href="#" class="detailButton" data-id="{{$customer->id}}" data-object="{{$customer}}">
+                        <i class="fas fa-eye green ml-1"></i>
+                      </a>
+                      |
                       <!-- Edit -->
                       <a href="#" class="editButton" data-id="{{$customer->id}}" data-object="{{$customer}}">
                         <i class="fas fa-edit blue ml-1"></i>
@@ -149,6 +154,133 @@
   </div>
 </div>
 
+<!-- Detail view -->
+<div class="modal fade" id="viewCustomerModal" tabindex="-1" role="dialog" aria-labelledby="addCustomerModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Customer Detail</h5>
+
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <!-- TABS -->
+            <ul class="nav nav-pills nav-fill" id="myTab" role="tablist">
+              <li class="nav-item" role="presentation">
+                <a class="nav-link active" data-toggle="tab" href="#bci">Basic Customer Information</a>
+              </li> 
+              <li class="nav-item" role="presentation" >
+                <a class="nav-link" data-toggle="tab" href="#si">Shop Information</a>
+              </li>
+              <li class="nav-item" role="presentation">
+                <a class="nav-link" data-toggle="tab" href="#pi">Payment Information</a>
+              </li>
+            </ul>
+            
+            <!-- TAB CONTENT -->
+            <div class="tab-content" id="myTabContent">
+              <!-- basic customer info -->
+              <div class="tab-pane fade show active" id="bci">
+                <div class="card-body">
+                  <div class="col-md-12">
+                    <img class="shop_keeper_picture" src="{{asset('img/logo.png')}}" width="150">
+                    <hr style="color:gray;">
+                    <table class="table table-bordered table-striped">
+                        <tbody id="table_row_wrapper">
+                            <tr role="row" class="odd">
+                                <td class="">Name</td>
+                                <td class="name"></td>
+                            </tr>
+                            <tr role="row" class="odd">
+                                <td class="">Contact #</td>
+                                <td class="contact_number"></td>
+                            </tr>
+                            <tr role="row" class="odd">
+                                <td class="">Whatsapp #</td>
+                                <td class="whatsapp_number"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+              <!-- Shop info -->
+              <div class="tab-pane fade" id="si">
+                <div class="card-body">
+                  <div class="col-md-12">
+                    <img class="shop_picture" src="{{asset('img/logo.png')}}" width="150">
+                    <hr style="color:gray;">
+                    <table class="table table-bordered table-striped">
+                        <tbody id="table_row_wrapper">
+                            <tr role="row" class="odd">
+                                <td class="">Shop Name</td>
+                                <td class="shop_name"></td>
+                            </tr>
+                            <tr role="row" class="odd">
+                                <td class="">Shop #</td>
+                                <td class="shop_number"></td>
+                            </tr>
+                            <tr role="row" class="odd">
+                                <td class="">Floor #</td>
+                                <td class="floor"></td>
+                            </tr>
+                            <tr role="row" class="odd">
+                                <td class="">Area</td>
+                                <td class="area"></td>
+                            </tr>
+                            <tr role="row" class="odd">
+                                <td class="">Market</td>
+                                <td class="market"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+              <!-- Payment info -->
+              <div class="tab-pane fade" id="pi">
+                <div class="card-body">
+                  <div class="col-md-12">
+                    <hr style="color:gray;">
+                    <table class="table table-bordered table-striped">
+                        <tbody id="table_row_wrapper">
+                            <tr role="row" class="odd">
+                                <td class="">Cash on Delivery</td>
+                                <td class="cash_on_delivery"></td>
+                            </tr>
+                            <tr role="row" class="odd">
+                                <td class="">Opening Balance</td>
+                                <td class="opening_balance"></td>
+                            </tr>
+                            <tr role="row" class="odd">
+                                <td class="">Business to Date</td>
+                                <td class="business_to_date"></td>
+                            </tr>
+                            <tr role="row" class="odd">
+                                <td class="">Outstanding Balance</td>
+                                <td class="outstanding_balance"></td>
+                            </tr>
+                            <tr role="row" class="odd">
+                                <td class="">Special Discount</td>
+                                <td class="special_discount"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+
+            <div class="card-footer">
+                <button class="btn btn-primary" data-dismiss="modal" style="float: right;">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <!-- Delete view -->
 <div class="modal fade" id="deleteCustomerModal" tabindex="-1" role="dialog" aria-labelledby="deleteCustomerModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
@@ -209,40 +341,6 @@ $(document).ready(function(){
         }
     });
   }
-  // fetch all stores and populate
-  // function fetch_all_stores(){
-  //   $.ajax({
-  //       url: '',
-  //       type: 'GET',
-  //       // data: {id: id},
-  //       dataType: 'JSON',
-  //       success: function (data) {
-  //         $('.store_wrapper').html('');
-  //         for(var i = 0; i < data.length; i++){
-  //           $('.store_wrapper').append('<option value="'+ data[i].id +'">'+ data[i].name +'</option>');
-  //         }
-  //         $('.store_wrapper').select2();
-  //       }
-  //   });
-  // }
-
-  // fetch specific stores and select
-  // function fetch_specific_stores(customer_id){
-  //   // fetch stores and populate
-  //   fetch_all_stores();
-  //   $.ajax({
-  //       url: '',
-  //       type: 'GET',
-  //       data: {id: customer_id},
-  //       dataType: 'JSON',
-  //       success: function (data) {
-  //         for(var i = 0; i < data.length; i++){
-  //           $('.store_wrapper option[value="'+ data[i].id +'"]').prop('selected', true);
-  //         }
-  //         $('.store_wrapper').select2();
-  //       }
-  //   });
-  // }
 
   // create
   $('#add_customer').on('click', function(){
@@ -283,6 +381,36 @@ $(document).ready(function(){
     
 
     $('#editCustomerModal').modal('show');
+  });
+
+  // detail
+  $('.detailButton').on('click', function(){
+    var customer = $(this).data('object');
+    
+    $('.name').html(customer.name);
+    $('.contact_number').html(customer.contact_number);
+    $('.whatsapp_number').html(customer.whatsapp_number);
+    if(customer.shop_keeper_picture){
+      var shop_path = "<?php echo(URL::to('/') . storage_path('shops')); ?>" + "/" + customer.shop_keeper_picture;
+      console.log(shop_path);
+      $('.shop_keeper_picture').attr('src', shop_path);
+    }
+
+    $('.shop_name').html(customer.shop_name);
+    $('.shop_number').html(customer.shop_number);
+    $('.floor').html(customer.floor);
+    $('.area').html(customer.market.area.name);
+    $('.market').html(customer.market.name);
+
+    $('.cash_on_delivery').html(customer.cash_on_delivery);
+    $('.opening_balance').html(customer.opening_balance);
+    $('.business_to_date').html(customer.business_to_date);
+    $('.outstanding_balance').html(customer.outstanding_balance);
+    $('.special_discount').html(customer.special_discount);
+
+
+
+    $('#viewCustomerModal').modal('show');
   });
 
   // delete
