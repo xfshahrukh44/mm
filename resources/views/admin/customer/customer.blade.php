@@ -71,7 +71,7 @@
                     <td class="{{'outstanding_balance'.$customer->id}}">{{$customer->outstanding_balance ? $customer->outstanding_balance : NULL}}</td>
                     <td>
                       <!-- Detail -->
-                      <a href="#" class="detailButton" data-id="{{$customer->id}}" data-object="{{$customer}}">
+                      <a href="#" class="detailButton" data-id="{{$customer->id}}" data-object="{{$customer}}" data-shopkeeper="{{URL::to('/') . '/' . storage_path('shops')) . $customer->shop_keeper_picture}}">
                         <i class="fas fa-eye green ml-1"></i>
                       </a>
                       |
@@ -391,7 +391,7 @@ $(document).ready(function(){
     $('.contact_number').html(customer.contact_number);
     $('.whatsapp_number').html(customer.whatsapp_number);
     if(customer.shop_keeper_picture){
-      var shop_path = "<?php echo(URL::to('/') . storage_path('shops')); ?>" + "/" + customer.shop_keeper_picture;
+      var shop_path = $(this).data('shopkeeper');
       console.log(shop_path);
       $('.shop_keeper_picture').attr('src', shop_path);
     }
@@ -424,11 +424,7 @@ $(document).ready(function(){
   });
 
   //on area id change
-  $('#addCustomerModal').on('change', '.area_id', function(){
-    var area_id = $(this).val();
-    fetch_specific_markets(area_id);
-  });
-  $('#editCustomerModal').on('change', '.area_id', function(){
+  $('.area_id').on('change', function(){
     var area_id = $(this).val();
     fetch_specific_markets(area_id);
   });
