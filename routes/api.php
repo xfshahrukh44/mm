@@ -22,7 +22,7 @@ Route::post('login', 'API\AuthController@login');
 Route::post('register', 'API\AuthController@store');
 
 // closed routes
-Route::group(['middleware' => 'auth:api', 'prefix' => 'auth'], function() {
+Route::group(['middleware' => ['auth:api', 'cors'], 'prefix' => 'auth'], function() {
     
     // User
     Route::post('logout', 'API\AuthController@logout');

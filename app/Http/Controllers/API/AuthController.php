@@ -22,6 +22,7 @@ class AuthController extends Controller
     {
         $this->userService = $userService;
         $this->middleware('auth:api', ['except' => ['login', 'store']]);
+        $this->middleware('cors');
     }
 
     /**
