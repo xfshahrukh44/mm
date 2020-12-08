@@ -424,7 +424,11 @@ $(document).ready(function(){
   });
 
   //on area id change
-  $('.area_id').on('change', function(){
+  $('#addCustomerModal').on('change', '.area_id', function(){
+    var area_id = $(this).val();
+    fetch_specific_markets(area_id);
+  });
+  $('#editCustomerModal').on('change', '.area_id', function(){
     var area_id = $(this).val();
     fetch_specific_markets(area_id);
   });
