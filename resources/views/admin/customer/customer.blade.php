@@ -71,7 +71,7 @@
                     <td class="{{'outstanding_balance'.$customer->id}}">{{$customer->outstanding_balance ? $customer->outstanding_balance : NULL}}</td>
                     <td>
                       <!-- Detail -->
-                      <a href="#" class="detailButton" data-id="{{$customer->id}}" data-object="{{$customer}}" data-shopkeeper="{{URL::to('/') . '/' . storage_path('shops')) . $customer->shop_keeper_picture}}">
+                      <a href="#" class="detailButton" data-id="{{$customer->id}}" data-object="{{$customer}}" data-shopkeeper="{{URL::to('/') . storage_path('shopkeepers') . '/' . $customer->shop_keeper_picture}}" data-shop="{{URL::to('/') . storage_path('shops') . '/' . $customer->shop_picture}}">
                         <i class="fas fa-eye green ml-1"></i>
                       </a>
                       |
@@ -247,6 +247,14 @@
                     <table class="table table-bordered table-striped">
                         <tbody id="table_row_wrapper">
                             <tr role="row" class="odd">
+                                <td class="">Status</td>
+                                <td class="status"></td>
+                            </tr>
+                            <tr role="row" class="odd">
+                                <td class="">Visting Days</td>
+                                <td class="visiting_days"></td>
+                            </tr>
+                            <tr role="row" class="odd">
                                 <td class="">Cash on Delivery</td>
                                 <td class="cash_on_delivery"></td>
                             </tr>
@@ -311,13 +319,13 @@ $(document).ready(function(){
   // $('#market_id').select2();
   // datatable
   // $('#example1').DataTable();
-  $('#example1').dataTable({
-    "bPaginate": false,
-    "bLengthChange": false,
-    "bFilter": true,
-    "bInfo": false,
-    "searching":false
-  });
+  // $('#example1').dataTable({
+  //   "bPaginate": false,
+  //   "bLengthChange": false,
+  //   "bFilter": true,
+  //   "bInfo": false,
+  //   "searching":false
+  // });
 
   // fetch markets by area id
   function fetch_specific_markets(area_id){
@@ -392,7 +400,6 @@ $(document).ready(function(){
     $('.whatsapp_number').html(customer.whatsapp_number);
     if(customer.shop_keeper_picture){
       var shop_path = $(this).data('shopkeeper');
-      console.log(shop_path);
       $('.shop_keeper_picture').attr('src', shop_path);
     }
 
@@ -401,7 +408,13 @@ $(document).ready(function(){
     $('.floor').html(customer.floor);
     $('.area').html(customer.market.area.name);
     $('.market').html(customer.market.name);
+    if(customer.shop_picture){
+      var shop_path = $(this).data('shopkeeper');
+      $('.shop_picture').attr('src', shop_path);
+    }
 
+    $('.status').html(customer.status);
+    $('.visiting_days').html(customer.visiting_days);
     $('.cash_on_delivery').html(customer.cash_on_delivery);
     $('.opening_balance').html(customer.opening_balance);
     $('.business_to_date').html(customer.business_to_date);

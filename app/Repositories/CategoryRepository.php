@@ -117,4 +117,14 @@ abstract class CategoryRepository implements RepositoryInterface
             throw new AllCategoryException($exception->getMessage());
         }
     }
+    
+    public function paginate($pagination)
+    {
+        try {
+            return $this->model::paginate($pagination);
+        }
+        catch (\Exception $exception) {
+            throw new AllCategoryException($exception->getMessage());
+        }
+    }
 }

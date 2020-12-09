@@ -117,4 +117,14 @@ abstract class BrandRepository implements RepositoryInterface
             throw new AllBrandException($exception->getMessage());
         }
     }
+
+    public function paginate($pagination)
+    {
+        try {
+            return $this->model::paginate($pagination);
+        }
+        catch (\Exception $exception) {
+            throw new AllBrandException($exception->getMessage());
+        }
+    }
 }

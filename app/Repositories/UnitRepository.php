@@ -117,4 +117,14 @@ abstract class UnitRepository implements RepositoryInterface
             throw new AllUnitException($exception->getMessage());
         }
     }
+
+    public function paginate($pagination)
+    {
+        try {
+            return $this->model::paginate($pagination);
+        }
+        catch (\Exception $exception) {
+            throw new AllUnitException($exception->getMessage());
+        }
+    }
 }
