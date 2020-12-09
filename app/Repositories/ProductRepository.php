@@ -7,6 +7,9 @@ use App\Exceptions\Product\CreateProductException;
 use App\Exceptions\Product\UpdateProductException;
 use App\Exceptions\Product\DeleteProductException;
 use App\Models\Product;
+use App\Models\Category;
+use App\Models\Brand;
+use App\Models\Unit;
 use Illuminate\Support\Facades\DB;
 use Hash;
 use JWTAuth;
@@ -27,14 +30,6 @@ abstract class ProductRepository implements RepositoryInterface
     {
         try 
         {
-            // product_picture
-            if(array_key_exists('product_picture', $data)){
-                $image = explode(',', $data['product_picture'])[1];
-                $imageName = Str::random(10).'.'.'png';
-                Storage::disk('products')->put($imageName, base64_decode($image));
-                $data['product_picture'] = $imageName;
-            }
-
             $product = $this->model->create($data);
             
             return [
@@ -81,15 +76,6 @@ abstract class ProductRepository implements RepositoryInterface
                 ];
             }
 
-            // product_picture
-            if(array_key_exists('product_picture', $data)){
-                Storage::disk('products')->delete($temp->product_picture);
-                $image = explode(',', $data['product_picture'])[1];
-                $imageName = Str::random(10).'.'.'png';
-                Storage::disk('products')->put($imageName, base64_decode($image));
-                $data['product_picture'] = $imageName;
-            }
-
             $temp->update($data);
             $temp->save();
             
@@ -134,5 +120,54 @@ abstract class ProductRepository implements RepositoryInterface
         catch (\Exception $exception) {
             throw new AllProductException($exception->getMessage());
         }
+    }
+
+    public function paginate($pagination)
+    {
+        try {
+            return $this->model::paginate($pagination);
+        }
+        catch (\Exception $exception) {
+            throw new AllProductException($exception->getMessage());
+        }
+    }
+
+    public function search_products($query)
+    {
+        // foreign fields
+        // categories
+        $categories = Category::select('id')->where('name', 'LIKE', '%'.$query.'%')->get();
+        $category_ids = [];
+        foreach($categories as $category){
+            array_push($category_ids, $category->id);
+        }
+        // brands
+        $brands = Brand::select('id')->where('name', 'LIKE', '%'.$query.'%')->get();
+        $brand_ids = [];
+        foreach($brands as $brand){
+            array_push($brand_ids, $brand->id);
+        }
+        // units
+        $units = Unit::select('id')->where('name', 'LIKE', '%'.$query.'%')->get();
+        $unit_ids = [];
+        foreach($units as $unit){
+            array_push($unit_ids, $unit->id);
+        }
+
+        // search block
+        $products = Product::where('article', 'LIKE', '%'.$query.'%')
+                        ->orWhereIn('category_id', $category_ids)
+                        ->orWhereIn('brand_id', $brand_ids)
+                        ->orWhereIn('unit_id', $unit_ids)
+                        ->orWhere('purchase_price', 'LIKE', '%'.$query.'%')
+                        ->orWhere('selling_price', 'LIKE', '%'.$query.'%')
+                        ->orWhere('opening_quantity', 'LIKE', '%'.$query.'%')
+                        ->orWhere('moq', 'LIKE', '%'.$query.'%')
+                        ->orWhere('quantity_in_hand', 'LIKE', '%'.$query.'%')
+                        ->orWhere('cost_value', 'LIKE', '%'.$query.'%')
+                        ->orWhere('sales_value', 'LIKE', '%'.$query.'%')
+                        ->paginate(env('PAGINATION'));
+
+        return $products;
     }
 }

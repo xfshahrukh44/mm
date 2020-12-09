@@ -33,10 +33,15 @@ Route::group(['middleware' => 'auth', 'prefix' => 'admin'], function() {
     Route::apiResources(['customer'=>'Admin\CustomerController']);
     Route::apiResources(['area'=>'Admin\AreaController']);
     Route::apiResources(['market'=>'Admin\MarketController']);
+    Route::apiResources(['category'=>'Admin\CategoryController']);
+    Route::apiResources(['brand'=>'Admin\BrandController']);
+    Route::apiResources(['unit'=>'Admin\UnitController']);
+    Route::apiResources(['product'=>'Admin\ProductController']);
 
     // search routes
     Route::get('/search_users', 'Admin\UserController@search_users')->name('search_users');
     Route::get('/search_customers', 'Admin\CustomerController@search_customers')->name('search_customers');
+    Route::get('/search_products', 'Admin\ProductController@search_products')->name('search_products');
 
     // helpers
     Route::get('/fetch_specific_markets', 'Admin\MarketController@fetch_specific_markets')->name('fetch_specific_markets');

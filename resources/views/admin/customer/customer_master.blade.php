@@ -3,17 +3,17 @@
     <!-- name -->
     <div class="form-group col-md-3">
         <label for="">Name</label>
-        <input id="name" type="text" name="name" placeholder="Enter name" class="form-control name" required max="50">
+        <input id="name" type="text" name="name" placeholder="Enter name" class="form-control name" required>
     </div>
     <!-- contact_number -->
     <div class="form-group col-md-3">
         <label for="">Contact #</label>
-        <input id="contact_number" type="text" name="contact_number" placeholder="Enter Contact #" class="form-control contact_number" required max="50">
+        <input id="contact_number" type="text" name="contact_number" placeholder="Enter Contact #" class="form-control contact_number" required>
     </div>
     <!-- whatsapp_number -->
     <div class="form-group col-md-3">
         <label for="">Whatsapp #</label>
-        <input id="whatsapp_number" type="text" name="whatsapp_number" placeholder="Enter Whatsapp #" class="form-control whatsapp_number" required max="50">
+        <input id="whatsapp_number" type="text" name="whatsapp_number" placeholder="Enter Whatsapp #" class="form-control whatsapp_number" required>
     </div>
     <!-- shop_keeper_picture -->
     <div class="form-group col-md-3">
@@ -24,17 +24,17 @@
     <!-- shop_name -->
     <div class="form-group col-md-3">
         <label for="">Shop Name</label>
-        <input id="shop_name" type="text" name="shop_name" placeholder="Enter Shop Name" class="form-control shop_name" required max="50">
+        <input id="shop_name" type="text" name="shop_name" placeholder="Enter Shop Name" class="form-control shop_name" required>
     </div>
     <!-- shop_number -->
     <div class="form-group col-md-3">
         <label for="">Shop #</label>
-        <input id="shop_number" type="text" name="shop_number" placeholder="Enter Shop #" class="form-control shop_number" required max="50">
+        <input id="shop_number" type="text" name="shop_number" placeholder="Enter Shop #" class="form-control shop_number" required>
     </div>
     <!-- floor -->
     <div class="form-group col-md-3">
         <label for="">Floor #</label>
-        <input id="floor" type="text" name="floor" placeholder="Enter Floor #" class="form-control floor" required max="50">
+        <input id="floor" type="text" name="floor" placeholder="Enter Floor #" class="form-control floor" required>
     </div>
     <!-- shop_picture -->
     <div class="form-group col-md-3">
@@ -94,26 +94,26 @@
     <!-- opening_balance -->
     <div class="form-group col-md-3">
         <label for="">Opening Balance</label>
-        <input id="opening_balance" type="number" min=0 name="opening_balance" placeholder="Enter Opening Balance" class="form-control opening_balance" required max="50">
+        <input id="opening_balance" type="number" min=0 name="opening_balance" placeholder="Enter Opening Balance" class="form-control opening_balance" required>
     </div>
     <!-- business_to_date -->
     <div class="form-group col-md-3">
         <label for="">Business to Date</label>
-        <input id="business_to_date" type="number" min=0 name="business_to_date" placeholder="Enter Business to Date" class="form-control business_to_date" required max="50">
+        <input id="business_to_date" type="number" min=0 name="business_to_date" placeholder="Enter Business to Date" class="form-control business_to_date" required>
     </div>
     <!-- outstanding_balance -->
     <div class="form-group col-md-3">
         <label for="">Outstanding Balance</label>
-        <input id="outstanding_balance" type="number" min=0 name="outstanding_balance" placeholder="Enter Outstanding Balance" class="form-control outstanding_balance" required max="50">
+        <input id="outstanding_balance" type="number" min=0 name="outstanding_balance" placeholder="Enter Outstanding Balance" class="form-control outstanding_balance" required>
     </div>
     <!-- special_discount -->
     <div class="form-group col-md-3">
         <label for="">Special Discount</label>
-        <input id="special_discount" type="number" min=0 name="special_discount" placeholder="Enter Special Discount" class="form-control special_discount" required max="50">
+        <input id="special_discount" type="number" min=0 name="special_discount" placeholder="Enter Special Discount" class="form-control special_discount" required>
     </div>
     <!-- payment_terms -->
     <div class="form-group col-md-12">
         <label for="">Payment Terms</label>
-        <textarea id="payment_terms" type="text" name="payment_terms" placeholder="Enter Payment Terms" class="form-control payment_terms" required max="50"></textarea>
+        <textarea id="payment_terms" type="text" name="payment_terms" placeholder="Enter Payment Terms" class="form-control payment_terms" required></textarea>
     </div>
 </div>

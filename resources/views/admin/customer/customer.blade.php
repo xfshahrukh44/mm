@@ -421,8 +421,6 @@ $(document).ready(function(){
     $('.outstanding_balance').html(customer.outstanding_balance);
     $('.special_discount').html(customer.special_discount);
 
-
-
     $('#viewCustomerModal').modal('show');
   });
 

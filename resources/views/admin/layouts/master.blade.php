@@ -136,13 +136,40 @@
           </li>
 
           <!-- Stock Management -->
-          <li class="nav-item">
-            <a href="{{route('customer.index')}}" class="nav-link">
+          <li class="nav-item has-treeview">
+            <a href="#" class="nav-link">
               <i class="nav-icon fa fa-truck"></i>
               <p>
                 Stock Management
+                <i class="right fas fa-angle-left"></i>
               </p>
             </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="{{route('category.index')}}" class="nav-link">
+                  <i class="fas fa-circle nav-icon"></i>
+                  <p>Categories</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{route('brand.index')}}" class="nav-link">
+                  <i class="fas fa-circle nav-icon"></i>
+                  <p>Brands</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{route('unit.index')}}" class="nav-link">
+                  <i class="fas fa-circle nav-icon"></i>
+                  <p>Units</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{route('product.index')}}" class="nav-link">
+                  <i class="fas fa-circle nav-icon"></i>
+                  <p>Products</p>
+                </a>
+              </li>
+            </ul>
           </li>
 
           <!-- Accouting -->

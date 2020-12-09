@@ -1,0 +1,156 @@
+<?php
+
+namespace App\Http\Controllers\Admin;
+
+use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
+use App\Services\ProductService;
+use App\Services\CategoryService;
+use App\Services\BrandService;
+use App\Services\UnitService;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Arr;
+use Illuminate\Support\Str;
+use Storage;
+
+class ProductController extends Controller
+{
+    private $productService;
+    private $categoryService;
+    private $brandService;
+    private $unitService;
+
+    public function __construct(ProductService $productService, CategoryService $categoryService, BrandService $brandService, UnitService $unitService)
+    {
+        $this->productService = $productService;
+        $this->categoryService = $categoryService;
+        $this->brandService = $brandService;
+        $this->unitService = $unitService;
+        $this->middleware('auth');
+    }
+    
+    public function index()
+    {
+        $products = $this->productService->paginate(env('PAGINATE'));
+        $categories = $this->categoryService->all();
+        $brands = $this->brandService->all();
+        $units = $this->unitService->all();
+        return view('admin.product.product', compact('products', 'categories', 'brands', 'units'));
+    }
+    
+    public function store(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'category_id' => 'required|int',
+            'brand_id' => 'required|int',
+            'unit_id' => 'required|int',
+            'article' => 'sometimes',
+            'purchase_price' => 'sometimes',
+            'selling_price' => 'sometimes',
+            'opening_quantity' => 'sometimes',
+            'moq' => 'sometimes',
+            'quantity_in_hand' => 'sometimes',
+            'product_picture' => 'sometimes',
+            'cost_value' => 'sometimes',
+            'sales_value' => 'sometimes'
+        ]);
+
+        if($validator->fails())
+            return response()->json($validator->errors()->toArray(), 400);
+
+        // image work
+        $req = Arr::except($request->all(),['product_picture']);
+        // product_picture
+        if($request->product_picture){
+            $image = $request->product_picture;
+            $imageName = Str::random(10).'.png';
+            Storage::disk('products')->put($imageName, \File::get($image));
+            $req['product_picture'] = $imageName;
+        }
+        // dd($req);
+
+        $this->productService->create($req);
+
+        return redirect()->route('product.index');
+    }
+    
+    public function show($id)
+    {
+        return $this->productService->find($id);
+    }
+    
+    public function update(Request $request, $id)
+    {
+        $id = $request->hidden;
+        $product = ($this->show($id))['product'];
+
+        if(!(auth()->user()->id == $id || auth()->user()->type == "superadmin"))
+        {
+            return response()->json([
+                'success' => FALSE,
+                'message' => 'Not allowed.'
+            ]);
+        }
+
+        $validator = Validator::make($request->all(), [
+            'category_id' => 'sometimes|int',
+            'brand_id' => 'sometimes|int',
+            'unit_id' => 'sometimes|int',
+            'article' => 'sometimes',
+            'purchase_price' => 'sometimes',
+            'selling_price' => 'sometimes',
+            'opening_quantity' => 'sometimes',
+            'moq' => 'sometimes',
+            'quantity_in_hand' => 'sometimes',
+            'product_picture' => 'sometimes',
+            'cost_value' => 'sometimes',
+            'sales_value' => 'sometimes'
+        ]);
+
+        if($validator->fails())
+            return response()->json($validator->errors()->toArray(), 400);
+
+        
+        // image work
+        $req = Arr::except($request->all(),['shop_picture', 'shop_keeper_picture']);
+
+        // product_picture
+        if($request->product_picture){
+            Storage::disk('products')->delete($product->product_picture);
+            $image = $request->product_picture;
+            $imageName = Str::random(10).'.png';
+            Storage::disk('products')->put($imageName, \File::get($image));
+            $req['product_picture'] = $imageName;
+        }
+
+        // dd($id);
+        $this->productService->update($req, $id);
+
+        if($request->identifier == 'rider'){
+            return $this->getRiders($request);
+        }
+
+        return redirect()->route('product.index');
+    }
+    
+    public function destroy(Request $request, $id)
+    {
+        $id = $request->hidden;
+
+        $this->productService->delete($id);
+
+        return redirect()->route('product.index');
+    }
+
+    public function search_products(Request $request)
+    {
+        $query = $request['query'];
+        
+        $products = $this->productService->search_products($query);
+        $categories = $this->categoryService->all();
+        $brands = $this->brandService->all();
+        $units = $this->unitService->all();
+
+        return view('admin.product.product', compact('products', 'categories', 'brands', 'units'));
+    }
+}
