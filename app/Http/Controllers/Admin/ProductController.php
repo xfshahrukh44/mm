@@ -153,4 +153,21 @@ class ProductController extends Controller
 
         return view('admin.product.product', compact('products', 'categories', 'brands', 'units'));
     }
+
+    public function create_category(Request $request)
+    {
+        return $this->productService->create_category($request->all());
+    }
+    
+    public function create_brand(Request $request)
+    {
+        return $this->productService->create_brand($request->all());
+        
+    }
+    
+    public function create_unit(Request $request)
+    {
+        return $this->productService->create_unit($request->all());
+        
+    }
 }

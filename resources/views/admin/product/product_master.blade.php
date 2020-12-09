@@ -15,6 +15,10 @@
     <!-- category_id -->
     <div class="form-group col-md-4">
         <label for="">Category</label>
+        <!-- Add new -->
+        <a href="#" class="add_category float-right mt-2">
+            <i class="nav-icon fa fa-plus green"></i>
+        </a>
         <select id="category_id" name="category_id" class="form-control category_id" style="width: 100%; height: 35px;">
             <option value="">Select category</option>
             @foreach($categories as $category)
@@ -25,6 +29,10 @@
     <!-- brand_id -->
     <div class="form-group col-md-4">
         <label for="">Brand</label>
+        <!-- Add new -->
+        <a href="#" class="add_brand float-right mt-2">
+            <i class="nav-icon fa fa-plus green"></i>
+        </a>
         <select id="brand_id" name="brand_id" class="form-control brand_id" style="width: 100%; height: 35px;">
             <option value="">Select brand</option>
             @foreach($brands as $brand)
@@ -35,6 +43,10 @@
     <!-- unit_id -->
     <div class="form-group col-md-4">
         <label for="">Unit</label>
+        <!-- Add new -->
+        <a href="#" class="add_unit float-right mt-2">
+            <i class="nav-icon fa fa-plus green"></i>
+        </a>
         <select id="unit_id" name="unit_id" class="form-control unit_id" style="width: 100%; height: 35px;">
             <option value="">Select unit</option>
             @foreach($units as $unit)

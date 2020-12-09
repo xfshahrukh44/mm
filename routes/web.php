@@ -45,4 +45,7 @@ Route::group(['middleware' => 'auth', 'prefix' => 'admin'], function() {
 
     // helpers
     Route::get('/fetch_specific_markets', 'Admin\MarketController@fetch_specific_markets')->name('fetch_specific_markets');
+    Route::get('/create_category', 'Admin\ProductController@create_category')->name('create_category');
+    Route::get('/create_brand', 'Admin\ProductController@create_brand')->name('create_brand');
+    Route::get('/create_unit', 'Admin\ProductController@create_unit')->name('create_unit');
 });

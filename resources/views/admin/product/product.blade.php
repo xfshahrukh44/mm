@@ -283,6 +283,90 @@
   </div>
 </div>
 
+<!-- Create category view -->
+<div class="modal fade" id="addCategoryModal" tabindex="-1" role="dialog" aria-labelledby="addCategoryModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="">Add new category</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="editForm" method="POST" enctype="multipart/form-data">
+                @csrf
+                <div class="modal-body">
+                    <!-- name -->
+                    <div class="form-group">
+                        <label for="">Name</label>
+                        <input id="categoryName" type="text" name="name" placeholder="Enter name"
+                        class="form-control" required max="50">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" id="storeCategoryButton">Create</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Create brand view -->
+<div class="modal fade" id="addBrandModal" tabindex="-1" role="dialog" aria-labelledby="addBrandModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="">Add new brand</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="editForm" method="POST" enctype="multipart/form-data">
+                @csrf
+                <div class="modal-body">
+                    <!-- name -->
+                    <div class="form-group">
+                        <label for="">Name</label>
+                        <input id="brandName" type="text" name="name" placeholder="Enter name"
+                        class="form-control" required max="50">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" id="storeBrandButton">Create</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Create unit view -->
+<div class="modal fade" id="addUnitModal" tabindex="-1" role="dialog" aria-labelledby="addUnitModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="">Add new unit</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="editForm" method="POST" enctype="multipart/form-data">
+                @csrf
+                <div class="modal-body">
+                    <!-- name -->
+                    <div class="form-group">
+                        <label for="">Name</label>
+                        <input id="unitName" type="text" name="name" placeholder="Enter name"
+                        class="form-control" required max="50">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" id="storeUnitButton">Create</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
 <script>
 $(document).ready(function(){
   // $('#area_id').select2();
@@ -296,29 +380,6 @@ $(document).ready(function(){
   //   "bInfo": false,
   //   "searching":false
   // });
-
-  // fetch markets by area id
-  function fetch_specific_markets(area_id){
-    $.ajax({
-        url: '<?php echo("fetch_specific_markets"); ?>',
-        type: 'GET',
-        data: {area_id: area_id},
-        dataType: 'JSON',
-        success: function (data) {
-          $('.market_id').html('<option value="">Select market</option>');
-          for(var i = 0; i < data.length; i++){
-            $('.market_id').append('<option value="'+ data[i].id +'">'+ data[i].name +'</option>');
-          }
-          // $('#market_id').select2({
-          //   dropdownParent: $('#addProductModal')
-          // });
-        },
-        error: function(data){
-          $('.market_id').html('<option value="">Select market</option>');
-          // $('.market_id').select2();
-        }
-    });
-  }
 
   // create
   $('#add_product').on('click', function(){
@@ -392,31 +453,6 @@ $(document).ready(function(){
     $('.quantity_in_hand').html(product.quantity_in_hand);
     $('.moq').html(product.moq);
 
-    // $('.contact_number').html(product.contact_number);
-    // $('.whatsapp_number').html(product.whatsapp_number);
-    // if(product.shop_keeper_picture){
-    //   var shop_path = $(this).data('shopkeeper');
-    //   $('.shop_keeper_picture').attr('src', shop_path);
-    // }
-
-    // $('.shop_name').html(product.shop_name);
-    // $('.shop_number').html(product.shop_number);
-    // $('.floor').html(product.floor);
-    // $('.area').html(product.market.area.name);
-    // $('.market').html(product.market.name);
-    // if(product.shop_picture){
-    //   var shop_path = $(this).data('shopkeeper');
-    //   $('.shop_picture').attr('src', shop_path);
-    // }
-
-    // $('.status').html(product.status);
-    // $('.visiting_days').html(product.visiting_days);
-    // $('.cash_on_delivery').html(product.cash_on_delivery);
-    // $('.opening_balance').html(product.opening_balance);
-    // $('.business_to_date').html(product.business_to_date);
-    // $('.outstanding_balance').html(product.outstanding_balance);
-    // $('.special_discount').html(product.special_discount);
-
     $('#viewProductModal').modal('show');
   });
 
@@ -430,10 +466,67 @@ $(document).ready(function(){
     $('#deleteProductModal').modal('show');
   });
 
-  //on area id change
-  $('.area_id').on('change', function(){
-    var area_id = $(this).val();
-    fetch_specific_markets(area_id);
+  // create category modal
+  $('.add_category').on('click', function(){
+      $('#addCategoryModal').modal('show');
+  });
+  // create category
+  $('#storeCategoryButton').on('click', function(){
+      var categoryName = $('#categoryName').val();
+      $('#addCategoryModal').modal('hide');
+
+      $.ajax({
+          url: "<?php echo(route('create_category')); ?>",
+          type: 'GET',
+          data: {"_token": "{{ csrf_token() }}", name: categoryName},
+          dataType: 'JSON',
+          success: function (data) {
+            $('.category_id').append("<option value='"+ data.id +"'>"+ data.name +"</option>");
+            $('#categoryName').val("");
+          }
+      }); 
+  });
+
+  // create brand modal
+  $('.add_brand').on('click', function(){
+      $('#addBrandModal').modal('show');
+  });
+  // create brand
+  $('#storeBrandButton').on('click', function(){
+      var brandName = $('#brandName').val();
+      $('#addBrandModal').modal('hide');
+
+      $.ajax({
+          url: "<?php echo(route('create_brand')); ?>",
+          type: 'GET',
+          data: {"_token": "{{ csrf_token() }}", name: brandName},
+          dataType: 'JSON',
+          success: function (data) {
+            $('.brand_id').append("<option value='"+ data.id +"'>"+ data.name +"</option>");
+            $('#brandName').val("");
+          }
+      }); 
+  });
+
+  // create unit modal
+  $('.add_unit').on('click', function(){
+      $('#addUnitModal').modal('show');
+  });
+  // create unit
+  $('#storeUnitButton').on('click', function(){
+      var unitName = $('#unitName').val();
+      $('#addUnitModal').modal('hide');
+
+      $.ajax({
+          url: "<?php echo(route('create_unit')); ?>",
+          type: 'GET',
+          data: {"_token": "{{ csrf_token() }}", name: unitName},
+          dataType: 'JSON',
+          success: function (data) {
+            $('.unit_id').append("<option value='"+ data.id +"'>"+ data.name +"</option>");
+            $('#unitName').val("");
+          }
+      }); 
   });
 
 });

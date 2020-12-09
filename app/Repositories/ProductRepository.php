@@ -170,4 +170,25 @@ abstract class ProductRepository implements RepositoryInterface
 
         return $products;
     }
+
+    public function create_category(array $data)
+    {
+        return Category::create([
+            'name' => $data['name']
+        ]);
+    }
+
+    public function create_brand(array $data)
+    {
+        return Brand::create([
+            'name' => $data['name']
+        ]);
+    }
+    
+    public function create_unit(array $data)
+    {
+        return Unit::create([
+            'name' => $data['name']
+        ]);
+    }
 }
