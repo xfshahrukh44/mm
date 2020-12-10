@@ -66,15 +66,15 @@ return [
         ],
         'shops' => [
             'driver' => 'local',
-            'root' => storage_path('shops'),
+            'root' => storage_path('app/public/shops'),
         ],
         'shopkeepers' => [
             'driver' => 'local',
-            'root' => storage_path('shopkeepers'),
+            'root' => storage_path('app/public/shopkeepers'),
         ],
         'products' => [
             'driver' => 'local',
-            'root' => storage_path('products'),
+            'root' => storage_path('app/public/products'),
         ],
     ],
 

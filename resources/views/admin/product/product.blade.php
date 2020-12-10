@@ -83,7 +83,7 @@
                     <td class="{{'product_picture'.$product->id}}">{{$product->product_picture}}</td>
                     <td>
                       <!-- Detail -->
-                      <a href="#" class="detailButton" data-id="{{$product->id}}" data-object="{{$product}}" data-product="{{URL::to('/') . storage_path('products') . '/' . $product->product_picture}}">
+                      <a href="#" class="detailButton" data-id="{{$product->id}}" data-object="{{$product}}" data-product="{{asset('storage/products') . '/' . $product->product_picture}}">
                         <i class="fas fa-eye green ml-1"></i>
                       </a>
                       |
@@ -183,7 +183,7 @@
               <!-- main info -->
               <div class="col-md-12" style="text-align: center;">
                 <!-- product_image -->
-                <img class="shop_picture" src="{{asset('img/logo.png')}}" width="200">
+                <img class="product_picture" src="{{asset('img/logo.png')}}" width="200">
                 <!-- article -->
                 <h3 class="article"></h3>
                 <hr style="color:gray;">
@@ -438,6 +438,10 @@ $(document).ready(function(){
     var product = $(this).data('object');
     
     $('.article').html(product.article);
+    if(product.product_picture){
+      var product_path = $(this).data('product');
+      $('.product_picture').attr('src', product_path);
+    }
     // $('.product_picture').html(product.product_picture);
 
     $('.category_id').html(product.category.name);

@@ -71,7 +71,7 @@
                     <td class="{{'outstanding_balance'.$customer->id}}">{{$customer->outstanding_balance ? $customer->outstanding_balance : NULL}}</td>
                     <td>
                       <!-- Detail -->
-                      <a href="#" class="detailButton" data-id="{{$customer->id}}" data-object="{{$customer}}" data-shopkeeper="{{URL::to('/') . storage_path('shopkeepers') . '/' . $customer->shop_keeper_picture}}" data-shop="{{URL::to('/') . storage_path('shops') . '/' . $customer->shop_picture}}">
+                      <a href="#" class="detailButton" data-id="{{$customer->id}}" data-object="{{$customer}}" data-shopkeeper="{{asset('storage/shopkeepers') . '/' . $customer->shop_keeper_picture}}" data-shop="{{asset('storage/shops') . '/' . $customer->shop_picture}}">
                         <i class="fas fa-eye green ml-1"></i>
                       </a>
                       |
@@ -169,7 +169,7 @@
             <!-- TABS -->
             <ul class="nav nav-pills nav-fill" id="myTab" role="tablist">
               <li class="nav-item" role="presentation">
-                <a class="nav-link active" data-toggle="tab" href="#bci">Basic Customer Information</a>
+                <a class="nav-link active bci" data-toggle="tab" href="#bci">Basic Customer Information</a>
               </li> 
               <li class="nav-item" role="presentation" >
                 <a class="nav-link" data-toggle="tab" href="#si">Shop Information</a>
@@ -338,6 +338,7 @@ $(document).ready(function(){
           $('.market_id').html('<option value="">Select market</option>');
           for(var i = 0; i < data.length; i++){
             $('.market_id').append('<option value="'+ data[i].id +'">'+ data[i].name +'</option>');
+            $('.market_id').fadeIn(200);
           }
           // $('#market_id').select2({
           //   dropdownParent: $('#addCustomerModal')
@@ -345,6 +346,7 @@ $(document).ready(function(){
         },
         error: function(data){
           $('.market_id').html('<option value="">Select market</option>');
+          $('.market_id').fadeOut(200);
           // $('.market_id').select2();
         }
     });
@@ -354,10 +356,13 @@ $(document).ready(function(){
   $('#add_customer').on('click', function(){
     // fetch_all_stores();
     // fetch_all_brands();
+    // market_id
+    $('.market_id').hide();
   });
 
   // edit
   $('.editButton').on('click', function(){
+    $('.market_id').hide();
     var id = $(this).data('id');
     var customer = $(this).data('object');
     $('#hidden').val(id);
@@ -393,6 +398,8 @@ $(document).ready(function(){
 
   // detail
   $('.detailButton').on('click', function(){
+    $('.bci').trigger('click');
+
     var customer = $(this).data('object');
     
     $('.name').html(customer.name);
@@ -409,7 +416,7 @@ $(document).ready(function(){
     $('.area').html(customer.market.area.name);
     $('.market').html(customer.market.name);
     if(customer.shop_picture){
-      var shop_path = $(this).data('shopkeeper');
+      var shop_path = $(this).data('shop');
       $('.shop_picture').attr('src', shop_path);
     }
 

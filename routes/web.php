@@ -13,15 +13,15 @@
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/', 'HomeController@index')->name('home');
 
 // ADMIN PANEL ROUTES---------------------------------------
 Route::group(['middleware' => 'auth', 'prefix' => 'admin'], function() {
 
     // DASHBOARD
-    Route::get('/', function () {
-        return view('admin.layouts.master');
-    })->name('home');
+    // Route::get('/', function () {
+    //     return view('admin.layouts.master');
+    // })->name('home');
 
     // blade indexes
     Route::get('/dashboard', 'Admin\DashboardController@index')->name('dashboard');
