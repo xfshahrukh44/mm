@@ -143,6 +143,26 @@ abstract class UserRepository implements RepositoryInterface
         }
     }
 
+    public function all_staff()
+    {
+        try {
+            return $this->model::where('type', '!=', 'rider')->get();
+        }
+        catch (\Exception $exception) {
+            throw new AllUserException($exception->getMessage());
+        }
+    }
+
+    public function all_riders()
+    {
+        try {
+            return $this->model::where('type', '=', 'rider')->get();
+        }
+        catch (\Exception $exception) {
+            throw new AllUserException($exception->getMessage());
+        }
+    }
+
     public function search_users($query, $user_type)
     {
         // search block

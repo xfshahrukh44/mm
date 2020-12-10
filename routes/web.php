@@ -13,7 +13,7 @@
 
 Auth::routes();
 
-Route::get('/', 'HomeController@index')->name('home');
+Route::get('/', 'Admin\DashboardController@index')->name('home');
 
 // ADMIN PANEL ROUTES---------------------------------------
 Route::group(['middleware' => 'auth', 'prefix' => 'admin'], function() {

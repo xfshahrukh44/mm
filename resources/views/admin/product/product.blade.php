@@ -61,7 +61,6 @@
                 <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1">Sales Value</th>
                 <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1">Opening Quantity</th>
                 <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1">M.O.Q</th>
-                <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1">Product Picture</th>
                 <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1">Actions</th>
               </tr>
             </thead>
@@ -80,7 +79,6 @@
                     <td class="{{'sales_value'.$product->id}}">{{$product->sales_value}}</td>
                     <td class="{{'opening_quantity'.$product->id}}">{{$product->opening_quantity}}</td>
                     <td class="{{'moq'.$product->id}}">{{$product->moq}}</td>
-                    <td class="{{'product_picture'.$product->id}}">{{$product->product_picture}}</td>
                     <td>
                       <!-- Detail -->
                       <a href="#" class="detailButton" data-id="{{$product->id}}" data-object="{{$product}}" data-product="{{asset('storage/products') . '/' . $product->product_picture}}">

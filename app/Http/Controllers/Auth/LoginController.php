@@ -45,6 +45,6 @@ class LoginController extends Controller
     public function logout(Request $request)
     {
         $this->performLogout($request);
-        return redirect()->route('home');
+        return redirect()->route('dashboard');
     }
 }
