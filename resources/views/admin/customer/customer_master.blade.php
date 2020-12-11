@@ -64,8 +64,11 @@
         <label for="">Status</label>
         <select id="status" name="status" class="form-control status" style="width: 100%; height: 35px;">
             <option value="">Select Method</option>
-            <option value="regular">Regular</option>
-            <option value="blacklist">Blacklist</option>
+            <option value="active">Active</option>
+            <option value="inactive">Inactive</option>
+            <option value="interested">Interested</option>
+            <option value="follow_up">Follow up</option>
+            <option value="not_interested">Not Interested</option>
         </select>
     </div>
     <!-- visiting_days -->
@@ -89,6 +92,9 @@
             <option value="">Select Method</option>
             <option value="credit">Credit</option>
             <option value="bil_to_bill">Bill to Bill</option>
+            <option value="weekly">Weekly</option>
+            <option value="after_15_days">After 15 Days</option>
+            <option value="50%_on_delivery">50% on Delivery</option>
         </select>
     </div>
     <!-- opening_balance -->

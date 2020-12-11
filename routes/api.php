@@ -56,4 +56,7 @@ Route::group(['middleware' => ['auth:api', 'cors'], 'prefix' => 'auth'], functio
     // OrderProduct
     Route::apiResources(['order_product'=>'API\OrderProductController']);
 
+    // helpers
+    Route::get('/fetch_specific_markets', 'API\MarketController@fetch_specific_markets');
+
 });

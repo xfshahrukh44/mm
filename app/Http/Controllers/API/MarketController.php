@@ -98,4 +98,9 @@ class MarketController extends Controller
     {
         return $this->marketService->delete($id);
     }
+
+    public function fetch_specific_markets(Request $request)
+    {
+        return $this->marketService->fetch_specific_markets($request->area_id);
+    }
 }
