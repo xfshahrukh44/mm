@@ -7,6 +7,7 @@ use App\Exceptions\Order\CreateOrderException;
 use App\Exceptions\Order\UpdateOrderException;
 use App\Exceptions\Order\DeleteOrderException;
 use App\Models\Order;
+use App\Models\Customer;
 use Illuminate\Support\Facades\DB;
 use Hash;
 use JWTAuth;
@@ -117,5 +118,35 @@ abstract class OrderRepository implements RepositoryInterface
         catch (\Exception $exception) {
             throw new AllOrderException($exception->getMessage());
         }
+    }
+
+    public function paginate($pagination)
+    {
+        try {
+            return $this->model::paginate($pagination);
+        }
+        catch (\Exception $exception) {
+            throw new AllOrderException($exception->getMessage());
+        }
+    }
+
+    public function search_orders($query)
+    {
+        // foreign fields
+        // customers
+        $customers = Customer::select('id')->where('name', 'LIKE', '%'.$query.'%')->get();
+        $customer_ids = [];
+        foreach($customers as $customer){
+            array_push($customer_ids, $customer->id);
+        }
+
+        // search block
+        $orders = Order::where('article', 'LIKE', '%'.$query.'%')
+                        ->orWhereIn('customer_id', $customer_ids)
+                        ->orWhere('total', 'LIKE', '%'.$query.'%')
+                        ->orWhere('status', 'LIKE', '%'.$query.'%')
+                        ->paginate(env('PAGINATION'));
+
+        return $orders;
     }
 }

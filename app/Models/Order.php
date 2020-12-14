@@ -11,7 +11,8 @@ class Order extends Model
     
     protected $fillable = [
         'customer_id',
-        'total'
+        'total',
+        'status'
     ];
 
     protected $dates = ['created_at', 'updated_at', 'deleted_at'];

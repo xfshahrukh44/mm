@@ -17,6 +17,7 @@ class CreateOrdersTable extends Migration
             $table->bigIncrements('id');
             $table->integer('customer_id')->nullable();
             $table->bigInteger('total')->nullable();
+            $table->string('status')->nullable();
             $table->timestamps();
             $table->softDeletes()->nullable();
         });
