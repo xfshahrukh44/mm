@@ -25,6 +25,8 @@ class CreateOrderProductsTable extends Migration
             $table->bigInteger('amount')->nullable();
             $table->bigInteger('balance_due')->nullable();
             $table->date('dispatch_date')->nullable();
+            $table->integer('created_by')->nullable();
+            $table->integer('modified_by')->nullable();
             $table->timestamps();
             $table->softDeletes()->nullable();
         });

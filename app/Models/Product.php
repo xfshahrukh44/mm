@@ -21,8 +21,23 @@ class Product extends Model
         'quantity_in_hand',
         'product_picture',
         'cost_value',
-        'sales_value'
+        'sales_value',
+        'created_by',
+        'modified_by'
     ];
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($query) {
+            $query->created_by = auth()->user()->id;
+        });
+
+        static::updating(function ($query) {
+            $query->modified_by = auth()->user()->id;
+        });
+    }
 
     protected $dates = ['created_at', 'updated_at', 'deleted_at'];
 

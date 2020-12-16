@@ -12,8 +12,23 @@ class Order extends Model
     protected $fillable = [
         'customer_id',
         'total',
-        'status'
+        'status',
+        'created_by',
+        'modified_by'
     ];
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($query) {
+            $query->created_by = auth()->user()->id;
+        });
+
+        static::updating(function ($query) {
+            $query->modified_by = auth()->user()->id;
+        });
+    }
 
     protected $dates = ['created_at', 'updated_at', 'deleted_at'];
 

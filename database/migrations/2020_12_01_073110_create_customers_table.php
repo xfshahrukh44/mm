@@ -32,6 +32,8 @@ class CreateCustomersTable extends Migration
             $table->string('status')->nullable();
             $table->bigInteger('opening_balance')->nullable();
             $table->bigInteger('special_discount')->nullable();
+            $table->integer('created_by')->nullable();
+            $table->integer('modified_by')->nullable();
             $table->timestamps();
             $table->softDeletes()->nullable();
         });

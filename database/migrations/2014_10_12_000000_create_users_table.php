@@ -22,6 +22,8 @@ class CreateUsersTable extends Migration
             $table->string('phone')->unique()->nullable();
             $table->string('type')->default('superadmin');
             $table->rememberToken();
+            $table->integer('created_by')->nullable();
+            $table->integer('modified_by')->nullable();
             $table->timestamps();
             $table->softDeletes()->nullable();
         });

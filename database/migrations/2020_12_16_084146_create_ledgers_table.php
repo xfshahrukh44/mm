@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateMarketsTable extends Migration
+class CreateLedgersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,9 @@ class CreateMarketsTable extends Migration
      */
     public function up()
     {
-        Schema::create('markets', function (Blueprint $table) {
+        Schema::create('ledgers', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->integer('area_id');
-            $table->string('name');
-            $table->integer('created_by')->nullable();
-            $table->integer('modified_by')->nullable();
             $table->timestamps();
-            $table->softDeletes()->nullable();
         });
     }
 
@@ -31,6 +26,6 @@ class CreateMarketsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('markets');
+        Schema::dropIfExists('ledgers');
     }
 }

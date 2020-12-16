@@ -27,6 +27,8 @@ class CreateProductsTable extends Migration
             $table->string('product_picture')->nullable();
             $table->bigInteger('cost_value')->nullable();
             $table->bigInteger('sales_value')->nullable();
+            $table->integer('created_by')->nullable();
+            $table->integer('modified_by')->nullable();
             $table->timestamps();
             $table->softDeletes()->nullable();
         });
