@@ -3,7 +3,7 @@
 @section('content_header')
 <div class="row mb-2">
   <div class="col-sm-6">
-    <h1 class="m-0 text-dark">Products</h1>
+    <h1 class="m-0 text-dark"><i class="nav-icon fab fa-product-hunt"></i> Products</h1>
   </div>
   <!-- /.col -->
   <div class="col-sm-6">

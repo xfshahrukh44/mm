@@ -9,7 +9,7 @@
   <div class="col-sm-6">
     <ol class="breadcrumb float-sm-right">
       <li class="breadcrumb-ledger"><a href="#">Admin</a></li>
-      <li class="breadcrumb-ledger active">Ledgers</li>
+      <li class="breadcrumb-ledger active"><i class="fas fa-book nav-icon"></i> Ledgers</li>
     </ol>
   </div>
   <!-- /.col -->

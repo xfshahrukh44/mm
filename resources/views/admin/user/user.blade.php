@@ -4,9 +4,9 @@
 <div class="row mb-2">
   <div class="col-sm-6">
     @if($user_type == 'staff')
-    <h1 class="m-0 text-dark">Staff</h1>
+    <h1 class="m-0 text-dark"><i class="nav-icon fas fa-users"></i> Staff</h1>
     @else
-    <h1 class="m-0 text-dark">Riders</h1>
+    <h1 class="m-0 text-dark"><i class="fas fa-motorcycle nav-icon"></i> Riders</h1>
     @endif
     
 </div>
