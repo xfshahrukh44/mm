@@ -72,7 +72,7 @@ class StockInController extends Controller
         }
 
         $validator = Validator::make($request->all(), [
-            'product_id' => 'required|int',
+            'product_id' => 'sometimes|int',
             'quantity' => 'sometimes',
             'transaction_date' => 'sometimes'
         ]);

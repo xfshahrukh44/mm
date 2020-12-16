@@ -73,7 +73,7 @@ class LedgerController extends Controller
         }
 
         $validator = Validator::make($request->all(), [
-            'customer_id' => 'required|int',
+            'customer_id' => 'sometimes|int',
             'amount' => 'sometimes',
             'type' => 'sometimes',
             'transaction_date' => 'sometimes'

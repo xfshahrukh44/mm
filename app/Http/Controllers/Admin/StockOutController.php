@@ -70,8 +70,8 @@ class StockOutController extends Controller
         }
 
         $validator = Validator::make($request->all(), [
-            'customer_id' => 'required|int',
-            'product_id' => 'required|int',
+            'customer_id' => 'sometimes|int',
+            'product_id' => 'sometimes|int',
             'quantity' => 'sometimes',
             'transaction_date' => 'sometimes'
         ]);

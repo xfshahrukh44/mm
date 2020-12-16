@@ -63,7 +63,7 @@ Route::group(['middleware' => ['auth:api', 'cors'], 'prefix' => 'auth'], functio
     Route::apiResources(['stock_in'=>'API\StockInController']);
 
     // StockOut
-    Route::apiResources(['stock_out'=>'API\OrderProductController']);
+    Route::apiResources(['stock_out'=>'API\StockOutController']);
 
     // helpers
     Route::get('/fetch_specific_markets', 'API\MarketController@fetch_specific_markets');
