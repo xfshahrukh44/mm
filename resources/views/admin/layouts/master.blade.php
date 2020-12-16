@@ -119,16 +119,16 @@
                 <i class="right fas fa-angle-left"></i>
               </p>
             </a>
-            <ul class="nav nav-treeview">
+            <ul class="nav nav-treeview ml-2">
               <li class="nav-item">
                 <a href="{{route('customer.index')}}" class="nav-link">
-                  <i class="fas fa-circle nav-icon"></i>
+                  <i class="nav-icon fas fa-users"></i>
                   <p>Customers</p>
                 </a>
               </li>
               <li class="nav-item">
                 <a href="{{route('area.index')}}" class="nav-link">
-                  <i class="fas fa-circle nav-icon"></i>
+                  <i class="nav-icon  fas fa-map-marked-alt"></i>
                   <p>Areas and Markets</p>
                 </a>
               </li>
@@ -144,40 +144,40 @@
                 <i class="right fas fa-angle-left"></i>
               </p>
             </a>
-            <ul class="nav nav-treeview">
+            <ul class="nav nav-treeview ml-2">
               <li class="nav-item">
                 <a href="{{route('product.index')}}" class="nav-link">
-                  <i class="fas fa-circle nav-icon"></i>
+                  <i class="nav-icon fab fa-product-hunt"></i>
                   <p>Products</p>
                 </a>
               </li>
               <li class="nav-item">
                 <a href="{{route('stock_in.index')}}" class="nav-link">
-                  <i class="fas fa-circle nav-icon"></i>
+                  <i class="nav-icon fas fa-sign-in-alt"></i>
                   <p>Stock In</p>
                 </a>
               </li>
               <li class="nav-item">
                 <a href="{{route('stock_out.index')}}" class="nav-link">
-                  <i class="fas fa-circle nav-icon"></i>
+                  <i class="nav-icon fas fa-sign-out-alt"></i>
                   <p>Stock Out</p>
                 </a>
               </li>
               <li class="nav-item">
                 <a href="{{route('category.index')}}" class="nav-link">
-                  <i class="fas fa-circle nav-icon"></i>
+                  <i class="nav-icon fas fa-copyright"></i>
                   <p>Categories</p>
                 </a>
               </li>
               <li class="nav-item">
                 <a href="{{route('brand.index')}}" class="nav-link">
-                  <i class="fas fa-circle nav-icon"></i>
+                  <i class="nav-icon fab fa-bootstrap"></i>
                   <p>Brands</p>
                 </a>
               </li>
               <li class="nav-item">
                 <a href="{{route('unit.index')}}" class="nav-link">
-                  <i class="fas fa-circle nav-icon"></i>
+                  <i class="nav-icon fas fa-balance-scale-left"></i>
                   <p>Units</p>
                 </a>
               </li>
@@ -187,16 +187,16 @@
           <!-- Accouting -->
           <li class="nav-item has-treeview">
             <a href="#" class="nav-link">
-              <i class="nav-icon fa fa-credit-card"></i>
+              <i class="nav-icon fas fa-money-check-alt"></i>
               <p>
                 Accouting
                 <i class="right fas fa-angle-left"></i>
               </p>
             </a>
-            <ul class="nav nav-treeview">
+            <ul class="nav nav-treeview ml-2">
               <li class="nav-item">
                 <a href="{{route('ledger.index')}}" class="nav-link">
-                  <i class="fas fa-circle nav-icon"></i>
+                  <i class="fas fa-book nav-icon"></i>
                   <p>Ledgers</p>
                 </a>
               </li>
@@ -232,16 +232,16 @@
                 <i class="right fas fa-angle-left"></i>
               </p>
             </a>
-            <ul class="nav nav-treeview">
+            <ul class="nav nav-treeview ml-2">
               <li class="nav-item">
                 <a href="{{route('user.index')}}" class="nav-link">
-                  <i class="fas fa-circle nav-icon"></i>
+                  <i class="nav-icon fas fa-users"></i>
                   <p>Staff</p>
                 </a>
               </li>
               <li class="nav-item">
                 <a href="{{route('rider')}}" class="nav-link">
-                  <i class="fas fa-circle nav-icon"></i>
+                  <i class="fas fa-motorcycle nav-icon"></i>
                   <p>Riders</p>
                 </a>
               </li>
