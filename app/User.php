@@ -27,11 +27,11 @@ class User extends Authenticatable implements JWTSubject
         parent::boot();
 
         static::creating(function ($query) {
-            $query->created_by = auth()->user()->id;
+            $query->created_by = (auth()->user() ? auth()->user()->id : 1);
         });
 
         static::updating(function ($query) {
-            $query->modified_by = auth()->user()->id;
+            $query->modified_by = (auth()->user() ? auth()->user()->id : 1);
         });
     }
 

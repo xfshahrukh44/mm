@@ -91,7 +91,7 @@
         <select id="cash_on_delivery" name="cash_on_delivery" class="form-control cash_on_delivery" style="width: 100%; height: 35px;">
             <option value="">Select Method</option>
             <option value="credit">Credit</option>
-            <option value="bil_to_bill">Bill to Bill</option>
+            <option value="bill_to_bill">Bill to Bill</option>
             <option value="weekly">Weekly</option>
             <option value="after_15_days">After 15 Days</option>
             <option value="50%_on_delivery">50% on Delivery</option>

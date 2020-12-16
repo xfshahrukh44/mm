@@ -37,11 +37,17 @@ Route::group(['middleware' => 'auth', 'prefix' => 'admin'], function() {
     Route::apiResources(['brand'=>'Admin\BrandController']);
     Route::apiResources(['unit'=>'Admin\UnitController']);
     Route::apiResources(['product'=>'Admin\ProductController']);
+    Route::apiResources(['ledger'=>'Admin\LedgerController']);
+    Route::apiResources(['stock_in'=>'Admin\StockInController']);
+    Route::apiResources(['stock_out'=>'Admin\StockOutController']);
 
     // search routes
     Route::get('/search_users', 'Admin\UserController@search_users')->name('search_users');
     Route::get('/search_customers', 'Admin\CustomerController@search_customers')->name('search_customers');
     Route::get('/search_products', 'Admin\ProductController@search_products')->name('search_products');
+    Route::get('/search_ledgers', 'Admin\LedgerController@search_ledgers')->name('search_ledgers');
+    Route::get('/search_stockIns', 'Admin\StockInController@search_stockIns')->name('search_stockIns');
+    Route::get('/search_stockOuts', 'Admin\StockOutController@search_stockOuts')->name('search_stockOuts');
 
     // helpers
     Route::get('/fetch_specific_markets', 'Admin\MarketController@fetch_specific_markets')->name('fetch_specific_markets');

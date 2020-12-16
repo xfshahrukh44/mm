@@ -55,4 +55,14 @@ class Customer extends Model
     {
         return $this->hasMany('App\Models\Order');
     }
+
+    public function ledgers()
+    {
+        return $this->hasMany('App\Models\Ledger');
+    }
+
+    public function stock_outs()
+    {
+        return $this->hasMany('App\Models\StockOut');
+    }
 }

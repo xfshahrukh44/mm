@@ -56,6 +56,15 @@ Route::group(['middleware' => ['auth:api', 'cors'], 'prefix' => 'auth'], functio
     // OrderProduct
     Route::apiResources(['order_product'=>'API\OrderProductController']);
 
+    // Ledger
+    Route::apiResources(['ledger'=>'API\LedgerController']);
+
+    // StockIn
+    Route::apiResources(['stock_in'=>'API\StockInController']);
+
+    // StockOut
+    Route::apiResources(['stock_out'=>'API\OrderProductController']);
+
     // helpers
     Route::get('/fetch_specific_markets', 'API\MarketController@fetch_specific_markets');
 

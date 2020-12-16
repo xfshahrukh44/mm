@@ -152,6 +152,18 @@
                 </a>
               </li>
               <li class="nav-item">
+                <a href="{{route('stock_in.index')}}" class="nav-link">
+                  <i class="fas fa-circle nav-icon"></i>
+                  <p>Stock In</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{route('stock_out.index')}}" class="nav-link">
+                  <i class="fas fa-circle nav-icon"></i>
+                  <p>Stock Out</p>
+                </a>
+              </li>
+              <li class="nav-item">
                 <a href="{{route('category.index')}}" class="nav-link">
                   <i class="fas fa-circle nav-icon"></i>
                   <p>Categories</p>
@@ -173,13 +185,22 @@
           </li>
 
           <!-- Accouting -->
-          <li class="nav-item">
-            <a href="{{route('customer.index')}}" class="nav-link">
+          <li class="nav-item has-treeview">
+            <a href="#" class="nav-link">
               <i class="nav-icon fa fa-credit-card"></i>
               <p>
                 Accouting
+                <i class="right fas fa-angle-left"></i>
               </p>
             </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="{{route('ledger.index')}}" class="nav-link">
+                  <i class="fas fa-circle nav-icon"></i>
+                  <p>Ledgers</p>
+                </a>
+              </li>
+            </ul>
           </li>
 
           <!-- Order Management -->

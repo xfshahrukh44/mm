@@ -5,10 +5,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Unit extends Model
+class StockOut extends Model
 {
     use SoftDeletes;
-
+    
     protected static function boot()
     {
         parent::boot();
@@ -23,13 +23,18 @@ class Unit extends Model
     }
     
     protected $fillable = [
-        'name', 'created_by', 'modified_by'
+        'customer_id', 'product_id', 'quantity', 'transaction_date', 'created_by', 'modified_by'
     ];
 
     protected $dates = ['created_at', 'updated_at', 'deleted_at'];
 
-    public function products()
+    public function customer()
     {
-        return $this->hasMany('App\Models\Product');
+        return $this->belongsTo('App\Models\Customer');
+    }
+
+    public function product()
+    {
+        return $this->belongsTo('App\Models\Product');
     }
 }

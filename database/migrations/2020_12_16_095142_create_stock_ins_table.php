@@ -5,7 +5,7 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 use Carbon\Carbon;
 
-class CreateLedgersTable extends Migration
+class CreateStockInsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -14,11 +14,10 @@ class CreateLedgersTable extends Migration
      */
     public function up()
     {
-        Schema::create('ledgers', function (Blueprint $table) {
+        Schema::create('stock_ins', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->integer('customer_id');
-            $table->decimal('amount', 8, 2);
-            $table->string('type');
+            $table->integer('product_id');
+            $table->integer('quantity');
             $table->date('transaction_date')->default(Carbon::now())->nullable();
             $table->integer('created_by')->nullable();
             $table->integer('modified_by')->nullable();
@@ -34,6 +33,6 @@ class CreateLedgersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('ledgers');
+        Schema::dropIfExists('stock_ins');
     }
 }

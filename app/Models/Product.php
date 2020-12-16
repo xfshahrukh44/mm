@@ -60,4 +60,14 @@ class Product extends Model
     {
         return $this->hasMany('App\Models\OrderProduct');
     }
+
+    public function stock_ins()
+    {
+        return $this->hasMany('App\Models\StockIn');
+    }
+
+    public function stock_outs()
+    {
+        return $this->hasMany('App\Models\StockOut');
+    }
 }
