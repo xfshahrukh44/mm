@@ -41,7 +41,7 @@ class CustomerController extends Controller
             'market_id' => 'required|int',
             'business_to_date' => 'sometimes',
             'outstanding_balance' => 'sometimes',
-            'contact_number' => 'somtimes',
+            'contact_number' => 'sometimes',
             'whatsapp_number' => 'sometimes',
             'floor' => 'sometimes',
             'shop_name' => 'sometimes',

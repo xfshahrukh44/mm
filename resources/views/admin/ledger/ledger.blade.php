@@ -3,16 +3,8 @@
 @section('content_header')
 <div class="row mb-2">
   <div class="col-sm-6">
-    <h1 class="m-0 text-dark">Ledgers</h1>
+    <h1 class="m-0 text-dark"><i class="fas fa-book nav-icon"></i> Ledgers</h1>
   </div>
-  <!-- /.col -->
-  <div class="col-sm-6">
-    <ol class="breadcrumb float-sm-right">
-      <li class="breadcrumb-ledger"><a href="#">Admin</a></li>
-      <li class="breadcrumb-ledger active"><i class="fas fa-book nav-icon"></i> Ledgers</li>
-    </ol>
-  </div>
-  <!-- /.col -->
 </div>
 <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
@@ -74,12 +66,10 @@
                       <a href="#" class="detailButton" data-id="{{$ledger->id}}">
                         <i class="fas fa-eye green ml-1"></i>
                       </a>
-                      |
                       <!-- Edit -->
                       <a href="#" class="editButton" data-id="{{$ledger->id}}" data-object="{{$ledger}}">
                         <i class="fas fa-edit blue ml-1"></i>
                       </a>
-                      |
                       <!-- Delete -->
                       <a href="#" class="deleteButton" data-id="{{$ledger->id}}" data-object="{{$ledger}}">
                         <i class="fas fa-trash red ml-1"></i>

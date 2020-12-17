@@ -5,14 +5,6 @@
   <div class="col-sm-6">
     <h1 class="m-0 text-dark"><i class="nav-icon fas fa-balance-scale-left"></i> Units</h1>
 </div>
-<!-- /.col -->
-<div class="col-sm-6">
-    <ol class="breadcrumb float-sm-right">
-      <li class="breadcrumb-item"><a href="#">Admin</a></li>
-      <li class="breadcrumb-item active">Unit</li>
-  </ol>
-</div>
-<!-- /.col -->
 </div>
 
 @endsection
@@ -52,7 +44,6 @@
                                     <a href="#" class="editButton" data-id="{{$unit->id}}">
                                         <i class="fas fa-edit blue ml-1"></i>
                                     </a>
-                                    |
                                     <!-- Delete -->
                                     <a href="#" class="deleteButton" data-id="{{$unit->id}}">
                                         <i class="fas fa-trash red ml-1"></i>

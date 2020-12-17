@@ -5,14 +5,6 @@
   <div class="col-sm-6">
     <h1 class="m-0 text-dark"><i class="nav-icon fas fa-users"></i> Customers</h1>
   </div>
-  <!-- /.col -->
-  <div class="col-sm-6">
-    <ol class="breadcrumb float-sm-right">
-      <li class="breadcrumb-customer"><a href="#">Admin</a></li>
-      <li class="breadcrumb-customer active">Customers</li>
-    </ol>
-  </div>
-  <!-- /.col -->
 </div>
 <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
@@ -74,12 +66,10 @@
                       <a href="#" class="detailButton" data-id="{{$customer->id}}" data-object="{{$customer}}" data-shopkeeper="{{asset('storage/shopkeepers') . '/' . $customer->shop_keeper_picture}}" data-shop="{{asset('storage/shops') . '/' . $customer->shop_picture}}">
                         <i class="fas fa-eye green ml-1"></i>
                       </a>
-                      |
                       <!-- Edit -->
                       <a href="#" class="editButton" data-id="{{$customer->id}}" data-object="{{$customer}}">
                         <i class="fas fa-edit blue ml-1"></i>
                       </a>
-                      |
                       <!-- Delete -->
                       <a href="#" class="deleteButton" data-id="{{$customer->id}}" data-object="{{$customer}}">
                         <i class="fas fa-trash red ml-1"></i>

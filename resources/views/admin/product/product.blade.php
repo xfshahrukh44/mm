@@ -5,14 +5,6 @@
   <div class="col-sm-6">
     <h1 class="m-0 text-dark"><i class="nav-icon fab fa-product-hunt"></i> Products</h1>
   </div>
-  <!-- /.col -->
-  <div class="col-sm-6">
-    <ol class="breadcrumb float-sm-right">
-      <li class="breadcrumb-product"><a href="#">Admin</a></li>
-      <li class="breadcrumb-product active">Products</li>
-    </ol>
-  </div>
-  <!-- /.col -->
 </div>
 <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
@@ -84,12 +76,10 @@
                       <a href="#" class="detailButton" data-id="{{$product->id}}" data-object="{{$product}}" data-product="{{asset('storage/products') . '/' . $product->product_picture}}">
                         <i class="fas fa-eye green ml-1"></i>
                       </a>
-                      |
                       <!-- Edit -->
                       <a href="#" class="editButton" data-id="{{$product->id}}" data-object="{{$product}}">
                         <i class="fas fa-edit blue ml-1"></i>
                       </a>
-                      |
                       <!-- Delete -->
                       <a href="#" class="deleteButton" data-id="{{$product->id}}" data-object="{{$product}}">
                         <i class="fas fa-trash red ml-1"></i>

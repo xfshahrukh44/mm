@@ -5,14 +5,6 @@
   <div class="col-sm-6">
     <h1 class="m-0 text-dark"><i class="nav-icon fas fa-map-marked-alt"></i> Areas and Markets</h1>
 </div>
-<!-- /.col -->
-<div class="col-sm-6">
-    <ol class="breadcrumb float-sm-right">
-      <li class="breadcrumb-item"><a href="#">Admin</a></li>
-      <li class="breadcrumb-item active">Areas</li>
-  </ol>
-</div>
-<!-- /.col -->
 </div>
 
 @endsection
@@ -71,7 +63,6 @@
                                 <a href="#" class="editButton" data-id="{{$area->id}}" data-route="{{route('area.show', 0)}}">
                                     <i class="fas fa-edit blue ml-1"></i>
                                 </a>
-                                |
                                 <!-- Delete -->
                                 <a href="#" class="deleteButton" data-id="{{$area->id}}">
                                     <i class="fas fa-trash red ml-1"></i>

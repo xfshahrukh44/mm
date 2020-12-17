@@ -10,19 +10,6 @@
     @endif
     
 </div>
-<!-- /.col -->
-<div class="col-sm-6">
-    <ol class="breadcrumb float-sm-right">
-      <li class="breadcrumb-item"><a href="#">Admin</a></li>
-      <li class="breadcrumb-item"><a href="#">Users</a></li>
-      @if($user_type == 'staff')
-      <li class="breadcrumb-item active">Staff</li>
-      @else
-      <li class="breadcrumb-item active">Riders</li>
-      @endif  
-  </ol>
-</div>
-<!-- /.col -->
 </div>
 <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
@@ -126,25 +113,21 @@
                                 </a>
                                 @if($user_type == 'staff')
                                     @if($user->id == Auth::user()->id || Gate::check('isSuperAdmin'))
-                                        |
                                         <!-- Edit -->
                                         <a href="#" class="editButton" data-id="{{$user->id}}" data-type="{{$user_type}}">
                                             <i class="fas fa-edit blue ml-1"></i>
                                         </a>
-                                        |
                                         <!-- Delete -->
                                         <a href="#" class="deleteButton" data-id="{{$user->id}}" data-type="{{$user_type}}">
                                             <i class="fas fa-trash red ml-1"></i>
                                         </a>
                                     @endif
                                 @else
-                                        |
                                         <!-- Edit -->
                                         <a href="#" class="editButton" data-id="{{$user->id}}" data-type="{{$user_type}}">
                                             <i class="fas fa-edit blue ml-1"></i>
                                         </a>
                                         @can('isSuperAdmin')
-                                            |
                                             <!-- Delete -->
                                             <a href="#" class="deleteButton" data-id="{{$user->id}}" data-type="{{$user_type}}">
                                                 <i class="fas fa-trash red ml-1"></i>
