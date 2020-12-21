@@ -3,7 +3,7 @@
 
     <!-- customer_id -->
     <div class="form-group col-md-12">
-        <label for="">Customer</label>
+        <label for=""><i class="nav-icon fas fa-users"></i> Customer</label>
         <select id="customer_id" name="customer_id" class="form-control customer_id" style="width: 100%; height: 35px;">
             <option value="">Select customer</option>
             @foreach($customers as $customer)

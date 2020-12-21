@@ -33,6 +33,11 @@ class OrderController extends Controller
         $products = $this->productService->all();
         return view('admin.order.order', compact('orders', 'customers', 'products'));
     }
+
+    public function all()
+    {
+        return $this->orderService->all();
+    }
     
     public function store(Request $request)
     {
@@ -45,7 +50,20 @@ class OrderController extends Controller
         if($validator->fails())
             return response()->json($validator->errors()->toArray(), 400);
 
-        $this->orderService->create($request->all());
+        // check status
+        if($request->has('pending_status'))
+            $request['status'] = 'pending';
+        if($request->has('completed_status'))
+            $request['status'] = 'completed';
+
+        $order = ($this->orderService->create($request->all()))['order'];
+        
+        dd($order);
+        // create order products
+        for($i = 0; $i < count($request->products); $i++){
+            
+        }
+
 
         return redirect()->route('order.index');
     }

@@ -14,7 +14,7 @@
 
     <!-- category_id -->
     <div class="form-group col-md-4">
-        <label for="">Category</label>
+        <label for=""><i class="nav-icon fas fa-copyright"></i> Category</label>
         <!-- Add new -->
         <a href="#" class="add_category float-right mt-2">
             <i class="nav-icon fa fa-plus green"></i>
@@ -28,7 +28,7 @@
     </div>
     <!-- brand_id -->
     <div class="form-group col-md-4">
-        <label for="">Brand</label>
+        <label for=""><i class="nav-icon fab fa-bootstrap"></i> Brand</label>
         <!-- Add new -->
         <a href="#" class="add_brand float-right mt-2">
             <i class="nav-icon fa fa-plus green"></i>
@@ -42,7 +42,7 @@
     </div>
     <!-- unit_id -->
     <div class="form-group col-md-4">
-        <label for="">Unit</label>
+        <label for=""><i class="nav-icon fas fa-balance-scale-left"></i> Unit</label>
         <!-- Add new -->
         <a href="#" class="add_unit float-right mt-2">
             <i class="nav-icon fa fa-plus green"></i>

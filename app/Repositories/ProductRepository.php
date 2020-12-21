@@ -191,4 +191,5 @@ abstract class ProductRepository implements RepositoryInterface
             'name' => $data['name']
         ]);
     }
+    
 }

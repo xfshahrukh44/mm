@@ -10,6 +10,7 @@ use App\Exceptions\Group\AllGroupException;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Services\OrderService;
+use App\Services\OrderProductService;
 use App\Services\CustomerService;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\JsonResponse;
@@ -19,11 +20,13 @@ class OrderController extends Controller
 {
     private $orderService;
     private $customerService;
+    private $orderProductService;
 
-    public function __construct(OrderService $orderService, CustomerService $customerService)
+    public function __construct(OrderService $orderService, CustomerService $customerService, OrderProductService $orderProductService)
     {
         $this->orderService = $orderService;
         $this->customerService = $customerService;
+        $this->orderProductService = $orderProductService;
         $this->middleware('auth:api');
     }
     
@@ -51,9 +54,21 @@ class OrderController extends Controller
             ]);
         }
 
+        // create order
         $data = $this->orderService->create($request->all());
 
-        return response()->json($data);
+        // create order product
+        if($request->orderProducts){
+            foreach($request->orderProducts as $orderProduct){
+                $this->orderProductService->create([
+                    'order_id' => $data['order']['order']['id'],
+                    'product_id' => $orderProduct['product_id'],
+                    'quantity' => $orderProduct['quantity']
+                ]);
+            }
+        }
+
+        return response()->json($this->orderService->find($data['order']['order']['id']));
     }
     
     public function show($id)

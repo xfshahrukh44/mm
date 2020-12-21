@@ -37,6 +37,11 @@ class ProductController extends Controller
         $units = $this->unitService->all();
         return view('admin.product.product', compact('products', 'categories', 'brands', 'units'));
     }
+
+    public function all()
+    {
+        return $this->productService->all();
+    }
     
     public function store(Request $request)
     {
@@ -169,5 +174,20 @@ class ProductController extends Controller
     {
         return $this->productService->create_unit($request->all());
         
+    }
+
+    public function fetch_product_labels()
+    {
+        $products = $this->productService->all();
+        $new_products = [];
+        foreach($products as $product){
+            array_push($new_products, [
+                'label' => $product->article,
+                'value' => $product->id,
+                'price' => $product->selling_price
+            ]);
+        }
+
+        return $new_products;
     }
 }

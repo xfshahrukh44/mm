@@ -33,6 +33,11 @@ class CustomerController extends Controller
         $markets = $this->marketService->all();
         return view('admin.customer.customer', compact('customers', 'areas', 'markets'));
     }
+
+    public function all()
+    {
+        return $this->customerService->all();
+    }
     
     public function store(Request $request)
     {
@@ -84,6 +89,9 @@ class CustomerController extends Controller
     
     public function show($id)
     {
+        if($_REQUEST['id']){
+            return $this->customerService->find($_REQUEST['id']);
+        }
         return $this->customerService->find($id);
     }
     
@@ -172,5 +180,19 @@ class CustomerController extends Controller
         $markets = $this->marketService->all();
 
         return view('admin.customer.customer', compact('customers', 'areas', 'markets'));
+    }
+
+    public function fetch_customer_labels()
+    {
+        $customers = $this->customerService->all();
+        $new_customers = [];
+        foreach($customers as $customer){
+            array_push($new_customers, [
+                'label' => $customer->name,
+                'value' => $customer->id
+            ]);
+        }
+
+        return $new_customers;
     }
 }

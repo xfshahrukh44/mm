@@ -44,7 +44,7 @@
     </div>
     <!-- area_id -->
     <div class="form-group col-md-6">
-        <label for="">Area</label>
+        <label for=""><i class="nav-icon  fas fa-map-marked-alt"></i> Area</label>
         <select id="area_id" name="area_id" class="form-control area_id" style="width: 100%; height: 35px;">
             <option value="">Select area</option>
             @foreach($areas as $area)
@@ -54,7 +54,7 @@
     </div>
     <!-- market_id -->
     <div class="form-group col-md-6">
-        <label for="">Market</label>
+        <label for=""><i class="nav-icon  fas fa-map-marked-alt"></i> Market</label>
         <select id="market_id" name="market_id" class="form-control market_id" style="width: 100%; height: 35px;" required>
             <option value="">Select market</option>
         </select>

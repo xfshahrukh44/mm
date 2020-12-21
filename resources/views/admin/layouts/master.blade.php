@@ -205,7 +205,7 @@
 
           <!-- Order Management -->
           <li class="nav-item">
-            <a href="{{route('customer.index')}}" class="nav-link">
+            <a href="{{route('order.index')}}" class="nav-link">
               <i class="nav-icon fa fa-clipboard"></i>
               <p>
                 Order Management
