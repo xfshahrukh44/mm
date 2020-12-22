@@ -57,6 +57,7 @@ class OrderController extends Controller
 
         // create order
         $data = $this->orderService->create($request->all());
+        $data = json_decode($data, true);
 
         // create order product
         if($request->orderProducts){
