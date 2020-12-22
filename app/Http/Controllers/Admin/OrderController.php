@@ -58,11 +58,11 @@ class OrderController extends Controller
 
         $order = ($this->orderService->create($request->all()))['order'];
         
-        dd($order);
+        // dd($order);
         // create order products
-        for($i = 0; $i < count($request->products); $i++){
+        // for($i = 0; $i < count($request->products); $i++){
             
-        }
+        // }
 
 
         return redirect()->route('order.index');
