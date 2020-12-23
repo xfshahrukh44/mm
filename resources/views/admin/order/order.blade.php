@@ -91,7 +91,7 @@
                                         @endcan
                                         <td>
                                             <!-- Detail -->
-                                            <a href="#" class="detailButton" data-id="{{$order->id}}" data-type="{{$order->id}}">
+                                            <a href="#" class="detailButton" data-id="{{$order->id}}" data-type="{{$order->id}}" data-order="{{$order}}">
                                                 <i class="fas fa-shopping-basket blue ml-1"></i>
                                             </a>
                                             <!-- Edit -->
@@ -333,18 +333,22 @@
                     </tr>
                     <tr>
                         <th>Customer name:</th>
-                        <td><h6 id="name"></h6></td>
+                        <td><h6 id="customer_name"></h6></td>
                     </tr>
                     <tr>
-                        <th>Telephone:</th>
-                        <td><h6 id="phone"></h6></td>
+                        <th>Contact:</th>
+                        <td><h6 id="contact_number"></h6></td>
                     </tr>
                     <tr>
                         <th>Address:</th>
                         <td><h6 id="address"></h6></td>
                     </tr>
                     <tr>
-                        <th>Status:</th>
+                        <th>Total Amount:</th>
+                        <td><h6 id="detailTotal"></h6></td>
+                    </tr>
+                    <tr>
+                        <th>Order Status:</th>
                         <td><h6 id="status"></h6></td>
                     </tr>
                 </table>
@@ -362,10 +366,9 @@
                         <table id="itemTable" class="table table-bordered table-hover dtr-inline" role="grid" aria-describedby="example2_info">
                             <thead>
                                 <tr role="row">
-                                    <th class="sorting_asc" tabindex="0" rowspan="1" colspan="1">Item</th>
+                                    <th class="sorting_asc" tabindex="0" rowspan="1" colspan="1">Product</th>
                                     <th class="sorting" tabindex="0" rowspan="1" colspan="1" >Brand</th>
                                     <th class="sorting" tabindex="0" rowspan="1" colspan="1" >Category</th>
-                                    <th class="sorting" tabindex="0" rowspan="1" colspan="1" >Store</th>
                                     <th class="sorting" tabindex="0" rowspan="1" colspan="1" >Quantity</th>
                                     <th class="sorting" tabindex="0" rowspan="1" colspan="1" >Unit</th>
                                 </tr>
@@ -376,8 +379,8 @@
                                     <td class="">Item name</td>
                                     <td class="">Brand</td>
                                     <td class="">Category</td>
-                                    <td class="">Store</td>
                                     <td class="">Quantity</td>
+                                    <td class="">Unit</td>
                                 </tr>
                             </tbody>
                             <tfoot>
@@ -747,34 +750,39 @@
     // detail
     $('.detailButton').on('click', function(){
         var order_id = $(this).data('id');
-        current_order_id = order_id;
+        
+        // fetch_order_products
+
 
         // fetch data
         $.ajax({
-            url: 'static',
+            url: `<?php echo(route('order.show', 1)); ?>`,
             type: 'GET',
             data: {order_id: order_id},
             dataType: 'JSON',
             success: function (data) {
                 // empty wrapper
                 $('#table_row_wrapper').html('');
+
+                console.log(data.order);
                 // loop over retrieved items
-                for(var i = 0; i < data.items.length; i++)
+                for(var i = 0; i < data.order.order_products.length; i++)
                 {
-                    $('#table_row_wrapper').append('<tr role="row" class="odd"><td class="">'+(data.items[i].item.name + ' (' + data.items[i].unit + ')')+'</td><td class="">'+data.items[i].brand+'</td><td class="">'+data.items[i].category+'</td><td class="">'+data.items[i].store+'</td><td class="">'+data.items[i].quantity+'</td><td class="">'+data.items[i].new_unit+'</td></tr>');
+                    $('#table_row_wrapper').append('<tr role="row" class="odd"><td class="">'+data.order.order_products[i].product.article+'</td><td class="">'+data.order.order_products[i].product.brand.name+'</td><td class="">'+data.order.order_products[i].product.category.name+'</td><td class="">'+data.order.order_products[i].quantity+'</td><td class="">'+data.order.order_products[i].product.unit.name+'</td></tr>');
                 }
 
                 $('#order_id').text(data.order.id);
-                $('#name').text(data.order.user.name);
-                $('#phone').text(data.order.user.phone);
-                $('#address').text(data.order.user.address);
+                $('#customer_name').text(data.order.customer.name);
+                $('#contact_number').text(data.order.customer.contact_number);
+                $('#address').text(data.order.customer.shop_name + ' - Shop # ' + data.order.customer.shop_number + ' - Floor # ' + data.order.customer.floor + ' - ' + data.order.customer.market.name + ' - ' + data.order.customer.market.area.name);
+                $('#detailTotal').text(data.order.total);
                 $('#status').text(data.order.status);
-                if(data.order.status != 'completed'){
-                    $('.addItem').show();
-                }
-                else{
-                    $('.addItem').hide();
-                }
+                // if(data.order.status != 'completed'){
+                //     $('.addItem').show();
+                // }
+                // else{
+                //     $('.addItem').hide();
+                // }
                 
                 // re init select2
                 // $('.js-example-basic-single').select2({

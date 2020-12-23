@@ -92,7 +92,7 @@ abstract class OrderRepository implements RepositoryInterface
     {
         try 
         {
-            $order = $this->model::with('customer.market.area', 'order_products.product')->find($id);
+            $order = $this->model::with('customer.market.area', 'order_products.product.brand', 'order_products.product.unit', 'order_products.product.category')->find($id);
             if(!$order)
             {
                 return [
@@ -123,7 +123,7 @@ abstract class OrderRepository implements RepositoryInterface
     public function paginate($pagination)
     {
         try {
-            return $this->model::paginate($pagination);
+            return $this->model::with('customer')->paginate($pagination);
         }
         catch (\Exception $exception) {
             throw new AllOrderException($exception->getMessage());
@@ -149,4 +149,5 @@ abstract class OrderRepository implements RepositoryInterface
 
         return $orders;
     }
+
 }

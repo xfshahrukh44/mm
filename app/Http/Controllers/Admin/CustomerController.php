@@ -89,7 +89,7 @@ class CustomerController extends Controller
     
     public function show($id)
     {
-        if($_REQUEST['id']){
+        if(array_key_exists('id', $_REQUEST)){
             return $this->customerService->find($_REQUEST['id']);
         }
         return $this->customerService->find($id);

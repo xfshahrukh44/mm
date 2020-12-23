@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Services\OrderService;
 use App\Services\CustomerService;
 use App\Services\ProductService;
+use App\Services\OrderProductService;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
@@ -17,12 +18,14 @@ class OrderController extends Controller
     private $orderService;
     private $customerService;
     private $productService;
+    private $orderProductService;
 
-    public function __construct(OrderService $orderService, CustomerService $customerService, ProductService $productService)
+    public function __construct(OrderService $orderService, CustomerService $customerService, ProductService $productService, OrderProductService $orderProductService)
     {
         $this->orderService = $orderService;
         $this->customerService = $customerService;
         $this->productService = $productService;
+        $this->orderProductService = $orderProductService;
         $this->middleware('auth');
     }
     
@@ -56,7 +59,34 @@ class OrderController extends Controller
         if($request->has('completed_status'))
             $request['status'] = 'completed';
 
-        $order = ($this->orderService->create($request->all()))['order'];
+        // $order = [
+        //     'customer_id' => $request->customer_id,
+        //     'total' => $request->total,
+        //     'status' => $request->status,
+        //     'orderProducts' => []
+        // ];
+        // array_push($order['orderProducts'], ["item" => "a", "qty" => 4]);
+        // for($i = 0; $i < count($request->products); $i++){
+        //     array_push($order['orderProducts'], [
+
+        //     ]);
+        // }
+        // dd($request->all());
+
+        // create order
+        $order = ($this->orderService->create($request->all()))['order']['order'];
+
+        // dd($order);
+
+        if($request->products){
+            for($i = 0; $i < count($request->products); $i++){
+                $this->orderProductService->create([
+                    'order_id' => $order['id'],
+                    'product_id' => $request->hidden_product_ids[$i],
+                    'quantity' => $request->quantities[$i]
+                ]);
+            }
+        }
         
         // dd($order);
         // create order products
@@ -68,8 +98,9 @@ class OrderController extends Controller
         return redirect()->route('order.index');
     }
     
-    public function show($id)
+    public function show(Request $request, $id)
     {
+        $id = $request->order_id;
         return $this->orderService->find($id);
     }
     
@@ -119,5 +150,12 @@ class OrderController extends Controller
         $products = $this->productService->all();
 
         return view('admin.order.order', compact('orders', 'customers', 'products'));
+    }
+
+    public function fetch_order_products(Request $request)
+    {
+        $order = ($this->orderService->find($request->order_id))['order'];
+
+        return $order->order_products;
     }
 }

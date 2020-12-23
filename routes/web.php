@@ -63,4 +63,5 @@ Route::group(['middleware' => 'auth', 'prefix' => 'admin'], function() {
     Route::get('/create_unit', 'Admin\ProductController@create_unit')->name('create_unit');
     Route::get('/fetch_product_labels', 'Admin\ProductController@fetch_product_labels')->name('fetch_product_labels');
     Route::get('/fetch_customer_labels', 'Admin\CustomerController@fetch_customer_labels')->name('fetch_customer_labels');
+    Route::get('/fetch_order_products', 'Admin\OrderController@fetch_order_products')->name('fetch_order_products');
 });
