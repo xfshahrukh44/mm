@@ -15,6 +15,7 @@ class CreateStockOutsTable extends Migration
     public function up()
     {
         Schema::create('stock_outs', function (Blueprint $table) {
+            // 
             $table->bigIncrements('id');
             $table->integer('customer_id');
             $table->integer('product_id');
