@@ -91,7 +91,7 @@
                                         @endcan
                                         <td>
                                             <!-- Detail -->
-                                            <a href="#" class="detailButton" data-id="{{$order->id}}" data-type="{{$order->id}}" data-order="{{$order}}">
+                                            <a href="#" class="detailButton" data-id="{{$order->id}}" data-type="{{$order->id}}">
                                                 <i class="fas fa-shopping-basket blue ml-1"></i>
                                             </a>
                                             <!-- Edit -->
@@ -164,7 +164,6 @@
                             <input id="total" type="number" name="total" class="total form-control" min=0 readonly style="background-color: white; border:none;" value=0>
                         </div>
                     </div>
-
                     <!-- previous_amount -->
                     <div class="col-md-4 p-3">
                         <div class="form-group">
@@ -172,7 +171,6 @@
                             <input id="previous_amount" type="number" name="previous_amount" class="previous_amount form-control" min=0 readonly style="background-color: white; border:none;" value=0>
                         </div>
                     </div>
-
                     <!-- final_amount -->
                     <div class="col-md-4 p-3">
                         <div class="form-group">
@@ -215,77 +213,63 @@
                 </button>
             </div>
             <form id="editForm" method="POST" action="{{route('order.update', 1)}}">
-                <!-- hidden input -->
-                @method('PUT')
-                <input id="hidden" type="hidden" name="hidden" class="hidden">
-                <input class="order_type" type="hidden" name="order_type">
-
-                <!-- customer_id -->
-                <div class="col-md-4 p-3 ">
-                    <div class="form-group">
-                        <label for="">Customer:</label>
-                        <select name="user_id" required class="form-control customer_id">
-                            <option value="">Select Customer</option>
-                            @foreach($customers as $customer)
-                            <option value="{{$customer->id}}">{{$customer->name}}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                </div>
-                <!-- order_date -->
-                <div class="col-md-4 p-3 ">
-                    <div class="form-group">
-                        <label for="">Date:</label>
-                        <input name="order_date" class="form-control order_date" id="order_date" type="date">
-                    </div>
-                </div>
-                @include('admin.order.order_master')
-
-                <!-- order_total -->
-                <div class="container-fluid">
-                    <div class="row">
-                        <div class="col-md-12" align="right">
-                            <label class="mr-5 pr-5">Total</label>
-                            <input id="edit_order_total" type="number" name="order_total" class=" col-md-3 form-control mb-3" style="float: right;positon:relative;right:8%;" min=0>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- rider_charges -->
-                <div class="container-fluid">
-                    <div class="row">
-                        <div class="col-md-12" align="right">
-                            <label class="mr-5 pr-5">Rider Charges</label>
-                            <input id="edit_rider_charges" type="number" name="rider_charges" class=" col-md-3 form-control mb-3" style="float: right;positon:relative;right:8%;" min=0>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- rider_id -->
-                <div class="container-fluid">
-                    <div class="row">
-                        <div class="col-md-12 form-group" align="right">
-                            <label class="mr-5 pr-5">Rider</label>
-                            <!-- <input id="rider_charges" type="number" name="rider_charges" class=" col-md-3 form-control mb-3" style="float: right;positon:relative;right:8%;" min=0> -->
-                            <select class=" col-md-3 form-control mb-3 rider_id_wrapper" name="rider_id" id="edit_rider_id" style="float: right;positon:relative;right:8%;">
-                                <option value="">--Select Rider--</option>
+                <div class="upper_section row">
+                    <!-- hidden input -->
+                    @method('PUT')
+                    <input id="hidden" type="hidden" name="hidden" class="hidden">
+                    <input class="order_type" type="hidden" name="order_type">
+                    <!-- customer_id -->
+                    <div class="col-md-12 p-3 ">
+                        <div class="form-group">
+                            <label for=""><i class="nav-icon fas fa-users"></i> Customer</label>
+                            <select name="customer_id" required class="form-control customer_id" style="width: 100%;">
+                                <option value="">Select Customer</option>
+                                @foreach($customers as $customer)
+                                <option value="{{$customer->id}}">{{$customer->name}}</option>
+                                @endforeach
                             </select>
                         </div>
                     </div>
+                    <!-- total -->
+                    <div class="col-md-4 p-3">
+                        <div class="form-group">
+                            <label>Current Amount</label>
+                            <input id="total" type="number" name="total" class="total form-control" min=0 readonly style="background-color: white; border:none;" value=0>
+                        </div>
+                    </div>
+                    <!-- previous_amount -->
+                    <div class="col-md-4 p-3">
+                        <div class="form-group">
+                            <label>Previous Amount</label>
+                            <input id="previous_amount" type="number" name="previous_amount" class="previous_amount form-control" min=0 readonly style="background-color: white; border:none;" value=0>
+                        </div>
+                    </div>
+                    <!-- final_amount -->
+                    <div class="col-md-4 p-3">
+                        <div class="form-group">
+                            <label>Final Amount</label>
+                            <input id="final_amount" type="number" name="final_amount" class="final_amount form-control" min=0 readonly style="background-color: white; border:none;" value=0>
+                        </div>
+                    </div>
                 </div>
 
+                <hr>
+                @include('admin.order.order_master')
+
+                <!-- buttons -->
                 <div class="modal-footer">
                     <!-- <button type="submit" class="btn btn-primary" id="createButton">Update</button> -->
                     <div class="btn-group">
-                        <button name="pending_status" type="submit" class="btn btn-success">Save as pending</button>
+                        <button name="pending_status" type="submit" class="btn btn-success save_as_pending"><i class="fas fa-clock mr-2 mt-1"></i>Save as pending</button>
                         <button type="button" class="btn btn-success dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <span class="sr-only">Toggle Dropdown</span>
                         </button>
                         <div class="dropdown-menu">
-                            <button name="completed_status" type="submit" class="dropdown-item" href="#">Save as completed</button>
+                            <button name="completed_status" type="submit" class="dropdown-item save_as_completed" href="#"><i class="fas fa-check-double mr-2"></i>Save as completed</button>
                         </div>
                     </div>
                 </div>
+
             </form>
         </div>
     </div>
@@ -452,6 +436,8 @@
     var product_labels = "";
     var product = "";
     var customer = "";
+    var order = "";
+    var current_order_id = 0;
     // adding items dynamically*
     var x = 1; //Initial field counter is 1
     var maxField = 40; //Input fields increment limitation
@@ -498,6 +484,21 @@
         });
     }
 
+    // fetch order
+    function fetch_order(id){
+        // fetch order
+        $.ajax({
+            url: "<?php echo(route('order.show', 1)); ?>",
+            type: 'GET',
+            async: false,
+            data: {order_id: id},
+            dataType: 'JSON',
+            success: function (data) {
+                order = data.order;
+            }
+        });
+    }
+
     // fetch customer
     function fetch_customer(id){
         // fetch customer
@@ -514,29 +515,31 @@
     }
 
     // count order total
-    function get_order_total(){
-        var quantities = $('.quantities');
-        var prices = $('.prices');
-        // console.log(quantities, prices)
+    function get_order_total(form){
+        var quantities = $(form + ' .quantities');
+        var prices = $(form + ' .prices');
+        console.log(quantities, prices);
         var total = 0;
-        for(var i = 0; i < prices.length; i++){
-            total += ($('.prices')[i].value * $('.quantities')[i].value);
+        for(var i = (prices.length); i < prices.length; i++){
+            total += ($(form + ' .prices')[i].value * $(form + ' .quantities')[i].value);
         }
-        $('#total').val(total);
+        $(form + ' .total').val(total);
         // final_amount
-        $('#final_amount').val(parseInt($('#total').val()) + parseInt($('#previous_amount').val()));
+        $(form + ' .final_amount').val(parseInt($(form + ' .total').val()) + parseInt($(form + ' .previous_amount').val()));
     }
 
     // ONCHANGE FUNCTIONS
     $('#addOrderModal').on('change', '.quantities', function(){
-        get_order_total();
+        get_order_total('#addOrderModal');
+    });
+    $('#editOrderModal').on('change', '.quantities', function(){
+        get_order_total('#editOrderModal');
     });
     // on customer change
     $('.customer_id').on('change', function(){
         var user_id = $(this).val();
         fetch_customer(user_id);
-        console.log(customer.name);
-        $('#previous_amount').val(customer.outstanding_balance);
+        $('.previous_amount').val(customer.outstanding_balance);
     })
 
     // autocomplete
@@ -659,75 +662,96 @@
     
     // edit
     $('.editButton').on('click', function(){
-        if(current_order_id == 0){
-            var order_id = $(this).data('id');
-            var url = $(this).data('route');
+        fetch_order($(this).data('id'));
+        console.log(order);
+
+        // select customer
+        // $('.customer_id').append('<option value="'+ data[i].id +'">'+ data[i].name +'</option>');
+        $('#editOrderModal .customer_id option[value="'+ order.customer_id +'"]').prop('selected', true);
+        $('#editOrderModal .customer_id').trigger('change.select2'); 
+        $('#editOrderModal .customer_id').change();
+        // $('#editOrderModal .customer_id').selectmenu();
+        // $('#editOrderModal .customer_id').selectmenu('refresh', true);
+
+        // empty wrapper
+        $('.field_wrapper').html('');
+
+        for(var i = 0; i < order.order_products.length; i++){
+            var productDiv = '<div class="col-md-4"><div class="ui-widget"><input class="form-control product_search" name="products[]" value="'+ order.order_products[i].product.article +'"><input class="hidden_product_search" type="hidden" name="hidden_product_ids[]" value="'+ order.order_products[i].product.id +'"></div></div>';
+            var priceDiv = '<div class="form-group col-md-4"><input type="number" class="form-control prices" name="prices[]" required min=0 value="'+ order.order_products[i].product.selling_price +'"></div>';
+            var quantityDiv = '<div class="form-group col-md-3"><input type="number" class="form-control quantities" name="quantities[]" required min=0  value="'+ order.order_products[i].quantity +'"></div>';
+            var fieldHTML = startDiv + productDiv + priceDiv + quantityDiv + removeChildDiv + endDiv;
+
+            $('.field_wrapper').prepend(fieldHTML);
         }
-        else{
-            var order_id = current_order_id;
-            var url = 'static';
-        }
-        // var order_id = $(this).data('id');
-        $('.hidden').val(order_id);
 
-        // fetch data for children
-        $.ajax({
-            url: url,
-            type: 'GET',
-            data: {order_id: order_id},
-            dataType: 'JSON',
-            success: function (data) {
-                var fetch_items_url = 'static';
+        initAutocompleteItems(".product_search", "#editOrderModal .ui-widget", product_labels);
 
-                // empty wrapper
-                $('.field_wrapper').html('');
-                // loop over retrieved items
-                for(var i = 0; i < data.items.length; i++)
-                {
-                    var productDiv = '<div class="col-md-2"><div class="ui-widget"><input class="form-control item_search" name="items[]" value="'+data.items[i].item.name+'"><input class="hidden_item_search" type="hidden" name="hidden_item_ids[]" value="'+data.items[i].item.id+'"></div></div>';
-                    var brandDiv = '<div class="col-md-2"><div class="ui-widget"><input class="form-control brand_search" name="brands[]" value="'+data.items[i].brand+'"><input class="hidden_brand_search" type="hidden" name="hidden_brand_ids[]" value="'+data.items[i].brand_id+'"></div></div>';
-                    var categoryDiv = '<div class="col-md-2"><div class="ui-widget"><input class="form-control category_search" name="categories[]" value="'+data.items[i].category+'"><input class="hidden_category_search" type="hidden" name="hidden_category_ids[]" value="'+data.items[i].category_id+'"></div></div>';
-                    var storeDiv = '<div class="col-md-2"><div class="ui-widget"><input class="form-control store_search" name="stores[]" value="'+data.items[i].store+'"><input class="hidden_store_search" type="hidden" name="hidden_store_ids[]" value="'+data.items[i].store_id+'"></div></div>';
-                    var quantityDiv = '<div class="form-group col-md-1"><input type="number" class="form-control" name="quantities[]" required min=0 value="'+data.items[i].quantity+'"></div>';
+        get_order_total('#editOrderModal');
 
-                    var unitDiv = '<div class="col-md-1"><div class="ui-widget"><input class="form-control unit_search" name="units[]" value="'+data.items[i].new_unit+'"><input class="hidden_unit_search" type="hidden" name="hidden_unit_ids[]" value="'+data.items[i].new_unit_id+'"></div></div>';
+        $('#editOrderModal').modal('show');
+        
+        // // var order_id = $(this).data('id');
+        // $('.hidden').val(order_id);
+
+        // // fetch data for children
+        // $.ajax({
+        //     url: url,
+        //     type: 'GET',
+        //     data: {order_id: current_order_id},
+        //     dataType: 'JSON',
+        //     success: function (data) {
+        //         var fetch_items_url = 'static';
+
+        //         // empty wrapper
+        //         $('.field_wrapper').html('');
+        //         // loop over retrieved items
+        //         for(var i = 0; i < data.items.length; i++)
+        //         {
+        //             var productDiv = '<div class="col-md-2"><div class="ui-widget"><input class="form-control item_search" name="items[]" value="'+data.items[i].item.name+'"><input class="hidden_item_search" type="hidden" name="hidden_item_ids[]" value="'+data.items[i].item.id+'"></div></div>';
+        //             var brandDiv = '<div class="col-md-2"><div class="ui-widget"><input class="form-control brand_search" name="brands[]" value="'+data.items[i].brand+'"><input class="hidden_brand_search" type="hidden" name="hidden_brand_ids[]" value="'+data.items[i].brand_id+'"></div></div>';
+        //             var categoryDiv = '<div class="col-md-2"><div class="ui-widget"><input class="form-control category_search" name="categories[]" value="'+data.items[i].category+'"><input class="hidden_category_search" type="hidden" name="hidden_category_ids[]" value="'+data.items[i].category_id+'"></div></div>';
+        //             var storeDiv = '<div class="col-md-2"><div class="ui-widget"><input class="form-control store_search" name="stores[]" value="'+data.items[i].store+'"><input class="hidden_store_search" type="hidden" name="hidden_store_ids[]" value="'+data.items[i].store_id+'"></div></div>';
+        //             var quantityDiv = '<div class="form-group col-md-1"><input type="number" class="form-control" name="quantities[]" required min=0 value="'+data.items[i].quantity+'"></div>';
+
+        //             var unitDiv = '<div class="col-md-1"><div class="ui-widget"><input class="form-control unit_search" name="units[]" value="'+data.items[i].new_unit+'"><input class="hidden_unit_search" type="hidden" name="hidden_unit_ids[]" value="'+data.items[i].new_unit_id+'"></div></div>';
 
 
-                    var fieldHTML = startDiv + productDiv + brandDiv + categoryDiv + storeDiv + quantityDiv + unitDiv + addChildDiv + removeChildDiv + endDiv;
+        //             var fieldHTML = startDiv + productDiv + brandDiv + categoryDiv + storeDiv + quantityDiv + unitDiv + addChildDiv + removeChildDiv + endDiv;
                     
-                    $('.field_wrapper').prepend(fieldHTML);
-                }
+        //             $('.field_wrapper').prepend(fieldHTML);
+        //         }
                 
-                // fetch items
-                // item
-                initAutocompleteItems(".item_search", '#editOrderModal .ui-widget', data.new_items);
-                // brand
-                // initAutocomplete(".brand_search", '#editOrderModal .ui-widget', data.new_brands);
-                // category
-                // initAutocomplete(".category_search", '#editOrderModal .ui-widget', data.new_categories);
-                // store
-                initAutocomplete(".store_search", '#editOrderModal .ui-widget', data.new_stores);
+        //         // fetch items
+        //         // item
+        //         initAutocompleteItems(".item_search", '#editOrderModal .ui-widget', data.new_items);
+        //         // brand
+        //         // initAutocomplete(".brand_search", '#editOrderModal .ui-widget', data.new_brands);
+        //         // category
+        //         // initAutocomplete(".category_search", '#editOrderModal .ui-widget', data.new_categories);
+        //         // store
+        //         initAutocomplete(".store_search", '#editOrderModal .ui-widget', data.new_stores);
 
-                $('#editOrderModal').modal('show');
-                current_order_id = 0;
-            }
-        });
+        //         $('#editOrderModal').modal('show');
+        //         current_order_id = 0;
+        //     }
+        // });
 
-        // 3 fields
-        $.ajax({
-            url: 'static',
-            type: 'GET',
-            data: {id: order_id},
-            dataType: 'JSON',
-            success: function (data) {
-                $('#edit_order_total').val(data.order_total);
-                $('#edit_rider_charges').val(data.rider_charges);
-                $('.customer_id option[value="'+ data.user_id +'"]').prop('selected', true);
-                $('.customer_id').change();
-                $('#edit_rider_id option[value="'+ data.rider_id +'"]').prop('selected', true);
-                $('.order_date').val(data.order_date);
-            }
-        });
+        // // 3 fields
+        // $.ajax({
+        //     url: 'static',
+        //     type: 'GET',
+        //     data: {id: order_id},
+        //     dataType: 'JSON',
+        //     success: function (data) {
+        //         $('#edit_order_total').val(data.order_total);
+        //         $('#edit_rider_charges').val(data.rider_charges);
+        //         $('.customer_id option[value="'+ data.user_id +'"]').prop('selected', true);
+        //         $('.customer_id').change();
+        //         $('#edit_rider_id option[value="'+ data.rider_id +'"]').prop('selected', true);
+        //         $('.order_date').val(data.order_date);
+        //     }
+        // });
     });
 
     //Add Items
@@ -750,47 +774,25 @@
     // detail
     $('.detailButton').on('click', function(){
         var order_id = $(this).data('id');
-        
-        // fetch_order_products
 
+        fetch_order(order_id);
 
-        // fetch data
-        $.ajax({
-            url: `<?php echo(route('order.show', 1)); ?>`,
-            type: 'GET',
-            data: {order_id: order_id},
-            dataType: 'JSON',
-            success: function (data) {
-                // empty wrapper
-                $('#table_row_wrapper').html('');
+        // console.log(order);
 
-                console.log(data.order);
-                // loop over retrieved items
-                for(var i = 0; i < data.order.order_products.length; i++)
-                {
-                    $('#table_row_wrapper').append('<tr role="row" class="odd"><td class="">'+data.order.order_products[i].product.article+'</td><td class="">'+data.order.order_products[i].product.brand.name+'</td><td class="">'+data.order.order_products[i].product.category.name+'</td><td class="">'+data.order.order_products[i].quantity+'</td><td class="">'+data.order.order_products[i].product.unit.name+'</td></tr>');
-                }
+        // empty wrapper
+        $('#table_row_wrapper').html('');
+        // loop over retrieved items
+        for(var i = 0; i < order.order_products.length; i++)
+        {
+            $('#table_row_wrapper').append('<tr role="row" class="odd"><td class="">'+order.order_products[i].product.article+'</td><td class="">'+order.order_products[i].product.brand.name+'</td><td class="">'+order.order_products[i].product.category.name+'</td><td class="">'+order.order_products[i].quantity+'</td><td class="">'+order.order_products[i].product.unit.name+'</td></tr>');
+        }
 
-                $('#order_id').text(data.order.id);
-                $('#customer_name').text(data.order.customer.name);
-                $('#contact_number').text(data.order.customer.contact_number);
-                $('#address').text(data.order.customer.shop_name + ' - Shop # ' + data.order.customer.shop_number + ' - Floor # ' + data.order.customer.floor + ' - ' + data.order.customer.market.name + ' - ' + data.order.customer.market.area.name);
-                $('#detailTotal').text(data.order.total);
-                $('#status').text(data.order.status);
-                // if(data.order.status != 'completed'){
-                //     $('.addItem').show();
-                // }
-                // else{
-                //     $('.addItem').hide();
-                // }
-                
-                // re init select2
-                // $('.js-example-basic-single').select2({
-                //     width: 'resolve'
-                // });
-                // $('select').selectpicker();
-            }
-        });
+        $('#order_id').text(order.id);
+        $('#customer_name').text(order.customer.name);
+        $('#contact_number').text(order.customer.contact_number);
+        $('#address').text(order.customer.shop_name + ' - Shop # ' + order.customer.shop_number + ' - Floor # ' + order.customer.floor + ' - ' + order.customer.market.name + ' - ' + order.customer.market.area.name);
+        $('#detailTotal').text(order.total);
+        $('#status').text(order.status);
 
         $('#detailOrderModal').modal('show');
 
@@ -828,30 +830,13 @@
 
     //Once add button is clicked on edit*
     $('#editOrderModal').on("click", ".add_button", function(){
-        var url = $(this).data('route');
-
         //Check maximum number of input fields
         if(x < maxField){ 
             x++; //Increment field counter
             $(wrapper).prepend(fieldHTML); //Add field html
 
-            $.ajax({
-                url: 'static',
-                type: 'GET',
-                data: {order_id: '1'},
-                dataType: 'JSON',
-                success: function (data) {
-                    // fetch items
-                    // item
-                    initAutocompleteItems(".item_search", '#editOrderModal .ui-widget', data.new_items);
-                    // brand
-                    // initAutocomplete(".brand_search", '#editOrderModal .ui-widget', data.new_brands);
-                    // category
-                    // initAutocomplete(".category_search", '#editOrderModal .ui-widget', data.new_categories);
-                    // store
-                    initAutocomplete(".store_search", '#editOrderModal .ui-widget', data.new_stores);
-                }
-            }); 
+            // initialize autocomplete
+            initAutocompleteItems(".product_search", "#editOrderModal .ui-widget", product_labels);
         }
     });
     
@@ -861,7 +846,9 @@
         if(x > minField){
             $(this).parent('div').remove(); //Remove field html
             x--; //Decrement field counter
-            get_order_total();
+            get_order_total('#editOrderModal');
+            get_order_total('#addOrderModal');
+            // initAutocompleteItems(".product_search", "#editOrderModal .ui-widget", product_labels);
         }
     });
     
