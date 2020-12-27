@@ -47,7 +47,10 @@ class OrderController extends Controller
         $validator = Validator::make($request->all(), [
             'customer_id' => 'required',
             'total' => 'sometimes',
-            'status' => 'sometimes'
+            'status' => 'sometimes',
+            'payment' => 'sometimes',
+            'amount_pay' => 'sometimes',
+            'dispatch_date' => 'sometimes'
         ]);
 
         if($validator->fails())
@@ -120,7 +123,10 @@ class OrderController extends Controller
         $validator = Validator::make($request->all(), [
             'customer_id' => 'sometimes',
             'total' => 'sometimes',
-            'status' => 'sometimes'
+            'status' => 'sometimes',
+            'payment' => 'sometimes',
+            'amount_pay' => 'sometimes',
+            'dispatch_date' => 'sometimes'
         ]);
 
         if($validator->fails())

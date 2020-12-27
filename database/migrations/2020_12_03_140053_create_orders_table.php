@@ -17,6 +17,9 @@ class CreateOrdersTable extends Migration
             $table->bigIncrements('id');
             $table->integer('customer_id')->nullable();
             $table->bigInteger('total')->nullable();
+            $table->string('payment')->nullable();
+            $table->bigInteger('amount_pay')->nullable();
+            $table->date('dispatch_date')->default(return_todays_date())->nullable();
             $table->string('status')->nullable();
             $table->integer('created_by')->nullable();
             $table->integer('modified_by')->nullable();

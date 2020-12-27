@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Models\StockIn;
 
 class Product extends Model
 {
@@ -36,6 +37,15 @@ class Product extends Model
 
         static::updating(function ($query) {
             $query->modified_by = auth()->user()->id;
+        });
+
+        static::created(function ($query) {
+            if($query->opening_quantity > 0){
+                StockIn::create([
+                    'product_id' => $query->id,
+                    'quantity' => $query->opening_quantity,
+                ]);
+            }
         });
     }
 

@@ -19,7 +19,7 @@ class CreateLedgersTable extends Migration
             $table->integer('customer_id');
             $table->decimal('amount', 8, 2);
             $table->string('type');
-            $table->date('transaction_date')->default(Carbon::now())->nullable();
+            $table->date('transaction_date')->nullable();
             $table->integer('created_by')->nullable();
             $table->integer('modified_by')->nullable();
             $table->timestamps();

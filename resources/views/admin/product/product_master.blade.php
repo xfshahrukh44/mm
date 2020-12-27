@@ -58,37 +58,32 @@
     <!-- purchase_price -->
     <div class="form-group col-md-3">
         <label for="">Purchase Price</label>
-        <input id="purchase_price" type="number" min=0 name="purchase_price" placeholder="Enter Purchase Price" class="form-control purchase_price" required>
+        <input id="purchase_price" type="number" min=0 name="purchase_price" placeholder="Enter Purchase Price" class="form-control purchase_price" required value=0>
     </div>
     <!-- selling_price -->
     <div class="form-group col-md-3">
         <label for="">Selling Price</label>
-        <input id="selling_price" type="number" min=0 name="selling_price" placeholder="Enter Selling Price" class="form-control selling_price" required>
+        <input id="selling_price" type="number" min=0 name="selling_price" placeholder="Enter Selling Price" class="form-control selling_price" required value=0>
     </div>
     <!-- cost_value -->
     <div class="form-group col-md-3">
         <label for="">Cost Value</label>
-        <input id="cost_value" type="number" min=0 name="cost_value" placeholder="Enter Cost Value" class="form-control cost_value" required>
+        <input id="cost_value" type="number" min=0 name="cost_value" placeholder="Enter Cost Value" class="form-control cost_value" required value=0>
     </div>
     <!-- sales_value -->
     <div class="form-group col-md-3">
         <label for="">Sales Value</label>
-        <input id="sales_value" type="number" min=0 name="sales_value" placeholder="Enter Sales Value" class="form-control sales_value" required>
+        <input id="sales_value" type="number" min=0 name="sales_value" placeholder="Enter Sales Value" class="form-control sales_value" required value=0>
     </div>
 
     <!-- opening_quantity -->
-    <div class="form-group col-md-4">
+    <div class="form-group col-md-6">
         <label for="">Opening Quantity</label>
-        <input id="opening_quantity" type="number" min=0 name="opening_quantity" placeholder="Enter Opening Quantity" class="form-control opening_quantity" required>
-    </div>
-    <!-- quantity_in_hand -->
-    <div class="form-group col-md-4">
-        <label for="">Quantity in Hand</label>
-        <input id="quantity_in_hand" type="number" min=0 name="quantity_in_hand" placeholder="Enter Quantity in Hand" class="form-control quantity_in_hand" required>
+        <input id="opening_quantity" type="number" min=0 name="opening_quantity" placeholder="Enter Opening Quantity" class="form-control opening_quantity" required value=0>
     </div>
     <!-- moq -->
-    <div class="form-group col-md-4">
+    <div class="form-group col-md-6">
         <label for="">Minimum Ordering Quantity</label>
-        <input id="moq" type="number" min=0 name="moq" placeholder="Enter Minimum Ordering Quantity" class="form-control moq" required>
+        <input id="moq" type="number" min=0 name="moq" placeholder="Enter Minimum Ordering Quantity" class="form-control moq" required value=0>
     </div>
 </div>

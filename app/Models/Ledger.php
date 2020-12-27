@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Models\Customer;
 
 class Ledger extends Model
 {
@@ -20,10 +21,36 @@ class Ledger extends Model
         static::updating(function ($query) {
             $query->modified_by = auth()->user()->id;
         });
+
+        static::deleting(function ($query) {
+            $customer = Customer::find($query->customer_id);
+
+            if($query->type == 'credit'){
+                $customer->outstanding_balance -= $query->amount;
+                $customer->save();
+            }
+            if($query->type == 'debit'){
+                $customer->outstanding_balance += $query->amount;
+                $customer->save();
+            }
+        }); 
+
+        static::created(function ($query) {
+            $customer = Customer::find($query->customer_id);
+
+            if($query->type == 'credit'){
+                $customer->outstanding_balance += $query->amount;
+                $customer->save();
+            }
+            if($query->type == 'debit'){
+                $customer->outstanding_balance -= $query->amount;
+                $customer->save();
+            }
+        }); 
     }
     
     protected $fillable = [
-        'customer_id', 'amount', 'type', 'created_by', 'modified_by'
+        'customer_id', 'amount', 'type', 'created_by', 'modified_by', 'transaction_date'
     ];
 
     protected $dates = ['created_at', 'updated_at', 'deleted_at'];

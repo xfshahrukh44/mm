@@ -23,7 +23,7 @@
         <label for="">Type</label>
         <select id="type" name="type" class="form-control type" style="width: 100%; height: 35px;">
             <option value="">Select type</option>
-            <option value="cash">Cash</option>
+            <option value="debit">Debit</option>
             <option value="credit">Credit</option>
         </select>
     </div>

@@ -222,10 +222,10 @@
               <div class="col-md-4">
                 <table class="table table-bordered table-striped">
                     <tbody id="table_row_wrapper">
-                        <tr role="row" class="odd">
+                        <!-- <tr role="row" class="odd">
                             <td class="">Opening Quantity</td>
                             <td class="opening_quantity"></td>
-                        </tr>
+                        </tr> -->
                         <tr role="row" class="odd">
                             <td class="">Quantity in Hand</td>
                             <td class="quantity_in_hand"></td>

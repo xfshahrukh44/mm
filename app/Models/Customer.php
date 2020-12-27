@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Models\Ledger;
 
 class Customer extends Model
 {
@@ -42,6 +43,16 @@ class Customer extends Model
         static::updating(function ($query) {
             $query->modified_by = auth()->user()->id;
         });
+
+        static::created(function ($query) {
+            if($query->opening_balance != NULL){
+                Ledger::create([
+                    'customer_id' => $query->id,
+                    'amount' => $query->opening_balance,
+                    'type' => 'credit'
+                ]);
+            }
+        });   
     }
 
     protected $dates = ['created_at', 'updated_at', 'deleted_at'];

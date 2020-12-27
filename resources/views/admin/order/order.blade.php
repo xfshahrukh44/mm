@@ -69,7 +69,7 @@
                                         </td>
                                         <td class="{{'contact_number'.$order->id}}">{{$order->customer ? $order->customer->contact_number : NULL}}</td>
                                         <td class="{{'address'.$order->id}}">{{$order->customer->shop_name . ' - ' . $order->customer->market->name . ' - ' . $order->customer->market->area->name}}</td>
-                                        <td class="{{'total'.$order->id}}">{{$order->order_total}} pkr</td>
+                                        <td class="{{'total'.$order->id}}">{{$order->total}} pkr</td>
                                         <td class="{{'status'.$order->id}} text-center">
 
                                             @if ($order->status == "pending")
@@ -143,45 +143,6 @@
             </div>
             <form class="col-md-12" method="POST" action="{{route('order.store')}}">
                 @method('POST')
-                
-                <div class="upper_section row">
-                    <!-- customer_id -->
-                    <div class="col-md-12 p-3 ">
-                        <div class="form-group">
-                            <label for=""><i class="nav-icon fas fa-users"></i> Customer</label>
-                            <select name="customer_id" required class="form-control customer_id" style="width: 100%;">
-                                <option value="">Select Customer</option>
-                                @foreach($customers as $customer)
-                                <option value="{{$customer->id}}">{{$customer->name}}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                    </div>
-                    <!-- total -->
-                    <div class="col-md-4 p-3">
-                        <div class="form-group">
-                            <label>Current Amount</label>
-                            <input id="total" type="number" name="total" class="total form-control" min=0 readonly style="background-color: white; border:none;" value=0>
-                        </div>
-                    </div>
-                    <!-- previous_amount -->
-                    <div class="col-md-4 p-3">
-                        <div class="form-group">
-                            <label>Previous Amount</label>
-                            <input id="previous_amount" type="number" name="previous_amount" class="previous_amount form-control" min=0 readonly style="background-color: white; border:none;" value=0>
-                        </div>
-                    </div>
-                    <!-- final_amount -->
-                    <div class="col-md-4 p-3">
-                        <div class="form-group">
-                            <label>Final Amount</label>
-                            <input id="final_amount" type="number" name="final_amount" class="final_amount form-control" min=0 readonly style="background-color: white; border:none;" value=0>
-                        </div>
-                    </div>
-                    
-                </div>
-
-                <hr>
                 @include('admin.order.order_master')
 
                 <!-- buttons -->
@@ -204,7 +165,7 @@
 
 <!-- Edit view -->
 <div class="modal fade" id="editOrderModal" tabindex="-1" role="dialog" aria-labelledby="editOrderModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-xl">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="editOrderModalLabel">Edit order</h5>
@@ -213,49 +174,8 @@
                 </button>
             </div>
             <form id="editForm" method="POST" action="{{route('order.update', 1)}}">
-                <div class="upper_section row">
-                    <!-- hidden input -->
-                    @method('PUT')
-                    <input id="hidden" type="hidden" name="hidden" class="hidden">
-                    <input class="order_type" type="hidden" name="order_type">
-                    <!-- customer_id -->
-                    <div class="col-md-12 p-3 ">
-                        <div class="form-group">
-                            <label for=""><i class="nav-icon fas fa-users"></i> Customer</label>
-                            <select name="customer_id" required class="form-control customer_id" style="width: 100%;">
-                                <option value="">Select Customer</option>
-                                @foreach($customers as $customer)
-                                <option value="{{$customer->id}}">{{$customer->name}}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                    </div>
-                    <!-- total -->
-                    <div class="col-md-4 p-3">
-                        <div class="form-group">
-                            <label>Current Amount</label>
-                            <input id="total" type="number" name="total" class="total form-control" min=0 readonly style="background-color: white; border:none;" value=0>
-                        </div>
-                    </div>
-                    <!-- previous_amount -->
-                    <div class="col-md-4 p-3">
-                        <div class="form-group">
-                            <label>Previous Amount</label>
-                            <input id="previous_amount" type="number" name="previous_amount" class="previous_amount form-control" min=0 readonly style="background-color: white; border:none;" value=0>
-                        </div>
-                    </div>
-                    <!-- final_amount -->
-                    <div class="col-md-4 p-3">
-                        <div class="form-group">
-                            <label>Final Amount</label>
-                            <input id="final_amount" type="number" name="final_amount" class="final_amount form-control" min=0 readonly style="background-color: white; border:none;" value=0>
-                        </div>
-                    </div>
-                </div>
 
-                <hr>
                 @include('admin.order.order_master')
-
                 <!-- buttons -->
                 <div class="modal-footer">
                     <!-- <button type="submit" class="btn btn-primary" id="createButton">Update</button> -->
@@ -455,6 +375,7 @@
     var removeChildDiv = '<div class="form-group col-md-0 ml-1 remove_button mt-1" style="display: table; vertical-align: middle;"><a class="btn btn-primary"><i class="fas fa-minus" style="color:white;"></i></a></div>';
     var endDiv = '</div>';
     var fieldHTML = startDiv + productDiv + priceDiv + quantityDiv + removeChildDiv + endDiv;
+    // var invoice = '<input type="checkbox" class = "mt-2">';
 
     // fetch product labels
     function fetch_product_labels(){
@@ -518,9 +439,9 @@
     function get_order_total(form){
         var quantities = $(form + ' .quantities');
         var prices = $(form + ' .prices');
-        console.log(quantities, prices);
+        // console.log(quantities, prices);
         var total = 0;
-        for(var i = (prices.length); i < prices.length; i++){
+        for(var i = 0; i < prices.length; i++){
             total += ($(form + ' .prices')[i].value * $(form + ' .quantities')[i].value);
         }
         $(form + ' .total').val(total);
@@ -540,6 +461,22 @@
         var user_id = $(this).val();
         fetch_customer(user_id);
         $('.previous_amount').val(customer.outstanding_balance);
+        get_order_total('#editOrderModal');
+        get_order_total('#addOrderModal');
+    })
+    // on payment change
+    $('.payment').on('change', function(){
+        if($(this).val() == 'credit'){
+            $('.amount_pay').val(0);
+            $('.amount_pay').prop('readonly', true);
+            $('.amount_pay').change();
+            return 0;
+        }
+        $('.amount_pay').prop('readonly', false);
+    })
+    // on amount_pay change
+    $('.amount_pay').on('change', function(){
+        $('.balance_due').val(parseInt($('.final_amount').val()) - parseInt($('.amount_pay').val()));
     })
 
     // autocomplete

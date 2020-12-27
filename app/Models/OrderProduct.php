@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Models\StockOut;
+use App\Models\Order;
 
 class OrderProduct extends Model
 {
@@ -34,6 +36,16 @@ class OrderProduct extends Model
 
         static::updating(function ($query) {
             $query->modified_by = auth()->user()->id;
+        });
+
+        static::created(function ($query) {
+            $order = Order::find($query->order_id);
+            $customer_id = $order->customer_id;
+            StockOut::create([
+                'customer_id' => $customer_id,
+                'product_id' => $query->product_id,
+                'quantity' => $query->quantity,
+            ]);
         });
     }
 

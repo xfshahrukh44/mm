@@ -18,7 +18,7 @@ class CreateStockInsTable extends Migration
             $table->bigIncrements('id');
             $table->integer('product_id');
             $table->integer('quantity');
-            $table->date('transaction_date')->default(Carbon::now())->nullable();
+            $table->date('transaction_date')->nullable();
             $table->integer('created_by')->nullable();
             $table->integer('modified_by')->nullable();
             $table->timestamps();

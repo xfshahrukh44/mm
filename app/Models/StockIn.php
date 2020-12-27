@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Models\Product;
 
 class StockIn extends Model
 {
@@ -19,6 +20,12 @@ class StockIn extends Model
 
         static::updating(function ($query) {
             $query->modified_by = auth()->user()->id;
+        });
+
+        static::created(function ($query) {
+            $product = Product::find($query->product_id);
+            $product->quantity_in_hand += $query->quantity;
+            $product->save();
         });
     }
     

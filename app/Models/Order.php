@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Models\Ledger;
 
 class Order extends Model
 {
@@ -13,6 +14,9 @@ class Order extends Model
         'customer_id',
         'total',
         'status',
+        'payment',
+        'amount_pay',
+        'dispatch_date',
         'created_by',
         'modified_by'
     ];
@@ -27,6 +31,23 @@ class Order extends Model
 
         static::updating(function ($query) {
             $query->modified_by = auth()->user()->id;
+        });
+
+        static::created(function ($query) {
+            // order total in ledger
+            Ledger::create([
+                'customer_id' => $query->customer_id,
+                'amount' => $query->total,
+                'type' => 'credit'
+            ]);
+
+            if($query->payment == 'cash'){
+                Ledger::create([
+                    'customer_id' => $query->customer_id,
+                    'amount' => $query->amount_pay,
+                    'type' => 'debit'
+                ]);
+            }
         });
     }
 
