@@ -152,7 +152,7 @@ abstract class OrderRepository implements RepositoryInterface
 
     public function fetch_pending_orders()
     {
-        return $this->model->where('status', 'pending')->get();
+        return $this->model->with('order_products')->where('status', 'pending')->get();
     }
 
 }
