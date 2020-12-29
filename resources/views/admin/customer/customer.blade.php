@@ -78,7 +78,7 @@
                   </tr>
                 @endforeach
               @else
-                <tr><td colspan="5"><h6 align="center">No customer(s) found</h6></td></tr>
+                <tr><td colspan="7"><h6 align="center">No customer(s) found</h6></td></tr>
               @endif
             </tbody>
             <tfoot>

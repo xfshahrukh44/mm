@@ -100,26 +100,26 @@
     <!-- opening_balance -->
     <div class="form-group col-md-3">
         <label for="">Opening Balance</label>
-        <input id="opening_balance" type="number" min=0 name="opening_balance" placeholder="Enter Opening Balance" class="form-control opening_balance" required>
+        <input id="opening_balance" type="number" min=0 name="opening_balance" placeholder="Enter Opening Balance" class="form-control opening_balance" required value=0>
     </div>
     <!-- business_to_date -->
     <div class="form-group col-md-3">
         <label for="">Business to Date</label>
-        <input id="business_to_date" type="number" min=0 name="business_to_date" placeholder="Enter Business to Date" class="form-control business_to_date" required>
+        <input id="business_to_date" type="number" min=0 name="business_to_date" placeholder="Enter Business to Date" class="form-control business_to_date" required value=0>
     </div>
     <!-- outstanding_balance -->
     <div class="form-group col-md-3">
         <label for="">Outstanding Balance</label>
-        <input id="outstanding_balance" type="number" min=0 name="outstanding_balance" placeholder="Enter Outstanding Balance" class="form-control outstanding_balance" required>
+        <input id="outstanding_balance" type="number" min=0 name="outstanding_balance" placeholder="Enter Outstanding Balance" class="form-control outstanding_balance" required value=0>
     </div>
     <!-- special_discount -->
     <div class="form-group col-md-3">
         <label for="">Special Discount</label>
-        <input id="special_discount" type="number" min=0 name="special_discount" placeholder="Enter Special Discount" class="form-control special_discount" required>
+        <input id="special_discount" type="number" min=0 name="special_discount" placeholder="Enter Special Discount" class="form-control special_discount" required value=0>
     </div>
     <!-- payment_terms -->
     <div class="form-group col-md-12">
         <label for="">Payment Terms</label>
-        <textarea id="payment_terms" type="text" name="payment_terms" placeholder="Enter Payment Terms" class="form-control payment_terms" required></textarea>
+        <textarea id="payment_terms" type="text" name="payment_terms" placeholder="Enter Payment Terms" class="form-control payment_terms"></textarea>
     </div>
 </div>

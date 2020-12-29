@@ -52,6 +52,7 @@ Route::group(['middleware' => ['auth:api', 'cors'], 'prefix' => 'auth'], functio
 
     // Order
     Route::apiResources(['order'=>'API\OrderController']);
+    Route::get('/fetch_pending_orders', 'Admin\OrderController@fetch_pending_orders')->name('fetch_pending_orders');
 
     // OrderProduct
     Route::apiResources(['order_product'=>'API\OrderProductController']);

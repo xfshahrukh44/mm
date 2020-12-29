@@ -116,4 +116,9 @@ class OrderController extends Controller
     {
         return $this->orderService->delete($id);
     }
+
+    public function fetch_pending_orders(Request $request)
+    {
+        return $this->orderService->fetch_pending_orders();
+    }
 }
