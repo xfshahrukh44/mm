@@ -43,6 +43,7 @@
             <thead>
               <tr role="row">
                 <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Name: activate to sort column ascending">Name</th>
+                <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Name: activate to sort column ascending">Type</th>
                 <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">Area</th>
                 <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">Market</th>
                 <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Pre-defined sizes: activate to sort column ascending">Contact #</th>
@@ -56,6 +57,7 @@
                 @foreach($customers as $customer)
                   <tr role="row" class="odd">
                     <td class="{{'name'.$customer->id}}">{{$customer->name}}</td>
+                    <td class="{{'type'.$customer->id}}">{{$customer->type}}</td>
                     <td class="{{'area'.$customer->id}}">{{$customer->market && $customer->market->area ? $customer->market->area->name : NULL}}</td>
                     <td class="{{'market'.$customer->id}}">{{$customer->market ? $customer->market->name : NULL}}</td>
                     <td class="{{'contact_number'.$customer->id}}">{{$customer->contact_number ? $customer->contact_number : NULL}}</td>
@@ -78,7 +80,7 @@
                   </tr>
                 @endforeach
               @else
-                <tr><td colspan="7"><h6 align="center">No customer(s) found</h6></td></tr>
+                <tr><td colspan="8"><h6 align="center">No customer(s) found</h6></td></tr>
               @endif
             </tbody>
             <tfoot>
@@ -190,6 +192,10 @@
                             <tr role="row" class="odd">
                                 <td class="">Whatsapp #</td>
                                 <td class="whatsapp_number"></td>
+                            </tr>
+                            <tr role="row" class="odd">
+                                <td class="">Customer Type</td>
+                                <td class="type"></td>
                             </tr>
                         </tbody>
                     </table>
@@ -356,11 +362,11 @@ $(document).ready(function(){
     var id = $(this).data('id');
     var customer = $(this).data('object');
     $('#hidden').val(id);
-    console.log(customer);
     
     $('#editForm #name').val($('.name' + id).html());
     $('#editForm #contact_number').val($('.contact_number' + id).html());
     $('#editForm #whatsapp_number').val(customer.whatsapp_number);
+    $('#editForm #type').val(customer.type);
 
     $('#editForm #shop_name').val(customer.shop_name);
     $('#editForm #shop_number').val(customer.shop_number);
@@ -399,6 +405,7 @@ $(document).ready(function(){
       var shop_path = $(this).data('shopkeeper');
       $('.shop_keeper_picture').attr('src', shop_path);
     }
+    $('.type').html(customer.type);
 
     $('.shop_name').html(customer.shop_name);
     $('.shop_number').html(customer.shop_number);

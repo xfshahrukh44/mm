@@ -46,10 +46,12 @@
                 <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1">Category</th>
                 <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1">Brand</th>
                 <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1">Unit</th>
+                <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1">Gender</th>
                 <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1">Purchase Price</th>
+                <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1">Consumer Selling Price</th>
+                <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1">Retailer Selling Price</th>
                 <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1">Quantity in Hand</th>
                 <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1">Cost Value</th>
-                <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1">Selling Price</th>
                 <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1">Sales Value</th>
                 <!-- <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1">Opening Quantity</th> -->
                 <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1">M.O.Q</th>
@@ -64,10 +66,20 @@
                     <td class="{{'category_id'.$product->id}}">{{$product->category ? $product->category->name : NULL}}</td>
                     <td class="{{'brand_id'.$product->id}}">{{$product->brand ? $product->brand->name : NULL}}</td>
                     <td class="{{'unit_id'.$product->id}}">{{$product->unit ? $product->unit->name : NULL}}</td>
+                    <td class="{{'gender'.$product->id}}">
+                      @if($product->gender == 'male')
+                        <i class="fas fa-mars blue"></i>
+                      @elseif($product->gender == 'female')
+                        <i class="fas fa-venus pink"></i>
+                      @else
+                      @endif
+                      {{$product->gender ? $product->gender : NULL}}
+                    </td>
                     <td class="{{'purchase_price'.$product->id}}">{{$product->purchase_price}}</td>
+                    <td class="{{'consumer_selling_price'.$product->id}}">{{$product->consumer_selling_price}}</td>
+                    <td class="{{'retailer_selling_price'.$product->id}}">{{$product->retailer_selling_price}}</td>
                     <td class="{{'quantity_in_hand'.$product->id}}">{{$product->quantity_in_hand}}</td>
                     <td class="{{'cost_value'.$product->id}}">{{$product->cost_value}}</td>
-                    <td class="{{'selling_price'.$product->id}}">{{$product->selling_price}}</td>
                     <td class="{{'sales_value'.$product->id}}">{{$product->sales_value}}</td>
                     <!-- <td class="{{'opening_quantity'.$product->id}}">{{$product->opening_quantity}}</td> -->
                     <td class="{{'moq'.$product->id}}">{{$product->moq}}</td>
@@ -88,7 +100,7 @@
                   </tr>
                 @endforeach
               @else
-                <tr><td colspan="11"><h6 align="center">No product(s) found</h6></td></tr>
+                <tr><td colspan="13"><h6 align="center">No product(s) found</h6></td></tr>
               @endif
             </tbody>
             <tfoot>
@@ -181,6 +193,10 @@
                 <table class="table table-bordered table-striped">
                     <tbody id="table_row_wrapper">
                         <tr role="row" class="odd">
+                            <td class="">Gender</td>
+                            <td class="gender"></td>
+                        </tr>
+                        <tr role="row" class="odd">
                             <td class="">Category</td>
                             <td class="category_id"></td>
                         </tr>
@@ -204,8 +220,12 @@
                             <td class="purchase_price"></td>
                         </tr>
                         <tr role="row" class="odd">
-                            <td class="">Selling Price</td>
-                            <td class="selling_price"></td>
+                            <td class="">Consumer Selling Price</td>
+                            <td class="consumer_selling_price"></td>
+                        </tr>
+                        <tr role="row" class="odd">
+                            <td class="">Retailer Selling Price</td>
+                            <td class="retailer_selling_price"></td>
                         </tr>
                         <tr role="row" class="odd">
                             <td class="">Cost Value</td>
@@ -381,20 +401,22 @@ $(document).ready(function(){
     var product = $(this).data('object');
     $('#hidden').val(id);
     
-    $('#editForm #article').val(product.article);
+    $('#editForm .article').val(product.article);
+    $('#editForm .gender option[value="'+ product.gender +'"]').prop('selected', true);
 
-    $('#editForm #category_id option[value="'+ product.category.id +'"]').prop('selected', true);
-    $('#editForm #brand_id option[value="'+ product.brand.id +'"]').prop('selected', true);
-    $('#editForm #unit_id option[value="'+ product.unit.id +'"]').prop('selected', true);
+    $('#editForm .category_id option[value="'+ product.category.id +'"]').prop('selected', true);
+    $('#editForm .brand_id option[value="'+ product.brand.id +'"]').prop('selected', true);
+    $('#editForm .unit_id option[value="'+ product.unit.id +'"]').prop('selected', true);
 
-    $('#editForm #purchase_price').val(product.purchase_price);
-    $('#editForm #selling_price').val(product.selling_price);
-    $('#editForm #cost_value').val(product.cost_value);
-    $('#editForm #sales_value').val(product.sales_value);
+    $('#editForm .purchase_price').val(product.purchase_price);
+    $('#editForm .consumer_selling_price').val(product.consumer_selling_price);
+    $('#editForm .retailer_selling_price').val(product.retailer_selling_price);
+    $('#editForm .cost_value').val(product.cost_value);
+    $('#editForm .sales_value').val(product.sales_value);
     
-    $('#editForm #opening_quantity').val(product.opening_quantity);
-    $('#editForm #quantity_in_hand').val(product.quantity_in_hand);
-    $('#editForm #moq').val(product.moq);
+    $('#editForm .opening_quantity').val(product.opening_quantity);
+    $('#editForm .quantity_in_hand').val(product.quantity_in_hand);
+    $('#editForm .moq').val(product.moq);
 
 
     // $('#editForm #shop_name').val(product.shop_name);
@@ -426,6 +448,7 @@ $(document).ready(function(){
     var product = $(this).data('object');
     
     $('.article').html(product.article);
+    $('.gender').html(product.gender);
     if(product.product_picture){
       var product_path = $(this).data('product');
       $('.product_picture').attr('src', product_path);
@@ -437,7 +460,8 @@ $(document).ready(function(){
     $('.unit_id').html(product.unit.name);
 
     $('.purchase_price').html(product.purchase_price);
-    $('.selling_price').html(product.selling_price);
+    $('.consumer_selling_price').html(product.consumer_selling_price);
+    $('.retailer_selling_price').html(product.retailer_selling_price);
     $('.cost_value').html(product.cost_value);
     $('.sales_value').html(product.sales_value);
 

@@ -54,7 +54,7 @@
               @if(count($stockIns) > 0)
                 @foreach($stockIns as $stockIn)
                   <tr role="row" class="odd">
-                    <td class="{{'product_id'.$stockIn->id}}">{{$stockIn->product ? $stockIn->product->article : NULL}}</td>
+                    <td class="{{'product_id'.$stockIn->id}}">{{$stockIn->product ? $stockIn->product->category->name . ' - ' . $stockIn->product->brand->name . ' - ' . $stockIn->product->article : NULL}}</td>
                     <td class="{{'quantity'.$stockIn->id}}">{{$stockIn->quantity}}</td>
                     <td class="{{'transaction_date'.$stockIn->id}}">{{return_date($stockIn->transaction_date)}}</td>
                     <td class="{{'created_by'.$stockIn->id}}">{{return_user_name($stockIn->created_by)}}</td>

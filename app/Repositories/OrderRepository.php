@@ -154,5 +154,4 @@ abstract class OrderRepository implements RepositoryInterface
     {
         return $this->model->with('order_products.product')->where('status', 'pending')->get();
     }
-
 }

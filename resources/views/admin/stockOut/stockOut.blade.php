@@ -56,7 +56,7 @@
                 @foreach($stockOuts as $stockOut)
                   <tr role="row" class="odd">
                     <td class="{{'customer_id'.$stockOut->id}}">{{$stockOut->customer ? $stockOut->customer->name : NULL}}</td>
-                    <td class="{{'product_id'.$stockOut->id}}">{{$stockOut->product ? $stockOut->product->article : NULL}}</td>
+                    <td class="{{'product_id'.$stockOut->id}}">{{$stockOut->product ? $stockIn->product->category->name . ' - ' . $stockIn->product->brand->name . ' - ' . $stockIn->product->article : NULL}}</td>
                     <td class="{{'quantity'.$stockOut->id}}">{{$stockOut->quantity}}</td>
                     <td class="{{'transaction_date'.$stockOut->id}}">{{return_date($stockOut->transaction_date)}}</td>
                     <td class="{{'created_by'.$stockOut->id}}">{{return_user_name($stockOut->created_by)}}</td>

@@ -17,6 +17,7 @@ class Customer extends Model
         'outstanding_balance',
         'contact_number',
         'whatsapp_number',
+        'type',
         'floor',
         'shop_name',
         'shop_number',
@@ -46,10 +47,17 @@ class Customer extends Model
 
         static::created(function ($query) {
             if($query->opening_balance != NULL){
+                if($query->opening_balance > 0){
+                    $type = 'debit';
+                }
+                if($query->opening_balance < 0){
+                    $type = 'credit';
+                    $query['opening_balance'] *= -1;
+                }
                 Ledger::create([
                     'customer_id' => $query->id,
                     'amount' => $query->opening_balance,
-                    'type' => 'credit'
+                    'type' => $type
                 ]);
             }
         });   

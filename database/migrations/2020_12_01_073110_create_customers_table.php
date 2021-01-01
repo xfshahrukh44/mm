@@ -21,6 +21,7 @@ class CreateCustomersTable extends Migration
             $table->bigInteger('outstanding_balance')->nullable();
             $table->string('contact_number')->nullable();
             $table->string('whatsapp_number')->nullable();
+            $table->string('type')->nullable();
             $table->string('floor')->nullable();
             $table->string('shop_name')->nullable();
             $table->string('shop_number')->nullable();

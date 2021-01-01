@@ -50,8 +50,10 @@ class ProductController extends Controller
             'brand_id' => 'required|int',
             'unit_id' => 'required|int',
             'article' => 'unique:products,article',
+            'gender' => 'sometimes',
             'purchase_price' => 'sometimes',
-            'selling_price' => 'sometimes',
+            'consumer_selling_price' => 'sometimes',
+            'retailer_selling_price' => 'sometimes',
             'opening_quantity' => 'sometimes',
             'moq' => 'sometimes',
             'quantity_in_hand' => 'sometimes',
@@ -102,8 +104,10 @@ class ProductController extends Controller
             'brand_id' => 'sometimes|int',
             'unit_id' => 'sometimes|int',
             'article' => 'sometimes',
+            'gender' => 'sometimes',
             'purchase_price' => 'sometimes',
-            'selling_price' => 'sometimes',
+            'consumer_selling_price' => 'sometimes',
+            'retailer_selling_price' => 'sometimes',
             'opening_quantity' => 'sometimes',
             'moq' => 'sometimes',
             'quantity_in_hand' => 'sometimes',
@@ -182,12 +186,11 @@ class ProductController extends Controller
         $new_products = [];
         foreach($products as $product){
             array_push($new_products, [
-                'label' => $product->article,
+                'label' => $product->category->name . ' - ' . $product->brand->name . ' - ' . $product->article,
                 'value' => $product->id,
                 'price' => $product->selling_price
             ]);
         }
-
         return $new_products;
     }
 }

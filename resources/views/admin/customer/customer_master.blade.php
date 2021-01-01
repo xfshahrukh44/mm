@@ -6,14 +6,23 @@
         <input id="name" type="text" name="name" placeholder="Enter name" class="form-control name" required>
     </div>
     <!-- contact_number -->
-    <div class="form-group col-md-3">
+    <div class="form-group col-md-2">
         <label for="">Contact #</label>
         <input id="contact_number" type="text" name="contact_number" placeholder="Enter Contact #" class="form-control contact_number" required>
     </div>
     <!-- whatsapp_number -->
-    <div class="form-group col-md-3">
+    <div class="form-group col-md-2">
         <label for="">Whatsapp #</label>
         <input id="whatsapp_number" type="text" name="whatsapp_number" placeholder="Enter Whatsapp #" class="form-control whatsapp_number" required>
+    </div>
+    <!-- type -->
+    <div class="form-group col-md-2">
+        <label for="">Customer Type</label>
+        <select id="type" name="type" class="form-control type" style="width: 100%; height: 35px;">
+            <option value="">Select Customer Type</option>
+            <option value="consumer">Consumer</option>
+            <option value="retailer">Retailer</option>
+        </select>
     </div>
     <!-- shop_keeper_picture -->
     <div class="form-group col-md-3">
@@ -100,7 +109,7 @@
     <!-- opening_balance -->
     <div class="form-group col-md-3">
         <label for="">Opening Balance</label>
-        <input id="opening_balance" type="number" min=0 name="opening_balance" placeholder="Enter Opening Balance" class="form-control opening_balance" required value=0>
+        <input id="opening_balance" type="number" name="opening_balance" placeholder="Enter Opening Balance" class="form-control opening_balance" required value=0>
     </div>
     <!-- business_to_date -->
     <div class="form-group col-md-3">
