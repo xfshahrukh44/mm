@@ -44,7 +44,7 @@ class ProductController extends Controller
             'category_id' => 'required',
             'brand_id' => 'required',
             'unit_id' => 'required',
-            'article' => 'sometimes',
+            'article' => 'required',
             'gender' => 'sometimes',
             'purchase_price' => 'sometimes',
             'consumer_selling_price' => 'sometimes',

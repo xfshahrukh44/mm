@@ -18,7 +18,7 @@
             <option value="">Select product gender</option>
             <option value="male">Male</option>
             <option value="female">Female</option>
-            <option value="other">Other</option>
+            <option value="both">Both</option>
         </select>
     </div>
 
@@ -66,29 +66,29 @@
     </div>
 
     <!-- purchase_price -->
-    <div class="form-group col-md-2">
+    <div class="form-group col-md-4">
         <label for="">Purchase Price</label>
         <input type="number" min=0 name="purchase_price" placeholder="Enter Purchase Price" class="form-control purchase_price" required value=0>
     </div>
     <!-- consumer_selling_price -->
-    <div class="form-group col-md-2">
+    <div class="form-group col-md-4">
         <label for="">Consumer Selling Price</label>
         <input type="number" min=0 name="consumer_selling_price" placeholder="Enter Selling Price" class="form-control consumer_selling_price" required value=0>
     </div>
     <!-- retailer_selling_price -->
-    <div class="form-group col-md-2">
+    <div class="form-group col-md-4">
         <label for="">Retailer Selling Price</label>
         <input type="number" min=0 name="retailer_selling_price" placeholder="Enter Selling Price" class="form-control retailer_selling_price" required value=0>
     </div>
     <!-- cost_value -->
-    <div class="form-group col-md-3">
+    <div class="form-group col-md-3" hidden>
         <label for="">Cost Value</label>
-        <input type="number" min=0 name="cost_value" placeholder="Enter Cost Value" class="form-control cost_value" required value=0>
+        <input type="number" min=0 name="cost_value" placeholder="Enter Cost Value" class="form-control cost_value" required value=0 readonly>
     </div>
     <!-- sales_value -->
-    <div class="form-group col-md-3">
+    <div class="form-group col-md-3" hidden>
         <label for="">Sales Value</label>
-        <input type="number" min=0 name="sales_value" placeholder="Enter Sales Value" class="form-control sales_value" required value=0>
+        <input type="number" min=0 name="sales_value" placeholder="Enter Sales Value" class="form-control sales_value" required value=0 readonly>
     </div>
 
     <!-- opening_quantity -->

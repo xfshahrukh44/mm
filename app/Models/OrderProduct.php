@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Models\StockOut;
+use App\Models\StockIn;
 use App\Models\Order;
 
 class OrderProduct extends Model
@@ -36,6 +37,31 @@ class OrderProduct extends Model
 
         static::updating(function ($query) {
             $query->modified_by = auth()->user()->id;
+
+            $order = Order::find($query->order_id);
+            $customer_id = $order->customer_id;
+            $old_quantity = $query->getOriginal('quantity');
+            $new_quantity = $query->quantity;
+
+            // old
+            StockIn::create([
+                'product_id' => $query->product_id,
+                'quantity' => $old_quantity,
+            ]);
+
+            // new
+            StockOut::create([
+                'customer_id' => $customer_id,
+                'product_id' => $query->product_id,
+                'quantity' => $new_quantity,
+            ]);
+        });
+
+        static::deleting(function ($query) {
+            StockIn::create([
+                'product_id' => $query->product_id,
+                'quantity' => $query->quantity,
+            ]);
         });
 
         static::created(function ($query) {

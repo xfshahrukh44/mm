@@ -28,17 +28,17 @@ abstract class ProductRepository implements RepositoryInterface
     
     public function create(array $data)
     {
-        try 
-        {
+        // try 
+        // {
             $product = $this->model->create($data);
             
             return [
                 'product' => $this->find($product->id)
             ];
-        }
-        catch (\Exception $exception) {
-            return $exception->getMessage();
-        }
+        // }
+        // catch (\Exception $exception) {
+        //     return $exception->getMessage();
+        // }
     }
     
     public function delete($id)
@@ -160,7 +160,8 @@ abstract class ProductRepository implements RepositoryInterface
                         ->orWhereIn('brand_id', $brand_ids)
                         ->orWhereIn('unit_id', $unit_ids)
                         ->orWhere('purchase_price', 'LIKE', '%'.$query.'%')
-                        ->orWhere('selling_price', 'LIKE', '%'.$query.'%')
+                        ->orWhere('consumer_selling_price', 'LIKE', '%'.$query.'%')
+                        ->orWhere('retailer_selling_price', 'LIKE', '%'.$query.'%')
                         ->orWhere('opening_quantity', 'LIKE', '%'.$query.'%')
                         ->orWhere('moq', 'LIKE', '%'.$query.'%')
                         ->orWhere('quantity_in_hand', 'LIKE', '%'.$query.'%')

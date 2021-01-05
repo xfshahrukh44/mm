@@ -49,7 +49,7 @@ class ProductController extends Controller
             'category_id' => 'required|int',
             'brand_id' => 'required|int',
             'unit_id' => 'required|int',
-            'article' => 'unique:products,article',
+            'article' => 'required',
             'gender' => 'sometimes',
             'purchase_price' => 'sometimes',
             'consumer_selling_price' => 'sometimes',

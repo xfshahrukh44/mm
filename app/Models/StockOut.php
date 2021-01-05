@@ -20,6 +20,23 @@ class StockOut extends Model
 
         static::updating(function ($query) {
             $query->modified_by = auth()->user()->id;
+
+            $product = Product::find($query->product_id);
+            $old_quantity = $query->getOriginal('quantity');
+            $new_quantity = $query->quantity;
+
+            // old
+            $product->quantity_in_hand += $old_quantity;
+            // new
+            $product->quantity_in_hand -= $new_quantity;
+
+            $product->save();
+        });
+
+        static::deleting(function ($query) {
+            $product = Product::find($query->product_id);
+            $product->quantity_in_hand += $query->quantity;
+            $product->save();
         });
 
         static::created(function ($query) {

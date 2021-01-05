@@ -76,7 +76,7 @@
                   </tr>
                 @endforeach
               @else
-                <tr><td colspan="5"><h6 align="center">No stockIn(s) found</h6></td></tr>
+                <tr><td colspan="6"><h6 align="center">No stockIn(s) found</h6></td></tr>
               @endif
             </tbody>
             <tfoot>

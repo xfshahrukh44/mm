@@ -72,7 +72,7 @@
                         @endforeach
                         @else
                         <tr>
-                            <td colspan="4"><h6 align="center">No area(s) found</h6></td>
+                            <td colspan="3"><h6 align="center">No area(s) found</h6></td>
                         </tr>
                         @endif
                     </tbody>

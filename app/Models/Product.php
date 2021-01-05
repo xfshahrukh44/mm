@@ -5,6 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Models\StockIn;
+use App\Models\StockOut;
+use App\Models\Product;
 
 class Product extends Model
 {
@@ -38,16 +40,46 @@ class Product extends Model
         });
 
         static::updating(function ($query) {
-            $query->modified_by = auth()->user()->id;
+            // $query->modified_by = auth()->user()->id;
+
+            // // old and new fields
+            // $old_opening_quantity = $query->getOriginal('opening_quantity');
+            // $new_opening_quantity = $query->opening_quantity;
+
+            // // finding stock_in entry
+            // $stock_in = StockIn::where('product_id', $query->id)
+            //                     ->where('quantity', $old_opening_quantity)
+            //                     ->first();
+
+            // // updating stock_in
+            // $stock_in->update([
+            //     'quantity' => $new_opening_quantity,
+            // ]);
+            // $stock_in->save();
         });
 
         static::created(function ($query) {
+            // stock_in entry
             if($query->opening_quantity > 0){
                 StockIn::create([
                     'product_id' => $query->id,
                     'quantity' => $query->opening_quantity,
                 ]);
             }
+
+            // cost and sales value
+            $product = Product::find($query->id);
+            $product->cost_value = $product->quantity_in_hand * $product->purchase_price;
+            $product->sales_value = $product->quantity_in_hand * $product->consumer_selling_price;
+            $product->save();
+        });
+
+        static::updated(function ($query) {
+            // cost and sales value
+            $product = Product::find($query->id);
+            $product->cost_value = $product->quantity_in_hand * $product->purchase_price;
+            $product->sales_value = $product->quantity_in_hand * $product->consumer_selling_price;
+            $product->save();
         });
     }
 
