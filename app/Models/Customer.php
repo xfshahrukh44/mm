@@ -111,4 +111,9 @@ class Customer extends Model
     {
         return $this->hasMany('App\Models\StockOut');
     }
+
+    public function special_discounts()
+    {
+        return $this->hasMany('App\Models\SpecialDiscount');
+    }
 }

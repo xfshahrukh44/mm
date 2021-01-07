@@ -66,6 +66,7 @@
                     <td class="{{'category_id'.$product->id}}">{{$product->category ? $product->category->name : NULL}}</td>
                     <td class="{{'brand_id'.$product->id}}">{{$product->brand ? $product->brand->name : NULL}}</td>
                     <td class="{{'unit_id'.$product->id}}">{{$product->unit ? $product->unit->name : NULL}}</td>
+                    <!-- gender -->
                     <td class="{{'gender'.$product->id}}">
                       @if($product->gender == 'male')
                         <i class="fas fa-mars blue"></i>
@@ -78,7 +79,13 @@
                     <td class="{{'purchase_price'.$product->id}}">{{$product->purchase_price}}</td>
                     <td class="{{'consumer_selling_price'.$product->id}}">{{$product->consumer_selling_price}}</td>
                     <td class="{{'retailer_selling_price'.$product->id}}">{{$product->retailer_selling_price}}</td>
-                    <td class="{{'quantity_in_hand'.$product->id}}">{{$product->quantity_in_hand}}</td>
+                    <!-- quantity_in_hand -->
+                    <td class="{{'quantity_in_hand'.$product->id}}">
+                      @if($product->quantity_in_hand <= $product->moq)
+                        <i class="fas fa-exclamation-circle red"></i>
+                      @endif
+                      {{$product->quantity_in_hand}}
+                    </td>
                     <td class="{{'cost_value'.$product->id}}">{{$product->cost_value}}</td>
                     <td class="{{'sales_value'.$product->id}}">{{$product->sales_value}}</td>
                     <!-- <td class="{{'opening_quantity'.$product->id}}">{{$product->opening_quantity}}</td> -->
@@ -448,7 +455,17 @@ $(document).ready(function(){
     var product = $(this).data('object');
     
     $('.article').html(product.article);
-    $('.gender').html(product.gender);
+    // gender
+    if(product.gender == 'male'){
+      $('.gender').html('<i class="fas fa-mars blue"></i> ' + product.gender);
+    }
+    else if(product.gender == 'female'){
+      
+      $('.gender').html('<i class="fas fa-venus pink"></i> ' + product.gender);
+    }
+    else{
+      $('.gender').html(product.gender);
+    }
     if(product.product_picture){
       var product_path = $(this).data('product');
       $('.product_picture').attr('src', product_path);
@@ -466,7 +483,13 @@ $(document).ready(function(){
     $('.sales_value').html(product.sales_value);
 
     $('.opening_quantity').html(product.opening_quantity);
-    $('.quantity_in_hand').html(product.quantity_in_hand);
+    // quantity_in_hand
+    if(product.quantity_in_hand <= product.moq){
+      $('.quantity_in_hand').html('<i class="fas fa-exclamation-circle red"></i> ' + product.quantity_in_hand);
+    }
+    else{
+      $('.quantity_in_hand').html(product.quantity_in_hand);
+    }
     $('.moq').html(product.moq);
 
     $('#viewProductModal').modal('show');

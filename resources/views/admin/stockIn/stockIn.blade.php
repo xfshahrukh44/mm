@@ -56,7 +56,7 @@
                   <tr role="row" class="odd">
                     <td class="{{'product_id'.$stockIn->id}}">{{$stockIn->product ? $stockIn->product->category->name . ' - ' . $stockIn->product->brand->name . ' - ' . $stockIn->product->article : NULL}}</td>
                     <td class="{{'quantity'.$stockIn->id}}">{{$stockIn->quantity}}</td>
-                    <td class="{{'transaction_date'.$stockIn->id}}">{{return_date($stockIn->transaction_date)}}</td>
+                    <td class="{{'transaction_date'.$stockIn->id}}">{{return_date($stockIn->created_at)}}</td>
                     <td class="{{'created_by'.$stockIn->id}}">{{return_user_name($stockIn->created_by)}}</td>
                     <td class="{{'modified_by'.$stockIn->id}}">{{return_user_name($stockIn->modified_by)}}</td>
                     <td>

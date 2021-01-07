@@ -116,7 +116,7 @@
       <form method="POST" action="{{route('customer.store')}}" enctype="multipart/form-data">
         @include('admin.customer.customer_master')
         <div class="modal-footer">
-          <button type="submit" class="btn btn-primary" id="createButton">Create</button>
+          <button type="submit" class="btn btn-primary">Create</button>
         </div>
       </form>
     </div>
@@ -139,7 +139,7 @@
         <input id="hidden" type="hidden" name="hidden">
         @include('admin.customer.customer_master')
         <div class="modal-footer">
-          <button type="submit" class="btn btn-primary" id="createButton">Update</button>
+          <button type="submit" class="btn btn-primary">Update</button>
         </div>
       </form>
     </div>
@@ -323,10 +323,32 @@ $(document).ready(function(){
   //   "searching":false
   // });
 
+  // global vars
+  var customer = "";
+
+  // on ready function calls
+  $('.products').select2();
+
+  // adding items dynamically*
+  var x = 1; //Initial field counter is 1
+  var maxField = 40; //Input fields increment limitation
+  var addButton = $('.add_button'); //Add button selector
+  var minField = 1; //Input fields decrement limitation
+  var removeButton = $('.remove_button'); //Remove button selector
+  var wrapper = $('.field_wrapper'); //Input field wrappervar x = 1; //Initial field counter is 1
+
+  // div strings
+  var startDiv = '<div class="row">';
+  var productDiv = '<div class="col-md-6 form-group"><select name="products[]" class="form-control products" style="width: 100%; max-height: 20px;"><option value="">Select Product</option>@foreach($products as $product)<option value="{{$product->id}}">{{$product->article}}</option>@endforeach</select></div>';
+  var amountDiv = '<div class="form-group col-md-5"><input type="number" class="form-control amounts" name="amounts[]" required min=0></div>';
+  var removeChildDiv = '<div class="form-group col-md-0 remove_button ml-1" style="display: table; vertical-align: middle;"><a class="btn btn-primary"><i class="fas fa-minus" style="color:white;"></i></a></div>';
+  var endDiv = '</div>';
+  var fieldHTML = startDiv + productDiv + amountDiv + removeChildDiv + endDiv;
+
   // fetch markets by area id
   function fetch_specific_markets(area_id){
     $.ajax({
-        url: '<?php echo("fetch_specific_markets"); ?>',
+        url: '<?php echo(route("fetch_specific_markets")); ?>',
         type: 'GET',
         data: {area_id: area_id},
         dataType: 'JSON',
@@ -348,6 +370,20 @@ $(document).ready(function(){
     });
   }
 
+  // fetch customer
+  function fetch_customer(id){
+    $.ajax({
+        url: '<?php echo(route("customer.show", 0)); ?>',
+        type: 'GET',
+        data: {id: id},
+        dataType: 'JSON',
+        async: false,
+        success: function (data) {
+          customer = data.customer;
+        }
+    });
+  }
+
   // create
   $('#add_customer').on('click', function(){
     // fetch_all_stores();
@@ -360,36 +396,47 @@ $(document).ready(function(){
   $('.editButton').on('click', function(){
     $('.market_id').hide();
     var id = $(this).data('id');
-    var customer = $(this).data('object');
+    fetch_customer(id);
+    // var customer = $(this).data('object');
     $('#hidden').val(id);
     
-    $('#editForm #name').val($('.name' + id).html());
-    $('#editForm #contact_number').val($('.contact_number' + id).html());
-    $('#editForm #whatsapp_number').val(customer.whatsapp_number);
-    $('#editForm #type').val(customer.type);
+    $('#editForm .name').val($('.name' + id).html());
+    $('#editForm .contact_number').val($('.contact_number' + id).html());
+    $('#editForm .whatsapp_number').val(customer.whatsapp_number);
+    $('#editForm .type').val(customer.type);
 
-    $('#editForm #shop_name').val(customer.shop_name);
-    $('#editForm #shop_number').val(customer.shop_number);
-    $('#editForm #floor').val(customer.floor);
+    $('#editForm .shop_name').val(customer.shop_name);
+    $('#editForm .shop_number').val(customer.shop_number);
+    $('#editForm .floor').val(customer.floor);
 
-    $('#editForm #area_id option[value="'+ customer.market.area.id +'"]').prop('selected', true);
+    $('#editForm .area_id option[value="'+ customer.market.area.id +'"]').prop('selected', true);
     fetch_specific_markets(customer.market.area.id);
-    $('#editForm #market_id option[value="'+ customer.market.id +'"]').prop('selected', true);
+    $('#editForm .market_id option[value="'+ customer.market.id +'"]').prop('selected', true);
 
-    $('#editForm #status option[value="'+ customer.status +'"]').prop('selected', true);
-    $('#editForm #visiting_days option[value="'+ customer.visiting_days +'"]').prop('selected', true);
-    $('#editForm #cash_on_delivery option[value="'+ customer.cash_on_delivery +'"]').prop('selected', true);
+    $('#editForm .status option[value="'+ customer.status +'"]').prop('selected', true);
+    $('#editForm .visiting_days option[value="'+ customer.visiting_days +'"]').prop('selected', true);
+    $('#editForm .cash_on_delivery option[value="'+ customer.cash_on_delivery +'"]').prop('selected', true);
 
-    $('#editForm #opening_balance').val(customer.opening_balance);
-    $('#editForm #business_to_date').val(customer.business_to_date);
-    $('#editForm #outstanding_balance').val(customer.outstanding_balance);
-    $('#editForm #special_discount').val(customer.special_discount);
+    $('#editForm .opening_balance').val(customer.opening_balance);
+    $('#editForm .business_to_date').val(customer.business_to_date);
+    $('#editForm .outstanding_balance').val(customer.outstanding_balance);
+    $('#editForm .special_discount').val(customer.special_discount);
 
-    $('#editForm #payment_terms').val(customer.payment_terms);
+    $('#editForm .payment_terms').val(customer.payment_terms);
 
-    
+    // children work
+    if(customer.special_discounts.length > 0){
+      $('.field_wrapper').html('');
+      for(var i = 0; i < customer.special_discounts.length; i++){
+        $('.field_wrapper').prepend(fieldHTML);
+        $('#editCustomerModal .products:first option[value="'+ customer.special_discounts[i].product_id +'"]').prop('selected', true);
+        $('#editCustomerModal .amounts:first').val(customer.special_discounts[i].amount);
+        $('.products').select2();
+      }
+    }
 
     $('#editCustomerModal').modal('show');
+
   });
 
   // detail
@@ -442,6 +489,45 @@ $(document).ready(function(){
   $('.area_id').on('change', function(){
     var area_id = $(this).val();
     fetch_specific_markets(area_id);
+  });
+
+  //Once add button is clicked on create*
+  $('#addCustomerModal').on("click", ".add_button", function(){
+      //Check maximum number of input fields
+      if(x < maxField){ 
+          x++; //Increment field counter
+          $(wrapper).prepend(fieldHTML); //Add field html
+
+          // initialize autocomplete
+          // initAutocompleteItems(".product_search", "#addOrderModal .ui-widget", product_labels);
+          $('.products').select2();
+      }
+  });
+
+  //Once add button is clicked on edit*
+  $('#editCustomerModal').on("click", ".add_button", function(){
+      //Check maximum number of input fields
+      if(x < maxField){ 
+          x++; //Increment field counter
+          $(wrapper).prepend(fieldHTML); //Add field html
+
+          // initialize autocomplete
+          // initAutocompleteItems(".product_search", "#editOrderModal .ui-widget", product_labels);
+          $('.products').select2();
+      }
+  });
+    
+  //Once remove button is clicked*
+  $('.modal').on("click", ".remove_button", function(e){
+      e.preventDefault();
+      if(x > minField){
+          $(this).parent('div').remove(); //Remove field html
+          x--; //Decrement field counter
+          // get_order_total('#editOrderModal');
+          // get_order_total('#addOrderModal');
+          // initAutocompleteItems(".product_search", "#editOrderModal .ui-widget", product_labels);
+          $('.products').select2();
+      }
   });
 
 });

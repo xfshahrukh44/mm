@@ -94,7 +94,7 @@ abstract class ProductRepository implements RepositoryInterface
     {
         try 
         {
-            $product = $this->model::with('category', 'brand', 'unit')->find($id);
+            $product = $this->model::with('category', 'brand', 'unit', 'special_discounts')->find($id);
             if(!$product)
             {
                 return [
@@ -160,6 +160,7 @@ abstract class ProductRepository implements RepositoryInterface
                         ->orWhereIn('brand_id', $brand_ids)
                         ->orWhereIn('unit_id', $unit_ids)
                         ->orWhere('purchase_price', 'LIKE', '%'.$query.'%')
+                        ->orWhere('gender', 'LIKE', '%'.$query.'%')
                         ->orWhere('consumer_selling_price', 'LIKE', '%'.$query.'%')
                         ->orWhere('retailer_selling_price', 'LIKE', '%'.$query.'%')
                         ->orWhere('opening_quantity', 'LIKE', '%'.$query.'%')

@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Services\CustomerService;
 use App\Services\AreaService;
 use App\Services\MarketService;
+use App\Services\ProductService;
+use App\Services\SpecialDiscountService;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
@@ -17,12 +19,16 @@ class CustomerController extends Controller
     private $customerService;
     private $areaService;
     private $marketService;
+    private $productService;
+    private $specialDiscountService;
 
-    public function __construct(CustomerService $customerService, AreaService $areaService, MarketService $marketService)
+    public function __construct(CustomerService $customerService, AreaService $areaService, MarketService $marketService, ProductService $productService, SpecialDiscountService $specialDiscountService)
     {
         $this->customerService = $customerService;
         $this->areaService = $areaService;
         $this->marketService = $marketService;
+        $this->productService = $productService;
+        $this->specialDiscountService = $specialDiscountService;
         $this->middleware('auth');
     }
 
@@ -31,7 +37,8 @@ class CustomerController extends Controller
         $customers = $this->customerService->paginate(env('PAGINATE'));
         $areas = $this->areaService->all();
         $markets = $this->marketService->all();
-        return view('admin.customer.customer', compact('customers', 'areas', 'markets'));
+        $products = $this->productService->all();
+        return view('admin.customer.customer', compact('customers', 'areas', 'markets', 'products'));
     }
 
     public function all()
@@ -41,6 +48,7 @@ class CustomerController extends Controller
     
     public function store(Request $request)
     {
+        // dd($request->all());
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
             'market_id' => 'required|int',
@@ -83,7 +91,20 @@ class CustomerController extends Controller
             $req['shop_keeper_picture'] = $imageName;
         }
 
-        $this->customerService->create($req);
+        $customer = ($this->customerService->create($req))['customer']['customer'];
+
+        // special discount work
+        if($request->products){
+            // create special discounts
+            for($i = 0; $i < count($request->products); $i++){
+                // here 
+                $this->specialDiscountService->create([
+                    'customer_id' => $customer->id,
+                    'product_id' => $request->products[$i],
+                    'amount' => $request->amounts[$i]
+                ]);
+            }
+        }
 
         return redirect()->route('customer.index');
     }
@@ -155,7 +176,24 @@ class CustomerController extends Controller
             $req['shop_keeper_picture'] = $imageName;
         }
 
-        $this->customerService->update($req, $id);
+        $customer = ($this->customerService->update($req, $id))['customer']['customer'];
+
+        // special discount work
+        if($request->products){
+            // delete old special discounts
+            foreach($customer->special_discounts as $special_discount){
+                $special_discount->delete();
+            }
+            // create new ones
+            for($i = 0; $i < count($request->products); $i++){
+                // here 
+                $this->specialDiscountService->create([
+                    'customer_id' => $customer->id,
+                    'product_id' => $request->products[$i],
+                    'amount' => $request->amounts[$i]
+                ]);
+            }
+        }
 
         if($request->identifier == 'rider'){
             return $this->getRiders($request);

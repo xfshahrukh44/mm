@@ -64,6 +64,9 @@ Route::group(['middleware' => 'auth', 'prefix' => 'admin'], function() {
     Route::get('/fetch_product_labels', 'Admin\ProductController@fetch_product_labels')->name('fetch_product_labels');
     Route::get('/fetch_customer_labels', 'Admin\CustomerController@fetch_customer_labels')->name('fetch_customer_labels');
     Route::get('/fetch_order_products', 'Admin\OrderController@fetch_order_products')->name('fetch_order_products');
+
+    // plug n play
+    Route::get('/plug_n_play', 'HomeController@plug_n_play')->name('plug_n_play');
 });
 
 // ARTISAN COMMAND ROUTES---------------------------------------

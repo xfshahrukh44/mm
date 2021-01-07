@@ -56,7 +56,7 @@ abstract class CustomerRepository implements RepositoryInterface
             return [
                 'success' => true,
                 'message' => 'Deleted successfully',
-                'deletedCustomer' => $temp,
+                'customer' => $temp,
             ];
         }
         catch (\Exception $exception) {
@@ -81,7 +81,7 @@ abstract class CustomerRepository implements RepositoryInterface
             return [
                 'success' => true,
                 'message' => 'Updated successfully!',
-                'updated_customer' => $this->find($temp->id),
+                'customer' => $this->find($temp->id),
             ];
         }
         catch (\Exception $exception) {
@@ -93,7 +93,7 @@ abstract class CustomerRepository implements RepositoryInterface
     {
         try 
         {
-            $customer = $this->model::with('market.area')->find($id);
+            $customer = $this->model::with('market.area', 'special_discounts.product')->find($id);
             if(!$customer)
             {
                 return [

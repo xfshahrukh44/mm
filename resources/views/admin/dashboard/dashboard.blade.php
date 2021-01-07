@@ -99,6 +99,8 @@
     </div> -->
 </div>
 
+<a href="{{route('plug_n_play')}}" class="red">.</a>
+
 <!-- <div class="info-box p-5" style="display:block;">
     <h4>ORDERS OVER TIME</h4>
     <br>

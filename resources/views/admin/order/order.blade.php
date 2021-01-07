@@ -358,6 +358,7 @@
     var customer = "";
     var order = "";
     var current_order_id = 0;
+    
     // adding items dynamically*
     var x = 1; //Initial field counter is 1
     var maxField = 40; //Input fields increment limitation

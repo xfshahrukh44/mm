@@ -1,0 +1,130 @@
+<?php
+
+namespace App\Repositories;
+
+use App\Exceptions\SpecialDiscount\AllSpecialDiscountException;
+use App\Exceptions\SpecialDiscount\CreateSpecialDiscountException;
+use App\Exceptions\SpecialDiscount\UpdateSpecialDiscountException;
+use App\Exceptions\SpecialDiscount\DeleteSpecialDiscountException;
+use App\Models\SpecialDiscount;
+use Illuminate\Support\Facades\DB;
+use Hash;
+use JWTAuth;
+use Tymon\JWTAuth\Exceptions\JWTException;
+use Illuminate\Support\Str;
+
+abstract class SpecialDiscountRepository implements RepositoryInterface
+{
+    private $model;
+    
+    public function __construct(SpecialDiscount $specialDiscount)
+    {
+        $this->model = $specialDiscount;
+    }
+    
+    public function create(array $data)
+    {
+        try 
+        {    
+            $specialDiscount = $this->model->create($data);
+            
+            return [
+                'specialDiscount' => $this->find($specialDiscount->id)
+            ];
+        }
+        catch (\Exception $exception) {
+            return $exception->getMessage();
+        }
+    }
+    
+    public function delete($id)
+    {
+        try {
+            if(!$temp = $this->model->find($id))
+            {
+                return [
+                    'success' => false,
+                    'message' => 'Could`nt find specialDiscount',
+                ];
+            }
+
+            $this->model->destroy($id);
+
+            return [
+                'success' => true,
+                'message' => 'Deleted successfully',
+                'specialDiscount' => $temp,
+            ];
+        }
+        catch (\Exception $exception) {
+            throw new DeletedSpecialDiscountException($exception->getMessage());
+        }
+    }
+    
+    public function update(array $data, $id)
+    {
+        try {
+            if(!$temp = $this->model->find($id))
+            {
+                return [
+                    'success' => false,
+                    'message' => 'Could`nt find specialDiscount',
+                ];
+            }
+
+            $temp->update($data);
+            $temp->save();
+            
+            return [
+                'success' => true,
+                'message' => 'Updated successfully!',
+                'specialDiscount' => $this->find($temp->id),
+            ];
+        }
+        catch (\Exception $exception) {
+            throw new UpdateSpecialDiscountException($exception->getMessage());
+        }
+    }
+    
+    public function find($id)
+    {
+        try 
+        {
+            $specialDiscount = $this->model::with('customer', 'product')->find($id);
+            if(!$specialDiscount)
+            {
+                return [
+                    'success' => false,
+                    'message' => 'Could`nt find specialDiscount',
+                ];
+            }
+            return [
+                'success' => true,
+                'specialDiscount' => $specialDiscount,
+            ];
+        }
+        catch (\Exception $exception) {
+
+        }
+    }
+    
+    public function all()
+    {
+        try {
+            return $this->model::with('customer', 'product')->get();
+        }
+        catch (\Exception $exception) {
+            throw new AllSpecialDiscountException($exception->getMessage());
+        }
+    }
+
+    public function paginate($pagination)
+    {
+        try {
+            return $this->model::paginate($pagination);
+        }
+        catch (\Exception $exception) {
+            throw new AllSpecialDiscountException($exception->getMessage());
+        }
+    }
+}

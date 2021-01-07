@@ -83,6 +83,9 @@ class ProductController extends Controller
     
     public function show($id)
     {
+        if(array_key_exists('id', $_REQUEST)){
+            return $this->productService->find($_REQUEST['id']);
+        }
         return $this->productService->find($id);
     }
     
