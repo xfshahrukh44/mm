@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Models\Customer;
+use App\Models\Vendor;
 
 class Ledger extends Model
 {
@@ -25,57 +26,80 @@ class Ledger extends Model
             $new_type = $query->type;
             $old_amount = $query->getOriginal('amount');
             $new_amount = $query->amount;
-            $customer = Customer::find($query->customer_id);
+
+            if($query->customer_id != NULL){
+                $client = Customer::find($query->customer_id);
+            }
+            if($query->vendor_id != NULL){
+                $client = Vendor::find($query->vendor_id);
+            }
 
             // old
             if($old_type == 'credit'){
-                $customer->outstanding_balance -= old_amount;
-                $customer->save();
+                $client->outstanding_balance -= old_amount;
+                $client->save();
             }
             if($old_type == 'debit'){
-                $customer->outstanding_balance -= $old_amount;
-                $customer->save();
+                $client->outstanding_balance -= $old_amount;
+                $client->save();
             }
 
             // new
             if($new_type == 'credit'){
-                $customer->outstanding_balance += $new_amount;
-                $customer->save();
+                $client->outstanding_balance += $new_amount;
+                $client->save();
             }
             if($new_type == 'debit'){
-                $customer->outstanding_balance -= $new_amount;
-                $customer->save();
+                $client->outstanding_balance -= $new_amount;
+                $client->save();
             }
         });
 
         static::deleting(function ($query) {
-            $customer = Customer::find($query->customer_id);
+            if($query->customer_id != NULL){
+                $client = Customer::find($query->customer_id);
+            }
+            if($query->vendor_id != NULL){
+                $client = Vendor::find($query->vendor_id);
+            }
 
             if($query->type == 'credit'){
-                $customer->outstanding_balance -= $query->amount;
-                $customer->save();
+                $client->outstanding_balance -= $query->amount;
+                $client->save();
             }
             if($query->type == 'debit'){
-                $customer->outstanding_balance += $query->amount;
-                $customer->save();
+                $client->outstanding_balance += $query->amount;
+                $client->save();
             }
         });
 
         static::created(function ($query) {
-            $customer = Customer::find($query->customer_id);
-            if($query->type == 'credit'){
-                $customer->outstanding_balance += $query->amount;
-                $customer->save();
+            $check = 0;
+
+            if($query->customer_id != NULL){
+                $client = Customer::find($query->customer_id);
+                $check = 1;
             }
-            if($query->type == 'debit'){
-                $customer->outstanding_balance -= $query->amount;
-                $customer->save();
+            if($query->vendor_id != NULL){
+                $client = Vendor::find($query->vendor_id);
+                $check = 1;
+            }
+
+            if($check == 1){
+                if($query->type == 'credit'){
+                    $client->outstanding_balance += $query->amount;
+                    $client->save();
+                }
+                if($query->type == 'debit'){
+                    $client->outstanding_balance -= $query->amount;
+                    $client->save();
+                }
             }
         });
     }
     
     protected $fillable = [
-        'customer_id', 'amount', 'type', 'created_by', 'modified_by', 'transaction_date'
+        'customer_id', 'vendor_id', 'amount', 'type', 'created_by', 'modified_by', 'transaction_date'
     ];
 
     protected $dates = ['created_at', 'updated_at', 'deleted_at'];
@@ -83,5 +107,10 @@ class Ledger extends Model
     public function customer()
     {
         return $this->belongsTo('App\Models\Customer');
+    }
+
+    public function vendor()
+    {
+        return $this->belongsTo('App\Models\Vendor');
     }
 }

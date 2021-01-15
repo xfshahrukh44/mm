@@ -93,7 +93,7 @@ abstract class CustomerRepository implements RepositoryInterface
     {
         try 
         {
-            $customer = $this->model::with('market.area', 'special_discounts.product')->find($id);
+            $customer = $this->model::with('market.area', 'special_discounts.product', 'ledgers')->find($id);
             if(!$customer)
             {
                 return [
@@ -141,10 +141,19 @@ abstract class CustomerRepository implements RepositoryInterface
             array_push($market_ids, $market->id);
         }
         // areas
+        // $areas = Area::select('id')->where('name', 'LIKE', '%'.$query.'%')->get();
+        // $area_ids = [];
+        // foreach($areas as $area){
+        //     array_push($area_ids, $area->id);
+        // }
+
+        // relational work customer->market->area
         $areas = Area::select('id')->where('name', 'LIKE', '%'.$query.'%')->get();
         $area_ids = [];
         foreach($areas as $area){
-            array_push($area_ids, $area->id);
+            foreach($area->markets as $market){
+                array_push($area_ids, $market->id);
+            }
         }
 
         // search block
@@ -152,7 +161,7 @@ abstract class CustomerRepository implements RepositoryInterface
                         ->orWhere('contact_number', 'LIKE', '%'.$query.'%')
                         ->orWhere('shop_name', 'LIKE', '%'.$query.'%')
                         ->orWhereIn('market_id', $market_ids)
-                        ->orWhereIn('area_id', $area_ids)
+                        ->orWhereIn('market_id', $area_ids)
                         ->paginate(env('PAGINATION'));
 
         return $customers;

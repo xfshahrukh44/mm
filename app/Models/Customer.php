@@ -29,6 +29,7 @@ class Customer extends Model
         'status',
         'opening_balance',
         'special_discount',
+        'account_number',
         'created_by',
         'modified_by'
     ];
@@ -73,13 +74,19 @@ class Customer extends Model
         });
 
         static::created(function ($query) {
+            // sales ledger account number
+            $query->account_number = '4010' . $query->id;
+            $query->save();
             if($query->opening_balance != NULL){
                 if($query->opening_balance > 0){
-                    $type = 'debit';
-                }
-                if($query->opening_balance < 0){
                     $type = 'credit';
+                }
+                else if($query->opening_balance < 0){
+                    $type = 'debit';
                     $query['opening_balance'] *= -1;
+                }
+                else{
+                    $type = 'debit';
                 }
                 Ledger::create([
                     'customer_id' => $query->id,

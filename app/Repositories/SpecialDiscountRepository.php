@@ -127,4 +127,19 @@ abstract class SpecialDiscountRepository implements RepositoryInterface
             throw new AllSpecialDiscountException($exception->getMessage());
         }
     }
+
+    public function fetch_by_customer_and_product($data)
+    {
+        $special_discount = SpecialDiscount::where('customer_id', $data['customer_id'])->where('product_id', $data['product_id'])->latest()->first();
+        if(!$special_discount){
+            return response()->json([
+                'success' => false,
+                'message' => 'no special discounts were found'
+            ]);
+        }
+        return response()->json([
+            'success' => true,
+            'special_discount' => $special_discount
+        ]);
+    }
 }

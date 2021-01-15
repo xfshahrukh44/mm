@@ -62,8 +62,11 @@ class Product extends Model
             // stock_in entry
             if($query->opening_quantity > 0){
                 StockIn::create([
+                    'vendor_id' => 0,
                     'product_id' => $query->id,
                     'quantity' => $query->opening_quantity,
+                    'rate' => $query->purchase_price,
+                    'amount' => $query->opening_quantity * $query->purchase_price
                 ]);
             }
 

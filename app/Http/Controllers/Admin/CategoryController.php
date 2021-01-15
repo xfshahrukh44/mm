@@ -38,7 +38,8 @@ class CategoryController extends Controller
 
         $this->categoryService->create($request->all());
 
-        return redirect()->route('category.index');
+        // return redirect()->route('category.index');
+        return redirect()->back();
     }
     
     public function show(Request $request, $id)
@@ -68,7 +69,8 @@ class CategoryController extends Controller
 
         $this->categoryService->update($request->all(), $id);
 
-        return redirect()->route('category.index');
+        // return redirect()->route('category.index');
+        return redirect()->back();
     }
     
     public function destroy(Request $request, $id)
@@ -77,6 +79,7 @@ class CategoryController extends Controller
 
         $this->categoryService->delete($id);
 
-        return redirect()->route('category.index');
+        // return redirect()->route('category.index');
+        return redirect()->back();
     }
 }

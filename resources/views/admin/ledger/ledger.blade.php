@@ -3,7 +3,14 @@
 @section('content_header')
 <div class="row mb-2">
   <div class="col-sm-6">
-    <h1 class="m-0 text-dark"><i class="fas fa-book nav-icon"></i> Ledgers</h1>
+    <h1 class="m-0 text-dark">
+      <i class="fas fa-book nav-icon"></i>
+      @if($client_type == 'customer')
+        Customer Ledgers
+      @else
+        Vendor Ledgers
+      @endif
+    </h1>
   </div>
 </div>
 <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
@@ -42,37 +49,49 @@
           <table id="example1" class="table table-bordered table-striped dataTable dtr-inline" role="grid" aria-describedby="example1_info">
             <thead>
               <tr role="row">
-                <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1">Customer</th>
-                <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1">Amount</th>
-                <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1">Type</th>
-                <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1">Transaction Date</th>
-                <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1">Created By</th>
-                <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1">Modified By</th>
-                <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1">Actions</th>
+                @if($client_type == 'customer')
+                  <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Name: activate to sort column ascending">Name</th>
+                  <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Name: activate to sort column ascending">Type</th>
+                  <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">Area</th>
+                  <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">Market</th>
+                  <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Pre-defined sizes: activate to sort column ascending">Contact #</th>
+                @else
+                  <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Name: activate to sort column ascending">Name</th>
+                  <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Name: activate to sort column ascending">Type</th>
+                  <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">Area</th>
+                  <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Pre-defined sizes: activate to sort column ascending">Contact #</th>
+                  <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Pre-defined sizes: activate to sort column ascending">Whatsapp #</th>
+                  <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Pre-defined sizes: activate to sort column ascending">Status</th>
+                @endif
+                <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">Business to Date</th>
+                <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">Outstanding Balance</th>
+                <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">Actions</th>
               </tr>
             </thead>
             <tbody>
               @if(count($ledgers) > 0)
                 @foreach($ledgers as $ledger)
                   <tr role="row" class="odd">
-                    <td class="{{'customer_id'.$ledger->id}}">{{$ledger->customer ? $ledger->customer->name : NULL}}</td>
-                    <td class="{{'amount'.$ledger->id}}">{{$ledger->amount}}</td>
-                    <td class="{{'type'.$ledger->id}}">{{$ledger->type}}</td>
-                    <td class="{{'transaction_date'.$ledger->id}}">{{return_date($ledger->transaction_date)}}</td>
-                    <td class="{{'created_by'.$ledger->id}}">{{return_user_name($ledger->created_by)}}</td>
-                    <td class="{{'modified_by'.$ledger->id}}">{{return_user_name($ledger->modified_by)}}</td>
+                    @if($client_type == 'customer')
+                      <td class="{{'name'.$ledger->id}}">{{$ledger->name}}</td>
+                      <td class="{{'type'.$ledger->id}}">{{$ledger->type}}</td>
+                      <td class="{{'area'.$ledger->id}}">{{$ledger->market && $ledger->market->area ? $ledger->market->area->name : NULL}}</td>
+                      <td class="{{'market'.$ledger->id}}">{{$ledger->market ? $ledger->market->name : NULL}}</td>
+                      <td class="{{'contact_number'.$ledger->id}}">{{$ledger->contact_number ? $ledger->contact_number : NULL}}</td>
+                    @else
+                      <td class="{{'name'.$ledger->id}}">{{$ledger->name}}</td>
+                      <td class="{{'type'.$ledger->id}}">{{$ledger->type}}</td>
+                      <td class="{{'area'.$ledger->id}}">{{$ledger->area ? $ledger->area->name : NULL}}</td>
+                      <td class="{{'contact_number'.$ledger->id}}">{{$ledger->contact_number ? $ledger->contact_number : NULL}}</td>
+                      <td class="{{'whatsapp_number'.$ledger->id}}">{{$ledger->whatsapp_number ? $ledger->whatsapp_number : NULL}}</td>
+                      <td class="{{'status'.$ledger->id}}">{{$ledger->status ? $ledger->status : NULL}}</td>
+                    @endif
+                    <td class="{{'business_to_date'.$ledger->id}}">{{$ledger->business_to_date ? 'Rs. ' . $ledger->business_to_date : NULL}}</td>
+                    <td class="{{'outstanding_balance'.$ledger->id}}">{{$ledger->outstanding_balance ? 'Rs. ' . $ledger->outstanding_balance : NULL}}</td>
                     <td>
-                      <!-- Detail -->
-                      <a href="#" class="detailButton" data-id="{{$ledger->id}}">
-                        <i class="fas fa-eye green ml-1"></i>
-                      </a>
-                      <!-- Edit -->
-                      <a href="#" class="editButton" data-id="{{$ledger->id}}" data-object="{{$ledger}}">
-                        <i class="fas fa-edit blue ml-1"></i>
-                      </a>
-                      <!-- Delete -->
-                      <a href="#" class="deleteButton" data-id="{{$ledger->id}}" data-object="{{$ledger}}">
-                        <i class="fas fa-trash red ml-1"></i>
+                      <!-- View Ledgers -->
+                      <a href="#" class="ledgerButton" data-id="{{$ledger->id}}" data-type="{{$client_type}}">
+                        <i class="fas fa-book nav-icon"></i> View Ledger
                       </a>
                     </td>
                   </tr>
@@ -168,6 +187,44 @@
   </div>
 </div>
 
+<!-- Ledger view -->
+<div class="modal fade" id="detailLedgerModal" tabindex="-1" role="dialog" aria-labelledby="detailLedgerModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-xl">
+    <div class="modal-content">
+      <div class="modal-header row">
+        <h5 class="modal-title" id="detailLedgerModalLabel">Ledger</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <table class="table table-bordered table-striped table-condensed table-sm">
+          <thead>
+            <!-- outstanding balance row -->
+            <tr class="table-info">
+              <td></td>
+              <td class="text-bold">Outstanding Balance</td>
+              <td class="detail_outstanding_balance"></td>
+            </tr>
+            <!-- headers -->
+            <tr>
+              <th>Transaction Date</th>
+              <th>Amount</th>
+              <th>Type</th>
+            </tr>
+          </thead>
+          <tbody class="ledger_wrapper">
+            <tr class="table-danger">
+              <td>12.12.12</td>
+              <td>444</td>
+              <td>debit</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
 <script>
 $(document).ready(function(){
   // $('#area_id').select2();
@@ -181,6 +238,37 @@ $(document).ready(function(){
   //   "bInfo": false,
   //   "searching":false
   // });
+
+  // global vars
+  var client = "";
+
+  // fetch vendor
+  function fetch_vendor(id){
+    $.ajax({
+        url: '<?php echo(route("vendor.show", 0)); ?>',
+        type: 'GET',
+        data: {id: id},
+        dataType: 'JSON',
+        async: false,
+        success: function (data) {
+          client = data.vendor;
+        }
+    });
+  }
+
+  // fetch customer
+  function fetch_customer(id){
+    $.ajax({
+        url: '<?php echo(route("customer.show", 0)); ?>',
+        type: 'GET',
+        data: {id: id},
+        dataType: 'JSON',
+        async: false,
+        success: function (data) {
+          client = data.customer;
+        }
+    });
+  }
 
   // create
   $('#add_ledger').on('click', function(){
@@ -210,6 +298,43 @@ $(document).ready(function(){
 
     $('#deleteLedgerModalLabel').text('Delete Ledger?');
     $('#deleteLedgerModal').modal('show');
+  });
+
+  // ledger(detail) view
+  $('.ledgerButton').on('click', function(){
+    // gather data items
+    var client_type = $(this).data('type');
+    var client_id = $(this).data('id');
+
+    // check for client type
+    if(client_type == 'customer'){
+      fetch_customer(client_id);
+    }
+    if(client_type == 'vendor'){
+      fetch_vendor(client_id);
+    }
+
+    // append ledger entries
+    $('.ledger_wrapper').html('');
+
+    if(client.ledgers.length == 0){
+      $('.ledger_wrapper').prepend('<tr class="table-warning"><td class="text-center" colspan=3>No Ledger Entries</td></tr>');
+    }
+    else{
+      for(var i = 0; i < client.ledgers.length; i++){
+        if(client.ledgers[i].type == 'debit'){
+          var color = "table-success";
+        }
+        else{
+          var color = "table-danger";
+        }
+        $('.ledger_wrapper').prepend('<tr class="'+ color +'"><td>'+ new Date(client.ledgers[i].created_at).toDateString() +'</td><td>Rs. '+ client.ledgers[i].amount +'</td><td>'+ client.ledgers[i].type +'</td></tr>');
+      }
+    }
+    // outstanding balance
+    $('.detail_outstanding_balance').html('Rs. ' + client.outstanding_balance);
+    $('#detailLedgerModal .modal-title').html(client.name + "'s Ledger.");
+    $('#detailLedgerModal').modal('show');
   });
 
 });

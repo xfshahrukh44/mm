@@ -110,12 +110,12 @@
             </a>
           </li>
 
-          <!-- Customer Database -->
+          <!-- Client Database -->
           <li class="nav-item has-treeview">
             <a href="#" class="nav-link">
               <i class="nav-icon fas fa-users"></i>
               <p>
-                Customer Database
+                Client Database
                 <i class="right fas fa-angle-left"></i>
               </p>
             </a>
@@ -124,6 +124,12 @@
                 <a href="{{route('customer.index')}}" class="nav-link">
                   <i class="nav-icon fas fa-users"></i>
                   <p>Customers</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{route('vendor.index')}}" class="nav-link">
+                  <i class="nav-icon fas fa-users"></i>
+                  <p>Vendors</p>
                 </a>
               </li>
               <li class="nav-item">
@@ -184,33 +190,74 @@
             </ul>
           </li>
 
-          <!-- Accouting -->
+          <!-- Accounting -->
           <li class="nav-item has-treeview">
             <a href="#" class="nav-link">
               <i class="nav-icon fas fa-money-check-alt"></i>
               <p>
-                Accouting
+                Accounting
                 <i class="right fas fa-angle-left"></i>
               </p>
             </a>
             <ul class="nav nav-treeview ml-2">
-              <li class="nav-item">
+              <!-- <li class="nav-item">
                 <a href="{{route('ledger.index')}}" class="nav-link">
                   <i class="fas fa-book nav-icon"></i>
                   <p>Ledgers</p>
+                </a>
+              </li> -->
+              <li class="nav-item">
+                <a href="{{route('get_customer_ledgers')}}" class="nav-link">
+                  <i class="fas fa-book nav-icon"></i>
+                  <p>Customer Ledgers</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{route('get_vendor_ledgers')}}" class="nav-link">
+                  <i class="fas fa-book nav-icon"></i>
+                  <p>Vendor Ledgers</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{route('receiving.index')}}" class="nav-link">
+                  <i class="fas fa-book nav-icon"></i>
+                  <p>Receipts</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{route('payment.index')}}" class="nav-link">
+                  <i class="fas fa-book nav-icon"></i>
+                  <p>Payments</p>
                 </a>
               </li>
             </ul>
           </li>
 
           <!-- Order Management -->
-          <li class="nav-item">
-            <a href="{{route('order.index')}}" class="nav-link">
+          <li class="nav-item has-treeview">
+            <a href="#" class="nav-link">
               <i class="nav-icon fa fa-clipboard"></i>
               <p>
                 Order Management
+                <i class="right fas fa-angle-left"></i>
               </p>
             </a>
+            <ul class="nav nav-treeview ml-2">
+              <!-- orders -->
+              <li class="nav-item">
+                <a href="{{route('order.index')}}" class="nav-link">
+                  <i class="nav-icon fa fa-clipboard"></i>
+                  <p>Orders</p>
+                </a>
+              </li>
+              <!-- invoices -->
+              <li class="nav-item">
+                <a href="{{route('invoice.index')}}" class="nav-link">
+                  <i class="nav-icon fas fa-file-invoice-dollar"></i>
+                  <p>Invoices</p>
+                </a>
+              </li>
+            </ul>
           </li>
 
           <!-- Marketing Plan -->

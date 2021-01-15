@@ -4,17 +4,20 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Product;
+use App\Services\InvoiceService;
 
 class HomeController extends Controller
 {
+    private $invoiceService;
     /**
      * Create a new controller instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(InvoiceService $invoiceService)
     {
         $this->middleware('auth');
+        $this->invoiceService = $invoiceService;
     }
 
     /**
@@ -29,10 +32,19 @@ class HomeController extends Controller
 
     public function plug_n_play(Request $request)
     {
+        dd($request->all());
         $products = Product::where('type', 'other')->get();
         foreach($products as $product){
             $product->gender = 'both';
             $product->save();
         }
+    }
+
+    public function generate_invoice_pdf(Request $request)
+    {
+        return $this->invoiceService->generate_invoice_pdf();
+        // $customPaper = array(0,0,930,600);
+        // $pdf = PDF::loadview('admin.invoice.invoice_pdf')->setPaper( $customPaper , 'landscape');
+        // return $pdf->stream(Carbon::now() . '.pdf');
     }
 }

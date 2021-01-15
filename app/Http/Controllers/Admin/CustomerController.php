@@ -106,7 +106,8 @@ class CustomerController extends Controller
             }
         }
 
-        return redirect()->route('customer.index');
+        // return redirect()->route('customer.index');
+        return redirect()->back();
     }
     
     public function show($id)
@@ -199,7 +200,8 @@ class CustomerController extends Controller
             return $this->getRiders($request);
         }
 
-        return redirect()->route('customer.index');
+        // return redirect()->route('customer.index');
+        return redirect()->back();
     }
     
     public function destroy(Request $request, $id)
@@ -208,7 +210,8 @@ class CustomerController extends Controller
 
         $this->customerService->delete($id);
 
-        return redirect()->route('customer.index');
+        // return redirect()->route('customer.index');
+        return redirect()->back();
     }
 
     public function search_customers(Request $request)
@@ -218,8 +221,9 @@ class CustomerController extends Controller
         $customers = $this->customerService->search_customers($query);
         $areas = $this->areaService->all();
         $markets = $this->marketService->all();
+        $products = $this->productService->all();
 
-        return view('admin.customer.customer', compact('customers', 'areas', 'markets'));
+        return view('admin.customer.customer', compact('customers', 'areas', 'markets', 'products'));
     }
 
     public function fetch_customer_labels()

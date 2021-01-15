@@ -8,12 +8,12 @@
     <!-- contact_number -->
     <div class="form-group col-md-2">
         <label for="">Contact #</label>
-        <input type="text" name="contact_number" placeholder="Enter Contact #" class="form-control contact_number" required>
+        <input type="text" name="contact_number" placeholder="Enter Contact #" class="form-control contact_number">
     </div>
     <!-- whatsapp_number -->
     <div class="form-group col-md-2">
         <label for="">Whatsapp #</label>
-        <input type="text" name="whatsapp_number" placeholder="Enter Whatsapp #" class="form-control whatsapp_number" required>
+        <input type="text" name="whatsapp_number" placeholder="Enter Whatsapp #" class="form-control whatsapp_number">
     </div>
     <!-- type -->
     <div class="form-group col-md-2">
@@ -33,17 +33,17 @@
     <!-- shop_name -->
     <div class="form-group col-md-3">
         <label for="">Shop Name</label>
-        <input type="text" name="shop_name" placeholder="Enter Shop Name" class="form-control shop_name" required>
+        <input type="text" name="shop_name" placeholder="Enter Shop Name" class="form-control shop_name">
     </div>
     <!-- shop_number -->
     <div class="form-group col-md-3">
         <label for="">Shop #</label>
-        <input type="text" name="shop_number" placeholder="Enter Shop #" class="form-control shop_number" required>
+        <input type="text" name="shop_number" placeholder="Enter Shop #" class="form-control shop_number">
     </div>
     <!-- floor -->
     <div class="form-group col-md-3">
         <label for="">Floor #</label>
-        <input type="text" name="floor" placeholder="Enter Floor #" class="form-control floor" required>
+        <input type="text" name="floor" placeholder="Enter Floor #" class="form-control floor">
     </div>
     <!-- shop_picture -->
     <div class="form-group col-md-3">
@@ -64,7 +64,7 @@
     <!-- market_id -->
     <div class="form-group col-md-6">
         <label for=""><i class="nav-icon  fas fa-map-marked-alt"></i> Market</label>
-        <select name="market_id" class="form-control market_id" style="width: 100%; height: 35px;" required>
+        <select name="market_id" class="form-control market_id" style="width: 100%; height: 35px;">
             <option value="">Select market</option>
         </select>
     </div>
@@ -109,22 +109,22 @@
     <!-- opening_balance -->
     <div class="form-group col-md-3">
         <label for="">Opening Balance</label>
-        <input type="number" name="opening_balance" placeholder="Enter Opening Balance" class="form-control opening_balance" required value=0>
+        <input type="number" name="opening_balance" placeholder="Enter Opening Balance" class="form-control opening_balance" value=0>
     </div>
     <!-- business_to_date -->
     <div class="form-group col-md-3" hidden>
         <label for="">Business to Date</label>
-        <input type="number" min=0 name="business_to_date" placeholder="Enter Business to Date" class="form-control business_to_date" required value=0>
+        <input type="number" min=0 name="business_to_date" placeholder="Enter Business to Date" class="form-control business_to_date" value=0>
     </div>
     <!-- outstanding_balance -->
     <div class="form-group col-md-3" hidden>
         <label for="">Outstanding Balance</label>
-        <input type="number" min=0 name="outstanding_balance" placeholder="Enter Outstanding Balance" class="form-control outstanding_balance" required value=0>
+        <input type="number" min=0 name="outstanding_balance" placeholder="Enter Outstanding Balance" class="form-control outstanding_balance" value=0>
     </div>
     <!-- special_discount -->
     <div class="form-group col-md-3" hidden>
         <label for="">Special Discount</label>
-        <input type="number" min=0 name="special_discount" placeholder="Enter Special Discount" class="form-control special_discount" required value=0>
+        <input type="number" min=0 name="special_discount" placeholder="Enter Special Discount" class="form-control special_discount" value=0>
     </div>
     <!-- payment_terms -->
     <div class="form-group col-md-12">
@@ -168,7 +168,7 @@
             </div>
             <!-- amount -->
             <div class="form-group col-md-5">
-                <input type="number" class="form-control amounts" name="amounts[]" required min=0>
+                <input type="number" class="form-control amounts" name="amounts[]" min=0>
             </div>
             <!-- remove child -->
             <div class="form-group col-md-0 remove_button ml-1" style="display: table; vertical-align: middle;">

@@ -61,8 +61,8 @@
                     <td class="{{'area'.$customer->id}}">{{$customer->market && $customer->market->area ? $customer->market->area->name : NULL}}</td>
                     <td class="{{'market'.$customer->id}}">{{$customer->market ? $customer->market->name : NULL}}</td>
                     <td class="{{'contact_number'.$customer->id}}">{{$customer->contact_number ? $customer->contact_number : NULL}}</td>
-                    <td class="{{'business_to_date'.$customer->id}}">{{$customer->business_to_date ? $customer->business_to_date : NULL}}</td>
-                    <td class="{{'outstanding_balance'.$customer->id}}">{{$customer->outstanding_balance ? $customer->outstanding_balance : NULL}}</td>
+                    <td class="{{'business_to_date'.$customer->id}}">{{$customer->business_to_date ? 'Rs. ' . $customer->business_to_date : NULL}}</td>
+                    <td class="{{'outstanding_balance'.$customer->id}}">{{$customer->outstanding_balance ? 'Rs. ' . $customer->outstanding_balance : NULL}}</td>
                     <td>
                       <!-- Detail -->
                       <a href="#" class="detailButton" data-id="{{$customer->id}}" data-object="{{$customer}}" data-shopkeeper="{{asset('storage/shopkeepers') . '/' . $customer->shop_keeper_picture}}" data-shop="{{asset('storage/shops') . '/' . $customer->shop_picture}}">
@@ -409,9 +409,11 @@ $(document).ready(function(){
     $('#editForm .shop_number').val(customer.shop_number);
     $('#editForm .floor').val(customer.floor);
 
-    $('#editForm .area_id option[value="'+ customer.market.area.id +'"]').prop('selected', true);
-    fetch_specific_markets(customer.market.area.id);
-    $('#editForm .market_id option[value="'+ customer.market.id +'"]').prop('selected', true);
+    if(customer.market){
+      $('#editForm .area_id option[value="'+ customer.market.area.id +'"]').prop('selected', true);
+      fetch_specific_markets(customer.market.area.id);
+      $('#editForm .market_id option[value="'+ customer.market.id +'"]').prop('selected', true);
+    }
 
     $('#editForm .status option[value="'+ customer.status +'"]').prop('selected', true);
     $('#editForm .visiting_days option[value="'+ customer.visiting_days +'"]').prop('selected', true);
@@ -467,10 +469,10 @@ $(document).ready(function(){
     $('.status').html(customer.status);
     $('.visiting_days').html(customer.visiting_days);
     $('.cash_on_delivery').html(customer.cash_on_delivery);
-    $('.opening_balance').html(customer.opening_balance);
-    $('.business_to_date').html(customer.business_to_date);
-    $('.outstanding_balance').html(customer.outstanding_balance);
-    $('.special_discount').html(customer.special_discount);
+    $('.opening_balance').html("Rs. " + customer.opening_balance);
+    $('.business_to_date').html("Rs. " + customer.business_to_date);
+    $('.outstanding_balance').html("Rs. " + customer.outstanding_balance);
+    $('.special_discount').html("Rs. " + customer.special_discount);
 
     $('#viewCustomerModal').modal('show');
   });

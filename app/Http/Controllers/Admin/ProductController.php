@@ -78,7 +78,8 @@ class ProductController extends Controller
 
         $this->productService->create($req);
 
-        return redirect()->route('product.index');
+        // return redirect()->route('product.index');
+        return redirect()->back();
     }
     
     public function show($id)
@@ -142,7 +143,8 @@ class ProductController extends Controller
             return $this->getRiders($request);
         }
 
-        return redirect()->route('product.index');
+        // return redirect()->route('product.index');
+        return redirect()->back();
     }
     
     public function destroy(Request $request, $id)
@@ -151,7 +153,8 @@ class ProductController extends Controller
 
         $this->productService->delete($id);
 
-        return redirect()->route('product.index');
+        // return redirect()->route('product.index');
+        return redirect()->back();
     }
 
     public function search_products(Request $request)
@@ -191,7 +194,8 @@ class ProductController extends Controller
             array_push($new_products, [
                 'label' => $product->category->name . ' - ' . $product->brand->name . ' - ' . $product->article,
                 'value' => $product->id,
-                'price' => $product->selling_price
+                'consumer_selling_price' => $product->consumer_selling_price ? $product->consumer_selling_price : 0,
+                'retailer_selling_price' => $product->retailer_selling_price ? $product->retailer_selling_price : 0,
             ]);
         }
         return $new_products;

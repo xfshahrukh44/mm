@@ -51,7 +51,8 @@ class UserController extends Controller
         if($request->identifier == 'rider'){
             return $this->getRiders($request);
         }
-        return redirect()->route('user.index');
+        // return redirect()->route('user.index');
+        return redirect()->back();
     }
     
     public function show($id)
@@ -96,7 +97,8 @@ class UserController extends Controller
             return $this->getRiders($request);
         }
 
-        return redirect()->route('user.index');
+        // return redirect()->route('user.index');
+        return redirect()->back();
     }
     
     public function destroy(Request $request, $id)
@@ -109,7 +111,8 @@ class UserController extends Controller
         if($request->user_type == 'rider'){
             return $this->getRiders($request);
         }
-        return redirect()->route('user.index');
+        // return redirect()->route('user.index');
+        return redirect()->back();
     }
 
     public function search_users(Request $request)

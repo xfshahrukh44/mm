@@ -14,7 +14,7 @@ class DropUniqueOnArticle extends Migration
     public function up()
     {
         Schema::table('products', function (Blueprint $table) {
-            $table->integer('article')->unique(false)->change();
+            // $table->integer('article')->unique(false)->change();
         });
     }
 

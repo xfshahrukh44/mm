@@ -51,7 +51,8 @@ class AreaController extends Controller
             }
         }
 
-        return redirect()->route('area.index');
+        // return redirect()->route('area.index');
+        return redirect()->back();
     }
     
     public function show(Request $request, $id)
@@ -101,7 +102,8 @@ class AreaController extends Controller
             }
         }
 
-        return redirect()->route('area.index');
+        // return redirect()->route('area.index');
+        return redirect()->back();
     }
     
     public function destroy(Request $request, $id)
@@ -110,6 +112,7 @@ class AreaController extends Controller
 
         $this->areaService->delete($id);
 
-        return redirect()->route('area.index');
+        // return redirect()->route('area.index');
+        return redirect()->back();
     }
 }

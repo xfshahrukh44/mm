@@ -8,6 +8,7 @@ use App\Exceptions\Ledger\UpdateLedgerException;
 use App\Exceptions\Ledger\DeleteLedgerException;
 use App\Models\Ledger;
 use App\Models\Customer;
+use App\Models\Vendor;
 use Illuminate\Support\Facades\DB;
 use Hash;
 use JWTAuth;
@@ -123,6 +124,26 @@ abstract class LedgerRepository implements RepositoryInterface
     {
         try {
             return $this->model::paginate($pagination);
+        }
+        catch (\Exception $exception) {
+            throw new AllLedgerException($exception->getMessage());
+        }
+    }
+
+    public function paginate_customer_ledgers($pagination)
+    {
+        try {
+            return Customer::paginate($pagination);
+        }
+        catch (\Exception $exception) {
+            throw new AllLedgerException($exception->getMessage());
+        }
+    }
+
+    public function paginate_vendor_ledgers($pagination)
+    {
+        try {
+            return Vendor::paginate($pagination);
         }
         catch (\Exception $exception) {
             throw new AllLedgerException($exception->getMessage());

@@ -18,3 +18,8 @@ function return_todays_date()
 {
     return Carbon::now();
 }
+
+function return_decimal_number($foo)
+{
+    return number_format((float)$foo, 2, '.', '');
+}

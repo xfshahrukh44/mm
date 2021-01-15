@@ -48,7 +48,8 @@ class StockOutController extends Controller
 
         $this->stockOutService->create($request->all());
 
-        return redirect()->route('stock_out.index');
+        // return redirect()->route('stock_out.index');
+        return redirect()->back();
     }
     
     public function show($id)
@@ -81,7 +82,8 @@ class StockOutController extends Controller
 
         $this->stockOutService->update($request->all(), $id);
 
-        return redirect()->route('stock_out.index');
+        // return redirect()->route('stock_out.index');
+        return redirect()->back();
     }
     
     public function destroy(Request $request, $id)
@@ -90,7 +92,8 @@ class StockOutController extends Controller
 
         $this->stockOutService->delete($id);
 
-        return redirect()->route('stock_out.index');
+        // return redirect()->route('stock_out.index');
+        return redirect()->back();
     }
 
     public function search_stockOuts(Request $request)

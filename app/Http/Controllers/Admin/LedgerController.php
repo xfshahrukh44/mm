@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Services\LedgerService;
 use App\Services\CustomerService;
+use App\Services\VendorService;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
@@ -15,11 +16,13 @@ class LedgerController extends Controller
 {
     private $ledgerService;
     private $customerService;
+    private $vendorService;
 
-    public function __construct(LedgerService $ledgerService, CustomerService $customerService)
+    public function __construct(LedgerService $ledgerService, CustomerService $customerService, VendorService $vendorService)
     {
         $this->ledgerService = $ledgerService;
         $this->customerService = $customerService;
+        $this->vendorService = $vendorService;
         $this->middleware('auth');
     }
     
@@ -27,13 +30,33 @@ class LedgerController extends Controller
     {
         $ledgers = $this->ledgerService->paginate(env('PAGINATE'));
         $customers = $this->customerService->all();
-        return view('admin.ledger.ledger', compact('ledgers', 'customers'));
+        $vendors = $this->vendorService->all();
+        return view('admin.ledger.ledger', compact('ledgers', 'customers', 'vendors'));
+    }
+
+    public function get_customer_ledgers()
+    {
+        $ledgers = $this->ledgerService->paginate_customer_ledgers(env('PAGINATE'));
+        $customers = $this->customerService->all();
+        $vendors = $this->vendorService->all();
+        $client_type = 'customer';
+        return view('admin.ledger.ledger', compact('ledgers', 'client_type', 'customers', 'vendors'));
+    }
+
+    public function get_vendor_ledgers()
+    {
+        $ledgers = $this->ledgerService->paginate_vendor_ledgers(env('PAGINATE'));
+        $customers = $this->customerService->all();
+        $vendors = $this->vendorService->all();
+        $client_type = 'vendor';
+        return view('admin.ledger.ledger', compact('ledgers', 'client_type', 'customers', 'vendors'));
     }
     
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'customer_id' => 'required|int',
+            'customer_id' => 'sometimes',
+            'vendor_id' => 'sometimes',
             'amount' => 'required',
             'type' => 'required',
             'transaction_date' => 'sometimes'
@@ -44,7 +67,8 @@ class LedgerController extends Controller
 
         $this->ledgerService->create($request->all());
 
-        return redirect()->route('ledger.index');
+        // return redirect()->route('ledger.index');
+        return redirect()->back();
     }
     
     public function show($id)
@@ -66,7 +90,8 @@ class LedgerController extends Controller
         }
 
         $validator = Validator::make($request->all(), [
-            'customer_id' => 'sometimes|int',
+            'customer_id' => 'sometimes',
+            'vendor_id' => 'sometimes',
             'amount' => 'sometimes',
             'type' => 'sometimes',
             'transaction_date' => 'sometimes'
@@ -77,7 +102,8 @@ class LedgerController extends Controller
 
         $this->ledgerService->update($request->all(), $id);
 
-        return redirect()->route('ledger.index');
+        // return redirect()->route('ledger.index');
+        return redirect()->back();
     }
     
     public function destroy(Request $request, $id)
@@ -86,7 +112,8 @@ class LedgerController extends Controller
 
         $this->ledgerService->delete($id);
 
-        return redirect()->route('ledger.index');
+        // return redirect()->route('ledger.index');
+        return redirect()->back();
     }
 
     public function search_ledgers(Request $request)

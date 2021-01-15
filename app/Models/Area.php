@@ -32,4 +32,9 @@ class Area extends Model
     {
         return $this->hasMany('App\Models\Market');
     }
+    
+    public function vendors()
+    {
+        return $this->hasMany('App\Models\Vendor');
+    }
 }

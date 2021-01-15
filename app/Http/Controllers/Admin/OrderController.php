@@ -8,6 +8,7 @@ use App\Services\OrderService;
 use App\Services\CustomerService;
 use App\Services\ProductService;
 use App\Services\OrderProductService;
+use App\Services\UserService;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
@@ -19,13 +20,15 @@ class OrderController extends Controller
     private $customerService;
     private $productService;
     private $orderProductService;
+    private $userService;
 
-    public function __construct(OrderService $orderService, CustomerService $customerService, ProductService $productService, OrderProductService $orderProductService)
+    public function __construct(OrderService $orderService, CustomerService $customerService, ProductService $productService, OrderProductService $orderProductService, UserService $userService)
     {
         $this->orderService = $orderService;
         $this->customerService = $customerService;
         $this->productService = $productService;
         $this->orderProductService = $orderProductService;
+        $this->userService = $userService;
         $this->middleware('auth');
     }
     
@@ -34,7 +37,8 @@ class OrderController extends Controller
         $orders = $this->orderService->paginate(env('PAGINATE'));
         $customers = $this->customerService->all();
         $products = $this->productService->all();
-        return view('admin.order.order', compact('orders', 'customers', 'products'));
+        $riders = $this->userService->all_riders();
+        return view('admin.order.order', compact('orders', 'customers', 'products', 'riders'));
     }
 
     public function all()
@@ -86,7 +90,8 @@ class OrderController extends Controller
                 $this->orderProductService->create([
                     'order_id' => $order['id'],
                     'product_id' => $request->hidden_product_ids[$i],
-                    'quantity' => $request->quantities[$i]
+                    'quantity' => $request->quantities[$i],
+                    'price' => $request->prices[$i],
                 ]);
             }
         }
@@ -98,7 +103,8 @@ class OrderController extends Controller
         // }
 
 
-        return redirect()->route('order.index');
+        // return redirect()->route('order.index');
+        return redirect()->back();
     }
     
     public function show(Request $request, $id)
@@ -110,7 +116,7 @@ class OrderController extends Controller
     public function update(Request $request, $id)
     {
         $id = $request->hidden;
-        $order = ($this->show($id))['order'];
+        $order = ($this->orderService->find($id))['order'];
 
         if(!(auth()->user()->id == $id || auth()->user()->type == "superadmin"))
         {
@@ -132,10 +138,29 @@ class OrderController extends Controller
         if($validator->fails())
             return response()->json($validator->errors()->toArray(), 400);
 
-        
+        // update order
         $this->orderService->update($request->all(), $id);
 
-        return redirect()->route('order.index');
+        if($request->products){
+            // delete old
+            foreach($order->order_products as $order_product){
+                $order_product->delete();
+            }
+            // create new
+            for($i = 0; $i < count($request->products); $i++){
+                $this->orderProductService->create([
+                    'order_id' => $order['id'],
+                    'product_id' => $request->hidden_product_ids[$i],
+                    'quantity' => $request->quantities[$i],
+                    'price' => $request->prices[$i],
+                ]);
+            }
+        }
+
+
+
+        // return redirect()->route('order.index');
+        return redirect()->back();
     }
     
     public function destroy(Request $request, $id)
@@ -144,7 +169,8 @@ class OrderController extends Controller
 
         $this->orderService->delete($id);
 
-        return redirect()->route('order.index');
+        // return redirect()->route('order.index');
+        return redirect()->back();
     }
 
     public function search_orders(Request $request)

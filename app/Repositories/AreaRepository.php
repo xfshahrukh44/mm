@@ -90,7 +90,7 @@ abstract class AreaRepository implements RepositoryInterface
     {
         try 
         {
-            $area = $this->model::with('markets.customers')->find($id);
+            $area = $this->model::with('markets.customers', 'vendors')->find($id);
             if(!$area)
             {
                 return [
@@ -111,7 +111,7 @@ abstract class AreaRepository implements RepositoryInterface
     public function all()
     {
         try {
-            return $this->model::with('markets.customers')->get();
+            return $this->model::with('markets.customers', 'vendors')->get();
         }
         catch (\Exception $exception) {
             throw new AllAreaException($exception->getMessage());

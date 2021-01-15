@@ -44,6 +44,9 @@
               <tr role="row">
                 <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1">Product</th>
                 <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1">Quantity</th>
+                <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1">Rate</th>
+                <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1">Amount</th>
+                <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1">Vendor</th>
                 <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1">Transaction Date</th>
                 <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1">Created By</th>
                 <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1">Modified By</th>
@@ -55,7 +58,10 @@
                 @foreach($stockIns as $stockIn)
                   <tr role="row" class="odd">
                     <td class="{{'product_id'.$stockIn->id}}">{{$stockIn->product ? $stockIn->product->category->name . ' - ' . $stockIn->product->brand->name . ' - ' . $stockIn->product->article : NULL}}</td>
-                    <td class="{{'quantity'.$stockIn->id}}">{{$stockIn->quantity}}</td>
+                    <td class="{{'quantity'.$stockIn->id}}">{{$stockIn->quantity ? $stockIn->quantity : NULL}}</td>
+                    <td class="{{'rate'.$stockIn->id}}">{{$stockIn->rate ? 'Rs. ' . $stockIn->rate : NULL}}</td>
+                    <td class="{{'amount'.$stockIn->id}}">{{$stockIn->amount ? 'Rs. ' . $stockIn->amount : NULL}}</td>
+                    <td class="{{'vendor'.$stockIn->id}}">{{$stockIn->vendor ? $stockIn->vendor->name : NULL}}</td>
                     <td class="{{'transaction_date'.$stockIn->id}}">{{return_date($stockIn->created_at)}}</td>
                     <td class="{{'created_by'.$stockIn->id}}">{{return_user_name($stockIn->created_by)}}</td>
                     <td class="{{'modified_by'.$stockIn->id}}">{{return_user_name($stockIn->modified_by)}}</td>
@@ -193,7 +199,10 @@ $(document).ready(function(){
     $('#hidden').val(id);
 
     $('#editForm #product_id option[value="'+ stockIn.product_id +'"]').prop('selected', true);
+    $('#editForm #vendor_id option[value="'+ stockIn.vendor_id +'"]').prop('selected', true);
     $('#editForm #quantity').val(stockIn.quantity);
+    $('#editForm #rate').val(stockIn.rate);
+    $('#editForm #amount').val(stockIn.amount);
     $('#editForm #transaction_date').val(stockIn.transaction_date);
     
     $('#editStockInModal').modal('show');
@@ -207,6 +216,26 @@ $(document).ready(function(){
 
     $('#deleteStockInModalLabel').text('Delete Stock In?');
     $('#deleteStockInModal').modal('show');
+  });
+
+  // on quantity change edit
+  $('#editStockInModal .quantity').on('change', function(){
+    $('#editStockInModal .amount').val($('#editStockInModal .quantity').val() * $('#editStockInModal .rate').val());
+  });
+
+  // on rate change edit
+  $('#editStockInModal .rate').on('change', function(){
+    $('#editStockInModal .amount').val($('#editStockInModal .quantity').val() * $('#editStockInModal .rate').val());
+  });
+
+  // on quantity change create
+  $('#addStockInModal .quantity').on('change', function(){
+    $('#addStockInModal .amount').val($('#addStockInModal .quantity').val() * $('#addStockInModal .rate').val());
+  });
+
+  // on rate change create
+  $('#addStockInModal .rate').on('change', function(){
+    $('#addStockInModal .amount').val($('#addStockInModal .quantity').val() * $('#addStockInModal .rate').val());
   });
 
 });

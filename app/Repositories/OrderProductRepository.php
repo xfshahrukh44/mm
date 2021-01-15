@@ -25,17 +25,17 @@ abstract class OrderProductRepository implements RepositoryInterface
     
     public function create(array $data)
     {
-        // try 
-        // {
+        try 
+        {
             $orderProduct = $this->model->create($data);
             
             return [
                 'orderProduct' => $this->find($orderProduct->id)
             ];
-        // }
-        // catch (\Exception $exception) {
-        //     return $exception->getMessage();
-        // }
+        }
+        catch (\Exception $exception) {
+            return $exception->getMessage();
+        }
     }
     
     public function delete($id)

@@ -64,7 +64,8 @@ class OrderController extends Controller
                 $this->orderProductService->create([
                     'order_id' => $data['order']['order']['id'],
                     'product_id' => $orderProduct['product_id'],
-                    'quantity' => $orderProduct['quantity']
+                    'quantity' => $orderProduct['quantity'],
+                    'price' => $orderProduct['price']
                 ]);
             }
         }
@@ -108,6 +109,24 @@ class OrderController extends Controller
         }
 
         $data = $this->orderService->update($request->all(), $id);
+
+        // create order product
+        if($request->orderProducts){
+            // delete old
+            $order = $data['order']['order'];
+            foreach($order->order_products as $order_product){
+                $order_product->delete();
+            }
+            // create new
+            foreach($request->orderProducts as $orderProduct){
+                $this->orderProductService->create([
+                    'order_id' => $order['id'],
+                    'product_id' => $orderProduct['product_id'],
+                    'quantity' => $orderProduct['quantity'],
+                    'price' => $orderProduct['price']
+                ]);
+            }
+        }
 
         return response()->json($data);
     }

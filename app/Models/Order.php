@@ -30,76 +30,76 @@ class Order extends Model
         });
 
         static::updating(function ($query) {
-            $query->modified_by = auth()->user()->id;
+            // $query->modified_by = auth()->user()->id;
 
-            $old_total = $query->getOriginal('total');
-            $new_total = $query->total;
-            $old_payment = $query->getOriginal('payment');
-            $new_payment = $query->payment;
-            $old_amount_pay = $query->getOriginal('amount_pay');
-            $new_amount_pay = $query->amount_pay;
+            // $old_total = $query->getOriginal('total');
+            // $new_total = $query->total;
+            // $old_payment = $query->getOriginal('payment');
+            // $new_payment = $query->payment;
+            // $old_amount_pay = $query->getOriginal('amount_pay');
+            // $new_amount_pay = $query->amount_pay;
 
-            // old
-            // order total in ledger
-            Ledger::create([
-                'customer_id' => $query->customer_id,
-                'amount' => $old_total,
-                'type' => 'debit'
-            ]);
-            if($old_payment == 'cash'){
-                Ledger::create([
-                    'customer_id' => $query->customer_id,
-                    'amount' => $old_amount_pay,
-                    'type' => 'credit'
-                ]);
-            }
+            // // old
+            // // order total in ledger
+            // Ledger::create([
+            //     'customer_id' => $query->customer_id,
+            //     'amount' => $old_total,
+            //     'type' => 'debit'
+            // ]);
+            // if($old_payment == 'cash'){
+            //     Ledger::create([
+            //         'customer_id' => $query->customer_id,
+            //         'amount' => $old_amount_pay,
+            //         'type' => 'credit'
+            //     ]);
+            // }
 
-            // new
-            Ledger::create([
-                'customer_id' => $query->customer_id,
-                'amount' => $new_total,
-                'type' => 'credit'
-            ]);
-            if($new_payment == 'cash'){
-                Ledger::create([
-                    'customer_id' => $query->customer_id,
-                    'amount' => $new_amount_pay,
-                    'type' => 'debit'
-                ]);
-            }
+            // // new
+            // Ledger::create([
+            //     'customer_id' => $query->customer_id,
+            //     'amount' => $new_total,
+            //     'type' => 'credit'
+            // ]);
+            // if($new_payment == 'cash'){
+            //     Ledger::create([
+            //         'customer_id' => $query->customer_id,
+            //         'amount' => $new_amount_pay,
+            //         'type' => 'debit'
+            //     ]);
+            // }
         });
 
         static::deleting(function ($query) {
             // order total in ledger
-            Ledger::create([
-                'customer_id' => $query->customer_id,
-                'amount' => $query->total,
-                'type' => 'debit'
-            ]);
-            if($query->payment == 'cash'){
-                Ledger::create([
-                    'customer_id' => $query->customer_id,
-                    'amount' => $query->amount_pay,
-                    'type' => 'credit'
-                ]);
-            }
+            // Ledger::create([
+            //     'customer_id' => $query->customer_id,
+            //     'amount' => $query->total,
+            //     'type' => 'debit'
+            // ]);
+            // if($query->payment == 'cash'){
+            //     Ledger::create([
+            //         'customer_id' => $query->customer_id,
+            //         'amount' => $query->amount_pay,
+            //         'type' => 'credit'
+            //     ]);
+            // }
         });
 
         static::created(function ($query) {
             // order total in ledger
-            Ledger::create([
-                'customer_id' => $query->customer_id,
-                'amount' => $query->total,
-                'type' => 'credit'
-            ]);
+            // Ledger::create([
+            //     'customer_id' => $query->customer_id,
+            //     'amount' => $query->total,
+            //     'type' => 'credit'
+            // ]);
 
-            if($query->payment == 'cash'){
-                Ledger::create([
-                    'customer_id' => $query->customer_id,
-                    'amount' => $query->amount_pay,
-                    'type' => 'debit'
-                ]);
-            }
+            // if($query->payment == 'cash'){
+            //     Ledger::create([
+            //         'customer_id' => $query->customer_id,
+            //         'amount' => $query->amount_pay,
+            //         'type' => 'debit'
+            //     ]);
+            // }
         });
     }
 
@@ -113,5 +113,10 @@ class Order extends Model
     public function order_products()
     {
         return $this->hasMany('App\Models\OrderProduct');
+    }
+
+    public function invoices()
+    {
+        return $this->hasMany('App\Models\Invoice');
     }
 }

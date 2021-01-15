@@ -37,7 +37,8 @@ class UnitController extends Controller
 
         $this->unitService->create($request->all());
 
-        return redirect()->route('unit.index');
+        // return redirect()->route('unit.index');
+        return redirect()->back();
     }
     
     public function show(Request $request, $id)
@@ -67,7 +68,8 @@ class UnitController extends Controller
 
         $this->unitService->update($request->all(), $id);
 
-        return redirect()->route('unit.index');
+        // return redirect()->route('unit.index');
+        return redirect()->back();
     }
     
     public function destroy(Request $request, $id)
@@ -76,6 +78,7 @@ class UnitController extends Controller
 
         $this->unitService->delete($id);
 
-        return redirect()->route('unit.index');
+        // return redirect()->route('unit.index');
+        return redirect()->back();
     }
 }

@@ -37,7 +37,8 @@ class BrandController extends Controller
 
         $this->brandService->create($request->all());
 
-        return redirect()->route('brand.index');
+        // return redirect()->route('brand.index');
+        return redirect()->back();
     }
     
     public function show(Request $request, $id)
@@ -67,7 +68,8 @@ class BrandController extends Controller
 
         $this->brandService->update($request->all(), $id);
 
-        return redirect()->route('brand.index');
+        // return redirect()->route('brand.index');
+        return redirect()->back();
     }
     
     public function destroy(Request $request, $id)
@@ -76,6 +78,7 @@ class BrandController extends Controller
 
         $this->brandService->delete($id);
 
-        return redirect()->route('brand.index');
+        // return redirect()->route('brand.index');
+        return redirect()->back();
     }
 }

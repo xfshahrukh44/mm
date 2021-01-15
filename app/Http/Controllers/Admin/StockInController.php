@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Services\StockInService;
 use App\Services\ProductService;
+use App\Services\VendorService;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
@@ -15,11 +16,13 @@ class StockInController extends Controller
 {
     private $stockInService;
     private $productService;
+    private $vendorService;
 
-    public function __construct(StockInService $stockInService, ProductService $productService)
+    public function __construct(StockInService $stockInService, ProductService $productService, VendorService $vendorService)
     {
         $this->stockInService = $stockInService;
         $this->productService = $productService;
+        $this->vendorService = $vendorService;
         $this->middleware('auth');
     }
     
@@ -27,14 +30,18 @@ class StockInController extends Controller
     {
         $stockIns = $this->stockInService->paginate(env('PAGINATE'));
         $products = $this->productService->all();
-        return view('admin.stockIn.stockIn', compact('stockIns', 'products'));
+        $vendors = $this->vendorService->all();
+        return view('admin.stockIn.stockIn', compact('stockIns', 'products', 'vendors'));
     }
     
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
             'product_id' => 'required|int',
+            'vendor_id' => 'sometimes',
             'quantity' => 'required',
+            'rate' => 'required',
+            'amount' => 'required',
             'transaction_date' => 'sometimes'
         ]);
 
@@ -43,7 +50,8 @@ class StockInController extends Controller
 
         $this->stockInService->create($request->all());
 
-        return redirect()->route('stock_in.index');
+        // return redirect()->route('stock_in.index');
+        return redirect()->back();
     }
     
     public function show($id)
@@ -66,7 +74,10 @@ class StockInController extends Controller
 
         $validator = Validator::make($request->all(), [
             'product_id' => 'sometimes|int',
+            'vendor_id' => 'sometimes',
             'quantity' => 'sometimes',
+            'rate' => 'required',
+            'amount' => 'required',
             'transaction_date' => 'sometimes'
         ]);
 
@@ -75,7 +86,8 @@ class StockInController extends Controller
 
         $this->stockInService->update($request->all(), $id);
 
-        return redirect()->route('stock_in.index');
+        // return redirect()->route('stock_in.index');
+        return redirect()->back();
     }
     
     public function destroy(Request $request, $id)
@@ -84,7 +96,8 @@ class StockInController extends Controller
 
         $this->stockInService->delete($id);
 
-        return redirect()->route('stock_in.index');
+        // return redirect()->route('stock_in.index');
+        return redirect()->back();
     }
 
     public function search_stockIns(Request $request)

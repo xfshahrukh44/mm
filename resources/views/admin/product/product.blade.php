@@ -76,9 +76,9 @@
                       @endif
                       {{$product->gender ? $product->gender : NULL}}
                     </td>
-                    <td class="{{'purchase_price'.$product->id}}">{{$product->purchase_price}}</td>
-                    <td class="{{'consumer_selling_price'.$product->id}}">{{$product->consumer_selling_price}}</td>
-                    <td class="{{'retailer_selling_price'.$product->id}}">{{$product->retailer_selling_price}}</td>
+                    <td class="{{'purchase_price'.$product->id}}">{{'Rs. ' .$product->purchase_price}}</td>
+                    <td class="{{'consumer_selling_price'.$product->id}}">{{'Rs. ' .$product->consumer_selling_price}}</td>
+                    <td class="{{'retailer_selling_price'.$product->id}}">{{'Rs. ' .$product->retailer_selling_price}}</td>
                     <!-- quantity_in_hand -->
                     <td class="{{'quantity_in_hand'.$product->id}}">
                       @if($product->quantity_in_hand <= $product->moq)
@@ -86,8 +86,8 @@
                       @endif
                       {{$product->quantity_in_hand}}
                     </td>
-                    <td class="{{'cost_value'.$product->id}}">{{$product->cost_value}}</td>
-                    <td class="{{'sales_value'.$product->id}}">{{$product->sales_value}}</td>
+                    <td class="{{'cost_value'.$product->id}}">{{'Rs. ' .$product->cost_value}}</td>
+                    <td class="{{'sales_value'.$product->id}}">{{'Rs. ' .$product->sales_value}}</td>
                     <!-- <td class="{{'opening_quantity'.$product->id}}">{{$product->opening_quantity}}</td> -->
                     <td class="{{'moq'.$product->id}}">{{$product->moq}}</td>
                     <td>
@@ -476,11 +476,11 @@ $(document).ready(function(){
     $('.brand_id').html(product.brand.name);
     $('.unit_id').html(product.unit.name);
 
-    $('.purchase_price').html(product.purchase_price);
-    $('.consumer_selling_price').html(product.consumer_selling_price);
-    $('.retailer_selling_price').html(product.retailer_selling_price);
-    $('.cost_value').html(product.cost_value);
-    $('.sales_value').html(product.sales_value);
+    $('.purchase_price').html("Rs. " + product.purchase_price);
+    $('.consumer_selling_price').html("Rs. " + product.consumer_selling_price);
+    $('.retailer_selling_price').html("Rs. " + product.retailer_selling_price);
+    $('.cost_value').html("Rs. " + product.cost_value);
+    $('.sales_value').html("Rs. " + product.sales_value);
 
     $('.opening_quantity').html(product.opening_quantity);
     // quantity_in_hand

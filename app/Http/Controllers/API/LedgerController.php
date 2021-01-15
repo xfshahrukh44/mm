@@ -35,7 +35,8 @@ class LedgerController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'customer_id' => 'required|int',
+            'customer_id' => 'sometimes',
+            'vendor_id' => 'sometimes',
             'amount' => 'required',
             'type' => 'required',
             'transaction_date' => 'sometimes'
@@ -73,7 +74,8 @@ class LedgerController extends Controller
         }
 
         $validator = Validator::make($request->all(), [
-            'customer_id' => 'sometimes|int',
+            'customer_id' => 'sometimes',
+            'vendor_id' => 'sometimes',
             'amount' => 'sometimes',
             'type' => 'sometimes',
             'transaction_date' => 'sometimes'

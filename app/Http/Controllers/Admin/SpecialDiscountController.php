@@ -38,7 +38,8 @@ class SpecialDiscountController extends Controller
 
         $this->specialDiscountService->create($request->all());
 
-        return redirect()->route('specialDiscount.index');
+        // return redirect()->route('specialDiscount.index');
+        return redirect()->back();
     }
     
     public function show(Request $request, $id)
@@ -70,7 +71,8 @@ class SpecialDiscountController extends Controller
 
         $this->specialDiscountService->update($request->all(), $id);
 
-        return redirect()->route('specialDiscount.index');
+        // return redirect()->route('specialDiscount.index');
+        return redirect()->back();
     }
     
     public function destroy(Request $request, $id)
@@ -79,6 +81,12 @@ class SpecialDiscountController extends Controller
 
         $this->specialDiscountService->delete($id);
 
-        return redirect()->route('specialDiscount.index');
+        // return redirect()->route('specialDiscount.index');
+        return redirect()->back();
+    }
+
+    public function fetch_by_customer_and_product(Request $request)
+    {
+        return $this->specialDiscountService->fetch_by_customer_and_product($request->all());
     }
 }
