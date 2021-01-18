@@ -124,6 +124,7 @@
     </div> -->
 </div>
 
+<img class="img-fluid" src="{{ base_path() }}/public/pdf_img/mg-01.jpg" alt="Master">
 <a href="{{route('generate_invoice_pdf')}}" class="red">.</a>
 
 <!-- <div class="info-box p-5" style="display:block;">

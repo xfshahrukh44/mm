@@ -126,7 +126,7 @@ abstract class UserRepository implements RepositoryInterface
     public function paginate_staff($pagination)
     {
         try {
-            return $this->model::where('type', '!=', 'rider')->paginate($pagination);
+            return $this->model::where('type', '!=', 'rider')->orderBy('created_at', 'DESC')->paginate($pagination);
         }
         catch (\Exception $exception) {
             throw new AllUserException($exception->getMessage());
@@ -136,7 +136,7 @@ abstract class UserRepository implements RepositoryInterface
     public function paginate_riders($pagination)
     {
         try {
-            return $this->model::where('type', '=', 'rider')->paginate($pagination);
+            return $this->model::where('type', '=', 'rider')->orderBy('created_at', 'DESC')->paginate($pagination);
         }
         catch (\Exception $exception) {
             throw new AllUserException($exception->getMessage());

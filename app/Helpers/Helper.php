@@ -8,6 +8,11 @@ function return_date($date)
     return Carbon::parse($date)->format('j F, Y. h:i a');
 }
 
+function return_date_pdf($date)
+{
+    return Carbon::parse($date)->format('j F, Y.');
+}
+
 function return_user_name($id)
 {
     $user = User::find($id);

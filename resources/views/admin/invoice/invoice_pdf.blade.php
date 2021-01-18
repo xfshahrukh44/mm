@@ -58,137 +58,12 @@
         }
         .border_none{
             border: none;
-            border-bottom: 1px solid gray;
+            /* border-bottom: 1px solid gray; */
+            margin-top:1%;
         }
     </style>
     <body>
         <div class="master_img">
-            <img class="img-fluid" src="{{asset('/pdf_img/mg-01.jpg')}}" alt="Master">
-        </div>
-    
-        <div class="gold_img">
-            <img class="img-fluid" src="/pdf_img/mg-01.jpg" alt="Gold">
-        </div>
-    
-        <div class="headin_gs">
-            <h5><u>Stockists</u></h5>
-            <h5>AA.Brothers</h5>
-            <h6>0311-1039785</h6>
-        </div>
-    
-        <div>
-            <br>
-            <label for="" style="position: absolute; top:1rem; margin-bottom:5%;" >Customer Name
-                <input type="text" class="border_none" value="shaikh muhammad sheharyar" style="width: 80%;">
-            </label>
-           
-            <label for="" class="" style="position: absolute; top:11rem; left:26rem;">Rider Name
-                 <input type="text" class="border_none" value="shaikh muhammad sheharyar" style="width: 100%;">
-            </label>
-            
-            <label for="" class="" style="position: absolute; top:12.6rem; left:26rem ;width: 20rem;">Company name & #
-                <input type="text" class="border_none" value="SuiDhagaa ,29A" style="width: 40%;">
-            </label>
-
-            <label for="" class="" style="position: absolute; top:14.1rem; left:26rem;width: 20rem;">Supplier
-                <input type="text" class="border_none" value="master material">
-            </label>
-
-            <label for="" class="" style="position: absolute; top:15.8rem; left:26rem;width: 20rem;">Contact
-                <input type="text" class="border_none" value="09132722191">
-            </label>
-            <br>            
-            <label for="" class="" style="position: absolute; top:17.9rem; left:26rem;width: 20rem;">Address
-                <input type="text" class="border_none" value="Plot 247, sector 16b, Malik Anwar goth, Gabol town, North Karachi." style="font-size:10px;">
-            </label>
-
-        </div>
-        {{-- <br> --}}
-        <div>
-            <label for="">Invoice</label>
-            <input type="text" class="border_none" value="">
-        </div>
-        <div>
-            <label for="">Order</label>
-            <input type="text" class="border_none" value="">
-        </div>
-        <div>
-            <label for="">Shop name & #</label>
-            <input type="text" class="border_none" value="core2plus ,29A">
-        </div>
-        <div>
-            <label for="">Mobile # </label>
-            <input type="text" class="border_none" value="0311-2233446">
-        </div>
-        <div>
-            <label for="">Market & area:</label>
-            <input type="text" class="border_none" value="Rufimall, Mosamiyat.">
-        </div>
-    
-        <div class="">
-            <label for="">Bill#</label>
-            <input type="text" class="bills border_none" value="7899 PKR" >
-            
-            <label for="" class="date_lable">Date</label>
-            <input type="text" class="date border_none" value="09/01/2021" style="width:10%;">
-        </div>
-            <div>
-            <img src="../public/pdf_img/NULK.png" alt="" style="width: 25%; position:absolute; z-index:-111; left:35%; opacity:0.4;">
-        </div>
-    
-        <table>
-            <tr>
-              <th>Qty.</th>
-              <th>Details</th>
-              <th>Rate</th>
-              <th>Amount</th>
-            </tr>
-            <tr>
-              <td style="text-align: center">550</td>
-              <td style="text-align: center"> is simply dummy text of the printing and typesetting industry.</td>
-              <td style="text-align: center">9</td>
-              <td style="text-align: center">10000</td>
-            </tr>
-            <tr>
-                <td style="border: none"></td>
-                <td style="border: none"></td>
-                <td style="border: none; font-size:14px;">Total</td>
-                <td style="text-align: right">200</td>
-            </tr>
-            <tr>
-                <td style="border: none"></td>
-                <td style="border: none"></td>
-                <td style="border: none; font-size:14px;">Previous Bal.</td>
-                <td style="text-align: right">790</td>
-            </tr>
-            <tr>
-                <td style="border: none"></td>
-                <td style="border: none"></td>
-                <td style="border: none; font-size:14px;">Total Due</td>
-                <td style="text-align: right">8800</td>
-            </tr>
-            <tr>
-                <td style="border: none"></td>
-                <td style="border: none">
-                    <input type="text">
-                    <br>
-                    <label  style="margin-left:5%;" for="">Customer Receiving</label>
-                </td>
-                <td style="border: none; font-size:14px;">Amount Received</td>
-                <td style="text-align: right">100</td>
-            </tr>
-            <tr>
-                <td style="border: none"></td>
-                <td style="border: none"></td>
-                <td style="border: none; font-size:14px;">Balance Due</td>
-                <td style="text-align: right">963</td>
-            </tr>
-        </table>
-        <p style=" text-align: center; font-size:8px;">This is a compelete generated invoice and requires no signature</p>
-        
-        {{-- 2nd invoice --}}
-
-        <div class="master_img" style="">
             <img class="img-fluid" src="../public/pdf_img/mg-02.jpg" alt="Master">
         </div>
     
@@ -196,69 +71,54 @@
             <img class="img-fluid" src="../public/pdf_img/mg-01.jpg" alt="Gold">
         </div>
     
-        <div style="position:absolute; top:41rem;text-align: center;">
-            <h5><u>Stockists</u></h5>
-            <h5>AA.Brothers</h5>
-            <h6>0311-1039785</h6>
+        <div class="headin_gs">
+            <p style="font-size: 14px;">Plot 247, sector 16b, Malik Anwar goth, Gabol town, North Karachi.</p>
         </div>
     
-        <div style="position: absolute; top:33rem;">
+        <div>
             <br>
-            <label for="" style="position: absolute; top:13.7rem; margin-bottom:5%;" >Customer Name
-                <input type="text" class="border_none" value="shaikh muhammad sheharyar" style="width: 80%;">
+            <label for="" style="position: absolute; top:0.8rem;" >Customer Name:
+                <input type="text" class="border_none" value="{{$invoice->customer ? $invoice->customer->name : NULL}}" style="margin-top: 0.7%;">
             </label>
            
-            <label for="" class="" style="position: absolute; top:13.8rem; left:26rem;">Rider Name
-                 <input type="text" class="border_none" value="shaikh muhammad sheharyar" style="width: 100%;">
+            <label for="" class="" style="position: absolute; top:9.6rem; left:35rem;">Rider Name:
+                 <input type="text" class="border_none" value="{{$invoice->rider_id ? return_user_name($invoice->rider_id) : NULL}}"  style="margin-top: 2.5%;">
             </label>
             
-            <label for="" class="" style="position: absolute; top:15.2rem; left:26rem ;width: 20rem;">Company name & #
-                <input type="text" class="border_none" value="SuiDhagaa ,29A" style="width: 40%;">
+            <label for="" class="" style="position: absolute; top:11.5rem; left:35rem;width: 20rem;">Supplier:
+                <input type="text" class="border_none" value="Master material" style="margin-top: 1.5%;">
             </label>
 
-            <label for="" class="" style="position: absolute; top:16.5rem; left:26rem;width: 20rem;">Supplier
-                <input type="text" class="border_none" value="master material">
+            <label for="" class="" style="position: absolute; top:12.8rem; left:35rem;width: 20rem;">Contact:
+                <input type="text" class="border_none" value="0311-1039785"  style="margin-top: 1.5%;">
             </label>
 
-            <label for="" class="" style="position: absolute; top:18rem; left:26rem;width: 20rem;">Contact
-                <input type="text" class="border_none" value="09132722191">
+            <label for="" class="date_lable"  style="position: absolute; top:14rem; left:24.2rem; width: 20rem;">Date:
+                <input type="text" class="date border_none" value="{{return_date_pdf($invoice->created_at)}}" style="margin-top: 1.8%;">
             </label>
-            <br>            
-            <label for="" class="" style="position: absolute; top:20rem; left:26rem;width: 20rem;">Address
-                <input type="text" class="border_none" value="Plot 247, sector 16b, Malik Anwar goth, Gabol town, North Karachi." style="font-size:10px;">
-            </label>
-
         </div>
         {{-- <br> --}}
         <div>
-            <label for="">Invoice</label>
-            <input type="text" class="border_none" value="">
+            <label for="" style="margin-top: 1%;">Invoice</label>
+            <input type="text" class="border_none" value="{{$invoice->id}}" style="margin-top: 1.5%;">
         </div>
         <div>
             <label for="">Order</label>
-            <input type="text" class="border_none" value="">
+            <input type="text" class="border_none" value="{{$invoice->order ? $invoice->order->id : NULL}}" style="margin-top: 0.2%;">
         </div>
-        <div>
+        <div style="margin-top:-1%;">
             <label for="">Shop name & #</label>
-            <input type="text" class="border_none" value="core2plus ,29A">
+            <input type="text" class="border_none" value="{{$invoice->customer ? $invoice->customer->shop_name . ' - ' . $invoice->customer->shop_number : NULL}}" style="margin-top: 0.2%;">
         </div>
-        <div>
+        <div style="margin-top:-1%;">
             <label for="">Mobile # </label>
-            <input type="text" class="border_none" value="0311-2233446">
+            <input type="text" class="border_none" value="{{$invoice->customer ? $invoice->customer->contact_number : NULL}}" style="margin-top: 0.3%;">
+        </div>
+        <div style="margin-top:-1%;">
+            <label for="">Market & area:</label>
+            <input type="text" class="border_none" value="{{$invoice->customer ? $invoice->customer->market->name.'-'.$invoice->customer->market->area->name : NULL}}" style="margin-top: 0.2%;">
         </div>
         <div>
-            <label for="">Market & area:</label>
-            <input type="text" class="border_none" value="Rufimall, Mosamiyat.">
-        </div>
-    
-        <div class="">
-            <label for="">Bill#</label>
-            <input type="text" class="bills border_none" value="7899 PKR" >
-            
-            <label for="" class="date_lable" >Date</label>
-            <input type="text" class="date border_none" value="09/01/2021" style="width:10%;">
-        </div>
-            <div>
             <img src="../public/pdf_img/NULK.png" alt="" style="width: 25%; position:absolute; z-index:-111; left:35%; opacity:0.4;">
         </div>
     
@@ -269,29 +129,31 @@
               <th>Rate</th>
               <th>Amount</th>
             </tr>
-            <tr>
-              <td style="text-align: center">550</td>
-              <td style="text-align: center"> is simply dummy text of the printing and typesetting industry.</td>
-              <td style="text-align: center">9</td>
-              <td style="text-align: center">10000</td>
-            </tr>
+            @foreach($invoice->invoice_products as $invoice_product)
+                <tr>
+                    <td style="text-align: center">{{$invoice_product->quantity}}</td>
+                    <td style="text-align: center">{{$invoice_product->product->category->name . ' - ' . $invoice_product->product->brand->name . ' - ' . $invoice_product->product->article}}</td>
+                    <td style="text-align: center">{{$invoice_product->price}}</td>
+                    <td style="text-align: center">{{$invoice_product->quantity * $invoice_product->price}}</td>
+                </tr>
+            @endforeach
             <tr>
                 <td style="border: none"></td>
                 <td style="border: none"></td>
                 <td style="border: none; font-size:14px;">Total</td>
-                <td style="text-align: right">200</td>
+                <td style="text-align: right">{{$invoice->total}}</td>
             </tr>
             <tr>
                 <td style="border: none"></td>
                 <td style="border: none"></td>
                 <td style="border: none; font-size:14px;">Previous Bal.</td>
-                <td style="text-align: right">790</td>
+                <td style="text-align: right">{{$invoice->customer->outstanding_balance - $invoice->total - $invoice->amount_pay}}</td>
             </tr>
             <tr>
                 <td style="border: none"></td>
                 <td style="border: none"></td>
                 <td style="border: none; font-size:14px;">Total Due</td>
-                <td style="text-align: right">8800</td>
+                <td style="text-align: right">{{$invoice->customer->outstanding_balance - $invoice->amount_pay}}</td>
             </tr>
             <tr>
                 <td style="border: none"></td>
@@ -301,16 +163,16 @@
                     <label  style="margin-left:5%;" for="">Customer Receiving</label>
                 </td>
                 <td style="border: none; font-size:14px;">Amount Received</td>
-                <td style="text-align: right">100</td>
+                <td style="text-align: right">{{$invoice->amount_pay}}</td>
             </tr>
             <tr>
                 <td style="border: none"></td>
                 <td style="border: none"></td>
                 <td style="border: none; font-size:14px;">Balance Due</td>
-                <td style="text-align: right">963</td>
+                <td style="text-align: right">{{$invoice->customer->outstanding_balance}}</td>
             </tr>
         </table>
-        <p style=" text-align: center; font-size:8px;">This is a compelete generated invoice and requires no signature</p>
-
+        <p style=" margin-left:23%; font-size:12px;">This is a computer generated invoice and requires no signature</p>
+        
     </body>
 </html>

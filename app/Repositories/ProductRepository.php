@@ -125,7 +125,7 @@ abstract class ProductRepository implements RepositoryInterface
     public function paginate($pagination)
     {
         try {
-            return $this->model::paginate($pagination);
+            return $this->model::orderBy('created_at', 'DESC')->paginate($pagination);
         }
         catch (\Exception $exception) {
             throw new AllProductException($exception->getMessage());

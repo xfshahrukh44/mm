@@ -40,9 +40,9 @@ class HomeController extends Controller
         }
     }
 
-    public function generate_invoice_pdf(Request $request)
+    public function generate_invoice_pdf($id)
     {
-        return $this->invoiceService->generate_invoice_pdf();
+        return $this->invoiceService->generate_invoice_pdf($id);
         // $customPaper = array(0,0,930,600);
         // $pdf = PDF::loadview('admin.invoice.invoice_pdf')->setPaper( $customPaper , 'landscape');
         // return $pdf->stream(Carbon::now() . '.pdf');

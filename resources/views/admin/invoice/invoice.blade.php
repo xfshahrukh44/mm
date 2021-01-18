@@ -139,7 +139,7 @@
 <div class="modal fade" id="detailInvoiceModal" tabindex="-1" role="dialog" aria-labelledby="detailInvoiceModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-lg">
         <div class="modal-content">
-            <form action="{{route('plug_n_play')}}" method="GET">
+            <form action="{{route('generate_invoice_pdf', 13)}}" method="GET" id="invoice_detail_form">
                 @method('GET')
                 @csrf
                 <div class="modal-header">
@@ -212,7 +212,7 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button class="btn btn-success" type="submit">Generate Invoice</button>
+                    <button class="btn btn-success generate_invoice" type="submit">Generate Invoice</button>
                     <button class="btn btn-primary" data-dismiss="modal">Close</button>
                 </div>
             </form>
@@ -279,6 +279,7 @@
     var invoice = "";
     var current_invoice_id = 0;
     var special_discount = 0;
+    var invoice_id = "";
 
     // fetch product labels
     function fetch_product_labels(){
@@ -357,11 +358,14 @@
 
     // detail
     $('.detailButton').on('click', function(){
-        var invoice_id = $(this).data('id');
+        invoice_id = $(this).data('id');
+
+        // set invoice url for pdf generation
+        var temp_route = "{{route('generate_invoice_pdf', ':id')}}";
+        temp_route = temp_route.replace(':id', invoice_id);
+        $('#invoice_detail_form').attr('action', temp_route);
 
         fetch_invoice(invoice_id);
-
-        console.log(invoice);
 
         // empty wrapper
         $('#table_row_wrapper').html('');
@@ -384,7 +388,7 @@
         // $('#table_row_wrapper').child('td').remove();
 
     });
-
+    
   });
 
 </script>

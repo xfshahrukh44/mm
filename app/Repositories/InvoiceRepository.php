@@ -14,7 +14,7 @@ use JWTAuth;
 use Tymon\JWTAuth\Exceptions\JWTException;
 use Illuminate\Support\Str;
 use Storage;
-use PDF;
+use Barryvdh\DomPDF\Facade as PDF;
 use Carbon\Carbon;
 
 abstract class InvoiceRepository implements RepositoryInterface
@@ -125,7 +125,7 @@ abstract class InvoiceRepository implements RepositoryInterface
     public function paginate($pagination)
     {
         try {
-            return $this->model::with('customer')->orderBy('id', 'DESC')->paginate($pagination);
+            return $this->model::with('customer')->orderBy('created_at', 'DESC')->paginate($pagination);
         }
         catch (\Exception $exception) {
             throw new AllInvoiceException($exception->getMessage());
@@ -151,11 +151,20 @@ abstract class InvoiceRepository implements RepositoryInterface
         return $invoices;
     }
 
-    public function generate_invoice_pdf()
+    public function generate_invoice_pdf($invoice_id)
     {
-        $test = "ayy";
-        $customPaper = array(0,0,930,600);
-        $pdf = PDF::loadview('admin.invoice.invoice_pdf', compact('test'))->setPaper( $customPaper , 'landscape');
+        $invoice = ($this->find($invoice_id))['invoice'];
+        // customer name
+        // invoice id
+        // order id
+        // shop name
+        // cus mobile number
+        // market and area
+        // bill#?
+        // rider name
+        // date of invoice
+        $customPaper = array(0,0,650,600);
+        $pdf = PDF::loadview('admin.invoice.invoice_pdf', compact('invoice'))->setPaper( $customPaper , 'landscape');
         return $pdf->stream(Carbon::now() . '.pdf');
     }
 }

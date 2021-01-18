@@ -79,7 +79,7 @@ Route::group(['middleware' => 'auth', 'prefix' => 'admin'], function() {
     Route::get('/plug_n_play', 'HomeController@plug_n_play')->name('plug_n_play');
 
     // generate invoice
-    Route::get('/generate_invoice_pdf', 'HomeController@generate_invoice_pdf')->name('generate_invoice_pdf');
+    Route::get('/generate_invoice_pdf/{id}', 'HomeController@generate_invoice_pdf')->name('generate_invoice_pdf');
 
     // ARTISAN COMMAND ROUTES---------------------------------------
     Route::get('/install', function () {
@@ -100,8 +100,9 @@ Route::group(['middleware' => 'auth', 'prefix' => 'admin'], function() {
 
     Route::get('/clear', function () {
         Illuminate\Support\Facades\Artisan::call('cache:clear');
+        Illuminate\Support\Facades\Artisan::call('config:clear');
         Illuminate\Support\Facades\Artisan::call('view:clear');
-        // Illuminate\Support\Facades\Artisan::call('config:cache');
+        Illuminate\Support\Facades\Artisan::call('config:cache');
     });
 
     Route::get('/passport', function () {

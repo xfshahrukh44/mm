@@ -123,7 +123,7 @@ abstract class LedgerRepository implements RepositoryInterface
     public function paginate($pagination)
     {
         try {
-            return $this->model::paginate($pagination);
+            return $this->model::orderBy('created_at', 'DESC')->paginate($pagination);
         }
         catch (\Exception $exception) {
             throw new AllLedgerException($exception->getMessage());
@@ -133,7 +133,7 @@ abstract class LedgerRepository implements RepositoryInterface
     public function paginate_customer_ledgers($pagination)
     {
         try {
-            return Customer::paginate($pagination);
+            return Customer::orderBy('created_at', 'DESC')->paginate($pagination);
         }
         catch (\Exception $exception) {
             throw new AllLedgerException($exception->getMessage());
@@ -143,7 +143,7 @@ abstract class LedgerRepository implements RepositoryInterface
     public function paginate_vendor_ledgers($pagination)
     {
         try {
-            return Vendor::paginate($pagination);
+            return Vendor::orderBy('created_at', 'DESC')->paginate($pagination);
         }
         catch (\Exception $exception) {
             throw new AllLedgerException($exception->getMessage());

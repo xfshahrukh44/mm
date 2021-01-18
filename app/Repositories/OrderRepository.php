@@ -123,7 +123,7 @@ abstract class OrderRepository implements RepositoryInterface
     public function paginate($pagination)
     {
         try {
-            return $this->model::with('customer')->orderBy('status', 'DESC')->orderBy('id', 'DESC')->paginate($pagination);
+            return $this->model::with('customer')->orderBy('created_at', 'DESC')->paginate($pagination);
         }
         catch (\Exception $exception) {
             throw new AllOrderException($exception->getMessage());
