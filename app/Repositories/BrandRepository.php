@@ -57,7 +57,7 @@ abstract class BrandRepository implements RepositoryInterface
             ];
         }
         catch (\Exception $exception) {
-            throw new DeletedBrandException($exception->getMessage());
+            throw new DeleteBrandException($exception->getMessage());
         }
     }
     

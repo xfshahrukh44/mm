@@ -57,7 +57,7 @@ abstract class SpecialDiscountRepository implements RepositoryInterface
             ];
         }
         catch (\Exception $exception) {
-            throw new DeletedSpecialDiscountException($exception->getMessage());
+            throw new DeleteSpecialDiscountException($exception->getMessage());
         }
     }
     

@@ -57,7 +57,7 @@ abstract class AreaRepository implements RepositoryInterface
             ];
         }
         catch (\Exception $exception) {
-            throw new DeletedAreaException($exception->getMessage());
+            throw new DeleteAreaException($exception->getMessage());
         }
     }
     

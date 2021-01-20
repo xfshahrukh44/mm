@@ -61,7 +61,7 @@ abstract class ProductRepository implements RepositoryInterface
             ];
         }
         catch (\Exception $exception) {
-            throw new DeletedProductException($exception->getMessage());
+            throw new DeleteProductException($exception->getMessage());
         }
     }
     

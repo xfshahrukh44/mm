@@ -59,7 +59,7 @@ abstract class OrderRepository implements RepositoryInterface
             ];
         }
         catch (\Exception $exception) {
-            throw new DeletedOrderException($exception->getMessage());
+            throw new DeleteOrderException($exception->getMessage());
         }
     }
     

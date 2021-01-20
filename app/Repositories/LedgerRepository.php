@@ -59,7 +59,7 @@ abstract class LedgerRepository implements RepositoryInterface
             ];
         }
         catch (\Exception $exception) {
-            throw new DeletedLedgerException($exception->getMessage());
+            throw new DeleteLedgerException($exception->getMessage());
         }
     }
     

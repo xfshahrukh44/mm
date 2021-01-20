@@ -58,7 +58,7 @@ abstract class PaymentRepository implements RepositoryInterface
             ];
         }
         catch (\Exception $exception) {
-            throw new DeletedPaymentException($exception->getMessage());
+            throw new DeletePaymentException($exception->getMessage());
         }
     }
     

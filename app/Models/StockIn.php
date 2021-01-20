@@ -64,7 +64,7 @@ class StockIn extends Model
             }
             $purchase_price -= $query->old_rate;
             $purchase_price += $query->new_rate;
-            $purchase_price = $purchase_price / count($stockIns);
+            $purchase_price = $purchase_price / (count($stockIns) != 0 ? count($stockIns) : 1);
             $product->purchase_price = $purchase_price;
 
             $product->save();
@@ -105,7 +105,7 @@ class StockIn extends Model
             $stockIns = StockIn::where('product_id', $query->product_id)->get();
             $purchase_price = 0;
             foreach($stockIns as $stockIn){
-                $purchase_price += intval($stockIn->rate ? $stockIn->rate : 0);
+                $purchase_price += intval($stockIn->rate ? $stockIn->rate : "0");
             }
             $purchase_price = $purchase_price / count($stockIns);
             $product->purchase_price = $purchase_price;

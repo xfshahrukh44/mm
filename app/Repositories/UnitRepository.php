@@ -57,7 +57,7 @@ abstract class UnitRepository implements RepositoryInterface
             ];
         }
         catch (\Exception $exception) {
-            throw new DeletedUnitException($exception->getMessage());
+            throw new DeleteUnitException($exception->getMessage());
         }
     }
     

@@ -59,7 +59,7 @@ abstract class StockOutRepository implements RepositoryInterface
             ];
         }
         catch (\Exception $exception) {
-            throw new DeletedStockOutException($exception->getMessage());
+            throw new DeleteStockOutException($exception->getMessage());
         }
     }
     

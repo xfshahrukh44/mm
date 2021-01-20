@@ -8,18 +8,18 @@
   <link rel="shortcut icon" href="#" type="image/x-icon">
 
   <!-- jquery ui css-->
-  <!-- <link rel="stylesheet" href="{{asset('plugins/jquery-ui/jquery-ui.min.css')}}"> -->
   <link rel="stylesheet" type="text/css" href="{{asset('plugins/jquery-ui/jquery-ui.css')}}">
-  <!-- <link href = "https://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css" rel = "stylesheet"> -->
+  <!-- toastr css -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.css">
   
-  <!-- jquery -->
-  <!-- <script src="{{asset('js/jquery-3.5.1.slim.min.js')}}"></script> -->
-  <!-- <script src="{{asset('plugins/jquery/jquery.js')}}"></script> -->
+  <!-- jquery js -->
   <script type="text/javascript" src="{{asset('plugins/jquery/jquery.js')}}"></script>
+  <!-- jquery ui js -->
   <script type="text/javascript" src="{{asset('plugins/jquery-ui/jquery-ui.js')}}"></script>
-  <!-- <script src="{{asset('plugins/jquery-ui/external/jquery/jquery.js')}}"></script> -->
-  <!-- <script src = "https://code.jquery.com/jquery-1.10.2.js"></script> -->
-  
+  <!-- toastr js -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+
+
   <link rel="stylesheet" href="{{asset('css/app.css')}}">
   <link rel="stylesheet" href="{{asset('css/custom-style.css')}}">
   <link rel="stylesheet" href="{{asset('dist/css/adminlte.css')}}">
@@ -230,6 +230,12 @@
                   <p>Payments</p>
                 </a>
               </li>
+              <li class="nav-item">
+                <a href="{{route('expense.index')}}" class="nav-link">
+                  <i class="fas fa-book nav-icon"></i>
+                  <p>Expenses</p>
+                </a>
+              </li>
             </ul>
           </li>
 
@@ -338,7 +344,45 @@
 
 <!-- jquery ui js-->
 <script src="{{asset('plugins/jquery-ui/jquery-ui.min.js')}}"></script>
-<!-- <script src = "https://code.jquery.com/ui/1.10.4/jquery-ui.js"></script> -->
+
+<!-- pusher work -->
+
+<!-- pusher -->
+<script src="https://js.pusher.com/7.0/pusher.min.js"></script>
+
+<!-- pusher event binder -->
+<script>
+  // Enable pusher logging - don't include this in production
+  // Pusher.logToConsole = true;
+
+  var pusher = new Pusher('c568a790f53b416b3823', {
+      cluster: 'ap2'
+  });
+
+  var channel = pusher.subscribe('my-channel');
+  channel.bind('threshold_reached', function(data) {
+      // console.log(JSON.stringify(data));
+
+      toastr.options = {
+      "closeButton": true,
+      "debug": false,
+      "newestOnTop": false,
+      "progressBar": true,
+      "positionClass": "toast-top-right",
+      "preventDuplicates": true,
+      "showDuration": "0",
+      "hideDuration": "0",
+      "timeOut": "0",
+      "extendedTimeOut": "0",
+      "showEasing": "swing",
+      "hideEasing": "linear",
+      "showMethod": "fadeIn",
+      "hideMethod": "fadeOut"
+      }
+
+      toastr["error"](data.message, "Threshold reached.");
+  });
+</script>
 
 </body>
 </html>

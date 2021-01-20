@@ -58,7 +58,7 @@ abstract class StockInRepository implements RepositoryInterface
             ];
         }
         catch (\Exception $exception) {
-            throw new DeletedStockInException($exception->getMessage());
+            throw new DeleteStockInException($exception->getMessage());
         }
     }
     

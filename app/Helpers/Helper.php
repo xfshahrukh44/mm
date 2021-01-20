@@ -10,7 +10,7 @@ function return_date($date)
 
 function return_date_pdf($date)
 {
-    return Carbon::parse($date)->format('j F, Y.');
+    return Carbon::parse($date)->format('j F, Y');
 }
 
 function return_user_name($id)

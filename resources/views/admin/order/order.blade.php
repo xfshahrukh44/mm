@@ -622,6 +622,9 @@
         // $('#editOrderModal .customer_id').selectmenu();
         // $('#editOrderModal .customer_id').selectmenu('refresh', true);
         $('#editOrderModal .dispatch_date').val(order.dispatch_date);
+        
+        // remove required attribute on rider_id
+        $("#editOrderModal .rider_id").prop("required", false);
 
         // empty wrapper
         $('.field_wrapper').html('');
@@ -764,6 +767,9 @@
         $('#addOrderModal .field_wrapper').prepend(fieldHTML);
 
         initAutocompleteItems(".product_search", "#addOrderModal .ui-widget", product_labels);
+
+        // remove required attribute on rider_id
+        $("#addOrderModal .rider_id").prop("required", false);
 
         $('#addOrderModal').modal('show');
     });

@@ -60,7 +60,7 @@ abstract class VendorRepository implements RepositoryInterface
             ];
         }
         catch (\Exception $exception) {
-            throw new DeletedVendorException($exception->getMessage());
+            throw new DeleteVendorException($exception->getMessage());
         }
     }
     

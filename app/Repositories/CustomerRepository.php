@@ -60,7 +60,7 @@ abstract class CustomerRepository implements RepositoryInterface
             ];
         }
         catch (\Exception $exception) {
-            throw new DeletedCustomerException($exception->getMessage());
+            throw new DeleteCustomerException($exception->getMessage());
         }
     }
     

@@ -57,7 +57,7 @@ abstract class MarketRepository implements RepositoryInterface
             ];
         }
         catch (\Exception $exception) {
-            throw new DeletedMarketException($exception->getMessage());
+            throw new DeleteMarketException($exception->getMessage());
         }
     }
     

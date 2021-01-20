@@ -61,7 +61,7 @@ abstract class InvoiceRepository implements RepositoryInterface
             ];
         }
         catch (\Exception $exception) {
-            throw new DeletedInvoiceException($exception->getMessage());
+            throw new DeleteInvoiceException($exception->getMessage());
         }
     }
     
@@ -125,7 +125,7 @@ abstract class InvoiceRepository implements RepositoryInterface
     public function paginate($pagination)
     {
         try {
-            return $this->model::with('customer')->orderBy('created_at', 'DESC')->paginate($pagination);
+            return $this->model::where('amount_pay', '>=', 'total')->with('customer')->orderBy('created_at', 'DESC')->paginate($pagination);
         }
         catch (\Exception $exception) {
             throw new AllInvoiceException($exception->getMessage());
@@ -154,17 +154,10 @@ abstract class InvoiceRepository implements RepositoryInterface
     public function generate_invoice_pdf($invoice_id)
     {
         $invoice = ($this->find($invoice_id))['invoice'];
-        // customer name
-        // invoice id
-        // order id
-        // shop name
-        // cus mobile number
-        // market and area
-        // bill#?
-        // rider name
-        // date of invoice
+        $pdf_name = $invoice->id.' - '.return_date_pdf(Carbon::now()).' - '.$invoice->customer->name.'.pdf';
         $customPaper = array(0,0,650,600);
-        $pdf = PDF::loadview('admin.invoice.invoice_pdf', compact('invoice'))->setPaper( $customPaper , 'landscape');
-        return $pdf->stream(Carbon::now() . '.pdf');
+        $pdf = PDF::loadview('admin.invoice.invoice_pdf', compact('invoice', 'pdf_name'))->setPaper( $customPaper , 'landscape');
+        return $pdf->stream($pdf_name, array('Attachment'=>0));
+        // return redirect()->away($pdf->stream(Carbon::now() . '.pdf'));
     }
 }

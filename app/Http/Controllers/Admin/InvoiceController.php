@@ -80,8 +80,8 @@ class InvoiceController extends Controller
             }
         }
 
-        // return redirect()->route('invoice.index');
-        return redirect()->back();
+        // return redirect()->back();
+        return $this->invoiceService->generate_invoice_pdf($invoice->id);
     }
     
     public function show(Request $request, $id)

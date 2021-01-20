@@ -23,17 +23,19 @@ Route::group(['middleware' => 'auth', 'prefix' => 'admin'], function() {
     //     return view('admin.layouts.master');
     // })->name('home');
 
-    // blade indexes
+    // BLADE INDEXES----------------------------------------------------------------
     Route::get('/dashboard', 'Admin\DashboardController@index')->name('dashboard');
     Route::get('/user/rider', 'Admin\UserController@getRiders')->name('rider');
     Route::get('/user/staff', 'Admin\UserController@index')->name('staff');
+    // -----------------------------------------------------------------------------
 
-    // all() routes
+    // all() ROUTES-------------------------------------------------------------------
     Route::get('/order/all', 'Admin\OrderController@all')->name('order.all');
     Route::get('/product/all', 'Admin\ProductController@all')->name('product.all');
     Route::get('/customer/all', 'Admin\CustomerController@all')->name('customer.all');
+    // -------------------------------------------------------------------------------
 
-    // api resources
+    // API RESOURCES-------------------------------------------------
     Route::apiResources(['user'=>'Admin\UserController']);
     Route::apiResources(['customer'=>'Admin\CustomerController']);
     Route::apiResources(['area'=>'Admin\AreaController']);
@@ -50,8 +52,10 @@ Route::group(['middleware' => 'auth', 'prefix' => 'admin'], function() {
     Route::apiResources(['vendor'=>'Admin\VendorController']);
     Route::apiResources(['receiving'=>'Admin\ReceivingController']);
     Route::apiResources(['payment'=>'Admin\PaymentController']);
+    Route::apiResources(['expense'=>'Admin\ExpenseController']);
+    // --------------------------------------------------------------
 
-    // search routes
+    // SEARCH ROUTES--------------------------------------------------------------------------------------------
     Route::get('/search_users', 'Admin\UserController@search_users')->name('search_users');
     Route::get('/search_customers', 'Admin\CustomerController@search_customers')->name('search_customers');
     Route::get('/search_products', 'Admin\ProductController@search_products')->name('search_products');
@@ -62,8 +66,10 @@ Route::group(['middleware' => 'auth', 'prefix' => 'admin'], function() {
     Route::get('/search_vendors', 'Admin\VendorController@search_vendors')->name('search_vendors');
     Route::get('/search_receivings', 'Admin\ReceivingController@search_receivings')->name('search_receivings');
     Route::get('/search_payments', 'Admin\PaymentController@search_payments')->name('search_payments');
+    Route::get('/search_expenses', 'Admin\ExpenseController@search_expenses')->name('search_expenses');
+    // ---------------------------------------------------------------------------------------------------------
 
-    // helpers
+    // HELPERS---------------------------------------------------------------------------------------------------------------
     Route::get('/fetch_specific_markets', 'Admin\MarketController@fetch_specific_markets')->name('fetch_specific_markets');
     Route::get('/create_category', 'Admin\ProductController@create_category')->name('create_category');
     Route::get('/create_brand', 'Admin\ProductController@create_brand')->name('create_brand');
@@ -74,52 +80,48 @@ Route::group(['middleware' => 'auth', 'prefix' => 'admin'], function() {
     Route::get('/fetch_by_customer_and_product', 'Admin\SpecialDiscountController@fetch_by_customer_and_product')->name('fetch_by_customer_and_product');
     Route::get('/get_customer_ledgers', 'Admin\LedgerController@get_customer_ledgers')->name('get_customer_ledgers');
     Route::get('/get_vendor_ledgers', 'Admin\LedgerController@get_vendor_ledgers')->name('get_vendor_ledgers');
-
-    // plug n play
-    Route::get('/plug_n_play', 'HomeController@plug_n_play')->name('plug_n_play');
-
+    // pusher
+    Route::get('/pusher', function(){return view('pusher');});
     // generate invoice
     Route::get('/generate_invoice_pdf/{id}', 'HomeController@generate_invoice_pdf')->name('generate_invoice_pdf');
-
+    // plug n play
+    Route::get('/plug_n_play', 'HomeController@plug_n_play')->name('plug_n_play');
+    // ----------------------------------------------------------------------------------------------------------------------
+    
+    
     // ARTISAN COMMAND ROUTES---------------------------------------
     Route::get('/install', function () {
         Illuminate\Support\Facades\Artisan::call('migrate:fresh', [
             '--seed' => true
-        ]);
-    });
-
-    Route::get('/migrate', function () {
-        Illuminate\Support\Facades\Artisan::call('migrate');
-    });
-
-    Route::get('/stepmigrate', function () {
-        Illuminate\Support\Facades\Artisan::call('migrate:rollback', [
-            '--step' => 3
-        ]);
-    });
-
-    Route::get('/clear', function () {
-        Illuminate\Support\Facades\Artisan::call('cache:clear');
+            ]);
+        });
+        Route::get('/migrate', function () {
+            Illuminate\Support\Facades\Artisan::call('migrate');
+        });
+        Route::get('/stepmigrate', function () {
+            Illuminate\Support\Facades\Artisan::call('migrate:rollback', [
+                '--step' => 3
+                ]);
+            });
+            Route::get('/clear', function () {
+                Illuminate\Support\Facades\Artisan::call('cache:clear');
         Illuminate\Support\Facades\Artisan::call('config:clear');
         Illuminate\Support\Facades\Artisan::call('view:clear');
         Illuminate\Support\Facades\Artisan::call('config:cache');
     });
-
     Route::get('/passport', function () {
         Illuminate\Support\Facades\Artisan::call('passport:install');
     });
-
     Route::get('/key', function () {
         Illuminate\Support\Facades\Artisan::call('key:generate');
     });
-
     Route::get('/storage', function () {
         Illuminate\Support\Facades\Artisan::call('storage:link');
     });
-
     Route::get('/composer-du', function()
     {
         Illuminate\Support\Facades\Artisan::call('dump-autoload');
     });
+    //--------------------------------------------------------------
 });
 

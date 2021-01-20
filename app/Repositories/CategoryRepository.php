@@ -57,7 +57,7 @@ abstract class CategoryRepository implements RepositoryInterface
             ];
         }
         catch (\Exception $exception) {
-            throw new DeletedCategoryException($exception->getMessage());
+            throw new DeleteCategoryException($exception->getMessage());
         }
     }
     

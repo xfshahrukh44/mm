@@ -14,7 +14,7 @@
 
     <!-- vendor_id -->
     <div class="form-group col-md-6">
-        <label for=""><i class="nav-icon fab fa-vendor-hunt"></i> Product</label>
+        <label for=""><i class="nav-icon fab fa-vendor-hunt"></i> Vendor</label>
         <select id="vendor_id" name="vendor_id" class="form-control vendor_id" style="width: 100%; height: 35px;">
             <option value="">Select vendor</option>
             @foreach($vendors as $vendor)

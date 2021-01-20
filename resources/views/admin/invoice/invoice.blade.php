@@ -46,6 +46,7 @@
                               <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Phone: activate to sort column ascending">Phone</th>
                               <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Address: activate to sort column ascending">Address</th>
                               <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Total: activate to sort column ascending">Total</th>
+                              <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Amount Paid: activate to sort column ascending">Amount Paid</th>
                                 @can('isSuperAdmin')
                                     <th class="sorting">Created By</th> 
                                     <th class="sorting">Modified By</th> 
@@ -69,7 +70,8 @@
                                         </td>
                                         <td class="{{'contact_number'.$invoice->id}}">{{$invoice->customer && $invoice->customer->contact_number ? $invoice->customer->contact_number : NULL}}</td>
                                         <td class="{{'address'.$invoice->id}}">{{($invoice->customer && $invoice->customer->shop_name ? $invoice->customer->shop_name : NULL) . ' - ' . ($invoice->customer && $invoice->customer->market ? $invoice->customer->market->name : NULL) . ' - ' .($invoice->customer && $invoice->customer->market ? $invoice->customer->market->area->name : NULL)}}</td>
-                                        <td class="{{'total'.$invoice->id}}">{{$invoice->total}} pkr</td>
+                                        <td class="{{'total'.$invoice->id}}">Rs.{{$invoice->total}}</td>
+                                        <td class="{{'amount_pay'.$invoice->id}}">Rs.{{$invoice->amount_pay}}</td>
                                         @can('isSuperAdmin')
                                             <td>{{return_user_name($invoice->created_by)}}</td>
                                             <td>{{return_user_name($invoice->modified_by)}}</td>
@@ -388,7 +390,7 @@
         // $('#table_row_wrapper').child('td').remove();
 
     });
-    
+
   });
 
 </script>

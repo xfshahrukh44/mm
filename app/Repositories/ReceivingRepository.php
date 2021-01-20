@@ -58,7 +58,7 @@ abstract class ReceivingRepository implements RepositoryInterface
             ];
         }
         catch (\Exception $exception) {
-            throw new DeletedReceivingException($exception->getMessage());
+            throw new DeleteReceivingException($exception->getMessage());
         }
     }
     

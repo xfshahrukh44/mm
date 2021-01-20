@@ -62,7 +62,7 @@ abstract class UserRepository implements RepositoryInterface
             ]);
         }
         catch (\Exception $exception) {
-            throw new DeletedUserException($exception->getMessage());
+            throw new DeleteUserException($exception->getMessage());
         }
     }
     

@@ -58,7 +58,7 @@ abstract class InvoiceProductRepository implements RepositoryInterface
             ];
         }
         catch (\Exception $exception) {
-            throw new DeletedInvoiceProductException($exception->getMessage());
+            throw new DeleteInvoiceProductException($exception->getMessage());
         }
     }
     

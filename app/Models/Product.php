@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Models\StockIn;
 use App\Models\StockOut;
 use App\Models\Product;
+use App\Events\ThresholdReached;
 
 class Product extends Model
 {
@@ -75,6 +76,16 @@ class Product extends Model
             $product->cost_value = $product->quantity_in_hand * $product->purchase_price;
             $product->sales_value = $product->quantity_in_hand * $product->consumer_selling_price;
             $product->save();
+
+
+            // pusher
+            if($query->opening_quantity < $query->moq){
+                $category = $query->category->name;
+                $brand = $query->brand->name;
+                $article = $query->article;
+                $message = $category.'-'.$brand.'-'.$article.' is low on stock.';
+                event(new ThresholdReached($message));
+            }
         });
 
         static::updated(function ($query) {
@@ -83,6 +94,15 @@ class Product extends Model
             $product->cost_value = $product->quantity_in_hand * $product->purchase_price;
             $product->sales_value = $product->quantity_in_hand * $product->consumer_selling_price;
             $product->save();
+
+            // pusher
+            if($query->quantity_in_hand < $query->moq){
+                $category = $query->category->name;
+                $brand = $query->brand->name;
+                $article = $query->article;
+                $message = $category.'-'.$brand.'-'.$article.' is low on stock.';
+                event(new ThresholdReached($message));
+            }
         });
     }
 

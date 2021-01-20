@@ -184,6 +184,7 @@ $(document).ready(function(){
   //   "searching":false
   // });
 
+
   // global vars
   var invoice = "";
   var receiving = "";
@@ -235,6 +236,7 @@ $(document).ready(function(){
     // fetch_all_stores();
     // fetch_all_brands();
 
+    $('#addReceivingModal .invoice_id').select2();
     // $('.invoice_id').select2();
   });
 
@@ -247,6 +249,8 @@ $(document).ready(function(){
     $('#editForm .invoice_id option[value="'+ receiving.invoice_id +'"]').prop('selected', true);
     $('#editForm .invoice_id').change();
 
+
+    $('#editReceivingModal .invoice_id').select2();
     $('#editReceivingModal').modal('show');
   });
 
