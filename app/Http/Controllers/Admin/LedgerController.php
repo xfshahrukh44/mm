@@ -125,4 +125,22 @@ class LedgerController extends Controller
 
         return view('admin.ledger.ledger', compact('ledgers', 'customers'));
     }
+
+    public function search_customer_ledgers(Request $request){
+        $query = $request['query'];
+        $ledgers = $this->customerService->search_customers($query);
+        $customers = $this->customerService->all();
+        $vendors = $this->vendorService->all();
+        $client_type = 'customer';
+        return view('admin.ledger.ledger', compact('ledgers', 'client_type', 'customers', 'vendors'));
+    }
+
+    public function search_vendor_ledgers(Request $request){
+        $query = $request['query'];
+        $ledgers = $this->vendorService->search_vendors($query);
+        $customers = $this->customerService->all();
+        $vendors = $this->vendorService->all();
+        $client_type = 'vendor';
+        return view('admin.ledger.ledger', compact('ledgers', 'client_type', 'customers', 'vendors'));
+    }
 }

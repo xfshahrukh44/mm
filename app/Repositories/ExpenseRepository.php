@@ -139,6 +139,7 @@ abstract class ExpenseRepository implements RepositoryInterface
         $expenses = Expense::where('detail', 'LIKE', '%'.$query.'%')
                         ->orWhere('type', 'LIKE', '%'.$query.'%')
                         ->orWhere('amount', 'LIKE', '%'.$query.'%')
+                        ->orWhere('detail', 'LIKE', '%'.$query.'%')
                         ->paginate(env('PAGINATION'));
 
         return $expenses;

@@ -144,7 +144,11 @@ abstract class VendorRepository implements RepositoryInterface
         // search block
         $vendors = Vendor::where('name', 'LIKE', '%'.$query.'%')
                         ->orWhere('contact_number', 'LIKE', '%'.$query.'%')
+                        ->orWhere('whatsapp_number', 'LIKE', '%'.$query.'%')
+                        ->orWhere('type', 'LIKE', '%'.$query.'%')
                         ->orWhere('shop_name', 'LIKE', '%'.$query.'%')
+                        ->orWhere('shop_number', 'LIKE', '%'.$query.'%')
+                        ->orWhere('status', 'LIKE', '%'.$query.'%')
                         ->orWhereIn('area_id', $area_ids)
                         ->paginate(env('PAGINATION'));
 

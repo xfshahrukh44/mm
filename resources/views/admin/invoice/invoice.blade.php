@@ -32,6 +32,19 @@
                         <i class="fas fa-plus"></i> Add New Invoice
                     </button>
                 </div>
+                <!-- search bar -->
+                <form action="{{route('search_invoices')}}" class="form-wrapper">
+                    <div class="row">
+                        <!-- search bar -->
+                        <div class="topnav col-md-4">
+                            <input name="query" class="form-control" id="search_content" type="text" placeholder="Search..">
+                        </div>
+                        <!-- search button-->
+                        <button type="submit" class="btn btn-primary col-md-0 justify-content-start" id="search_button">
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </div>
+                </form>
             </div>
             <!-- /.card-header -->
             <div class="card-body">

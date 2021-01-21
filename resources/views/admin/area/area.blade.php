@@ -47,7 +47,9 @@
                             <td class="{{'name'.$area->id}}" id="{{'name'.$area->id}}">{{$area->name}}</td>
                             <td class="{{'name'.$area->id}}" id="{{'name'.$area->id}}">
                                 @foreach($area->markets as $market)
-                                    {{$market->name.','}}
+                                    {{ $loop->first ? '' : ', ' }}
+                                    {{$market->name}}
+                                    {{ $loop->last ? '.' : '' }}
                                 @endforeach
                             </td>
                             <td>

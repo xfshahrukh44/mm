@@ -28,17 +28,17 @@ abstract class ProductRepository implements RepositoryInterface
     
     public function create(array $data)
     {
-        // try 
-        // {
+        try 
+        {
             $product = $this->model->create($data);
             
             return [
                 'product' => $this->find($product->id)
             ];
-        // }
-        // catch (\Exception $exception) {
-        //     return $exception->getMessage();
-        // }
+        }
+        catch (\Exception $exception) {
+            return $exception->getMessage();
+        }
     }
     
     public function delete($id)

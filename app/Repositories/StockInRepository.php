@@ -8,6 +8,7 @@ use App\Exceptions\StockIn\UpdateStockInException;
 use App\Exceptions\StockIn\DeleteStockInException;
 use App\Models\StockIn;
 use App\Models\Product;
+use App\Models\Vendor;
 use Illuminate\Support\Facades\DB;
 use Hash;
 use JWTAuth;
@@ -139,9 +140,19 @@ abstract class StockInRepository implements RepositoryInterface
             array_push($product_ids, $product->id);
         }
 
+        // vendors
+        $vendors = Vendor::select('id')->where('name', 'LIKE', '%'.$query.'%')->get();
+        $vendor_ids = [];
+        foreach($vendors as $vendor){
+            array_push($vendor_ids, $vendor->id);
+        }
+
         // search block
         $stockIns = StockIn::whereIn('product_id', $product_ids)
+                        ->orWhereIn('vendor_id', $vendor_ids)
                         ->orWhere('quantity', 'LIKE', '%'.$query.'%')
+                        ->orWhere('rate', 'LIKE', '%'.$query.'%')
+                        ->orWhere('amount', 'LIKE', '%'.$query.'%')
                         ->paginate(env('PAGINATION'));
 
         return $stockIns;

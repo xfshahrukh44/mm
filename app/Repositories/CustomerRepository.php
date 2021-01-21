@@ -140,12 +140,6 @@ abstract class CustomerRepository implements RepositoryInterface
         foreach($markets as $market){
             array_push($market_ids, $market->id);
         }
-        // areas
-        // $areas = Area::select('id')->where('name', 'LIKE', '%'.$query.'%')->get();
-        // $area_ids = [];
-        // foreach($areas as $area){
-        //     array_push($area_ids, $area->id);
-        // }
 
         // relational work customer->market->area
         $areas = Area::select('id')->where('name', 'LIKE', '%'.$query.'%')->get();
@@ -159,7 +153,17 @@ abstract class CustomerRepository implements RepositoryInterface
         // search block
         $customers = Customer::where('name', 'LIKE', '%'.$query.'%')
                         ->orWhere('contact_number', 'LIKE', '%'.$query.'%')
+                        ->orWhere('whatsapp_number', 'LIKE', '%'.$query.'%')
+                        ->orWhere('type', 'LIKE', '%'.$query.'%')
                         ->orWhere('shop_name', 'LIKE', '%'.$query.'%')
+                        ->orWhere('shop_number', 'LIKE', '%'.$query.'%')
+                        ->orWhere('floor', 'LIKE', '%'.$query.'%')
+                        ->orWhere('status', 'LIKE', '%'.$query.'%')
+                        ->orWhere('visiting_days', 'LIKE', '%'.$query.'%')
+                        ->orWhere('cash_on_delivery', 'LIKE', '%'.$query.'%')
+                        ->orWhere('opening_balance', 'LIKE', '%'.$query.'%')
+                        ->orWhere('payment_terms', 'LIKE', '%'.$query.'%')
+                        ->orWhere('payment_terms', 'LIKE', '%'.$query.'%')
                         ->orWhereIn('market_id', $market_ids)
                         ->orWhereIn('market_id', $area_ids)
                         ->paginate(env('PAGINATION'));

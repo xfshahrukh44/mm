@@ -30,7 +30,11 @@
             <i class="fas fa-plus"></i> Add New Ledger</button>
         </div>
         <!-- search bar -->
-        <form action="{{route('search_ledgers')}}" class="form-wrapper">
+        @if($client_type == 'customer')
+        <form action="{{route('search_customer_ledgers')}}" class="form-wrapper">
+        @else
+        <form action="{{route('search_vendor_ledgers')}}" class="form-wrapper">
+        @endif
           <div class="row">
               <!-- search bar -->
               <div class="topnav col-md-4">

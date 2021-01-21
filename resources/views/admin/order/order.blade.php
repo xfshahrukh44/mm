@@ -32,6 +32,19 @@
                         <i class="fas fa-plus"></i> Add New Order
                     </button>
                 </div>
+                <!-- search bar -->
+                <form action="{{route('search_orders')}}" class="form-wrapper">
+                    <div class="row">
+                        <!-- search bar -->
+                        <div class="topnav col-md-4">
+                            <input name="query" class="form-control" id="search_content" type="text" placeholder="Search..">
+                        </div>
+                        <!-- search button-->
+                        <button type="submit" class="btn btn-primary col-md-0 justify-content-start" id="search_button">
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </div>
+                </form>
             </div>
             <!-- /.card-header -->
             <div class="card-body">
@@ -68,7 +81,7 @@
                                             </a>
                                         </td>
                                         <td class="{{'contact_number'.$order->id}}">{{$order->customer ? $order->customer->contact_number : NULL}}</td>
-                                        <td class="{{'address'.$order->id}}">{{$order->customer ? ($order->customer->shop_name . ' - ' . $order->customer->market->name . ' - ' . $order->customer->market->area->name) : NULL}}</td>
+                                        <td class="{{'address'.$order->id}}">{{$order->customer ? ($order->customer->shop_name . ' - ' . ($order->customer->market ? $order->customer->market->name : NULL) . ' - ' . ($order->customer->market && $order->customer->market->area ? $order->customer->market->area->name : NULL)) : NULL}}</td>
                                         <td class="{{'total'.$order->id}}">RS.{{$order->total}}</td>
                                         <td class="{{'status'.$order->id}} text-center">
 

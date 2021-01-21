@@ -58,14 +58,14 @@
                     <td class="{{'type'.$expense->id}}">{{$expense->type ? $expense->type : NULL}}</td>
                     <td class="{{'amount'.$expense->id}}">{{$expense->amount ? $expense->amount : NULL}}</td>
                     <td class="{{'detail'.$expense->id}}">{{$expense->detail ? $expense->detail : NULL}}</td>
-                    <td class="{{'date'.$expense->id}}">{{$expense->date ? $expense->date : NULL}}</td>
+                    <td class="{{'date'.$expense->id}}">{{$expense->date ? return_date($expense->date) : NULL}}</td>
                     <td class="{{'created_by'.$expense->id}}">{{return_user_name($expense->created_by)}}</td>
                     <td class="{{'modified_by'.$expense->id}}">{{return_user_name($expense->modified_by)}}</td>
                     <td>
                       <!-- Detail -->
-                      <a href="#" class="detailButton" data-id="{{$expense->id}}">
+                      <!-- <a href="#" class="detailButton" data-id="{{$expense->id}}">
                         <i class="fas fa-eye green ml-1"></i>
-                      </a>
+                      </a> -->
                       <!-- Edit -->
                       <a href="#" class="editButton" data-id="{{$expense->id}}" data-object="{{$expense}}">
                         <i class="fas fa-edit blue ml-1"></i>

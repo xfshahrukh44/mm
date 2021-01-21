@@ -65,9 +65,9 @@
                     <td class="{{'modified_by'.$receiving->id}}">{{return_user_name($receiving->modified_by)}}</td>
                     <td>
                       <!-- Detail -->
-                      <a href="#" class="detailButton" data-id="{{$receiving->id}}">
+                      <!-- <a href="#" class="detailButton" data-id="{{$receiving->id}}">
                         <i class="fas fa-eye green ml-1"></i>
-                      </a>
+                      </a> -->
                       <!-- Edit -->
                       <a href="#" class="editButton" data-id="{{$receiving->id}}">
                         <i class="fas fa-edit blue ml-1"></i>

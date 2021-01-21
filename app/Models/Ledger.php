@@ -36,21 +36,41 @@ class Ledger extends Model
 
             // old
             if($old_type == 'credit'){
-                $client->outstanding_balance -= old_amount;
+                // outstanding_balance
+                $client->outstanding_balance -= $old_amount;
+                // business_to_date for customer
+                if($query->customer_id != NULL){
+                    $client->business_to_date -= $old_amount;
+                }
                 $client->save();
             }
             if($old_type == 'debit'){
+                // outstanding_balance
                 $client->outstanding_balance -= $old_amount;
+                // business_to_date for vendor
+                if($query->vendor_id != NULL){
+                    $client->business_to_date -= $old_amount;
+                }
                 $client->save();
             }
 
             // new
             if($new_type == 'credit'){
+                // outstanding_balance
                 $client->outstanding_balance += $new_amount;
+                // business_to_date for customer
+                if($query->customer_id != NULL){
+                    $client->business_to_date += $new_amount;
+                }
                 $client->save();
             }
             if($new_type == 'debit'){
+                // outstanding_balance
                 $client->outstanding_balance -= $new_amount;
+                // business_to_date for vendor
+                if($query->vendor_id != NULL){
+                    $client->business_to_date += $new_amount;
+                }
                 $client->save();
             }
         });
@@ -64,11 +84,21 @@ class Ledger extends Model
             }
 
             if($query->type == 'credit'){
+                // outstanding_balance
                 $client->outstanding_balance -= $query->amount;
+                // business_to_date for customer
+                if($query->customer_id != NULL){
+                    $client->business_to_date -= $query->amount;
+                }
                 $client->save();
             }
             if($query->type == 'debit'){
+                // outstanding_balance
                 $client->outstanding_balance += $query->amount;
+                // business_to_date for vendor
+                if($query->vendor_id != NULL){
+                    $client->business_to_date -= $query->amount;
+                }
                 $client->save();
             }
         });
@@ -87,11 +117,21 @@ class Ledger extends Model
 
             if($check == 1){
                 if($query->type == 'credit'){
+                    // outstanding_balance
                     $client->outstanding_balance += $query->amount;
+                    // business_to_date for customer
+                    if($query->customer_id != NULL){
+                        $client->business_to_date += $query->amount;
+                    }
                     $client->save();
                 }
                 if($query->type == 'debit'){
+                    // outstanding_balance
                     $client->outstanding_balance -= $query->amount;
+                    // business_to_date for vendor
+                    if($query->vendor_id != NULL){
+                        $client->business_to_date += $query->amount;
+                    }
                     $client->save();
                 }
             }

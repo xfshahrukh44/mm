@@ -8,6 +8,7 @@ use App\Exceptions\Invoice\UpdateInvoiceException;
 use App\Exceptions\Invoice\DeleteInvoiceException;
 use App\Models\Invoice;
 use App\Models\Customer;
+use App\Services\CustomerService;
 use Illuminate\Support\Facades\DB;
 use Hash;
 use JWTAuth;
@@ -20,10 +21,12 @@ use Carbon\Carbon;
 abstract class InvoiceRepository implements RepositoryInterface
 {
     private $model;
+    private $customerService;
     
-    public function __construct(Invoice $invoice)
+    public function __construct(Invoice $invoice, CustomerService $customerService)
     {
         $this->model = $invoice;
+        $this->customerService = $customerService;
     }
     
     public function create(array $data)
@@ -136,16 +139,16 @@ abstract class InvoiceRepository implements RepositoryInterface
     {
         // foreign fields
         // customers
-        $customers = Customer::select('id')->where('name', 'LIKE', '%'.$query.'%')->get();
+        $customers = $this->customerService->search_customers($query);
         $customer_ids = [];
         foreach($customers as $customer){
             array_push($customer_ids, $customer->id);
         }
 
         // search block
-        $invoices = Invoice::where('article', 'LIKE', '%'.$query.'%')
-                        ->orWhereIn('customer_id', $customer_ids)
+        $invoices = Invoice::whereIn('customer_id', $customer_ids)
                         ->orWhere('total', 'LIKE', '%'.$query.'%')
+                        ->orWhere('amount_pay', 'LIKE', '%'.$query.'%')
                         ->paginate(env('PAGINATION'));
 
         return $invoices;

@@ -61,9 +61,9 @@
                     <td class="{{'modified_by'.$payment->id}}">{{return_user_name($payment->modified_by)}}</td>
                     <td>
                       <!-- Detail -->
-                      <a href="#" class="detailButton" data-id="{{$payment->id}}">
+                      <!-- <a href="#" class="detailButton" data-id="{{$payment->id}}">
                         <i class="fas fa-eye green ml-1"></i>
-                      </a>
+                      </a> -->
                       <!-- Edit -->
                       <a href="#" class="editButton" data-id="{{$payment->id}}">
                         <i class="fas fa-edit blue ml-1"></i>

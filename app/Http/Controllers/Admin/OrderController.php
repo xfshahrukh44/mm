@@ -180,8 +180,9 @@ class OrderController extends Controller
         $orders = $this->orderService->search_orders($query);
         $customers = $this->customerService->all();
         $products = $this->productService->all();
+        $riders = $this->userService->all_riders();
 
-        return view('admin.order.order', compact('orders', 'customers', 'products'));
+        return view('admin.order.order', compact('orders', 'customers', 'products', 'riders'));
     }
 
     public function fetch_order_products(Request $request)

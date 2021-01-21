@@ -8,6 +8,7 @@ use App\Exceptions\Order\UpdateOrderException;
 use App\Exceptions\Order\DeleteOrderException;
 use App\Models\Order;
 use App\Models\Customer;
+use App\Services\CustomerService;
 use Illuminate\Support\Facades\DB;
 use Hash;
 use JWTAuth;
@@ -18,10 +19,12 @@ use Storage;
 abstract class OrderRepository implements RepositoryInterface
 {
     private $model;
+    private $customerService;
     
-    public function __construct(Order $order)
+    public function __construct(Order $order, CustomerService $customerService)
     {
         $this->model = $order;
+        $this->customerService = $customerService;
     }
     
     public function create(array $data)
@@ -134,15 +137,18 @@ abstract class OrderRepository implements RepositoryInterface
     {
         // foreign fields
         // customers
-        $customers = Customer::select('id')->where('name', 'LIKE', '%'.$query.'%')->get();
+        // $customers = Customer::select('id')
+        //             ->where('name', 'LIKE', '%'.$query.'%')
+        //             ->orWhere('phone', 'LIKE', '%'.$query.'%')
+        //             ->get();
+        $customers = $this->customerService->search_customers($query);
         $customer_ids = [];
         foreach($customers as $customer){
             array_push($customer_ids, $customer->id);
         }
 
         // search block
-        $orders = Order::where('article', 'LIKE', '%'.$query.'%')
-                        ->orWhereIn('customer_id', $customer_ids)
+        $orders = Order::whereIn('customer_id', $customer_ids)
                         ->orWhere('total', 'LIKE', '%'.$query.'%')
                         ->orWhere('status', 'LIKE', '%'.$query.'%')
                         ->paginate(env('PAGINATION'));

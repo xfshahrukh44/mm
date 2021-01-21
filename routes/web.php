@@ -63,10 +63,13 @@ Route::group(['middleware' => 'auth', 'prefix' => 'admin'], function() {
     Route::get('/search_stockIns', 'Admin\StockInController@search_stockIns')->name('search_stockIns');
     Route::get('/search_stockOuts', 'Admin\StockOutController@search_stockOuts')->name('search_stockOuts');
     Route::get('/search_orders', 'Admin\OrderController@search_orders')->name('search_orders');
+    Route::get('/search_invoices', 'Admin\InvoiceController@search_invoices')->name('search_invoices');
     Route::get('/search_vendors', 'Admin\VendorController@search_vendors')->name('search_vendors');
     Route::get('/search_receivings', 'Admin\ReceivingController@search_receivings')->name('search_receivings');
     Route::get('/search_payments', 'Admin\PaymentController@search_payments')->name('search_payments');
     Route::get('/search_expenses', 'Admin\ExpenseController@search_expenses')->name('search_expenses');
+    Route::get('/search_customer_ledgers', 'Admin\LedgerController@search_customer_ledgers')->name('search_customer_ledgers');
+    Route::get('/search_vendor_ledgers', 'Admin\LedgerController@search_vendor_ledgers')->name('search_vendor_ledgers');
     // ---------------------------------------------------------------------------------------------------------
 
     // HELPERS---------------------------------------------------------------------------------------------------------------

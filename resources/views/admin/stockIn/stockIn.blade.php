@@ -67,9 +67,9 @@
                     <td class="{{'modified_by'.$stockIn->id}}">{{return_user_name($stockIn->modified_by)}}</td>
                     <td>
                       <!-- Detail -->
-                      <a href="#" class="detailButton" data-id="{{$stockIn->id}}">
+                      <!-- <a href="#" class="detailButton" data-id="{{$stockIn->id}}">
                         <i class="fas fa-eye green ml-1"></i>
-                      </a>
+                      </a> -->
                       <!-- Edit -->
                       <a href="#" class="editButton" data-id="{{$stockIn->id}}" data-object="{{$stockIn}}">
                         <i class="fas fa-edit blue ml-1"></i>
