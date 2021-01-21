@@ -51,7 +51,7 @@ class UserController extends Controller
         if($request->identifier == 'rider'){
             return $this->getRiders($request);
         }
-        // return redirect()->route('user.index');
+
         return redirect()->back();
     }
     
@@ -97,7 +97,6 @@ class UserController extends Controller
             return $this->getRiders($request);
         }
 
-        // return redirect()->route('user.index');
         return redirect()->back();
     }
     
@@ -111,7 +110,7 @@ class UserController extends Controller
         if($request->user_type == 'rider'){
             return $this->getRiders($request);
         }
-        // return redirect()->route('user.index');
+        
         return redirect()->back();
     }
 

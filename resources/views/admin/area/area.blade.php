@@ -37,61 +37,59 @@
                                <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Name: activate to sort column ascending">Name</th>
                                <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Name: activate to sort column ascending">Markets</th>
                                <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" width="10%">Actions</th>
-                           </tr>
-                       </thead>
-
-                       <tbody>
-                        @if(count($areas) > 0)
-                        @foreach($areas as $area)
-                        <tr role="row" class="odd">
-                            <td class="{{'name'.$area->id}}" id="{{'name'.$area->id}}">{{$area->name}}</td>
-                            <td class="{{'name'.$area->id}}" id="{{'name'.$area->id}}">
-                                @foreach($area->markets as $market)
-                                    {{ $loop->first ? '' : ', ' }}
-                                    {{$market->name}}
-                                    {{ $loop->last ? '.' : '' }}
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if(count($areas) > 0)
+                                @foreach($areas as $area)
+                                    <tr role="row" class="odd">
+                                        <td class="{{'name'.$area->id}}" id="{{'name'.$area->id}}">{{$area->name}}</td>
+                                        <td class="{{'name'.$area->id}}" id="{{'name'.$area->id}}">
+                                            @foreach($area->markets as $market)
+                                                {{ $loop->first ? '' : ', ' }}
+                                                {{$market->name}}
+                                                {{ $loop->last ? '.' : '' }}
+                                            @endforeach
+                                        </td>
+                                        <td>
+                                            <!-- Detail -->
+                                            <!-- <a href="#" class="detailButton" data-id="{{$area->id}}" data-area="{{$area}}" data-route="{{route('area.show', 0)}}">
+                                                <i class="fas fa-eye green ml-1"></i>
+                                            </a>
+                                            | -->
+                                            <!-- Edit -->
+                                            <!-- <button class="btn btn-success xs col-md-1" id="add_program" data-toggle="modal" data-target="#addUserModal">
+                                                <i class="fas fa-user-plus fa-lg mr-2"></i>Add new
+                                            </button> -->
+                                            <a href="#" class="editButton" data-id="{{$area->id}}" data-route="{{route('area.show', 0)}}">
+                                                <i class="fas fa-edit blue ml-1"></i>
+                                            </a>
+                                            <!-- Delete -->
+                                            <a href="#" class="deleteButton" data-id="{{$area->id}}">
+                                                <i class="fas fa-trash red ml-1"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
                                 @endforeach
-                            </td>
-                            <td>
-                                <!-- Detail -->
-                                <!-- <a href="#" class="detailButton" data-id="{{$area->id}}" data-area="{{$area}}" data-route="{{route('area.show', 0)}}">
-                                    <i class="fas fa-eye green ml-1"></i>
-                                </a>
-                                | -->
-                                <!-- Edit -->
-                                <!-- <button class="btn btn-success xs col-md-1" id="add_program" data-toggle="modal" data-target="#addUserModal">
-                                    <i class="fas fa-user-plus fa-lg mr-2"></i>Add new
-                                </button> -->
-                                <a href="#" class="editButton" data-id="{{$area->id}}" data-route="{{route('area.show', 0)}}">
-                                    <i class="fas fa-edit blue ml-1"></i>
-                                </a>
-                                <!-- Delete -->
-                                <a href="#" class="deleteButton" data-id="{{$area->id}}">
-                                    <i class="fas fa-trash red ml-1"></i>
-                                </a>
-                            </td>
-                        </tr>
-                        @endforeach
-                        @else
-                        <tr>
-                            <td colspan="3"><h6 align="center">No area(s) found</h6></td>
-                        </tr>
-                        @endif
-                    </tbody>
-                    <tfoot>
-                        
-                    </tfoot>
-                </table>
+                            @else
+                            <tr>
+                                <td colspan="3"><h6 align="center">No area(s) found</h6></td>
+                            </tr>
+                            @endif
+                        </tbody>
+                        <tfoot>         
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+            <!-- /.card-body -->
+            <div class="card-footer">
+                @if(count($areas) > 0)
+                {{$areas->links()}}
+                @endif
             </div>
         </div>
-        <!-- /.card-body -->
-        <div class="card-footer">
-            @if(count($areas) > 0)
-            {{$areas->links()}}
-            @endif
-        </div>
     </div>
-</div>
 </div>
 
 <!-- Create view -->
@@ -277,6 +275,11 @@
         //   "bInfo": false,
         //   "searching":false 
         // });
+
+        // persistent active sidebar
+        var element = $('li a[href*="'+ window.location.pathname +'"]');
+        element.parent().parent().parent().addClass('menu-open');
+        element.addClass('active');
 
         var current_area_id = 0;
         var current_route = "";

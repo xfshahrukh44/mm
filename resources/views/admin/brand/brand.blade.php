@@ -142,12 +142,18 @@
 <script>
     $(document).ready(function(){
          //*** datatables ***//
-         $('#example1').dataTable({
+        $('#example1').dataTable({
             "bPaginate": false,
             "bLengthChange": false,
             "bFilter": true,
             "bInfo": false,
-            "searching":false });
+            "searching":false
+        });
+
+        // persistent active sidebar
+        var element = $('li a[href*="'+ window.location.pathname +'"]');
+        element.parent().parent().parent().addClass('menu-open');
+        element.addClass('active');
 
         // edit
         $('.editButton').on('click', function(){

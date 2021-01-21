@@ -182,6 +182,11 @@ $(document).ready(function(){
   //   "searching":false
   // });
 
+  // persistent active sidebar
+  var element = $('li a[href*="'+ window.location.pathname +'"]');
+  element.parent().parent().parent().addClass('menu-open');
+  element.addClass('active');
+
   // create
   $('#add_stockOut').on('click', function(){
     // fetch_all_stores();

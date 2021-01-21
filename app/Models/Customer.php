@@ -44,33 +44,7 @@ class Customer extends Model
         });
 
         static::updating(function ($query) {
-            // $query->modified_by = auth()->user()->id;
-
-            // // old and new fields
-            // $old_opening_balance = $query->getOriginal('opening_balance');
-            // $new_opening_balance = $query->opening_balance;
-            // // adjusting new balance
-            // if($new_opening_balance > 0){
-            //     $type = 'credit';
-            // }
-            // if($new_opening_balance < 0){
-            //     $type = 'debit';
-            //     $new_opening_balance *= -1;
-            // }
-            // dd($query);
-
-            // // finding ledger entry
-            // $ledger = Ledger::where('customer_id', $query->id)
-            //         ->where('amount', $old_opening_balance)
-            //         ->where('type', $type)
-            //         ->first();
-
-            // // updating ledger
-            // $ledger->update([
-            //     'amount' => $new_opening_balance,
-            //     'type' => $type
-            // ]);
-            // $ledger->save();
+            $query->modified_by = auth()->user()->id;
         });
 
         static::created(function ($query) {

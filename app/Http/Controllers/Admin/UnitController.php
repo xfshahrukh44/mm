@@ -37,7 +37,6 @@ class UnitController extends Controller
 
         $this->unitService->create($request->all());
 
-        // return redirect()->route('unit.index');
         return redirect()->back();
     }
     
@@ -68,7 +67,6 @@ class UnitController extends Controller
 
         $this->unitService->update($request->all(), $id);
 
-        // return redirect()->route('unit.index');
         return redirect()->back();
     }
     
@@ -78,7 +76,6 @@ class UnitController extends Controller
 
         $this->unitService->delete($id);
 
-        // return redirect()->route('unit.index');
         return redirect()->back();
     }
 }

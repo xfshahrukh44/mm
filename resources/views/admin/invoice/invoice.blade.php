@@ -283,6 +283,11 @@
 <script>
 
   $(document).ready(function(){
+    // persistent active sidebar
+    var element = $('li a[href*="'+ window.location.pathname +'"]');
+    element.parent().parent().parent().addClass('menu-open');
+    element.addClass('active');
+
     // on ready functions
     $('.customer_id').select2();
     fetch_product_labels();

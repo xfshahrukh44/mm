@@ -46,56 +46,13 @@ class Vendor extends Model
         });
 
         static::updating(function ($query) {
-            // $query->modified_by = auth()->user()->id;
-
-            // // old and new fields
-            // $old_opening_balance = $query->getOriginal('opening_balance');
-            // $new_opening_balance = $query->opening_balance;
-            // // adjusting new balance
-            // if($new_opening_balance > 0){
-            //     $type = 'credit';
-            // }
-            // if($new_opening_balance < 0){
-            //     $type = 'debit';
-            //     $new_opening_balance *= -1;
-            // }
-            // dd($query);
-
-            // // finding ledger entry
-            // $ledger = Ledger::where('vendor_id', $query->id)
-            //         ->where('amount', $old_opening_balance)
-            //         ->where('type', $type)
-            //         ->first();
-
-            // // updating ledger
-            // $ledger->update([
-            //     'amount' => $new_opening_balance,
-            //     'type' => $type
-            // ]);
-            // $ledger->save();
+            $query->modified_by = auth()->user()->id;
         });
 
         static::created(function ($query) {
             // sales ledger account number
             $query->account_number = '4010' . $query->id;
             $query->save();
-            // if($query->opening_balance != NULL){
-            //     if($query->opening_balance > 0){
-            //         $type = 'credit';
-            //     }
-            //     else if($query->opening_balance < 0){
-            //         $type = 'debit';
-            //         $query['opening_balance'] *= -1;
-            //     }
-            //     else{
-            //         $type = 'debit';
-            //     }
-            //     Ledger::create([
-            //         'vendor_id' => $query->id,
-            //         'amount' => $query->opening_balance,
-            //         'type' => $type
-            //     ]);
-            // }
         });
     }
 

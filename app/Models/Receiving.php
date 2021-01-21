@@ -50,7 +50,6 @@ class Receiving extends Model
                 'type' => 'debit'
             ]);
 
-
             $invoice->save();
         });
 

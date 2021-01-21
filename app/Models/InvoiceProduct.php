@@ -30,32 +30,11 @@ class InvoiceProduct extends Model
         });
 
         static::updating(function ($query) {
-            // $query->modified_by = auth()->user()->id;
-
-            // $invoice = Invoice::find($query->invoice_id);
-            // $customer_id = $invoice->customer_id;
-            // $old_quantity = $query->getOriginal('quantity');
-            // $new_quantity = $query->quantity;
-
-            // // old
-            // StockIn::create([
-            //     'product_id' => $query->product_id,
-            //     'quantity' => $old_quantity,
-            // ]);
-
-            // // new
-            // StockOut::create([
-            //     'customer_id' => $customer_id,
-            //     'product_id' => $query->product_id,
-            //     'quantity' => $new_quantity,
-            // ]);
+            $query->modified_by = auth()->user()->id;
         });
 
         static::deleting(function ($query) {
-            // StockIn::create([
-            //     'product_id' => $query->product_id,
-            //     'quantity' => $query->quantity,
-            // ]);
+            
         });
 
         static::created(function ($query) {

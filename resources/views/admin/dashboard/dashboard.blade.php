@@ -134,7 +134,9 @@
 
 <script>
     $(document).ready(function(){
-        
+        // persistent active sidebar
+        var element = $('li a[href*="'+ window.location.pathname +'"]');
+        element.parent().addClass('menu-open');
     });
 </script>
 @endsection('content_body')

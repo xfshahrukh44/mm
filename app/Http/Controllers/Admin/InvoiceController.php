@@ -118,7 +118,6 @@ class InvoiceController extends Controller
         
         $this->invoiceService->update($request->all(), $id);
 
-        // return redirect()->route('invoice.index');
         return redirect()->back();
     }
     
@@ -128,7 +127,6 @@ class InvoiceController extends Controller
 
         $this->invoiceService->delete($id);
 
-        // return redirect()->route('invoice.index');
         return redirect()->back();
     }
 

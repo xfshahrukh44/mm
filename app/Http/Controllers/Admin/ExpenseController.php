@@ -40,7 +40,6 @@ class ExpenseController extends Controller
 
         $this->expenseService->create($request->all());
 
-        // return redirect()->route('expense.index');
         return redirect()->back();
     }
     
@@ -74,7 +73,6 @@ class ExpenseController extends Controller
 
         $this->expenseService->update($request->all(), $id);
 
-        // return redirect()->route('expense.index');
         return redirect()->back();
     }
     
@@ -84,7 +82,6 @@ class ExpenseController extends Controller
 
         $this->expenseService->delete($id);
 
-        // return redirect()->route('expense.index');
         return redirect()->back();
     }
 }

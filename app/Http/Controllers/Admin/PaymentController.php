@@ -42,7 +42,6 @@ class PaymentController extends Controller
 
         $this->paymentService->create($request->all());
 
-        // return redirect()->route('payment.index');
         return redirect()->back();
     }
     
@@ -75,7 +74,6 @@ class PaymentController extends Controller
 
         $this->paymentService->update($request->all(), $id);
 
-        // return redirect()->route('payment.index');
         return redirect()->back();
     }
     
@@ -85,7 +83,6 @@ class PaymentController extends Controller
 
         $this->paymentService->delete($id);
 
-        // return redirect()->route('payment.index');
         return redirect()->back();
     }
 

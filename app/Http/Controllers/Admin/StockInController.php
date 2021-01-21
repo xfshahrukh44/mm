@@ -50,7 +50,6 @@ class StockInController extends Controller
 
         $this->stockInService->create($request->all());
 
-        // return redirect()->route('stock_in.index');
         return redirect()->back();
     }
     
@@ -86,7 +85,6 @@ class StockInController extends Controller
 
         $this->stockInService->update($request->all(), $id);
 
-        // return redirect()->route('stock_in.index');
         return redirect()->back();
     }
     
@@ -96,7 +94,6 @@ class StockInController extends Controller
 
         $this->stockInService->delete($id);
 
-        // return redirect()->route('stock_in.index');
         return redirect()->back();
     }
 

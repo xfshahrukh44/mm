@@ -138,7 +138,11 @@
                         </tr>
                         @endforeach
                         @else
-                        <tr><td colspan="9"><h6 align="center">No record(s) found</h6></td></tr>
+                            @if($user_type == 'staff')
+                                <tr><td colspan="6"><h6 align="center">No record(s) found</h6></td></tr>
+                            @else
+                                <tr><td colspan="5"><h6 align="center">No record(s) found</h6></td></tr>
+                            @endif
                         @endif
                     </tbody>
                     <tfoot>
@@ -299,6 +303,10 @@
         //     "bInfo": false,
         //     "searching":false
         // });
+
+        // persistent active sidebar
+        var element = $('li a[href*="'+ window.location.pathname +'"]');
+        element.parent().parent().parent().addClass('menu-open');
 
 
         //*** View Profile ***//        

@@ -323,6 +323,11 @@ $(document).ready(function(){
   //   "searching":false
   // });
 
+  // persistent active sidebar
+  var element = $('li a[href*="'+ window.location.pathname +'"]');
+  element.parent().parent().parent().addClass('menu-open');
+  element.addClass('active');
+
   // global vars
   var customer = "";
 

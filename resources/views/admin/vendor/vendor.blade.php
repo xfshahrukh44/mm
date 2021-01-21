@@ -82,7 +82,7 @@
                   </tr>
                 @endforeach
               @else
-                <tr><td colspan="8"><h6 align="center">No vendor(s) found</h6></td></tr>
+                <tr><td colspan="9"><h6 align="center">No vendor(s) found</h6></td></tr>
               @endif
             </tbody>
             <tfoot>
@@ -300,6 +300,11 @@ $(document).ready(function(){
   //   "bInfo": false,
   //   "searching":false
   // });
+
+  // persistent active sidebar
+  var element = $('li a[href*="'+ window.location.pathname +'"]');
+  element.parent().parent().parent().addClass('menu-open');
+  element.addClass('active');
 
   // global vars
   var vendor = "";

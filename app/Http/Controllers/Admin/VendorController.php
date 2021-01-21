@@ -94,7 +94,6 @@ class VendorController extends Controller
         
         $this->vendorService->create($req);
 
-        // return redirect()->route('vendor.index');
         return redirect()->back();
     }
     
@@ -166,10 +165,8 @@ class VendorController extends Controller
             $req['shop_keeper_picture'] = $imageName;
         }
 
-        // $vendor = ($this->vendorService->update($req, $id))['vendor']['vendor'];
         $this->vendorService->update($req, $id);
 
-        // return redirect()->route('vendor.index');
         return redirect()->back();
     }
     
@@ -179,7 +176,6 @@ class VendorController extends Controller
 
         $this->vendorService->delete($id);
 
-        // return redirect()->route('vendor.index');
         return redirect()->back();
     }
 

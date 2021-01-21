@@ -41,22 +41,7 @@ class Product extends Model
         });
 
         static::updating(function ($query) {
-            // $query->modified_by = auth()->user()->id;
-
-            // // old and new fields
-            // $old_opening_quantity = $query->getOriginal('opening_quantity');
-            // $new_opening_quantity = $query->opening_quantity;
-
-            // // finding stock_in entry
-            // $stock_in = StockIn::where('product_id', $query->id)
-            //                     ->where('quantity', $old_opening_quantity)
-            //                     ->first();
-
-            // // updating stock_in
-            // $stock_in->update([
-            //     'quantity' => $new_opening_quantity,
-            // ]);
-            // $stock_in->save();
+            $query->modified_by = auth()->user()->id;
         });
 
         static::created(function ($query) {

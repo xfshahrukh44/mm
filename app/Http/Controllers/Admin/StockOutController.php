@@ -48,7 +48,6 @@ class StockOutController extends Controller
 
         $this->stockOutService->create($request->all());
 
-        // return redirect()->route('stock_out.index');
         return redirect()->back();
     }
     
@@ -82,7 +81,6 @@ class StockOutController extends Controller
 
         $this->stockOutService->update($request->all(), $id);
 
-        // return redirect()->route('stock_out.index');
         return redirect()->back();
     }
     
@@ -92,7 +90,6 @@ class StockOutController extends Controller
 
         $this->stockOutService->delete($id);
 
-        // return redirect()->route('stock_out.index');
         return redirect()->back();
     }
 

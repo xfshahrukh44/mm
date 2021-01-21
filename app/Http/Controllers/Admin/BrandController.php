@@ -37,7 +37,6 @@ class BrandController extends Controller
 
         $this->brandService->create($request->all());
 
-        // return redirect()->route('brand.index');
         return redirect()->back();
     }
     
@@ -68,7 +67,6 @@ class BrandController extends Controller
 
         $this->brandService->update($request->all(), $id);
 
-        // return redirect()->route('brand.index');
         return redirect()->back();
     }
     
@@ -78,7 +76,6 @@ class BrandController extends Controller
 
         $this->brandService->delete($id);
 
-        // return redirect()->route('brand.index');
         return redirect()->back();
     }
 }

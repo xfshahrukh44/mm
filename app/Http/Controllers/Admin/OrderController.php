@@ -66,20 +66,6 @@ class OrderController extends Controller
         if($request->has('completed_status'))
             $request['status'] = 'completed';
 
-        // $order = [
-        //     'customer_id' => $request->customer_id,
-        //     'total' => $request->total,
-        //     'status' => $request->status,
-        //     'orderProducts' => []
-        // ];
-        // array_push($order['orderProducts'], ["item" => "a", "qty" => 4]);
-        // for($i = 0; $i < count($request->products); $i++){
-        //     array_push($order['orderProducts'], [
-
-        //     ]);
-        // }
-        // dd($request->all());
-
         // create order
         $order = ($this->orderService->create($request->all()))['order']['order'];
 
@@ -96,14 +82,6 @@ class OrderController extends Controller
             }
         }
         
-        // dd($order);
-        // create order products
-        // for($i = 0; $i < count($request->products); $i++){
-            
-        // }
-
-
-        // return redirect()->route('order.index');
         return redirect()->back();
     }
     
@@ -157,9 +135,6 @@ class OrderController extends Controller
             }
         }
 
-
-
-        // return redirect()->route('order.index');
         return redirect()->back();
     }
     
@@ -169,7 +144,6 @@ class OrderController extends Controller
 
         $this->orderService->delete($id);
 
-        // return redirect()->route('order.index');
         return redirect()->back();
     }
 

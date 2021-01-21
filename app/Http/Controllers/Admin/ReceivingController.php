@@ -42,7 +42,6 @@ class ReceivingController extends Controller
 
         $this->receivingService->create($request->all());
 
-        // return redirect()->route('receiving.index');
         return redirect()->back();
     }
     
@@ -75,7 +74,6 @@ class ReceivingController extends Controller
 
         $this->receivingService->update($request->all(), $id);
 
-        // return redirect()->route('receiving.index');
         return redirect()->back();
     }
     
@@ -85,7 +83,6 @@ class ReceivingController extends Controller
 
         $this->receivingService->delete($id);
 
-        // return redirect()->route('receiving.index');
         return redirect()->back();
     }
 

@@ -24,23 +24,12 @@ class AuthController extends Controller
         $this->middleware('auth:api', ['except' => ['login', 'store']]);
         $this->middleware('cors');
     }
-
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    
     public function index()
     {
         return $this->userService->all();
     }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+    
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
@@ -60,25 +49,12 @@ class AuthController extends Controller
 
         return response()->json($data);
     }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+    
     public function show($id)
     {
         return $this->userService->find($id);
     }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+    
     public function update(Request $request, $id)
     {
         if(!(auth()->user()->id == $id || auth()->user()->type == "superadmin"))
@@ -98,9 +74,7 @@ class AuthController extends Controller
 
         if($validator->fails())
             return response()->json($validator->errors()->toArray(), 400);
-
-        // if(!$request['email'])
-        //     $request['email'] = NULL;
+                $request['email'] = NULL;
         
         if(auth()->user()->type != 'superadmin')
         {
@@ -111,13 +85,7 @@ class AuthController extends Controller
 
         return response()->json($data);
     }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+    
     public function destroy($id)
     {
         return $this->userService->delete($id);

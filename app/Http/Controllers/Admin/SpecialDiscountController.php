@@ -38,7 +38,6 @@ class SpecialDiscountController extends Controller
 
         $this->specialDiscountService->create($request->all());
 
-        // return redirect()->route('specialDiscount.index');
         return redirect()->back();
     }
     
@@ -71,7 +70,6 @@ class SpecialDiscountController extends Controller
 
         $this->specialDiscountService->update($request->all(), $id);
 
-        // return redirect()->route('specialDiscount.index');
         return redirect()->back();
     }
     
@@ -81,7 +79,6 @@ class SpecialDiscountController extends Controller
 
         $this->specialDiscountService->delete($id);
 
-        // return redirect()->route('specialDiscount.index');
         return redirect()->back();
     }
 

@@ -74,11 +74,9 @@ class ProductController extends Controller
             Storage::disk('products')->put($imageName, \File::get($image));
             $req['product_picture'] = $imageName;
         }
-        // dd($req);
 
         $this->productService->create($req);
 
-        // return redirect()->route('product.index');
         return redirect()->back();
     }
     
@@ -143,7 +141,6 @@ class ProductController extends Controller
             return $this->getRiders($request);
         }
 
-        // return redirect()->route('product.index');
         return redirect()->back();
     }
     
@@ -153,7 +150,6 @@ class ProductController extends Controller
 
         $this->productService->delete($id);
 
-        // return redirect()->route('product.index');
         return redirect()->back();
     }
 

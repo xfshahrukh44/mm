@@ -210,7 +210,6 @@ class CustomerController extends Controller
 
         $this->customerService->delete($id);
 
-        // return redirect()->route('customer.index');
         return redirect()->back();
     }
 

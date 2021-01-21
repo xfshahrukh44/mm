@@ -67,7 +67,6 @@ class LedgerController extends Controller
 
         $this->ledgerService->create($request->all());
 
-        // return redirect()->route('ledger.index');
         return redirect()->back();
     }
     
@@ -102,7 +101,6 @@ class LedgerController extends Controller
 
         $this->ledgerService->update($request->all(), $id);
 
-        // return redirect()->route('ledger.index');
         return redirect()->back();
     }
     
@@ -112,7 +110,6 @@ class LedgerController extends Controller
 
         $this->ledgerService->delete($id);
 
-        // return redirect()->route('ledger.index');
         return redirect()->back();
     }
 
