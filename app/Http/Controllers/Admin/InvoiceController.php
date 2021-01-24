@@ -9,6 +9,7 @@ use App\Services\CustomerService;
 use App\Services\ProductService;
 use App\Services\InvoiceProductService;
 use App\Services\OrderProductService;
+use App\Services\OrderService;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
@@ -21,14 +22,16 @@ class InvoiceController extends Controller
     private $productService;
     private $invoiceProductService;
     private $orderProductService;
+    private $orderService;
 
-    public function __construct(InvoiceService $invoiceService, CustomerService $customerService, ProductService $productService, InvoiceProductService $invoiceProductService, OrderProductService $orderProductService)
+    public function __construct(InvoiceService $invoiceService, CustomerService $customerService, ProductService $productService, InvoiceProductService $invoiceProductService, OrderProductService $orderProductService, OrderService $orderService)
     {
         $this->invoiceService = $invoiceService;
         $this->customerService = $customerService;
         $this->productService = $productService;
         $this->invoiceProductService = $invoiceProductService;
         $this->orderProductService = $orderProductService;
+        $this->orderService = $orderService;
         $this->middleware('auth');
     }
     
@@ -63,12 +66,16 @@ class InvoiceController extends Controller
         // create invoice
         $invoice = ($this->invoiceService->create($request->all()))['invoice']['invoice'];
 
+        // children
+        $invoiced_items = 0;
         if($request->products){
             for($i = 0; $i < count($request->products); $i++){
                 // mark order product as invoiced
                 $this->orderProductService->update([
                     'invoiced' => 1
                 ], $request->order_products_ids[$i]);
+                // increment invoiced_items
+                $invoiced_items += 1;
 
                 // create invoice product
                 $this->invoiceProductService->create([
@@ -80,8 +87,13 @@ class InvoiceController extends Controller
             }
         }
 
-        // return redirect()->back();
-        return $this->invoiceService->generate_invoice_pdf($invoice->id);
+        // update order with invoiced_items
+        $this->orderService->update([
+            'invoiced_items' => $invoiced_items
+        ], $request->order_id);
+
+        return redirect()->back();
+        // return $this->invoiceService->generate_invoice_pdf($invoice->id);
     }
     
     public function show(Request $request, $id)

@@ -20,7 +20,7 @@
         <!-- <h3 class="card-title">Receivings</h3> -->
         <div class="card-tools">
           <button class="btn btn-success" id="add_receiving" data-toggle="modal" data-target="#addReceivingModal">
-            <i class="fas fa-plus"></i> Add New Receiving</button>
+            <i class="fas fa-plus"></i> Add New Receipt</button>
         </div>
         <!-- search bar -->
         <form action="{{route('search_receivings')}}" class="form-wrapper">

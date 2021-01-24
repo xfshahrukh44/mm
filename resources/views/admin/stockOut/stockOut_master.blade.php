@@ -4,6 +4,7 @@
     <!-- customer_id -->
     <div class="form-group col-md-6">
         <label for=""><i class="nav-icon fas fa-users"></i> Customer</label>
+        <div class="form-group {{$errors->has('customer_id') ? 'has-error' : ''}} "></div>
         <select id="customer_id" name="customer_id" class="form-control customer_id" style="width: 100%; height: 35px;">
             <option value="">Select customer</option>
             @foreach($customers as $customer)

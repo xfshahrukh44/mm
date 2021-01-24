@@ -116,7 +116,7 @@
         </div>
         <div style="margin-top:-1%;">
             <label for="">Market & area:</label>
-            <input type="text" class="border_none" value="{{$invoice->customer ? $invoice->customer->market->name.'-'.$invoice->customer->market->area->name : NULL}}" style="margin-top: 0.2%;">
+            <input type="text" class="border_none" value="{{($invoice->customer && $invoice->customer->market && $invoice->customer->market->area) ? $invoice->customer->market->name.'-'.$invoice->customer->market->area->name : NULL}}" style="margin-top: 0.2%;">
         </div>
         <div>
             <img src="../public/pdf_img/NULK.png" alt="" style="width: 25%; position:absolute; z-index:-111; left:35%; opacity:0.4;">
@@ -148,6 +148,7 @@
                 <td style="border: none"></td>
                 <td style="border: none; font-size:14px;">Previous Bal.</td>
                 <td style="text-align: right">{{$invoice->customer->outstanding_balance - $invoice->total - $invoice->amount_pay}}</td>
+                <!-- <td style="text-align: right">{{$invoice->customer->outstanding_balance - $invoice->amount_pay}}</td> -->
             </tr>
             <tr>
                 <td style="border: none"></td>

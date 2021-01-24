@@ -89,6 +89,10 @@ Route::group(['middleware' => 'auth', 'prefix' => 'admin'], function() {
     Route::get('/generate_invoice_pdf/{id}', 'HomeController@generate_invoice_pdf')->name('generate_invoice_pdf');
     // plug n play
     Route::get('/plug_n_play', 'HomeController@plug_n_play')->name('plug_n_play');
+    // expenses
+    Route::get('/expenses', function(){
+        return view('admin.expense.expense_search');
+    })->name('expenses');
     // ----------------------------------------------------------------------------------------------------------------------
     
     

@@ -4,7 +4,6 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use App\Models\Ledger;
 
 class Order extends Model
 {
@@ -17,6 +16,7 @@ class Order extends Model
         'payment',
         'amount_pay',
         'dispatch_date',
+        'invoiced_items',
         'created_by',
         'modified_by'
     ];
@@ -57,5 +57,12 @@ class Order extends Model
     public function invoices()
     {
         return $this->hasMany('App\Models\Invoice');
+    }
+
+    public function all_invoiced()
+    {
+        $this->whereHas('order_products', function ($query) {
+            return $query->where('invoiced', '=', 1);
+        })->get();
     }
 }

@@ -53,21 +53,26 @@ class Customer extends Model
             $query->save();
             if($query->opening_balance != NULL){
                 if($query->opening_balance > 0){
-                    $type = 'credit';
+                    $type = 'debit';
                 }
                 else if($query->opening_balance < 0){
-                    $type = 'debit';
+                    $type = 'credit';
                     $query['opening_balance'] *= -1;
                 }
                 else{
-                    $type = 'debit';
+                    $type = NULL;
                 }
-                Ledger::create([
-                    'customer_id' => $query->id,
-                    'amount' => $query->opening_balance,
-                    'type' => $type
-                ]);
+                if($type != NULL){
+                    Ledger::create([
+                        'customer_id' => $query->id,
+                        'amount' => $query->opening_balance,
+                        'type' => $type,
+                        'transaction_date' => return_todays_date()
+                    ]);
+                }
             }
+            // set business_to_date to 0. First debit entry.
+            // $query->business_to_date = 0;
         });   
     }
 
@@ -97,4 +102,5 @@ class Customer extends Model
     {
         return $this->hasMany('App\Models\SpecialDiscount');
     }
+
 }

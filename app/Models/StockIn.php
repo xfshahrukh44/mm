@@ -37,35 +37,49 @@ class StockIn extends Model
             $product->quantity_in_hand -= $old_quantity;
 
             // update vendor ledger
-            Ledger::create([
-                'vendor_id' => $query->vendor_id,
-                'customer_id' => 0,
-                'amount' => $old_amount,
-                'type' => 'credit'
-            ]);
+            // Ledger::create([
+            //     'vendor_id' => $query->vendor_id,
+            //     'amount' => $old_amount,
+            //     'type' => 'debit',
+            //     'transaction_date' => return_todays_date()
+            // ]);
+            $ledger = Ledger::where('vendor_id', $query->vendor_id)
+                            ->where('amount', $query->amount)
+                            ->first();
+            $ledger->delete();
+
             // new
             // update product quantity in hand
             $product->quantity_in_hand += $new_quantity;
+            // ---------------------------------------------------------------
+            // update product purchase price
+            $stockIns = StockIn::where('product_id', $query->product_id)->get();
+            $amount = 0;
+            $quantity = 0;
+            foreach($stockIns as $stockIn){
+                $amount += $stockIn->amount;
+                $quantity += $stockIn->quantity;
+            }
+            // decrement current amount and rate
+            $amount -= $old_amount;
+            $quantity -= $old_quantity;
+            // increment new amount and rate
+            $amount += $new_amount;
+            $quantity += $new_quantity;
+            // calculate avg purchase price
+            $purchase_price = $amount / $quantity;
+            $product->purchase_price = $purchase_price;
+            // cost and sales value
+            $product->cost_value = $product->quantity_in_hand * $product->purchase_price;
+            $product->sales_value = $product->quantity_in_hand * $product->consumer_selling_price;
 
             // update vendor ledger
             Ledger::create([
                 'vendor_id' => $query->vendor_id,
-                'customer_id' => 0,
                 'amount' => $new_amount,
-                'type' => 'debit'
+                'type' => 'credit',
+                'transaction_date' => return_todays_date()
             ]);
-
-
-            // update product purchase price
-            $stockIns = StockIn::where('product_id', $query->product_id)->get();
-            $purchase_price = 0;
-            foreach($stockIns as $stockIn){
-                $purchase_price += intval($stockIn->rate ? $stockIn->rate : 0);
-            }
-            $purchase_price -= $query->old_rate;
-            $purchase_price += $query->new_rate;
-            $purchase_price = $purchase_price / (count($stockIns) != 0 ? count($stockIns) : 1);
-            $product->purchase_price = $purchase_price;
 
             $product->save();
         });
@@ -76,25 +90,38 @@ class StockIn extends Model
 
             // update product purchase price
             $stockIns = StockIn::where('product_id', $query->product_id)->get();
-            $purchase_price = 0;
+            $amount = 0;
+            $quantity = 0;
             foreach($stockIns as $stockIn){
-                $purchase_price += intval($stockIn->rate ? $stockIn->rate : 0);
+                $amount += $stockIn->amount;
+                $quantity += $stockIn->quantity;
             }
-            $purchase_price -= $query->rate;
-            $purchase_price = $purchase_price / (count($stockIns) - 1);
+            // decrement current amount and rate
+            $amount -= $query->amount;
+            $quantity -= $query->quantity;
+
+            $purchase_price = $amount / $quantity;
             $product->purchase_price = $purchase_price;
 
             // update product quantity in hand
             $product->quantity_in_hand -= $query->quantity;
+
+            // cost and sales value
+            $product->cost_value = $product->quantity_in_hand * $product->purchase_price;
+            $product->sales_value = $product->quantity_in_hand * $product->consumer_selling_price;
             $product->save();
 
             // update vendor ledger
-            Ledger::create([
-                'vendor_id' => $query->vendor_id,
-                'customer_id' => 0,
-                'amount' => $query->amount,
-                'type' => 'credit'
-            ]);
+            // Ledger::create([
+            //     'vendor_id' => $query->vendor_id,
+            //     'amount' => $query->amount,
+            //     'type' => 'debit',
+            //     'transaction_date' => return_todays_date()
+            // ]);
+            $ledger = Ledger::where('vendor_id', $query->vendor_id)
+                            ->where('amount', $query->amount)
+                            ->first();
+            $ledger->delete();
         });
 
         static::created(function ($query) {
@@ -103,15 +130,21 @@ class StockIn extends Model
 
             // update product purchase price
             $stockIns = StockIn::where('product_id', $query->product_id)->get();
-            $purchase_price = 0;
+            $amount = 0;
+            $quantity = 0;
             foreach($stockIns as $stockIn){
-                $purchase_price += intval($stockIn->rate ? $stockIn->rate : "0");
+                $amount += $stockIn->amount;
+                $quantity += $stockIn->quantity;
             }
-            $purchase_price = $purchase_price / count($stockIns);
+            $purchase_price = $amount / $quantity;
             $product->purchase_price = $purchase_price;
-
+            
             // update product quantity in hand
             $product->quantity_in_hand += $query->quantity;
+
+            // cost and sales value
+            $product->cost_value = $product->quantity_in_hand * $product->purchase_price;
+            $product->sales_value = $product->quantity_in_hand * $product->consumer_selling_price;
             $product->save();
 
             // update vendor ledger
@@ -119,7 +152,8 @@ class StockIn extends Model
                 'vendor_id' => $query->vendor_id,
                 'customer_id' => 0,
                 'amount' => $query->amount,
-                'type' => 'debit'
+                'type' => 'credit',
+                'transaction_date' => return_todays_date()
             ]);
         });
     }

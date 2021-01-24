@@ -154,7 +154,7 @@
 <div class="modal fade" id="detailInvoiceModal" tabindex="-1" role="dialog" aria-labelledby="detailInvoiceModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-lg">
         <div class="modal-content">
-            <form action="{{route('generate_invoice_pdf', 13)}}" method="GET" id="invoice_detail_form">
+            <form action="{{route('generate_invoice_pdf', 13)}}" method="GET" id="invoice_detail_form" target="_blank">
                 @method('GET')
                 @csrf
                 <div class="modal-header">
@@ -235,7 +235,7 @@
     </div>
 </div>
 
-<!-- Profile view -->
+<!-- Profile view --> 
 <div class="modal fade" id="viewUserModal" tabindex="-1" role="dialog" aria-labelledby="addUserModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -398,7 +398,7 @@
         $('#invoice_id').text(invoice.id);
         $('#customer_name').text(invoice.customer.name);
         $('#contact_number').text(invoice.customer.contact_number);
-        $('#address').text(invoice.customer.shop_name + ' - Shop # ' + invoice.customer.shop_number + ' - Floor # ' + invoice.customer.floor + ' - ' + invoice.customer.market.name + ' - ' + invoice.customer.market.area.name);
+        $('#address').text(invoice.customer.shop_name + ' - Shop # ' + invoice.customer.shop_number + ' - Floor # ' + invoice.customer.floor + ((invoice.customer && invoice.customer.market && invoice.customer.market.area) ? (' - ' + invoice.customer.market.name + ' - ' + invoice.customer.market.area.name) : ''));
         $('#detailTotal').text(invoice.total);
         $('#amount_pay').text(invoice.amount_pay);
 

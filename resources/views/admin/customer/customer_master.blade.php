@@ -22,6 +22,7 @@
             <option value="">Select Customer Type</option>
             <option value="consumer">Consumer</option>
             <option value="retailer">Retailer</option>
+            <option value="distributor">Distributor</option>
         </select>
     </div>
     <!-- shop_keeper_picture -->
@@ -64,7 +65,7 @@
     <!-- market_id -->
     <div class="form-group col-md-6">
         <label for=""><i class="nav-icon  fas fa-map-marked-alt"></i> Market</label>
-        <select name="market_id" class="form-control market_id" style="width: 100%; height: 35px;">
+        <select name="market_id" class="form-control market_id" style="width: 100%; height: 35px;" required>
             <option value="">Select market</option>
         </select>
     </div>
@@ -109,23 +110,23 @@
     <!-- opening_balance -->
     <div class="form-group col-md-3">
         <label for="">Opening Balance</label>
-        <input type="number" name="opening_balance" placeholder="Enter Opening Balance" class="form-control opening_balance" value=0>
+        <input type="number" name="opening_balance" placeholder="Enter Opening Balance" class="form-control opening_balance">
     </div>
     <!-- business_to_date -->
-    <div class="form-group col-md-3" hidden>
+    <!-- <div class="form-group col-md-3" hidden>
         <label for="">Business to Date</label>
-        <input type="number" min=0 name="business_to_date" placeholder="Enter Business to Date" class="form-control business_to_date" value=0>
-    </div>
+        <input type="number" min=0 name="business_to_date" placeholder="Enter Business to Date" class="form-control business_to_date">
+    </div> -->
     <!-- outstanding_balance -->
-    <div class="form-group col-md-3" hidden>
+    <!-- <div class="form-group col-md-3" hidden>
         <label for="">Outstanding Balance</label>
-        <input type="number" min=0 name="outstanding_balance" placeholder="Enter Outstanding Balance" class="form-control outstanding_balance" value=0>
-    </div>
+        <input type="number" min=0 name="outstanding_balance" placeholder="Enter Outstanding Balance" class="form-control outstanding_balance">
+    </div> -->
     <!-- special_discount -->
-    <div class="form-group col-md-3" hidden>
+    <!-- <div class="form-group col-md-3" hidden>
         <label for="">Special Discount</label>
-        <input type="number" min=0 name="special_discount" placeholder="Enter Special Discount" class="form-control special_discount" value=0>
-    </div>
+        <input type="number" min=0 name="special_discount" placeholder="Enter Special Discount" class="form-control special_discount">
+    </div> -->
     <!-- payment_terms -->
     <div class="form-group col-md-12">
         <label for="">Payment Terms</label>

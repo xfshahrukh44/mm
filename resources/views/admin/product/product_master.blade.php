@@ -68,7 +68,7 @@
     <!-- purchase_price -->
     <div class="form-group col-md-4">
         <label for="">Purchase Price</label>
-        <input type="number" min=0 name="purchase_price" placeholder="Enter Purchase Price" class="form-control purchase_price" required value=0>
+        <input type="number" min=0 name="purchase_price" placeholder="Enter Purchase Price" class="form-control purchase_price" required value=0 step=".01">
     </div>
     <!-- consumer_selling_price -->
     <div class="form-group col-md-4">

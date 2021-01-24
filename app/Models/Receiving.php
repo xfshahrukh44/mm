@@ -33,11 +33,17 @@ class Receiving extends Model
             $invoice->amount_pay -= $old_amount;
 
             // ledger entry
-            Ledger::create([
-                'customer_id' => $invoice->customer_id,
-                'amount' => $old_amount,
-                'type' => 'credit'
-            ]);
+            // Ledger::create([
+            //     'customer_id' => $invoice->customer_id,
+            //     'amount' => $old_amount,
+            //     'type' => 'debit',
+            //     'transaction_date' => return_todays_date()
+            // ]);
+            $ledger = Ledger::where('customer_id', $invoice->customer_id)
+                            ->where('receiving_id', $query->id)
+                            ->where('amount', $old_amount)
+                            ->first();
+            $ledger->delete();
 
             // new
             // update invoice
@@ -46,8 +52,10 @@ class Receiving extends Model
             // ledger entry
             Ledger::create([
                 'customer_id' => $invoice->customer_id,
+                'receiving_id' => $query->id,
                 'amount' => $new_amount,
-                'type' => 'debit'
+                'type' => 'credit',
+                'transaction_date' => return_todays_date()
             ]);
 
             $invoice->save();
@@ -60,11 +68,17 @@ class Receiving extends Model
             $invoice->save();
 
             // ledger entry
-            Ledger::create([
-                'customer_id' => $invoice->customer_id,
-                'amount' => $query->amount,
-                'type' => 'credit'
-            ]);
+            // Ledger::create([
+            //     'customer_id' => $invoice->customer_id,
+            //     'amount' => $query->amount,
+            //     'type' => 'debit',
+            //     'transaction_date' => return_todays_date()
+            // ]);
+            $ledger = Ledger::where('customer_id', $invoice->customer_id)
+                            ->where('receiving_id', $query->id)
+                            ->where('amount', $query->amount)
+                            ->first();
+            $ledger->delete();
         });
 
         static::created(function ($query) {
@@ -76,8 +90,10 @@ class Receiving extends Model
             // ledger entry
             Ledger::create([
                 'customer_id' => $invoice->customer_id,
+                'receiving_id' => $query->id,
                 'amount' => $query->amount,
-                'type' => 'debit'
+                'type' => 'credit',
+                'transaction_date' => return_todays_date()
             ]);
         });
     }
@@ -91,5 +107,10 @@ class Receiving extends Model
     public function invoice()
     {
         return $this->belongsTo('App\Models\Invoice');
+    }
+
+    public function ledgers()
+    {
+        return $this->hasMany('App\Models\Ledger');
     }
 }

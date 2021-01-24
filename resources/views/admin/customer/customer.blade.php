@@ -345,7 +345,7 @@ $(document).ready(function(){
   // div strings
   var startDiv = '<div class="row">';
   var productDiv = '<div class="col-md-6 form-group"><select name="products[]" class="form-control products" style="width: 100%; max-height: 20px;"><option value="">Select Product</option>@foreach($products as $product)<option value="{{$product->id}}">{{$product->article}}</option>@endforeach</select></div>';
-  var amountDiv = '<div class="form-group col-md-5"><input type="number" class="form-control amounts" name="amounts[]" required min=0></div>';
+  var amountDiv = '<div class="form-group col-md-5"><input type="number" class="form-control amounts" name="amounts[]" min=0></div>';
   var removeChildDiv = '<div class="form-group col-md-0 remove_button ml-1" style="display: table; vertical-align: middle;"><a class="btn btn-primary"><i class="fas fa-minus" style="color:white;"></i></a></div>';
   var endDiv = '</div>';
   var fieldHTML = startDiv + productDiv + amountDiv + removeChildDiv + endDiv;
@@ -357,6 +357,7 @@ $(document).ready(function(){
         type: 'GET',
         data: {area_id: area_id},
         dataType: 'JSON',
+        async: false,
         success: function (data) {
           $('.market_id').html('<option value="">Select market</option>');
           for(var i = 0; i < data.length; i++){
@@ -414,10 +415,13 @@ $(document).ready(function(){
     $('#editForm .shop_number').val(customer.shop_number);
     $('#editForm .floor').val(customer.floor);
 
-    if(customer.market){
+    if(customer.market && customer.market.area){
       $('#editForm .area_id option[value="'+ customer.market.area.id +'"]').prop('selected', true);
-      fetch_specific_markets(customer.market.area.id);
+      // fetch_specific_markets(customer.market.area.id);
+      $('#editForm  .area_id').change();
       $('#editForm .market_id option[value="'+ customer.market.id +'"]').prop('selected', true);
+      // $('[name=market_id] option[value='+ customer.market.id +']').prop('selected',true);
+      // $('#editForm .market_id').val(customer.market.id);
     }
 
     $('#editForm .status option[value="'+ customer.status +'"]').prop('selected', true);
@@ -434,10 +438,12 @@ $(document).ready(function(){
     // children work
     if(customer.special_discounts.length > 0){
       $('.field_wrapper').html('');
+      x = 0;
       for(var i = 0; i < customer.special_discounts.length; i++){
         $('.field_wrapper').prepend(fieldHTML);
         $('#editCustomerModal .products:first option[value="'+ customer.special_discounts[i].product_id +'"]').prop('selected', true);
         $('#editCustomerModal .amounts:first').val(customer.special_discounts[i].amount);
+        x++;
         $('.products').select2();
       }
     }
@@ -524,16 +530,30 @@ $(document).ready(function(){
       }
   });
     
-  //Once remove button is clicked*
-  $('.modal').on("click", ".remove_button", function(e){
-      e.preventDefault();
+  //Once remove button is clicked on create*
+  $('#addCustomerModal').on("click", ".remove_button", function(e){
+      // e.preventDefault();
       if(x > minField){
           $(this).parent('div').remove(); //Remove field html
           x--; //Decrement field counter
           // get_order_total('#editOrderModal');
           // get_order_total('#addOrderModal');
           // initAutocompleteItems(".product_search", "#editOrderModal .ui-widget", product_labels);
-          $('.products').select2();
+          $('#addCustomerModal .products').select2();
+      }
+  });
+
+  //Once remove button is clicked*
+  $('#editCustomerModal').on("click", ".remove_button", function(e){
+      // e.preventDefault();
+      if(x > minField){
+          $(this).parent('div').remove(); //Remove field html
+          x--; //Decrement field counter
+          // get_order_total('#editOrderModal');
+          // get_order_total('#addOrderModal');
+          // initAutocompleteItems(".product_search", "#editOrderModal .ui-widget", product_labels);
+          $('#editCustomerModal .products').select2();
+          console.log(x);
       }
   });
 

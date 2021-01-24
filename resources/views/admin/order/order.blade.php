@@ -117,10 +117,12 @@
                                                     <i class="fas fa-trash red ml-1"></i>
                                                 </a>
                                             @endcan
-                                            <!-- Generate Invoice -->
-                                            <a href="#" class="invoiceButton" data-id="{{$order->id}}" data-type="{{$order->id}}">
-                                                <i class="fas fa-file-invoice-dollar"></i>
-                                            </a>
+                                            @if($order->invoiced_items < count($order->order_products))
+                                                <!-- Generate Invoice -->
+                                                <a href="#" class="invoiceButton" data-id="{{$order->id}}" data-type="{{$order->id}}">
+                                                    <i class="fas fa-file-invoice-dollar"></i>
+                                                </a>
+                                            @endif
                                         </td>
                                     </tr>
                                 @endforeach
@@ -473,6 +475,7 @@
             dataType: 'JSON',
             success: function (data) {
                 order = data.order;
+                console.log(order);
             }
         });
     }
@@ -504,6 +507,7 @@
         $(form + ' .total').val(total);
         // final_amount
         $(form + ' .final_amount').val(parseInt($(form + ' .total').val()) + parseInt($(form + ' .previous_amount').val()));
+        $(form + ' .balance_due').val(parseInt($(form + ' .final_amount').val()) - parseInt($(form + ' .amount_pay').val()));
     }
 
     // fetch_by_customer_and_product
@@ -763,7 +767,7 @@
         $('#order_id').text(order.id);
         $('#customer_name').text(order.customer.name);
         $('#contact_number').text(order.customer.contact_number);
-        $('#address').text(order.customer.shop_name + ' - Shop # ' + order.customer.shop_number + ' - Floor # ' + order.customer.floor + ' - ' + order.customer.market.name + ' - ' + order.customer.market.area.name);
+        $('#address').text(order.customer.shop_name + ' - Shop # ' + order.customer.shop_number + ' - Floor # ' + order.customer.floor + ((customer.market && customer.market.area) ? (' - ' + order.customer.market.name + ' - ' + order.customer.market.area.name) : ''));
         $('#detailTotal').text(order.total);
         $('#status').text(order.status);
 

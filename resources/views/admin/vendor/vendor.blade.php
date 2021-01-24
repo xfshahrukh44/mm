@@ -335,6 +335,7 @@ $(document).ready(function(){
         type: 'GET',
         data: {area_id: area_id},
         dataType: 'JSON',
+        async: false,
         success: function (data) {
           $('.market_id').html('<option value="">Select market</option>');
           for(var i = 0; i < data.length; i++){
@@ -392,9 +393,9 @@ $(document).ready(function(){
     $('#editForm .shop_number').val(vendor.shop_number);
     $('#editForm .floor').val(vendor.floor);
 
-    $('#editForm .area_id option[value="'+ vendor.market.area.id +'"]').prop('selected', true);
-    fetch_specific_markets(vendor.market.area.id);
-    $('#editForm .market_id option[value="'+ vendor.market.id +'"]').prop('selected', true);
+    $('#editForm .area_id option[value="'+ vendor.area.id +'"]').prop('selected', true);
+    // fetch_specific_markets(vendor.area.id);
+    // $('#editForm .market_id option[value="'+ vendor.area.id +'"]').prop('selected', true);
 
     $('#editForm .status option[value="'+ vendor.status +'"]').prop('selected', true);
     $('#editForm .visiting_days option[value="'+ vendor.visiting_days +'"]').prop('selected', true);
@@ -408,15 +409,15 @@ $(document).ready(function(){
     $('#editForm .payment_terms').val(vendor.payment_terms);
 
     // children work
-    if(vendor.special_discounts.length > 0){
-      $('.field_wrapper').html('');
-      for(var i = 0; i < vendor.special_discounts.length; i++){
-        $('.field_wrapper').prepend(fieldHTML);
-        $('#editVendorModal .products:first option[value="'+ vendor.special_discounts[i].product_id +'"]').prop('selected', true);
-        $('#editVendorModal .amounts:first').val(vendor.special_discounts[i].amount);
-        $('.products').select2();
-      }
-    }
+    // if(vendor.special_discounts.length > 0){
+    //   $('.field_wrapper').html('');
+    //   for(var i = 0; i < vendor.special_discounts.length; i++){
+    //     $('.field_wrapper').prepend(fieldHTML);
+    //     $('#editVendorModal .products:first option[value="'+ vendor.special_discounts[i].product_id +'"]').prop('selected', true);
+    //     $('#editVendorModal .amounts:first').val(vendor.special_discounts[i].amount);
+    //     $('.products').select2();
+    //   }
+    // }
 
     $('#editVendorModal').modal('show');
 

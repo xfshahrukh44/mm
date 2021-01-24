@@ -341,7 +341,7 @@ $(document).ready(function(){
         else{
           var color = "table-danger";
         }
-        $('.ledger_wrapper').prepend('<tr class="'+ color +'"><td>'+ new Date(client.ledgers[i].created_at).toDateString() +'</td><td>Rs. '+ client.ledgers[i].amount +'</td><td>'+ client.ledgers[i].type +'</td></tr>');
+        $('.ledger_wrapper').prepend('<tr class="'+ color +'"><td>'+ new Date(client.ledgers[i].transaction_date).toDateString() +'</td><td>Rs. '+ client.ledgers[i].amount +'</td><td>'+ client.ledgers[i].type +'</td></tr>');
       }
     }
     // outstanding balance

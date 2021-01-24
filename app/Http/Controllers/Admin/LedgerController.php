@@ -57,9 +57,12 @@ class LedgerController extends Controller
         $validator = Validator::make($request->all(), [
             'customer_id' => 'sometimes',
             'vendor_id' => 'sometimes',
+            'invoice_id' => 'sometimes',
+            'receiving_id' => 'sometimes',
+            'payment_id' => 'sometimes',
             'amount' => 'required',
             'type' => 'required',
-            'transaction_date' => 'sometimes'
+            'transaction_date' => 'sometimes',
         ]);
 
         if($validator->fails())
@@ -91,9 +94,12 @@ class LedgerController extends Controller
         $validator = Validator::make($request->all(), [
             'customer_id' => 'sometimes',
             'vendor_id' => 'sometimes',
+            'invoice_id' => 'sometimes',
+            'receiving_id' => 'sometimes',
+            'payment_id' => 'sometimes',
             'amount' => 'sometimes',
             'type' => 'sometimes',
-            'transaction_date' => 'sometimes'
+            'transaction_date' => 'sometimes',
         ]);
 
         if($validator->fails())

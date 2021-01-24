@@ -44,7 +44,12 @@ class StockOutController extends Controller
         ]);
 
         if($validator->fails())
-            return response()->json($validator->errors()->toArray(), 400);
+        {
+            $errors = $validator->errors();
+            return redirect()->back()->with(compact('errors'));
+        }
+        //     return response()->json($validator->errors()->toArray(), 400);
+        //     return response()->json($validator->errors()->toArray(), 400);
 
         $this->stockOutService->create($request->all());
 

@@ -74,11 +74,11 @@ class Product extends Model
         });
 
         static::updated(function ($query) {
-            // cost and sales value
-            $product = Product::find($query->id);
-            $product->cost_value = $product->quantity_in_hand * $product->purchase_price;
-            $product->sales_value = $product->quantity_in_hand * $product->consumer_selling_price;
-            $product->save();
+            // // cost and sales value
+            // $product = Product::find($query->id);
+            // $product->cost_value = $product->quantity_in_hand * $product->purchase_price;
+            // $product->sales_value = $product->quantity_in_hand * $product->consumer_selling_price;
+            // $product->save();
 
             // pusher
             if($query->quantity_in_hand < $query->moq){

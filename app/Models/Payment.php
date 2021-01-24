@@ -26,36 +26,52 @@ class Payment extends Model
 
             // old
             // ledger entry
-            Ledger::create([
-                'vendor_id' => $query->vendor_id,
-                'amount' => $old_amount,
-                'type' => 'debit'
-            ]);
+            // Ledger::create([
+            //     'vendor_id' => $query->vendor_id,
+            //     'amount' => $old_amount,
+            //     'type' => 'credit',
+            //     'transaction_date' => return_todays_date()
+            // ]);
+            $ledger = Ledger::where('vendor_id', $query->vendor_id)
+                            ->where('payment_id', $query->id)
+                            ->where('amount', $old_amount)
+                            ->first();
+            $ledger->delete();
 
             // new
             // ledger entry
             Ledger::create([
                 'vendor_id' => $query->vendor_id,
+                'payment_id' => $query->id,
                 'amount' => $new_amount,
-                'type' => 'credit'
+                'type' => 'debit',
+                'transaction_date' => return_todays_date()
             ]);
         });
 
         static::deleting(function ($query) {
             // ledger entry
-            Ledger::create([
-                'vendor_id' => $query->vendor_id,
-                'amount' => $query->amount,
-                'type' => 'debit'
-            ]);
+            // Ledger::create([
+            //     'vendor_id' => $query->vendor_id,
+            //     'amount' => $query->amount,
+            //     'type' => 'credit',
+            //     'transaction_date' => return_todays_date()
+            // ]);
+            $ledger = Ledger::where('vendor_id', $query->vendor_id)
+                            ->where('payment_id', $query->id)
+                            ->where('amount', $query->amount)
+                            ->first();
+            $ledger->delete();
         });
 
         static::created(function ($query) {
             // ledger entry
             Ledger::create([
                 'vendor_id' => $query->vendor_id,
+                'payment_id' => $query->id,
                 'amount' => $query->amount,
-                'type' => 'credit'
+                'type' => 'debit',
+                'transaction_date' => return_todays_date()
             ]);
         });
     }
@@ -69,5 +85,10 @@ class Payment extends Model
     public function vendor()
     {
         return $this->belongsTo('App\Models\Vendor');
+    }
+
+    public function ledgers()
+    {
+        return $this->hasMany('App\Models\Ledger');
     }
 }

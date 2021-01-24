@@ -34,38 +34,56 @@ class Invoice extends Model
 
             $old_total = $query->getOriginal('total');
             $new_total = $query->total;
+            $old_payment = $query->getOriginal('payment');
+            $new_payment = $query->payment;
             $old_amount_pay = $query->getOriginal('amount_pay');
             $new_amount_pay = $query->amount_pay;
 
             // old
             // invoice total in ledger
-            Ledger::create([
-                'customer_id' => $query->customer_id,
-                'amount' => $old_total,
-                'type' => 'debit'
-            ]);
+            // Ledger::create([
+            //     'customer_id' => $query->customer_id,
+            //     'amount' => $old_total,
+            //     'type' => 'credit',
+            //     'transaction_date' => return_todays_date()
+            // ]);
+            $ledger = Ledger::where('customer_id', $query->customer_id)
+                            ->where('invoice_id', $query->id)
+                            ->where('amount', $old_total)
+                            ->first();
+            $ledger->delete();
             // amount pay
-            if($query->payment == 'cash'){
-                Ledger::create([
-                    'customer_id' => $query->customer_id,
-                    'amount' => $old_amount_pay,
-                    'type' => 'credit'
-                ]);
+            if($query->old_payment == 'cash'){
+                // Ledger::create([
+                //     'customer_id' => $query->customer_id,
+                //     'amount' => $old_amount_pay,
+                //     'type' => 'debit',
+                //     'transaction_date' => return_todays_date()
+                // ]);
+                $ledger = Ledger::where('customer_id', $query->customer_id)
+                                ->where('invoice_id', $query->id)
+                                ->where('amount', $old_amount_pay)
+                                ->first();
+                $ledger->delete();
             }
 
             // new
             // invoice total in ledger
             Ledger::create([
                 'customer_id' => $query->customer_id,
+                'invoice_id' => $query->id,
                 'amount' => $new_total,
-                'type' => 'credit'
+                'type' => 'debit',
+                'transaction_date' => return_todays_date()
             ]);
             // amount pay
-            if($query->payment == 'cash'){
+            if($query->new_payment == 'cash'){
                 Ledger::create([
                     'customer_id' => $query->customer_id,
+                    'invoice_id' => $query->id,
                     'amount' => $new_amount_pay,
-                    'type' => 'debit'
+                    'type' => 'credit',
+                    'transaction_date' => return_todays_date()
                 ]);
             }
 
@@ -73,19 +91,31 @@ class Invoice extends Model
 
         static::deleting(function ($query) {
             // invoice total in ledger
-            Ledger::create([
-                'customer_id' => $query->customer_id,
-                'amount' => $query->total,
-                'type' => 'debit'
-            ]);
+            // Ledger::create([
+            //     'customer_id' => $query->customer_id,
+            //     'amount' => $query->total,
+            //     'type' => 'credit',
+            //     'transaction_date' => return_todays_date()
+            // ]);
+            $ledger = Ledger::where('customer_id', $query->customer_id)
+                            ->where('invoice_id', $query->id)
+                            ->where('amount', $query->total)
+                            ->first();
+            $ledger->delete();
             
             // amount pay
             if($query->payment == 'cash'){
-                Ledger::create([
-                    'customer_id' => $query->customer_id,
-                    'amount' => $query->amount_pay,
-                    'type' => 'credit'
-                ]);
+                // Ledger::create([
+                //     'customer_id' => $query->customer_id,
+                //     'amount' => $query->amount_pay,
+                //     'type' => 'debit',
+                //     'transaction_date' => return_todays_date()
+                // ]);
+                $ledger = Ledger::where('customer_id', $query->customer_id)
+                                ->where('invoice_id', $query->id)
+                                ->where('amount', $query->amount_pay)
+                                ->first();
+                $ledger->delete();
             }
         });
 
@@ -93,16 +123,20 @@ class Invoice extends Model
             // invoice total in ledger
             Ledger::create([
                 'customer_id' => $query->customer_id,
+                'invoice_id' => $query->id,
                 'amount' => $query->total,
-                'type' => 'credit'
+                'type' => 'debit',
+                'transaction_date' => return_todays_date()
             ]);
 
             // amount pay
             if($query->payment == 'cash'){
                 Ledger::create([
                     'customer_id' => $query->customer_id,
+                    'invoice_id' => $query->id,
                     'amount' => $query->amount_pay,
-                    'type' => 'debit'
+                    'type' => 'credit',
+                    'transaction_date' => return_todays_date()
                 ]);
             }
         });
@@ -129,4 +163,10 @@ class Invoice extends Model
     {
         return $this->hasMany('App\Models\Receiving');
     }
+
+    public function ledgers()
+    {
+        return $this->hasMany('App\Models\Ledger');
+    }
+
 }

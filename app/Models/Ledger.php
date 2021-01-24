@@ -27,85 +27,161 @@ class Ledger extends Model
             $old_amount = $query->getOriginal('amount');
             $new_amount = $query->amount;
 
+            // fetching client from corresponding type
+            $check = 0;
             if($query->customer_id != NULL){
                 $client = Customer::find($query->customer_id);
+                $check = 1;
             }
             if($query->vendor_id != NULL){
                 $client = Vendor::find($query->vendor_id);
+                $check = 1;
             }
 
-            // old
-            if($old_type == 'credit'){
-                // outstanding_balance
-                $client->outstanding_balance -= $old_amount;
-                // business_to_date for customer
-                if($query->customer_id != NULL){
-                    $client->business_to_date -= $old_amount;
+            // if success
+            if($check == 1){
+                // old
+                // credit
+                if($old_type == 'credit'){
+                    // customer
+                    if($query->customer_id != NULL){
+                        // outstanding_balance
+                        $client->outstanding_balance += $old_amount;
+                    }
+
+                    // vendor
+                    if($query->vendor_id != NULL){
+                        // outstanding_balance
+                        $client->outstanding_balance -= $old_amount;
+                        // business_to_date
+                        $client->business_to_date -= $old_amount;
+                    }
+
+                    // save client
+                    $client->save();
                 }
-                $client->save();
-            }
-            if($old_type == 'debit'){
-                // outstanding_balance
-                $client->outstanding_balance -= $old_amount;
-                // business_to_date for vendor
-                if($query->vendor_id != NULL){
-                    $client->business_to_date -= $old_amount;
+                // debit
+                if($old_type == 'debit'){
+                    // customer
+                    if($query->customer_id != NULL){
+                        // outstanding_balance
+                        $client->outstanding_balance -= $old_amount;
+                        // business_to_date
+                        $client->business_to_date -= $old_amount;
+                    }
+
+                    // vendor
+                    if($query->vendor_id != NULL){
+                        // outstanding_balance
+                        $client->outstanding_balance += $old_amount;
+                    }
+
+                    // save client
+                    $client->save();
                 }
-                $client->save();
+
+                // new
+                // credit
+                if($new_type == 'credit'){
+                    // customer
+                    if($query->customer_id != NULL){
+                        // outstanding_balance
+                        $client->outstanding_balance -= $new_amount;
+                    }
+
+                    // vendor
+                    if($query->vendor_id != NULL){
+                        // outstanding_balance
+                        $client->outstanding_balance += $new_amount;
+                        // business_to_date
+                        $client->business_to_date += $new_amount;
+                    }
+
+                    // save client
+                    $client->save();
+                }
+                // debit
+                if($new_type == 'debit'){
+                    // customer
+                    if($query->customer_id != NULL){
+                        // outstanding_balance
+                        $client->outstanding_balance += $new_amount;
+                        // business_to_date
+                        $client->business_to_date += $new_amount;
+                    }
+
+                    // vendor
+                    if($query->vendor_id != NULL){
+                        // outstanding_balance
+                        $client->outstanding_balance -= $new_amount;
+                    }
+                    
+                    // save client
+                    $client->save();
+                }
             }
 
-            // new
-            if($new_type == 'credit'){
-                // outstanding_balance
-                $client->outstanding_balance += $new_amount;
-                // business_to_date for customer
-                if($query->customer_id != NULL){
-                    $client->business_to_date += $new_amount;
-                }
-                $client->save();
-            }
-            if($new_type == 'debit'){
-                // outstanding_balance
-                $client->outstanding_balance -= $new_amount;
-                // business_to_date for vendor
-                if($query->vendor_id != NULL){
-                    $client->business_to_date += $new_amount;
-                }
-                $client->save();
-            }
         });
 
         static::deleting(function ($query) {
+            // fetching client from corresponding type
+            $check = 0;
             if($query->customer_id != NULL){
                 $client = Customer::find($query->customer_id);
+                $check = 1;
             }
             if($query->vendor_id != NULL){
                 $client = Vendor::find($query->vendor_id);
+                $check = 1;
             }
 
-            if($query->type == 'credit'){
-                // outstanding_balance
-                $client->outstanding_balance -= $query->amount;
-                // business_to_date for customer
-                if($query->customer_id != NULL){
-                    $client->business_to_date -= $query->amount;
+            // if success
+            if($check == 1){
+                // credit
+                if($query->type == 'credit'){
+                    // customer
+                    if($query->customer_id != NULL){
+                        // outstanding_balance
+                        $client->outstanding_balance += $query->amount;
+                    }
+
+                    // vendor
+                    if($query->vendor_id != NULL){
+                        // outstanding_balance
+                        $client->outstanding_balance -= $query->amount;
+                        // business_to_date
+                        $client->business_to_date -= $query->amount;
+                    }
+
+                    // save client
+                    $client->save();
                 }
-                $client->save();
-            }
-            if($query->type == 'debit'){
-                // outstanding_balance
-                $client->outstanding_balance += $query->amount;
-                // business_to_date for vendor
-                if($query->vendor_id != NULL){
-                    $client->business_to_date -= $query->amount;
+
+                // debit
+                if($query->type == 'debit'){
+                    // customer
+                    if($query->customer_id != NULL){
+                        // outstanding_balance
+                        $client->outstanding_balance -= $query->amount;
+                        // business_to_date
+                        $client->business_to_date -= $query->amount;
+                    }
+
+                    // vendor
+                    if($query->vendor_id != NULL){
+                        // outstanding_balance
+                        $client->outstanding_balance += $query->amount;
+                    }
+
+                    // save client
+                    $client->save();
                 }
-                $client->save();
             }
         });
 
         static::created(function ($query) {
+            // fetching client from corresponding type
             $check = 0;
-
             if($query->customer_id != NULL){
                 $client = Customer::find($query->customer_id);
                 $check = 1;
@@ -115,23 +191,45 @@ class Ledger extends Model
                 $check = 1;
             }
 
+            // if success
             if($check == 1){
+                // credit
                 if($query->type == 'credit'){
-                    // outstanding_balance
-                    $client->outstanding_balance += $query->amount;
-                    // business_to_date for customer
+                    // customer
                     if($query->customer_id != NULL){
+                        // outstanding_balance
+                        $client->outstanding_balance -= $query->amount;
+                    }
+
+                    // vendor
+                    if($query->vendor_id != NULL){
+                        // outstanding_balance
+                        $client->outstanding_balance += $query->amount;
+                        // business_to_date
                         $client->business_to_date += $query->amount;
                     }
+
+                    // save client
                     $client->save();
                 }
+
+                // debit
                 if($query->type == 'debit'){
-                    // outstanding_balance
-                    $client->outstanding_balance -= $query->amount;
-                    // business_to_date for vendor
-                    if($query->vendor_id != NULL){
+                    // customer
+                    if($query->customer_id != NULL){
+                        // outstanding_balance
+                        $client->outstanding_balance += $query->amount;
+                        // business_to_date
                         $client->business_to_date += $query->amount;
                     }
+
+                    // vendor
+                    if($query->vendor_id != NULL){
+                        // outstanding_balance
+                        $client->outstanding_balance -= $query->amount;
+                    }
+                    
+                    // save client
                     $client->save();
                 }
             }
@@ -139,7 +237,7 @@ class Ledger extends Model
     }
     
     protected $fillable = [
-        'customer_id', 'vendor_id', 'amount', 'type', 'created_by', 'modified_by', 'transaction_date'
+        'customer_id', 'vendor_id', 'amount', 'type', 'invoice_id', 'receiving_id', 'payment_id', 'created_by', 'modified_by', 'transaction_date'
     ];
 
     protected $dates = ['created_at', 'updated_at', 'deleted_at'];
@@ -152,5 +250,20 @@ class Ledger extends Model
     public function vendor()
     {
         return $this->belongsTo('App\Models\Vendor');
+    }
+
+    public function invoice()
+    {
+        return $this->belongsTo('App\Models\Invoice');
+    }
+
+    public function receiving()
+    {
+        return $this->belongsTo('App\Models\Receiving');
+    }
+
+    public function payment()
+    {
+        return $this->belongsTo('App\Models\Payment');
     }
 }
