@@ -110,6 +110,10 @@
         </div>
     </div>
 
+    <form id="dummy_form" action="{{route('generate_expenses_excel')}}" method="POST" target="_blank" hidden>
+        @csrf
+    </form>
+
     <script>
         $(document).ready(function(){
             // persistent active sidebar
@@ -187,7 +191,7 @@
                     
                     // append ledger entries
                     for(var i = 0; i < expenses.length; i++){
-                        $('.ledger_wrapper').prepend('<tr><td>'+new Date(expenses[i].date).toDateString() +((wild_card == 1) ? (' <strong>('+expenses[i].type+')</strong>') : '')+'</td><td>Rs.'+expenses[i].amount+'</td><td>'+(expenses[i].detail ? expenses[i].detail : '')+'</td></tr>');
+                        $('.ledger_wrapper').prepend('<tr><td class="transaction_dates">'+new Date(expenses[i].date).toDateString() +((wild_card == 1) ? (' <strong>('+expenses[i].type+')</strong>') : '')+'</td><td class="amounts">Rs.'+expenses[i].amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")+'</td><td class="details">'+(expenses[i].detail ? expenses[i].detail : '')+'</td></tr>');
                     }
                     // set total amount
                     $('.detail_total').html('Rs. ' + total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
@@ -200,22 +204,24 @@
 
             // on generate_expenses_excel click
             $('.generate_expenses_excel').on('click', function(){
-                // console.log(expenses);
-                $.ajax({
-                    url: "<?php echo(route('generate_expenses_excel')); ?>",
-                    type: 'GET',
-                    async: false,
-                    data: {
-                        expenses: expenses.reverse(),
-                        title: $('#detailLedgerModalLabel').text(),
-                        total: $('.detail_total').text(),
-                        wild_card: wild_card
-                    },
-                    dataType: 'JSON',
-                    success: function (data) {
-                        console.log(data);
-                    }
+                // transaction_dates
+                $('.transaction_dates').each(function(){
+                    $('#dummy_form').append('<input name="transaction_dates[]" value="'+$(this).text()+'"></input>')
                 });
+                // amounts
+                $('.amounts').each(function(){
+                    $('#dummy_form').append('<input name="amounts[]" value="'+$(this).text()+'"></input>')
+                });
+                // details
+                $('.details').each(function(){
+                    $('#dummy_form').append('<input name="details[]" value="'+$(this).text()+'"></input>')
+                });
+                // title
+                $('#dummy_form').append('<input name="title" value="'+$('#detailLedgerModalLabel').text()+'"></input>')
+                // total
+                $('#dummy_form').append('<input name="total" value="'+$('.detail_total').text()+'"></input>')
+                // submit
+                $('#dummy_form').submit();
             });
         });
     </script>

@@ -107,7 +107,7 @@ Route::group(['middleware' => 'auth', 'prefix' => 'admin'], function() {
     // all_sales
     Route::get('/all_sales', 'HomeController@all_sales')->name('all_sales');
     // generate_expenses_excel
-    Route::get('/generate_expenses_excel', 'HomeController@generate_expenses_excel')->name('generate_expenses_excel');
+    Route::post('/generate_expenses_excel', 'HomeController@generate_expenses_excel')->name('generate_expenses_excel');
     // ----------------------------------------------------------------------------------------------------------------------
     
     

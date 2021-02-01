@@ -252,22 +252,19 @@ class HomeController extends Controller
         $amounts = [];
         $details = [];
         $main_array = [];
-        foreach($request->expenses as $expense){
-            // array_push($transaction_dates, return_date_pdf($expense['created_at']) . (($request->wild_card == 1) ? (' ('.$expense['type'].')') : ''));
-            // array_push($amounts, $expense['amount']);
-            // array_push($details, $expense['detail']);
+        for($i = 0; $i < count($request->transaction_dates); $i++){
 
             array_push($main_array, [
-                'Transaction Date' => return_date_pdf($expense['created_at']) . (($request->wild_card == 1) ? (' ('.$expense['type'].')') : ''),
-                'Amount' => $expense['amount'],
-                'Details' => $expense['detail']
+                'Transaction Date' => $request->transaction_dates[$i],
+                'Amount' => $request->amounts[$i],
+                'Details' => $request->details[$i]
             ]);
         }
-        // $main_array = [
-        //     'Transaction Date' => $transaction_dates,
-        //     'Amount' => $amounts,
-        //     'Details' => $details
-        // ];
+        array_push($main_array, [
+            'Transaction Date' => "Total",
+            'Amount' => $request->total,
+            'Details' => "",
+        ]);
         
         $export = new ExpensesExport($main_array);
 
