@@ -77,46 +77,46 @@
     
         <div>
             <br>
-            <label for="" style="position: absolute; top:0.8rem;" >Customer Name:
-                <input type="text" class="border_none" value="{{$invoice->customer ? $invoice->customer->name : NULL}}" style="margin-top: 0.7%;">
+            <label for="" style="position: absolute; top:0.8rem;" ><strong>Customer Name:</strong>
+                <input type="text" class="border_none" value="{{$invoice->customer ? $invoice->customer->name : NULL}}" style="margin-top: 0.72%;">
             </label>
            
-            <label for="" class="" style="position: absolute; top:9.6rem; left:35rem;">Rider Name:
-                 <input type="text" class="border_none" value="{{$invoice->rider_id ? return_user_name($invoice->rider_id) : NULL}}"  style="margin-top: 2.5%;">
+            <label for="" class="" style="position: absolute; top:9.5rem; left:35rem;"><strong>Rider Name:</strong>
+                 <input type="text" class="border_none" value="{{$invoice->rider_id ? return_user_name($invoice->rider_id) : NULL}}"  style="margin-top: 3.1%;">
             </label>
             
-            <label for="" class="" style="position: absolute; top:11.5rem; left:35rem;width: 20rem;">Supplier:
-                <input type="text" class="border_none" value="Master material" style="margin-top: 1.5%;">
+            <label for="" class="" style="position: absolute; top:11.5rem; left:35.97rem;width: 20rem;"><strong>Supplier:</strong>
+                <input type="text" class="border_none" value="Master material" style="margin-top: 1.55%;">
             </label>
 
-            <label for="" class="" style="position: absolute; top:12.8rem; left:35rem;width: 20rem;">Contact:
-                <input type="text" class="border_none" value="0311-1039785"  style="margin-top: 1.5%;">
+            <label for="" class="" style="position: absolute; top:12.8rem; left:36.15rem;width: 20rem;"><strong>Contact:</strong>
+                <input type="text" class="border_none" value="0311-1039785"  style="margin-top: 1.55%;">
             </label>
 
-            <label for="" class="date_lable"  style="position: absolute; top:14rem; left:24.2rem; width: 20rem;">Date:
-                <input type="text" class="date border_none" value="{{return_date_pdf($invoice->created_at)}}" style="margin-top: 1.8%;">
+            <label for="" class="date_lable"  style="position: absolute; top:14rem; left:26.265rem; width: 20rem;"><strong>Date:</strong>
+                <input type="text" class="date border_none" value="{{return_date_pdf($invoice->created_at)}}" style="margin-top: 1.65%;">
             </label>
         </div>
         {{-- <br> --}}
         <div>
-            <label for="" style="margin-top: 1%;">Invoice</label>
-            <input type="text" class="border_none" value="{{$invoice->id}}" style="margin-top: 1.5%;">
+            <label for="" style="margin-top: 1%; margin-left: 2.64rem"><strong>Invoice:</strong></label>
+            <input type="text" class="border_none" value="{{$invoice->id}}" style="margin-top: 1.3%;">
         </div>
         <div>
-            <label for="">Order</label>
-            <input type="text" class="border_none" value="{{$invoice->order ? $invoice->order->id : NULL}}" style="margin-top: 0.2%;">
+            <label for="" style="margin-left: 3.09rem"><strong>Order:</strong></label>
+            <input type="text" class="border_none" value="{{$invoice->order ? $invoice->order->id : NULL}}" style="margin-top: 0.27%;">
         </div>
         <div style="margin-top:-1%;">
-            <label for="">Shop name & #</label>
-            <input type="text" class="border_none" value="{{$invoice->customer ? $invoice->customer->shop_name . ' - ' . $invoice->customer->shop_number : NULL}}" style="margin-top: 0.2%;">
+            <label for="" style="margin-left: 0.28rem"><strong>Shop name & #:</strong></label>
+            <input type="text" class="border_none" value="{{$invoice->customer ? $invoice->customer->shop_name . ' - ' . $invoice->customer->shop_number : NULL}}" style="margin-top: 0.25%;">
         </div>
         <div style="margin-top:-1%;">
-            <label for="">Mobile # </label>
+            <label for="" style="margin-left: 2.29rem"><strong>Mobile #:</strong></label>
             <input type="text" class="border_none" value="{{$invoice->customer ? $invoice->customer->contact_number : NULL}}" style="margin-top: 0.3%;">
         </div>
         <div style="margin-top:-1%;">
-            <label for="">Market & area:</label>
-            <input type="text" class="border_none" value="{{($invoice->customer && $invoice->customer->market && $invoice->customer->market->area) ? $invoice->customer->market->name.'-'.$invoice->customer->market->area->name : NULL}}" style="margin-top: 0.2%;">
+            <label for="" style="margin-left: 0.69rem"><strong>Market & area:</strong></label>
+            <input type="text" class="border_none" value="{{($invoice->customer && $invoice->customer->market && $invoice->customer->market->area) ? $invoice->customer->market->name.'-'.$invoice->customer->market->area->name : NULL}}" style="margin-top: 0.3%; width:60%;">
         </div>
         <div>
             <img src="../public/pdf_img/NULK.png" alt="" style="width: 25%; position:absolute; z-index:-111; left:35%; opacity:0.4;">
@@ -132,7 +132,7 @@
             @foreach($invoice->invoice_products as $invoice_product)
                 <tr>
                     <td style="text-align: center">{{$invoice_product->quantity}}</td>
-                    <td style="text-align: center">{{$invoice_product->product->category->name . ' - ' . $invoice_product->product->brand->name . ' - ' . $invoice_product->product->article}}</td>
+                    <td style="text-align: center">{{$invoice_product->product ? ($invoice_product->product->category->name . ' - ' . $invoice_product->product->brand->name . ' - ' . $invoice_product->product->article) : NULL}}</td>
                     <td style="text-align: center">{{$invoice_product->price}}</td>
                     <td style="text-align: center">{{$invoice_product->quantity * $invoice_product->price}}</td>
                 </tr>
@@ -147,14 +147,17 @@
                 <td style="border: none"></td>
                 <td style="border: none"></td>
                 <td style="border: none; font-size:14px;">Previous Bal.</td>
-                <td style="text-align: right">{{$invoice->customer->outstanding_balance - $invoice->total - $invoice->amount_pay}}</td>
+                <td style="text-align: right">{{$invoice->previous_balance}}</td>
+                <!-- <td style="text-align: right">{{$invoice->customer->outstanding_balance + $invoice->amount_pay - $invoice->total}}</td> -->
                 <!-- <td style="text-align: right">{{$invoice->customer->outstanding_balance - $invoice->amount_pay}}</td> -->
             </tr>
             <tr>
                 <td style="border: none"></td>
                 <td style="border: none"></td>
                 <td style="border: none; font-size:14px;">Total Due</td>
-                <td style="text-align: right">{{$invoice->customer->outstanding_balance - $invoice->amount_pay}}</td>
+                <td style="text-align: right">{{$invoice->total + $invoice->previous_balance}}</td>
+                <!-- <td style="text-align: right">{{$invoice->customer->outstanding_balance + $invoice->amount_pay}}</td> -->
+                <!-- <td style="text-align: right">{{$invoice->customer->outstanding_balance - $invoice->amount_pay}}</td> -->
             </tr>
             <tr>
                 <td style="border: none"></td>
@@ -164,13 +167,14 @@
                     <label  style="margin-left:5%;" for="">Customer Receiving</label>
                 </td>
                 <td style="border: none; font-size:14px;">Amount Received</td>
-                <td style="text-align: right">{{$invoice->amount_pay}}</td>
+                <td style="text-align: right">{{($invoice->amount_pay != 0) ? $invoice->amount_pay : ""}}</td>
             </tr>
             <tr>
                 <td style="border: none"></td>
                 <td style="border: none"></td>
                 <td style="border: none; font-size:14px;">Balance Due</td>
-                <td style="text-align: right">{{$invoice->customer->outstanding_balance}}</td>
+                <td style="text-align: right">{{(($invoice->amount_pay != 0) ? ($invoice->total + $invoice->previous_balance) - $invoice->amount_pay : "")}}</td>
+                <!-- <td style="text-align: right">{{$invoice->customer->outstanding_balance}}</td> -->
             </tr>
         </table>
         <p style=" margin-left:23%; font-size:12px;">This is a computer generated invoice and requires no signature</p>

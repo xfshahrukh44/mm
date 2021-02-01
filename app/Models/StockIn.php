@@ -46,7 +46,9 @@ class StockIn extends Model
             $ledger = Ledger::where('vendor_id', $query->vendor_id)
                             ->where('amount', $query->amount)
                             ->first();
-            $ledger->delete();
+            if($ledger){
+                $ledger->delete();
+            }
 
             // new
             // update product quantity in hand
@@ -121,7 +123,9 @@ class StockIn extends Model
             $ledger = Ledger::where('vendor_id', $query->vendor_id)
                             ->where('amount', $query->amount)
                             ->first();
-            $ledger->delete();
+            if($ledger){
+                $ledger->delete();
+            }
         });
 
         static::created(function ($query) {

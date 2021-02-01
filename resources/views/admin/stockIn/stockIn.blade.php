@@ -59,8 +59,8 @@
                   <tr role="row" class="odd">
                     <td class="{{'product_id'.$stockIn->id}}">{{$stockIn->product ? $stockIn->product->category->name . ' - ' . $stockIn->product->brand->name . ' - ' . $stockIn->product->article : NULL}}</td>
                     <td class="{{'quantity'.$stockIn->id}}">{{$stockIn->quantity ? $stockIn->quantity : NULL}}</td>
-                    <td class="{{'rate'.$stockIn->id}}">{{$stockIn->rate ? 'Rs. ' . $stockIn->rate : NULL}}</td>
-                    <td class="{{'amount'.$stockIn->id}}">{{$stockIn->amount ? 'Rs. ' . $stockIn->amount : NULL}}</td>
+                    <td class="{{'rate'.$stockIn->id}}">{{$stockIn->rate ? 'Rs. ' . number_format($stockIn->rate, 2) : NULL}}</td>
+                    <td class="{{'amount'.$stockIn->id}}">{{$stockIn->amount ? 'Rs. ' . number_format($stockIn->amount) : NULL}}</td>
                     <td class="{{'vendor'.$stockIn->id}}">{{$stockIn->vendor ? $stockIn->vendor->name : NULL}}</td>
                     <td class="{{'transaction_date'.$stockIn->id}}">{{return_date($stockIn->created_at)}}</td>
                     <td class="{{'created_by'.$stockIn->id}}">{{return_user_name($stockIn->created_by)}}</td>

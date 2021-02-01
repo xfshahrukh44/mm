@@ -90,8 +90,8 @@
                       <td class="{{'whatsapp_number'.$ledger->id}}">{{$ledger->whatsapp_number ? $ledger->whatsapp_number : NULL}}</td>
                       <td class="{{'status'.$ledger->id}}">{{$ledger->status ? $ledger->status : NULL}}</td>
                     @endif
-                    <td class="{{'business_to_date'.$ledger->id}}">{{$ledger->business_to_date ? 'Rs. ' . $ledger->business_to_date : NULL}}</td>
-                    <td class="{{'outstanding_balance'.$ledger->id}}">{{$ledger->outstanding_balance ? 'Rs. ' . $ledger->outstanding_balance : NULL}}</td>
+                    <td class="{{'business_to_date'.$ledger->id}}">{{$ledger->business_to_date ? 'Rs. ' . number_format($ledger->business_to_date) : NULL}}</td>
+                    <td class="{{'outstanding_balance'.$ledger->id}}">{{$ledger->outstanding_balance ? 'Rs. ' . number_format($ledger->outstanding_balance) : NULL}}</td>
                     <td>
                       <!-- View Ledgers -->
                       <a href="#" class="ledgerButton" data-id="{{$ledger->id}}" data-type="{{$client_type}}">
@@ -211,12 +211,14 @@
             <!-- outstanding balance row -->
             <tr class="table-info">
               <td></td>
+              <td></td>
               <td class="text-bold">Outstanding Balance</td>
               <td class="detail_outstanding_balance"></td>
             </tr>
             <!-- headers -->
             <tr>
               <th>Transaction Date</th>
+              <th>Details</th>
               <th>Amount</th>
               <th>Type</th>
             </tr>
@@ -335,17 +337,39 @@ $(document).ready(function(){
     }
     else{
       for(var i = 0; i < client.ledgers.length; i++){
+        // debit credit classification
         if(client.ledgers[i].type == 'debit'){
           var color = "table-success";
         }
         else{
           var color = "table-danger";
         }
-        $('.ledger_wrapper').prepend('<tr class="'+ color +'"><td>'+ new Date(client.ledgers[i].transaction_date).toDateString() +'</td><td>Rs. '+ client.ledgers[i].amount +'</td><td>'+ client.ledgers[i].type +'</td></tr>');
+        
+        // check if record has receiving_id
+        if(client.ledgers[i].receiving_id){
+          var detail = " Received";
+        }
+        else{
+          var detail = "";
+        }
+
+        // check if record has invoice_id
+        if(client.ledgers[i].invoice_id){
+          var temp_route = "{{route('generate_invoice_pdf', ':id')}}";
+          temp_route = temp_route.replace(':id', client.ledgers[i].invoice_id);
+          // var detailHTML = '<a href="'+temp_route+'" target="_blank">Invoice # '+client.ledgers[i].invoice_id+', Items: '+client.ledgers[i].invoice.invoice_products.length+', Total: '+client.ledgers[i].invoice.total+'</a>';
+          var detailHTML = 'Invoice # <a href="'+temp_route+'" target="_blank">'+client.ledgers[i].invoice_id+'</a>'+', Items: '+client.ledgers[i].invoice.invoice_products.length+', Total: Rs.'+client.ledgers[i].invoice.total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        }
+        else{
+          var detailHTML = '';
+        }
+
+        // prepend ledger entries
+        $('.ledger_wrapper').prepend('<tr class="'+ color +'"><td>'+ new Date(client.ledgers[i].transaction_date).toDateString() +'</td><td>'+detailHTML+'</td><td>Rs. '+ client.ledgers[i].amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + detail + '</td><td>'+ client.ledgers[i].type +'</td></tr>');
       }
     }
     // outstanding balance
-    $('.detail_outstanding_balance').html('Rs. ' + client.outstanding_balance);
+    $('.detail_outstanding_balance').html('Rs. ' + client.outstanding_balance.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
     $('#detailLedgerModal .modal-title').html(client.name + "'s Ledger.");
     $('#detailLedgerModal').modal('show');
   });

@@ -17,6 +17,7 @@ class Invoice extends Model
         'total',
         'payment',
         'amount_pay',
+        'previous_balance',
         'created_by',
         'modified_by'
     ];
@@ -51,7 +52,9 @@ class Invoice extends Model
                             ->where('invoice_id', $query->id)
                             ->where('amount', $old_total)
                             ->first();
-            $ledger->delete();
+            if($ledger){
+                $ledger->delete();
+            }
             // amount pay
             if($query->old_payment == 'cash'){
                 // Ledger::create([
@@ -64,7 +67,10 @@ class Invoice extends Model
                                 ->where('invoice_id', $query->id)
                                 ->where('amount', $old_amount_pay)
                                 ->first();
-                $ledger->delete();
+                
+                if($ledger){
+                    $ledger->delete();
+                }
             }
 
             // new
@@ -101,7 +107,9 @@ class Invoice extends Model
                             ->where('invoice_id', $query->id)
                             ->where('amount', $query->total)
                             ->first();
-            $ledger->delete();
+            if($ledger){
+                $ledger->delete();
+            }
             
             // amount pay
             if($query->payment == 'cash'){
@@ -115,7 +123,9 @@ class Invoice extends Model
                                 ->where('invoice_id', $query->id)
                                 ->where('amount', $query->amount_pay)
                                 ->first();
-                $ledger->delete();
+                if($ledger){
+                    $ledger->delete();
+                }
             }
         });
 

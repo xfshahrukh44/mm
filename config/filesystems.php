@@ -76,6 +76,10 @@ return [
             'driver' => 'local',
             'root' => storage_path('app/public/products'),
         ],
+        'exports' => [
+            'driver' => 'local',
+            'root' => asset('exports'),
+        ],
     ],
 
 ];

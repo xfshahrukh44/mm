@@ -84,4 +84,13 @@ class ExpenseController extends Controller
 
         return redirect()->back();
     }
+
+    public function fetch_expenses(Request $request)
+    {
+        $data['type'] = $request->type;
+        $data['date_from'] = $request->date_from;
+        $data['date_to'] = $request->date_to;
+
+        return $this->expenseService->fetch_expenses($data);
+    }
 }

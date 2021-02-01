@@ -58,9 +58,9 @@
                   <tr role="row" class="odd">
                     <td class="{{'invoice_id'.$receiving->id}}">{{$receiving->invoice ? $receiving->invoice->id : NULL}}</td>
                     <td class="{{'order_id'.$receiving->id}}">{{$receiving->invoice && $receiving->invoice->order ? $receiving->invoice->order->id : NULL}}</td>
-                    <td class="{{'customer'.$receiving->id}}">{{$receiving->invoice && $receiving->invoice->order && $receiving->invoice->order->customer? $receiving->invoice->order->customer->name : NULL}}</td>
-                    <td class="{{'total'.$receiving->id}}">{{$receiving->invoice ? $receiving->invoice->total : NULL}}</td>
-                    <td class="{{'amount'.$receiving->id}}">{{$receiving->amount ? $receiving->amount : NULL}}</td>
+                    <td class="{{'customer'.$receiving->id}}">{{$receiving->customer? $receiving->customer->name : NULL}}</td>
+                    <td class="{{'total'.$receiving->id}}">{{$receiving->invoice ? 'Rs.' . number_format($receiving->invoice->total) : NULL}}</td>
+                    <td class="{{'amount'.$receiving->id}}">{{$receiving->amount ? 'Rs.' . number_format($receiving->amount) : NULL}}</td>
                     <td class="{{'created_by'.$receiving->id}}">{{return_user_name($receiving->created_by)}}</td>
                     <td class="{{'modified_by'.$receiving->id}}">{{return_user_name($receiving->modified_by)}}</td>
                     <td>
@@ -193,6 +193,7 @@ $(document).ready(function(){
   // global vars
   var invoice = "";
   var receiving = "";
+  var customer = "";
 
   // fetch invoice
   function fetch_invoice(id){
@@ -205,6 +206,24 @@ $(document).ready(function(){
         dataType: 'JSON',
         success: function (data) {
             invoice = data.invoice;
+        }
+    });
+  }
+
+  // fetch customer
+  function fetch_customer(id){
+    // fetch customer
+    $.ajax({
+        url: "<?php echo(route('customer.show', 1)); ?>",
+        type: 'GET',
+        async: false,
+        data: {id: id},
+        dataType: 'JSON',
+        success: function (data) {
+            customer = data.customer;
+        },
+        error: function(data){
+          customer = "";
         }
     });
   }
@@ -235,6 +254,31 @@ $(document).ready(function(){
     $('.amount_pay').html(invoice.amount_pay);
     $('.invoice_due').html(invoice.total - invoice.amount_pay);
   });
+  // on customer change
+  $('.customer_id').on('change', function(){
+    fetch_customer($(this).val());
+
+    // if customer found and invoices found
+    if(customer && customer.invoices.length > 0){
+      // empty wrapper
+      $('.invoice_id').html('<option value="">Select invoice</option>');
+
+      // append invoice items
+      for(var i = (customer.invoices.length - 1); i >= 0; i--){
+        $('.invoice_id').append('<option value="'+customer.invoices[i].id+'">Invoice # '+customer.invoices[i].id+', Items: '+customer.invoices[i].invoice_products.length+', Total: Rs.'+customer.invoices[i].total+'</option>');
+      }
+      
+      // init select2
+      $('.invoice_id').select2();
+    }
+    // else
+    else{
+      // empty wrapper
+      $('.invoice_id').html('<option value="">Select invoice</option>');
+      // init select2
+      $('.invoice_id').select2();
+    }
+  });
 
   // create
   $('#add_receiving').on('click', function(){
@@ -242,6 +286,7 @@ $(document).ready(function(){
     // fetch_all_brands();
 
     $('#addReceivingModal .invoice_id').select2();
+    $('#addReceivingModal .customer_id').select2();
     // $('.invoice_id').select2();
   });
 
@@ -251,11 +296,26 @@ $(document).ready(function(){
     fetch_receiving(id);
     
     $('#editForm .hidden').val(id);
-    $('#editForm .invoice_id option[value="'+ receiving.invoice_id +'"]').prop('selected', true);
-    $('#editForm .invoice_id').change();
+
+    // if customer_id
+    if(receiving.customer_id){
+      $('#editForm .customer_id option[value="'+ receiving.customer_id +'"]').prop('selected', true);
+      $('#editForm .customer_id').change();
+    }
+    // if invoice_id
+    if(receiving.invoice_id){
+      $('#editForm .invoice_id option[value="'+ receiving.invoice_id +'"]').prop('selected', true);
+      $('#editForm .invoice_id').change();
+    }
+    // $('#editForm .invoice_id option[value="'+ receiving.invoice_id +'"]').prop('selected', true);
+    // $('#editForm .invoice_id').change();
+
+    // amount
+    $('#editForm .amount').val(receiving.amount);
 
 
     $('#editReceivingModal .invoice_id').select2();
+    $('#editReceivingModal .customer_id').select2();
     $('#editReceivingModal').modal('show');
   });
 

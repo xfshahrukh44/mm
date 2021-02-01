@@ -97,7 +97,7 @@
     </div>
     <!-- cash_on_delivery -->
     <div class="form-group col-md-3">
-        <label for="">Cash on Delivery</label>
+        <label for="">Payment Method</label>
         <select name="cash_on_delivery" class="form-control cash_on_delivery" style="width: 100%; height: 35px;">
             <option value="">Select Method</option>
             <option value="credit">Credit</option>

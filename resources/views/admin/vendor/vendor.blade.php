@@ -63,8 +63,8 @@
                     <td class="{{'contact_number'.$vendor->id}}">{{$vendor->contact_number ? $vendor->contact_number : NULL}}</td>
                     <td class="{{'whatsapp_number'.$vendor->id}}">{{$vendor->whatsapp_number ? $vendor->whatsapp_number : NULL}}</td>
                     <td class="{{'status'.$vendor->id}}">{{$vendor->status ? $vendor->status : NULL}}</td>
-                    <td class="{{'business_to_date'.$vendor->id}}">{{$vendor->business_to_date ? 'Rs. ' . $vendor->business_to_date : NULL}}</td>
-                    <td class="{{'outstanding_balance'.$vendor->id}}">{{$vendor->outstanding_balance ? 'Rs. ' . $vendor->outstanding_balance : NULL}}</td>
+                    <td class="{{'business_to_date'.$vendor->id}}">{{$vendor->business_to_date ? 'Rs. ' . number_format($vendor->business_to_date) : NULL}}</td>
+                    <td class="{{'outstanding_balance'.$vendor->id}}">{{$vendor->outstanding_balance ? 'Rs. ' . number_format($vendor->outstanding_balance) : NULL}}</td>
                     <td>
                       <!-- Detail -->
                       <a href="#" class="detailButton" data-id="{{$vendor->id}}" data-object="{{$vendor}}" data-shopkeeper="{{asset('storage/shopkeepers') . '/' . $vendor->shop_keeper_picture}}" data-shop="{{asset('storage/shops') . '/' . $vendor->shop_picture}}">
@@ -447,8 +447,8 @@ $(document).ready(function(){
     }
 
     $('.status').html(vendor.status);
-    $('.business_to_date').html("Rs. " + vendor.business_to_date);
-    $('.outstanding_balance').html("Rs. " + vendor.outstanding_balance);
+    $('.business_to_date').html("Rs. " + vendor.business_to_date.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
+    $('.outstanding_balance').html("Rs. " + vendor.outstanding_balance.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
 
     $('#viewVendorModal').modal('show');
   });

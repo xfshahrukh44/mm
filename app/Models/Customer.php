@@ -88,6 +88,11 @@ class Customer extends Model
         return $this->hasMany('App\Models\Order');
     }
 
+    public function invoices()
+    {
+        return $this->hasMany('App\Models\Invoice');
+    }
+
     public function ledgers()
     {
         return $this->hasMany('App\Models\Ledger');
@@ -101,6 +106,11 @@ class Customer extends Model
     public function special_discounts()
     {
         return $this->hasMany('App\Models\SpecialDiscount');
+    }
+
+    public function receivings()
+    {
+        return $this->hasMany('App\Models\Receiving');
     }
 
 }

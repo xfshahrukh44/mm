@@ -144,4 +144,35 @@ abstract class ExpenseRepository implements RepositoryInterface
 
         return $expenses;
     }
+
+    public function fetch_expenses(array $data)
+    {
+        // check for wildcard(*)
+        if($data['type'] == 'All'){
+            // all expenses
+            $expenses = Expense::where('date', '>=', $data['date_from'])
+                                ->where('date', '<=', $data['date_to'])
+                                ->orderBy('date', 'ASC')
+                                ->get();
+        }
+        else{
+            // all filtered expenses
+            $expenses = Expense::where('type', 'LIKE', '%Trans%')
+                                ->where('date', '>=', $data['date_from'])
+                                ->where('date', '<=', $data['date_to'])
+                                ->orderBy('date', 'ASC')
+                                ->get();
+        }
+
+        // calculate total
+        $total = 0;
+        foreach($expenses as $expense){
+            $total += $expense->amount;
+        }
+
+        return [
+            'expenses' => $expenses,
+            'total' => $total
+        ];
+    }
 }

@@ -23,18 +23,18 @@
             <i class="fas fa-plus"></i> Add New Expense</button>
         </div>
         <!-- search bar -->
-        <form action="{{route('search_expenses')}}" class="form-wrapper">
-          <div class="row">
+        <!-- <form action="{{route('search_expenses')}}" class="form-wrapper">
+          <div class="row"> -->
               <!-- search bar -->
-              <div class="topnav col-md-4">
+              <!-- <div class="topnav col-md-4">
                 <input name="query" class="form-control" id="search_content" type="text" placeholder="Search..">
-              </div>
+              </div> -->
               <!-- search button-->
-              <button type="submit" class="btn btn-primary col-md-0 justify-content-start" id="search_button">
+              <!-- <button type="submit" class="btn btn-primary col-md-0 justify-content-start" id="search_button">
                 <i class="fas fa-search"></i>
               </button>
           </div>
-        </form>
+        </form> -->
       </div>
       <!-- /.card-header -->
       <div class="card-body">
@@ -56,7 +56,7 @@
                 @foreach($expenses as $expense)
                   <tr role="row" class="odd">
                     <td class="{{'type'.$expense->id}}">{{$expense->type ? $expense->type : NULL}}</td>
-                    <td class="{{'amount'.$expense->id}}">{{$expense->amount ? $expense->amount : NULL}}</td>
+                    <td class="{{'amount'.$expense->id}}">{{$expense->amount ? 'Rs.' . number_format($expense->amount) : NULL}}</td>
                     <td class="{{'detail'.$expense->id}}">{{$expense->detail ? $expense->detail : NULL}}</td>
                     <td class="{{'date'.$expense->id}}">{{$expense->date ? return_date($expense->date) : NULL}}</td>
                     <td class="{{'created_by'.$expense->id}}">{{return_user_name($expense->created_by)}}</td>

@@ -26,25 +26,27 @@ class Expense extends Model
 
             // old
             // find payment and delete
-            $payment = Payment::where('amount', $old_amount)->where('vendor_id', NULL)->first();
+            $payment = Payment::where('expense_id', $query->id)->where('amount', $old_amount)->first();
             $payment->delete();
 
             // new
             // payment entry
             Payment::create([
+                'expense_id' => $query->id,
                 'amount' => $new_amount
             ]);
         });
 
         static::deleting(function ($query) {
             // find payment and delete
-            $payment = Payment::where('amount', $query->amount)->where('vendor_id', NULL)->first();
+            $payment = Payment::where('expense_id', $query->id)->where('amount', $query->amount)->first();
             $payment->delete();
         });
 
         static::created(function ($query) {
             // payment entry
             Payment::create([
+                'expense_id' => $query->id,
                 'amount' => $query->amount
             ]);
         });
@@ -55,4 +57,9 @@ class Expense extends Model
     ];
 
     protected $dates = ['created_at', 'updated_at', 'deleted_at'];
+
+    public function payment()
+    {
+        return $this->hasOne('App\Models\Payment');
+    }
 }

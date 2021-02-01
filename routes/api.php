@@ -66,7 +66,13 @@ Route::group(['middleware' => ['auth:api', 'cors'], 'prefix' => 'auth'], functio
     // StockOut
     Route::apiResources(['stock_out'=>'API\StockOutController']);
 
+    // invoice
+    Route::apiResources(['invoice'=>'API\InvoiceController']);
+
     // helpers
     Route::get('/fetch_specific_markets', 'API\MarketController@fetch_specific_markets');
+
+    // generate invoice pdf
+    Route::get('/generate_invoice_pdf', 'API\InvoiceController@generate_invoice_pdf')->name('generate_invoice_pdf');
 
 });

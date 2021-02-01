@@ -89,10 +89,25 @@ Route::group(['middleware' => 'auth', 'prefix' => 'admin'], function() {
     Route::get('/generate_invoice_pdf/{id}', 'HomeController@generate_invoice_pdf')->name('generate_invoice_pdf');
     // plug n play
     Route::get('/plug_n_play', 'HomeController@plug_n_play')->name('plug_n_play');
-    // expenses
-    Route::get('/expenses', function(){
+    // expenses view
+    Route::get('/e><penses', function(){
         return view('admin.expense.expense_search');
     })->name('expenses');
+    
+    // fetch_expenses
+    Route::get('/fetch_expenses', 'Admin\ExpenseController@fetch_expenses')->name('fetch_expenses');
+    // sales ledgers view
+    Route::get('/sales_ledgers', 'HomeController@sales_ledgers')->name('sales_ledgers');
+    // customer_wise_sales
+    Route::get('/customer_wise_sales', 'HomeController@customer_wise_sales')->name('customer_wise_sales');
+    // product_wise_sales
+    Route::get('/product_wise_sales', 'HomeController@product_wise_sales')->name('product_wise_sales');
+    // combined_sales
+    Route::get('/combined_sales', 'HomeController@combined_sales')->name('combined_sales');
+    // all_sales
+    Route::get('/all_sales', 'HomeController@all_sales')->name('all_sales');
+    // generate_expenses_excel
+    Route::get('/generate_expenses_excel', 'HomeController@generate_expenses_excel')->name('generate_expenses_excel');
     // ----------------------------------------------------------------------------------------------------------------------
     
     

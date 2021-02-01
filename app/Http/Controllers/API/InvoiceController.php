@@ -137,4 +137,10 @@ class InvoiceController extends Controller
     {
         return $this->invoiceService->delete($id);
     }
+
+    public function generate_invoice_pdf(Request $request)
+    {
+        // dd($request->all());
+        return $this->invoiceService->generate_invoice_pdf($request->invoice_id);
+    }
 }

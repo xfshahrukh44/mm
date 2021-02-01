@@ -61,8 +61,8 @@
                     <td class="{{'area'.$customer->id}}">{{$customer->market && $customer->market->area ? $customer->market->area->name : NULL}}</td>
                     <td class="{{'market'.$customer->id}}">{{$customer->market ? $customer->market->name : NULL}}</td>
                     <td class="{{'contact_number'.$customer->id}}">{{$customer->contact_number ? $customer->contact_number : NULL}}</td>
-                    <td class="{{'business_to_date'.$customer->id}}">{{$customer->business_to_date ? 'Rs. ' . $customer->business_to_date : NULL}}</td>
-                    <td class="{{'outstanding_balance'.$customer->id}}">{{$customer->outstanding_balance ? 'Rs. ' . $customer->outstanding_balance : NULL}}</td>
+                    <td class="{{'business_to_date'.$customer->id}}">{{$customer->business_to_date ? 'Rs. ' . number_format($customer->business_to_date) : NULL}}</td>
+                    <td class="{{'outstanding_balance'.$customer->id}}">{{$customer->outstanding_balance ? 'Rs. ' . number_format($customer->outstanding_balance) : NULL}}</td>
                     <td>
                       <!-- Detail -->
                       <a href="#" class="detailButton" data-id="{{$customer->id}}" data-object="{{$customer}}" data-shopkeeper="{{asset('storage/shopkeepers') . '/' . $customer->shop_keeper_picture}}" data-shop="{{asset('storage/shops') . '/' . $customer->shop_picture}}">
@@ -266,7 +266,7 @@
                                 <td class="">Outstanding Balance</td>
                                 <td class="outstanding_balance"></td>
                             </tr>
-                            <tr role="row" class="odd">
+                            <tr role="row" class="odd" hidden>
                                 <td class="">Special Discount</td>
                                 <td class="special_discount"></td>
                             </tr>
@@ -480,9 +480,9 @@ $(document).ready(function(){
     $('.status').html(customer.status);
     $('.visiting_days').html(customer.visiting_days);
     $('.cash_on_delivery').html(customer.cash_on_delivery);
-    $('.opening_balance').html("Rs. " + customer.opening_balance);
-    $('.business_to_date').html("Rs. " + customer.business_to_date);
-    $('.outstanding_balance').html("Rs. " + customer.outstanding_balance);
+    $('.opening_balance').html("Rs. " + customer.opening_balance.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
+    $('.business_to_date').html("Rs. " + customer.business_to_date.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
+    $('.outstanding_balance').html("Rs. " + customer.outstanding_balance.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
     $('.special_discount').html("Rs. " + customer.special_discount);
 
     $('#viewCustomerModal').modal('show');

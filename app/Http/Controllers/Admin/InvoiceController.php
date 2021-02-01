@@ -63,6 +63,10 @@ class InvoiceController extends Controller
         if($validator->fails())
             return response()->json($validator->errors()->toArray(), 400);
 
+        // set previous balance
+        $customer = ($this->customerService->find($request->customer_id))['customer'];
+        $request['previous_balance'] = $customer->outstanding_balance;
+
         // create invoice
         $invoice = ($this->invoiceService->create($request->all()))['invoice']['invoice'];
 

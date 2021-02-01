@@ -36,7 +36,9 @@ class Payment extends Model
                             ->where('payment_id', $query->id)
                             ->where('amount', $old_amount)
                             ->first();
-            $ledger->delete();
+            if($ledger){
+                $ledger->delete();
+            }
 
             // new
             // ledger entry
@@ -61,7 +63,9 @@ class Payment extends Model
                             ->where('payment_id', $query->id)
                             ->where('amount', $query->amount)
                             ->first();
-            $ledger->delete();
+            if($ledger){
+                $ledger->delete();
+            }
         });
 
         static::created(function ($query) {
@@ -77,7 +81,7 @@ class Payment extends Model
     }
     
     protected $fillable = [
-        'vendor_id', 'amount', 'created_by', 'modified_by',
+        'vendor_id', 'expense_id', 'amount', 'created_by', 'modified_by',
     ];
 
     protected $dates = ['created_at', 'updated_at', 'deleted_at'];
@@ -90,5 +94,10 @@ class Payment extends Model
     public function ledgers()
     {
         return $this->hasMany('App\Models\Ledger');
+    }
+
+    public function expense()
+    {
+        return $this->belongsTo('App\Models\Expense');
     }
 }

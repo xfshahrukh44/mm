@@ -83,8 +83,8 @@
                                         </td>
                                         <td class="{{'contact_number'.$invoice->id}}">{{$invoice->customer && $invoice->customer->contact_number ? $invoice->customer->contact_number : NULL}}</td>
                                         <td class="{{'address'.$invoice->id}}">{{($invoice->customer && $invoice->customer->shop_name ? $invoice->customer->shop_name : NULL) . ' - ' . ($invoice->customer && $invoice->customer->market ? $invoice->customer->market->name : NULL) . ' - ' .($invoice->customer && $invoice->customer->market ? $invoice->customer->market->area->name : NULL)}}</td>
-                                        <td class="{{'total'.$invoice->id}}">Rs.{{$invoice->total}}</td>
-                                        <td class="{{'amount_pay'.$invoice->id}}">Rs.{{$invoice->amount_pay}}</td>
+                                        <td class="{{'total'.$invoice->id}}">Rs.{{number_format($invoice->total)}}</td>
+                                        <td class="{{'amount_pay'.$invoice->id}}">Rs.{{number_format($invoice->amount_pay)}}</td>
                                         @can('isSuperAdmin')
                                             <td>{{return_user_name($invoice->created_by)}}</td>
                                             <td>{{return_user_name($invoice->modified_by)}}</td>
@@ -93,6 +93,10 @@
                                             <!-- Detail -->
                                             <a href="#" class="detailButton" data-id="{{$invoice->id}}" data-type="{{$invoice->id}}">
                                                 <i class="fas fa-shopping-basket blue ml-1"></i>
+                                            </a>
+                                            <!-- Edit -->
+                                            <a href="#" class="editButton" data-id="{{$invoice->id}}" data-object="{{$invoice}}">
+                                                <i class="fas fa-edit blue ml-1"></i>
                                             </a>
                                             @can('isSuperAdmin')
                                                 <!-- Delete -->
@@ -230,6 +234,40 @@
                     <button class="btn btn-success generate_invoice" type="submit">Generate Invoice</button>
                     <button class="btn btn-primary" data-dismiss="modal">Close</button>
                 </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Edit view -->
+<div class="modal fade" id="editInvoiceModal" tabindex="-1" role="dialog" aria-labelledby="editInvoiceModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editInvoiceModalLabel">Edit invoice</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="editForm" method="POST" action="{{route('invoice.update', 1)}}">
+                <!-- hidden input -->
+                @method('PUT')
+                <input type="hidden" class="hidden" name="hidden">
+                @include('admin.invoice.invoice_master')
+                <!-- buttons -->
+                <div class="modal-footer">
+                    <button name="completed_status" type="submit" class="btn btn-primary" id="createButton">Update</button>
+                    <!-- <div class="btn-group">
+                        <button name="pending_status" type="submit" class="btn btn-success save_as_pending"><i class="fas fa-clock mr-2 mt-1"></i>Save as pending</button>
+                        <button type="button" class="btn btn-success dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <span class="sr-only">Toggle Dropdown</span>
+                        </button>
+                        <div class="dropdown-menu">
+                            <button name="completed_status" type="submit" class="dropdown-item save_as_completed" href="#"><i class="fas fa-check-double mr-2"></i>Save as completed</button>
+                        </div>
+                    </div> -->
+                </div>
+
             </form>
         </div>
     </div>
@@ -407,6 +445,43 @@
         // append in table_row_wrapper empty first
         // $('#table_row_wrapper').child('td').remove();
 
+    });
+
+    // edit
+    $('.editButton').on('click', function(){
+        fetch_invoice($(this).data('id'));
+        $('#editOrderModal .hidden').val($(this).data('id'));
+
+        // select customer
+        $('#editInvoiceModal .customer_id option[value="'+ invoice.customer_id +'"]').prop('selected', true);
+        $('#editInvoiceModal .customer_id').trigger('change.select2'); 
+        $('#editInvoiceModal .customer_id').change();
+        // $('#editInvoiceModal .customer_id').attr("readonly", true);
+        // $('#editInvoiceModal .customer_id').selectmenu();
+        // $('#editInvoiceModal .customer_id').selectmenu('refresh', true);
+        $('#editInvoiceModal .dispatch_date').val(invoice.dispatch_date);
+        
+        // remove required attribute on rider_id
+        $("#editInvoiceModal .rider_id").prop("required", false);
+
+        // empty wrapper
+        $('.field_wrapper').html('');
+
+        for(var i = 0; i < invoice.invoice_products.length; i++){
+            var productDiv = '<div class="col-md-4"><div class="ui-widget"><input class="form-control product_search" name="products[]" value="'+ invoice.invoice_products[i].product.article +'"><input class="hidden_product_search" type="hidden" name="hidden_product_ids[]" value="'+ invoice.invoice_products[i].product.id +'"></div></div>';
+            var priceDiv = '<div class="form-group col-md-4"><input type="number" class="form-control prices" name="prices[]" required min=0 value="'+ invoice.invoice_products[i].price +'"></div>';
+            var quantityDiv = '<div class="form-group col-md-3"><input type="number" class="form-control quantities" name="quantities[]" required min=0  value="'+ invoice.invoice_products[i].quantity +'"></div>';
+            var fieldHTML = startDiv + productDiv + priceDiv + quantityDiv + removeChildDiv + endDiv;
+
+            $('.field_wrapper').prepend(fieldHTML);
+            x++;
+        }
+
+        initAutocompleteItems(".product_search", "#editInvoiceModal .ui-widget", product_labels);
+
+        get_invoice_total('#editInvoiceModal');
+
+        $('#editInvoiceModal').modal('show');
     });
 
   });

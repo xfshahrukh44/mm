@@ -82,7 +82,7 @@
                                         </td>
                                         <td class="{{'contact_number'.$order->id}}">{{$order->customer ? $order->customer->contact_number : NULL}}</td>
                                         <td class="{{'address'.$order->id}}">{{$order->customer ? ($order->customer->shop_name . ' - ' . ($order->customer->market ? $order->customer->market->name : NULL) . ' - ' . ($order->customer->market && $order->customer->market->area ? $order->customer->market->area->name : NULL)) : NULL}}</td>
-                                        <td class="{{'total'.$order->id}}">RS.{{$order->total}}</td>
+                                        <td class="{{'total'.$order->id}}">RS.{{number_format($order->total)}}</td>
                                         <td class="{{'status'.$order->id}} text-center">
 
                                             @if ($order->status == "pending")
@@ -429,7 +429,7 @@
     var startDiv = '<div class="row">';
     var productDiv = '<div class="col-md-4"><div class="ui-widget"><input class="form-control product_search" name="products[]"><input class="hidden_product_search" type="hidden" name="hidden_product_ids[]"></div></div>';
     var priceDiv = '<div class="form-group col-md-4"><input type="number" class="form-control prices" name="prices[]" required min=0></div>';
-    var quantityDiv = '<div class="form-group col-md-3"><input type="number" class="form-control quantities" name="quantities[]" required min=0 value=0></div>';
+    var quantityDiv = '<div class="form-group col-md-3"><input type="number" class="form-control quantities" name="quantities[]" required value=0></div>';
     // var addChildDiv = '<div class="form-group col-md-0 add_button" style="display: table; vertical-align: middle;"><a class="btn btn-primary"><i class="fas fa-plus" style="color:white;"></i></a></div>';
     var removeChildDiv = '<div class="form-group col-md-0 ml-1 remove_button mt-1" style="display: table; vertical-align: middle;"><a class="btn btn-primary"><i class="fas fa-minus" style="color:white;"></i></a></div>';
     var endDiv = '</div>';
@@ -491,6 +491,8 @@
             dataType: 'JSON',
             success: function (data) {
                 customer = data.customer;
+                // if customer is distributor, rider id is not required, else required
+                (customer.type == 'distributor') ? rider_not_required() : rider_required();
             }
         });
     }
@@ -604,7 +606,7 @@
                     if(customer.type == "consumer"){
                         $(this).parent().parent().next().find('input').val(ui.item.consumer_selling_price);
                     }
-                    if(customer.type == "retailer"){
+                    if(customer.type == "retailer" || customer.type == "distributor"){
                         $(this).parent().parent().next().find('input').val(ui.item.retailer_selling_price);
                     }
                 }
@@ -615,12 +617,22 @@
         });
     }
 
+    // add required attribute from rider
+    function rider_required(){
+        // rider_id
+        $("#invoiceOrderModal .rider_id").prop("required", true);
+    }
+    
+    // remove required attribute from rider
+    function rider_not_required(){
+        $("#invoiceOrderModal .rider_id").prop("required", false);
+    }
+
     // add required attribute
     $('.save_as_completed').on('click', function(){
         $("#order_total").prop("required", true);
         $("#rider_charges").prop("required", true);
         $("#rider_id").prop('required', true);
-
     })
 
     // remove required attribute
@@ -714,7 +726,7 @@
             if(order.order_products[i].invoiced == 0){
                 var productDiv = '<div class="col-md-4"><div class="ui-widget"><input name="order_products_ids[]" type="hidden" value="'+ order.order_products[i].id +'"><input class="form-control product_search" name="products[]" value="'+ order.order_products[i].product.category.name + ' - ' + order.order_products[i].product.brand.name + ' - ' + order.order_products[i].product.article +'"><input class="hidden_product_search" type="hidden" name="hidden_product_ids[]" value="'+ order.order_products[i].product.id +'"></div></div>';
                 var priceDiv = '<div class="form-group col-md-4"><input type="number" class="form-control prices" name="prices[]" required min=0 value="'+ order.order_products[i].price +'"></div>';
-                var quantityDiv = '<div class="form-group col-md-3"><input type="number" class="form-control quantities" name="quantities[]" required min=0  value="'+ order.order_products[i].quantity +'"></div>';
+                var quantityDiv = '<div class="form-group col-md-3"><input type="number" class="form-control quantities" name="quantities[]" required value="'+ order.order_products[i].quantity +'"></div>';
                 var fieldHTML = startDiv + productDiv + priceDiv + quantityDiv + removeChildDiv + endDiv;
 
                 $('.field_wrapper').prepend(fieldHTML);

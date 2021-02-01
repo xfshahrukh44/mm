@@ -219,6 +219,12 @@
                 </a>
               </li>
               <li class="nav-item">
+                <a href="{{route('sales_ledgers')}}" class="nav-link">
+                  <i class="fas fa-book nav-icon"></i>
+                  <p>Sales Ledgers</p>
+                </a>
+              </li>
+              <li class="nav-item">
                 <a href="{{route('receiving.index')}}" class="nav-link">
                   <i class="fas fa-book nav-icon"></i>
                   <p>Receipts</p>
@@ -234,6 +240,12 @@
                 <a href="{{route('expense.index')}}" class="nav-link">
                   <i class="fas fa-book nav-icon"></i>
                   <p>Expenses</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{route('expenses')}}" class="nav-link">
+                  <i class="fas fa-book nav-icon"></i>
+                  <p>Expense Ledgers</p>
                 </a>
               </li>
             </ul>

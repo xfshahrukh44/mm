@@ -74,7 +74,7 @@ class StockOut extends Model
     }
     
     protected $fillable = [
-        'customer_id', 'product_id', 'quantity', 'transaction_date', 'created_by', 'modified_by'
+        'customer_id', 'product_id', 'quantity', 'price', 'transaction_date', 'created_by', 'modified_by'
     ];
 
     protected $dates = ['created_at', 'updated_at', 'deleted_at'];

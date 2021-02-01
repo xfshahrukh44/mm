@@ -34,7 +34,15 @@ class InvoiceProduct extends Model
         });
 
         static::deleting(function ($query) {
-            
+            $stock_out = StockOut::where('customer_id', $query->customer_id)
+                                ->where('product_id', $query->product_id)
+                                ->where('quantity', $query->quantity)
+                                ->where('price', $query->price)
+                                ->first();
+
+            if($stock_out){
+                $stock_out->delete();
+            }
         });
 
         static::created(function ($query) {
@@ -44,6 +52,8 @@ class InvoiceProduct extends Model
                 'customer_id' => $customer_id,
                 'product_id' => $query->product_id,
                 'quantity' => $query->quantity,
+                'price' => $query->price,
+                'transaction_date' => return_todays_date()
             ]);
         });
     }

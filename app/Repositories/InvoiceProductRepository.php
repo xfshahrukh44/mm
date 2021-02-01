@@ -118,4 +118,12 @@ abstract class InvoiceProductRepository implements RepositoryInterface
             throw new AllInvoiceProductException($exception->getMessage());
         }
     }
+    
+    public function fetch_by_product($data)
+    {
+        return $this->model::where('product_id', $data['product_id'])
+                            ->where('created_at', '>=', $data['date_from'])
+                            ->where('created_at', '<=', $data['date_to'])
+                            ->get();
+    }
 }

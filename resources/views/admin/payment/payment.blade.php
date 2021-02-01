@@ -55,7 +55,7 @@
                 @foreach($payments as $payment)
                   <tr role="row" class="odd">
                     <td class="{{'vendor_id'.$payment->id}}">{{$payment->vendor ? $payment->vendor->name : NULL}}</td>
-                    <td class="{{'amount'.$payment->id}}">{{$payment->amount ? $payment->amount : NULL}}</td>
+                    <td class="{{'amount'.$payment->id}}">{{$payment->amount ? 'Rs.' . number_format($payment->amount) : NULL}}</td>
                     <td class="{{'created_at'.$payment->id}}">{{$payment->created_at ? $payment->created_at : NULL}}</td>
                     <td class="{{'created_by'.$payment->id}}">{{return_user_name($payment->created_by)}}</td>
                     <td class="{{'modified_by'.$payment->id}}">{{return_user_name($payment->modified_by)}}</td>

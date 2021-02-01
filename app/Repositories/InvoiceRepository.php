@@ -163,4 +163,13 @@ abstract class InvoiceRepository implements RepositoryInterface
         return $pdf->stream($pdf_name, array('Attachment'=>0));
         // return redirect()->away($pdf->stream(Carbon::now() . '.pdf'));
     }
+
+    public function fetch_by_customer($data)
+    {
+        return $this->model::with('invoice_products')
+                            ->where('customer_id', $data['customer_id'])
+                            ->where('created_at', '>=', $data['date_from'])
+                            ->where('created_at', '<=', $data['date_to'])
+                            ->get();
+    }
 }

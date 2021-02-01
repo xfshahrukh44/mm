@@ -93,7 +93,7 @@ abstract class CustomerRepository implements RepositoryInterface
     {
         try 
         {
-            $customer = $this->model::with('market.area', 'special_discounts.product', 'ledgers')->find($id);
+            $customer = $this->model::with('market.area', 'special_discounts.product', 'ledgers.invoice.invoice_products', 'invoices.invoice_products')->find($id);
             if(!$customer)
             {
                 return [

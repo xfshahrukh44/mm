@@ -1,14 +1,22 @@
 @csrf
 <div class="modal-body row">
 
+    <!-- customer_id -->
+    <div class="form-group col-md-12 customer_id_wrapper">
+        <label for=""><i class="nav-icon fas fa-users"></i> Customer</label>
+        <select name="customer_id" class="form-control customer_id" style="width: 100%; height: 35px;" required>
+            <option value="">Select customer</option>
+            @foreach($customers as $customer)
+                <option value="{{$customer->id}}">{{$customer->name}}</option>
+            @endforeach
+        </select>
+    </div>
+
     <!-- invoice_id -->
     <div class="form-group col-md-12 invoice_id_wrapper">
         <label for=""><i class="nav-icon fas fa-users"></i> Invoice</label>
-        <select id="invoice_id" name="invoice_id" class="form-control invoice_id" style="width: 100%; height: 35px;">
+        <select name="invoice_id" class="form-control invoice_id" style="width: 100%; height: 35px;">
             <option value="">Select invoice</option>
-            @foreach($invoices as $invoice)
-                <option value="{{$invoice->id}}">{{$invoice->id}}</option>
-            @endforeach
         </select>
     </div>
     
@@ -66,11 +74,11 @@
                 <td>Invoice Total</td>
                 <td class="total"></td>
             </tr>
-            <tr role="row">
+            <tr role="row" hidden>
                 <td>Amount Paid</td>
                 <td class="amount_pay"></td>
             </tr>
-            <tr role="row">
+            <tr role="row" hidden>
                 <td>Invoice Due</td>
                 <td class="invoice_due"></td>
             </tr>

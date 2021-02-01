@@ -129,7 +129,7 @@
             </div>
             <!-- quantity -->
             <div class="form-group col-md-3">
-                <input type="number" class="form-control quantities" name="quantities[]" required min=0 value=0>
+                <input type="number" class="form-control quantities" name="quantities[]" required value=0>
             </div>
         </div>
     </div>
