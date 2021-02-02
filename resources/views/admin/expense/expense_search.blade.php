@@ -72,6 +72,7 @@
             <div class="modal-content">
             <div class="modal-header row">
                 <h5 class="modal-title" id="detailLedgerModalLabel">Ledger</h5>
+                <!-- generate excel -->
                 <div class="text-right">
                     <button type="button" class="btn btn-success generate_expenses_excel">
                         <i class="fas fa-file-excel"></i>
@@ -110,6 +111,7 @@
         </div>
     </div>
 
+    <!-- dummy form -->
     <form id="dummy_form" action="{{route('generate_expenses_excel')}}" method="POST" target="_blank" hidden>
         @csrf
     </form>

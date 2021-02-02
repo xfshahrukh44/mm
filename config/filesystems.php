@@ -68,17 +68,25 @@ return [
             'driver' => 'local',
             'root' => storage_path('app/public/shops'),
         ],
+        'public_shops' => [
+            'driver' => 'local',
+            'root' => public_path('img/shops'),
+        ],
         'shopkeepers' => [
             'driver' => 'local',
             'root' => storage_path('app/public/shopkeepers'),
+        ],
+        'public_shopkeepers' => [
+            'driver' => 'local',
+            'root' => public_path('img/shopkeepers'),
         ],
         'products' => [
             'driver' => 'local',
             'root' => storage_path('app/public/products'),
         ],
-        'exports' => [
+        'public_products' => [
             'driver' => 'local',
-            'root' => asset('exports'),
+            'root' => public_path('img/products'),
         ],
     ],
 

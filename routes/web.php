@@ -108,6 +108,16 @@ Route::group(['middleware' => 'auth', 'prefix' => 'admin'], function() {
     Route::get('/all_sales', 'HomeController@all_sales')->name('all_sales');
     // generate_expenses_excel
     Route::post('/generate_expenses_excel', 'HomeController@generate_expenses_excel')->name('generate_expenses_excel');
+    // generate_ledgers_excel
+    Route::post('/generate_ledgers_excel', 'HomeController@generate_ledgers_excel')->name('generate_ledgers_excel');
+    // generate_sales_excel
+    Route::post('/generate_sales_excel', 'HomeController@generate_sales_excel')->name('generate_sales_excel');
+    // generate_customers_excel
+    Route::post('/generate_customers_excel', 'HomeController@generate_customers_excel')->name('generate_customers_excel');
+    // generate_vendors_excel
+    Route::post('/generate_vendors_excel', 'HomeController@generate_vendors_excel')->name('generate_vendors_excel');
+    // generate_products_excel
+    Route::post('/generate_products_excel', 'HomeController@generate_products_excel')->name('generate_products_excel');
     // ----------------------------------------------------------------------------------------------------------------------
     
     
@@ -115,18 +125,18 @@ Route::group(['middleware' => 'auth', 'prefix' => 'admin'], function() {
     Route::get('/install', function () {
         Illuminate\Support\Facades\Artisan::call('migrate:fresh', [
             '--seed' => true
-            ]);
-        });
-        Route::get('/migrate', function () {
-            Illuminate\Support\Facades\Artisan::call('migrate');
-        });
-        Route::get('/stepmigrate', function () {
-            Illuminate\Support\Facades\Artisan::call('migrate:rollback', [
-                '--step' => 3
-                ]);
-            });
-            Route::get('/clear', function () {
-                Illuminate\Support\Facades\Artisan::call('cache:clear');
+        ]);
+    });
+    Route::get('/migrate', function () {
+        Illuminate\Support\Facades\Artisan::call('migrate');
+    });
+    Route::get('/stepmigrate', function () {
+        Illuminate\Support\Facades\Artisan::call('migrate:rollback', [
+            '--step' => 3
+        ]);
+    });
+    Route::get('/clear', function () {
+        Illuminate\Support\Facades\Artisan::call('cache:clear');
         Illuminate\Support\Facades\Artisan::call('config:clear');
         Illuminate\Support\Facades\Artisan::call('view:clear');
         Illuminate\Support\Facades\Artisan::call('config:cache');

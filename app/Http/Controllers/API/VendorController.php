@@ -73,14 +73,14 @@ class VendorController extends Controller
         if(($request->shop_picture != NULL)){
             $image = explode(',', $request->shop_picture)[1];
             $imageName = Str::random(10).'.'.'png';
-            Storage::disk('shops')->put($imageName, base64_decode($image));
+            Storage::disk('public_shops')->put($imageName, base64_decode($image));
             $request['shop_picture'] = $imageName;
         }
         // shop_keeper_picture
         if(($request->shop_keeper_picture != NULL)){
             $image = explode(',', $request->shop_keeper_picture)[1];
             $imageName = Str::random(10).'.'.'png';
-            Storage::disk('shopkeepers')->put($imageName, base64_decode($image));
+            Storage::disk('public_shopkeepers')->put($imageName, base64_decode($image));
             $request['shop_keeper_picture'] = $imageName;
         }
 
@@ -146,18 +146,18 @@ class VendorController extends Controller
         
         // shop_picture
         if(($request->shop_picture)){
-            Storage::disk('shops')->delete(($this->vendorService->find($id))['vendor']['shop_picture']);
+            Storage::disk('public_shops')->delete(($this->vendorService->find($id))['vendor']['shop_picture']);
             $image = explode(',', $request->shop_picture)[1];
             $imageName = Str::random(10).'.'.'png';
-            Storage::disk('shops')->put($imageName, base64_decode($image));
+            Storage::disk('public_shops')->put($imageName, base64_decode($image));
             $request['shop_picture'] = $imageName;
         }
         // shop_keeper_picture
         if(($request->shop_keeper_picture)){
-            Storage::disk('shopkeepers')->delete(($this->vendorService->find($id))['vendor']['shop_keeper_picture']);
+            Storage::disk('public_shopkeepers')->delete(($this->vendorService->find($id))['vendor']['shop_keeper_picture']);
             $image = explode(',', $request->shop_keeper_picture)[1];
             $imageName = Str::random(10).'.'.'png';
-            Storage::disk('shopkeepers')->put($imageName, base64_decode($image));
+            Storage::disk('public_shopkeepers')->put($imageName, base64_decode($image));
             $request['shop_keeper_picture'] = $imageName;
         }
 

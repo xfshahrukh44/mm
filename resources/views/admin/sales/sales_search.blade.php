@@ -205,6 +205,12 @@
             <div class="modal-content">
             <div class="modal-header row">
                 <h5 class="modal-title title">Ledger</h5>
+                <!-- generate excel -->
+                <div class="text-right">
+                    <button type="button" class="btn btn-success generate_sales_excel" data-form="all_modal">
+                        <i class="fas fa-file-excel"></i>
+                    </button>
+                </div>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
                 </button>
@@ -250,6 +256,12 @@
             <div class="modal-content">
             <div class="modal-header row">
                 <h5 class="modal-title title">Ledger</h5>
+                <!-- generate excel -->
+                <div class="text-right">
+                    <button type="button" class="btn btn-success generate_sales_excel" data-form="customer_wise_modal">
+                        <i class="fas fa-file-excel"></i>
+                    </button>
+                </div>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
                 </button>
@@ -295,6 +307,12 @@
             <div class="modal-content">
             <div class="modal-header row">
                 <h5 class="modal-title title">Ledger</h5>
+                <!-- generate excel -->
+                <div class="text-right">
+                    <button type="button" class="btn btn-success generate_sales_excel" data-form="product_wise_modal">
+                        <i class="fas fa-file-excel"></i>
+                    </button>
+                </div>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
                 </button>
@@ -340,6 +358,12 @@
             <div class="modal-content">
             <div class="modal-header row">
                 <h5 class="modal-title title">Ledger</h5>
+                <!-- generate excel -->
+                <div class="text-right">
+                    <button type="button" class="btn btn-success generate_sales_excel" data-form="combined_modal">
+                        <i class="fas fa-file-excel"></i>
+                    </button>
+                </div>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
                 </button>
@@ -378,6 +402,11 @@
             </div>
         </div>
     </div>
+
+    <!-- dummy form -->
+    <form id="dummy_form" action="{{route('generate_sales_excel')}}" method="POST" target="_blank" hidden>
+        @csrf
+    </form>
 
     <script>
         $(document).ready(function(){
@@ -546,7 +575,7 @@
                 // if sales > 0 append in wrapper
                 if(all_sales.sales.length > 0){
                     for(var i = 0; i < all_sales.sales.length; i++){
-                        $('#all_modal .ledger_wrapper').prepend('<tr><td>'+new Date(all_sales.sales[i].transaction_date).toDateString()+'</td><td>'+all_sales.sales[i].customer+'</td><td>'+all_sales.sales[i].product+'</td><td>Rs.'+all_sales.sales[i].price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")+'</td><td>'+all_sales.sales[i].quantity+'</td></tr>');
+                        $('#all_modal .ledger_wrapper').prepend('<tr><td class="transaction_dates">'+new Date(all_sales.sales[i].transaction_date).toDateString()+'</td><td class="customers">'+all_sales.sales[i].customer+'</td><td class="products">'+all_sales.sales[i].product+'</td><td class="prices">Rs.'+all_sales.sales[i].price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")+'</td><td class="quantities">'+all_sales.sales[i].quantity.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")+'</td></tr>');
                         // <tr><td>12.12.12</td><td>Advance wala customer</td><td>Dhaaga</td><td>Price</td><td>Quantity</td></tr>
                     }
                 }
@@ -588,7 +617,7 @@
                 // if sales > 0 append in wrapper
                 if(customer_wise_sales.sales.length > 0){
                     for(var i = 0; i < customer_wise_sales.sales.length; i++){
-                        $('#customer_wise_modal .ledger_wrapper').prepend('<tr><td>'+new Date(customer_wise_sales.sales[i].transaction_date).toDateString()+'</td><td>'+customer_wise_sales.sales[i].customer+'</td><td>'+customer_wise_sales.sales[i].product+'</td><td>Rs.'+customer_wise_sales.sales[i].price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")+'</td><td>'+customer_wise_sales.sales[i].quantity+'</td></tr>');
+                        $('#customer_wise_modal .ledger_wrapper').prepend('<tr><td class="transaction_dates">'+new Date(customer_wise_sales.sales[i].transaction_date).toDateString()+'</td><td class="customers">'+customer_wise_sales.sales[i].customer+'</td><td class="products">'+customer_wise_sales.sales[i].product+'</td><td class="prices">Rs.'+customer_wise_sales.sales[i].price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")+'</td><td class="quantities">'+customer_wise_sales.sales[i].quantity.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")+'</td></tr>');
                     }
                 }
                 else{
@@ -634,7 +663,7 @@
                 // if sales > 0 append in wrapper
                 if(product_wise_sales.sales.length > 0){
                     for(var i = 0; i < product_wise_sales.sales.length; i++){
-                        $('#product_wise_modal .ledger_wrapper').prepend('<tr><td>'+new Date(product_wise_sales.sales[i].transaction_date).toDateString()+'</td><td>'+product_wise_sales.sales[i].customer+'</td><td>'+product_wise_sales.sales[i].product+'</td><td>Rs.'+product_wise_sales.sales[i].price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")+'</td><td>'+product_wise_sales.sales[i].quantity+'</td></tr>');
+                        $('#product_wise_modal .ledger_wrapper').prepend('<tr><td class="transaction_dates">'+new Date(product_wise_sales.sales[i].transaction_date).toDateString()+'</td><td class="customers">'+product_wise_sales.sales[i].customer+'</td><td class="products">'+product_wise_sales.sales[i].product+'</td><td class="prices">Rs.'+product_wise_sales.sales[i].price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")+'</td><td class="quantities">'+product_wise_sales.sales[i].quantity.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")+'</td></tr>');
                         // <tr><td>12.12.12</td><td>Customer</td><td>Price</td><td>Quantity</td></tr>
                     }
                 }
@@ -685,7 +714,7 @@
                 // if sales > 0 append in wrapper
                 if(combined_sales.sales.length > 0){
                     for(var i = 0; i < combined_sales.sales.length; i++){
-                        $('#combined_modal .ledger_wrapper').prepend('<tr><td>'+new Date(combined_sales.sales[i].transaction_date).toDateString()+'</td><td>'+combined_sales.sales[i].customer+'</td><td>'+combined_sales.sales[i].product+'</td><td>Rs.'+combined_sales.sales[i].price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")+'</td><td>'+combined_sales.sales[i].quantity+'</td></tr>');
+                        $('#combined_modal .ledger_wrapper').prepend('<tr><td class="transaction_dates">'+new Date(combined_sales.sales[i].transaction_date).toDateString()+'</td><td class="customers">'+combined_sales.sales[i].customer+'</td><td class="products">'+combined_sales.sales[i].product+'</td><td class="prices">Rs.'+combined_sales.sales[i].price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")+'</td><td class="quantities">'+combined_sales.sales[i].quantity.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")+'</td></tr>');
                     }
                 }
                 else{
@@ -698,6 +727,43 @@
 
                 $('#combined_modal').modal('show');
 
+            });
+
+            // on generate_sales_excel click
+            $('.generate_sales_excel').on('click', function(){
+                // identify source form
+                var form_id = '#' + $(this).data('form');
+                // empty wrapper
+                $('#dummy_form').html('@csrf');
+
+                // transaction_dates
+                $(form_id + ' .transaction_dates').each(function(){
+                    $('#dummy_form').append('<input name="transaction_dates[]" value="'+$(this).text()+'"></input>')
+                });
+                // customers
+                $(form_id + ' .customers').each(function(){
+                    $('#dummy_form').append('<input name="customers[]" value="'+$(this).text()+'"></input>')
+                });
+                // products
+                $(form_id + ' .products').each(function(){
+                    $('#dummy_form').append('<input name="products[]" value="'+$(this).text()+'"></input>')
+                });
+                // prices
+                $(form_id + ' .prices').each(function(){
+                    $('#dummy_form').append('<input name="prices[]" value="'+$(this).text()+'"></input>')
+                });
+                // quantities
+                $(form_id + ' .quantities').each(function(){
+                    $('#dummy_form').append('<input name="quantities[]" value="'+$(this).text()+'"></input>')
+                });
+                // title
+                $('#dummy_form').append('<input name="title" value="'+$(form_id + ' .title').text()+'"></input>')
+                // total
+                $('#dummy_form').append('<input name="total" value="'+$(form_id + ' .total').text()+'"></input>')
+                // total_qty
+                $('#dummy_form').append('<input name="total_qty" value="'+$(form_id + ' .total_qty').text()+'"></input>')
+                // submit
+                $('#dummy_form').submit();
             });
         });
     </script>

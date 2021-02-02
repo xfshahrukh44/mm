@@ -71,7 +71,7 @@ class ProductController extends Controller
         if($request->product_picture){
             $image = $request->product_picture;
             $imageName = Str::random(10).'.png';
-            Storage::disk('products')->put($imageName, \File::get($image));
+            Storage::disk('public_products')->put($imageName, \File::get($image));
             $req['product_picture'] = $imageName;
         }
 
@@ -127,10 +127,10 @@ class ProductController extends Controller
 
         // product_picture
         if($request->product_picture){
-            Storage::disk('products')->delete($product->product_picture);
+            Storage::disk('public_products')->delete($product->product_picture);
             $image = $request->product_picture;
             $imageName = Str::random(10).'.png';
-            Storage::disk('products')->put($imageName, \File::get($image));
+            Storage::disk('public_products')->put($imageName, \File::get($image));
             $req['product_picture'] = $imageName;
         }
 

@@ -19,8 +19,18 @@
       <div class="card-header">
         <!-- <h3 class="card-title">Products</h3> -->
         <div class="card-tools">
-          <button class="btn btn-success" id="add_product" data-toggle="modal" data-target="#addProductModal">
-            <i class="fas fa-plus"></i> Add New Product</button>
+          <!-- generate excel -->
+          <form action="{{route('generate_products_excel')}}" target="_blank" method="post">
+            @csrf
+            <button type="submit" class="btn btn-success generate_ledgers_excel">
+                <i class="fas fa-file-excel"></i>
+                Generate Excel
+            </button>
+            <button class="btn btn-success" id="add_product" data-toggle="modal" data-target="#addProductModal">
+              <i class="fas fa-plus"></i>
+              Add New Product
+            </button>
+          </form>
         </div>
         <!-- search bar -->
         <form action="{{route('search_products')}}" class="form-wrapper">
@@ -92,7 +102,7 @@
                     <td class="{{'moq'.$product->id}}">{{$product->moq}}</td>
                     <td>
                       <!-- Detail -->
-                      <a href="#" class="detailButton" data-id="{{$product->id}}" data-object="{{$product}}" data-product="{{asset('storage/products') . '/' . $product->product_picture}}">
+                      <a href="#" class="detailButton" data-id="{{$product->id}}" data-object="{{$product}}" data-product="{{asset('img/products') . '/' . $product->product_picture}}">
                         <i class="fas fa-eye green ml-1"></i>
                       </a>
                       <!-- Edit -->

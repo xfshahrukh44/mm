@@ -19,8 +19,17 @@
       <div class="card-header">
         <!-- <h3 class="card-title">Vendors</h3> -->
         <div class="card-tools">
-          <button class="btn btn-success" id="add_vendor" data-toggle="modal" data-target="#addVendorModal">
-            <i class="fas fa-plus"></i> Add New Vendor</button>
+          <form action="{{route('generate_vendors_excel')}}" target="_blank" method="post">
+            @csrf
+            <button type="submit" class="btn btn-success generate_ledgers_excel">
+                <i class="fas fa-file-excel"></i>
+                Generate Excel
+            </button>
+            <button class="btn btn-success" id="add_vendor" data-toggle="modal" data-target="#addVendorModal">
+              <i class="fas fa-plus"></i>
+              Add New Vendor
+            </button>
+          </form>
         </div>
         <!-- search bar -->
         <form action="{{route('search_vendors')}}" class="form-wrapper">
@@ -67,7 +76,7 @@
                     <td class="{{'outstanding_balance'.$vendor->id}}">{{$vendor->outstanding_balance ? 'Rs. ' . number_format($vendor->outstanding_balance) : NULL}}</td>
                     <td>
                       <!-- Detail -->
-                      <a href="#" class="detailButton" data-id="{{$vendor->id}}" data-object="{{$vendor}}" data-shopkeeper="{{asset('storage/shopkeepers') . '/' . $vendor->shop_keeper_picture}}" data-shop="{{asset('storage/shops') . '/' . $vendor->shop_picture}}">
+                      <a href="#" class="detailButton" data-id="{{$vendor->id}}" data-object="{{$vendor}}" data-shopkeeper="{{asset('img/shopkeepers') . '/' . $vendor->shop_keeper_picture}}" data-shop="{{asset('img/shops') . '/' . $vendor->shop_picture}}">
                         <i class="fas fa-eye green ml-1"></i>
                       </a>
                       <!-- Edit -->

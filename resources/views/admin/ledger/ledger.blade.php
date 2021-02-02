@@ -201,6 +201,12 @@
     <div class="modal-content">
       <div class="modal-header row">
         <h5 class="modal-title" id="detailLedgerModalLabel">Ledger</h5>
+        <!-- generate excel -->
+        <div class="text-right">
+            <button type="button" class="btn btn-success generate_ledgers_excel">
+                <i class="fas fa-file-excel"></i>
+            </button>
+        </div>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -211,9 +217,9 @@
             <!-- outstanding balance row -->
             <tr class="table-info">
               <td></td>
-              <td></td>
               <td class="text-bold">Outstanding Balance</td>
               <td class="detail_outstanding_balance"></td>
+              <td></td>
             </tr>
             <!-- headers -->
             <tr>
@@ -235,6 +241,12 @@
     </div>
   </div>
 </div>
+
+<!-- dummy form -->
+<form id="dummy_form" action="{{route('generate_ledgers_excel')}}" method="POST" target="_blank" hidden>
+    @csrf
+</form>
+
 <script>
 $(document).ready(function(){
   // $('#area_id').select2();
@@ -365,13 +377,39 @@ $(document).ready(function(){
         }
 
         // prepend ledger entries
-        $('.ledger_wrapper').prepend('<tr class="'+ color +'"><td>'+ new Date(client.ledgers[i].transaction_date).toDateString() +'</td><td>'+detailHTML+'</td><td>Rs. '+ client.ledgers[i].amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + detail + '</td><td>'+ client.ledgers[i].type +'</td></tr>');
+        $('.ledger_wrapper').prepend('<tr class="'+ color +'"><td class="transaction_dates">'+ new Date(client.ledgers[i].transaction_date).toDateString() +'</td><td class="details">'+detailHTML+'</td><td class="amounts">Rs. '+ client.ledgers[i].amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + detail + '</td><td class="types">'+ client.ledgers[i].type +'</td></tr>');
       }
     }
     // outstanding balance
     $('.detail_outstanding_balance').html('Rs. ' + client.outstanding_balance.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
     $('#detailLedgerModal .modal-title').html(client.name + "'s Ledger.");
     $('#detailLedgerModal').modal('show');
+  });
+
+  // on generate_ledgers_excel click
+  $('.generate_ledgers_excel').on('click', function(){
+      // transaction_dates
+      $('.transaction_dates').each(function(){
+          $('#dummy_form').append('<input name="transaction_dates[]" value="'+$(this).text()+'"></input>')
+      });
+      // details
+      $('.details').each(function(){
+          $('#dummy_form').append('<input name="details[]" value="'+$(this).text()+'"></input>')
+      });
+      // amounts
+      $('.amounts').each(function(){
+          $('#dummy_form').append('<input name="amounts[]" value="'+$(this).text()+'"></input>')
+      });
+      // types
+      $('.types').each(function(){
+          $('#dummy_form').append('<input name="types[]" value="'+$(this).text()+'"></input>')
+      });
+      // title
+      $('#dummy_form').append('<input name="title" value="'+$('#detailLedgerModalLabel').text()+'"></input>')
+      // total
+      $('#dummy_form').append('<input name="outstanding_balance" value="'+$('.detail_outstanding_balance').text()+'"></input>')
+      // submit
+      $('#dummy_form').submit();
   });
 
 });

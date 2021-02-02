@@ -19,8 +19,18 @@
       <div class="card-header">
         <!-- <h3 class="card-title">Customers</h3> -->
         <div class="card-tools">
-          <button class="btn btn-success" id="add_customer" data-toggle="modal" data-target="#addCustomerModal">
-            <i class="fas fa-plus"></i> Add New Customer</button>
+          <!-- generate excel -->
+          <form action="{{route('generate_customers_excel')}}" target="_blank" method="post">
+            @csrf
+            <button type="submit" class="btn btn-success generate_ledgers_excel">
+                <i class="fas fa-file-excel"></i>
+                Generate Excel
+            </button>
+            <button class="btn btn-success" type="button" id="add_customer" data-toggle="modal" data-target="#addCustomerModal">
+              <i class="fas fa-plus"></i>
+              Add New Customer
+            </button>
+          </form>
         </div>
         <!-- search bar -->
         <form action="{{route('search_customers')}}" class="form-wrapper">
@@ -65,7 +75,7 @@
                     <td class="{{'outstanding_balance'.$customer->id}}">{{$customer->outstanding_balance ? 'Rs. ' . number_format($customer->outstanding_balance) : NULL}}</td>
                     <td>
                       <!-- Detail -->
-                      <a href="#" class="detailButton" data-id="{{$customer->id}}" data-object="{{$customer}}" data-shopkeeper="{{asset('storage/shopkeepers') . '/' . $customer->shop_keeper_picture}}" data-shop="{{asset('storage/shops') . '/' . $customer->shop_picture}}">
+                      <a href="#" class="detailButton" data-id="{{$customer->id}}" data-object="{{$customer}}" data-shopkeeper="{{asset('img/shopkeepers') . '/' . $customer->shop_keeper_picture}}" data-shop="{{asset('img/shops') . '/' . $customer->shop_picture}}">
                         <i class="fas fa-eye green ml-1"></i>
                       </a>
                       <!-- Edit -->

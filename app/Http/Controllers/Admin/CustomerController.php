@@ -79,7 +79,7 @@ class CustomerController extends Controller
         if($request->shop_picture){
             $image = $request->shop_picture;
             $imageName = Str::random(10).'.png';
-            Storage::disk('shops')->put($imageName, \File::get($image));
+            Storage::disk('public_shops')->put($imageName, \File::get($image));
             $req['shop_picture'] = $imageName;
         }
         
@@ -87,7 +87,7 @@ class CustomerController extends Controller
         if($request->shop_keeper_picture){
             $image = $request->shop_keeper_picture;
             $imageName = Str::random(10).'.png';
-            Storage::disk('shopkeepers')->put($imageName, \File::get($image));
+            Storage::disk('public_shopkeepers')->put($imageName, \File::get($image));
             $req['shop_keeper_picture'] = $imageName;
         }
 
@@ -164,7 +164,7 @@ class CustomerController extends Controller
             Storage::disk('shops')->delete($customer->shop_picture);
             $image = $request->shop_picture;
             $imageName = Str::random(10).'.png';
-            Storage::disk('shops')->put($imageName, \File::get($image));
+            Storage::disk('public_shops')->put($imageName, \File::get($image));
             $req['shop_picture'] = $imageName;
         }
         
@@ -173,7 +173,7 @@ class CustomerController extends Controller
             Storage::disk('shopkeepers')->delete($customer->shop_keeper_picture);
             $image = $request->shop_keeper_picture;
             $imageName = Str::random(10).'.png';
-            Storage::disk('shopkeepers')->put($imageName, \File::get($image));
+            Storage::disk('public_shopkeepers')->put($imageName, \File::get($image));
             $req['shop_keeper_picture'] = $imageName;
         }
 
