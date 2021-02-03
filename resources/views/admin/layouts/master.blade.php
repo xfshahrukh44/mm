@@ -280,7 +280,7 @@
 
           <!-- Marketing Plan -->
           <li class="nav-item">
-            <a href="#" class="nav-link">
+            <a href="{{route('marketing')}}" class="nav-link">
               <i class="nav-icon fa fa-cart-arrow-down"></i>
               <p>
                 Marketing Plan

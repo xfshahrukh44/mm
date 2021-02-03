@@ -27,6 +27,7 @@ Route::group(['middleware' => 'auth', 'prefix' => 'admin'], function() {
     Route::get('/dashboard', 'Admin\DashboardController@index')->name('dashboard');
     Route::get('/user/rider', 'Admin\UserController@getRiders')->name('rider');
     Route::get('/user/staff', 'Admin\UserController@index')->name('staff');
+    Route::get('/marketing', 'HomeController@marketing')->name('marketing');
     // -----------------------------------------------------------------------------
 
     // all() ROUTES-------------------------------------------------------------------

@@ -12,7 +12,7 @@
 
     <!-- markup to be injected -->
     <!-- search form -->
-    <h2 class="text-center display-4">Search Expenses</h2>
+    <h2 class="text-center display-3">Search Expenses</h2>
     <form action="enhanced-results.html" data-select2-id="13">
         <div class="row" data-select2-id="12">
             <div class="col-md-10 offset-md-1" data-select2-id="11">

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Models\Customer;
 use App\Models\StockOut;
+use App\Models\Order;
 use App\Services\InvoiceService;
 use App\Services\InvoiceProductService;
 use App\Services\ProductService;
@@ -54,12 +55,16 @@ class HomeController extends Controller
 
     public function plug_n_play(Request $request)
     {
-        dd($request->all());
-        $products = Product::where('type', 'other')->get();
-        foreach($products as $product){
-            $product->gender = 'both';
-            $product->save();
-        }
+        // dd($request->all());
+        // $products = Product::where('type', 'other')->get();
+        // foreach($products as $product){
+        //     $product->gender = 'both';
+        //     $product->save();
+        // }
+
+        $today =lcfirst(Carbon::today()->format('l'));
+        $tomorrow =lcfirst(Carbon::tomorrow()->format('l'));
+        dd($today, $tomorrow);
     }
 
     public function generate_invoice_pdf($id)
@@ -383,5 +388,16 @@ class HomeController extends Controller
         $export = new ProductExport($main_array);
 
         return Excel::download($export, 'Products - ' . return_date_pdf(Carbon::now()) . '.xls');
+    }
+
+    public function marketing()
+    {
+        $today =lcfirst(Carbon::today()->format('l'));
+        $tomorrow =lcfirst(Carbon::tomorrow()->format('l'));
+
+        $customers = Customer::where('visiting_days', $today)->get();
+        $orders = Order::where('dispatch_date', Carbon::now()->format('Y-m-d'))->get();
+
+        return view('admin.marketing.marketing', compact('customers', 'orders'));
     }
 }
