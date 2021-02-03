@@ -40,14 +40,6 @@ class Invoice extends Model
             $old_amount_pay = $query->getOriginal('amount_pay');
             $new_amount_pay = $query->amount_pay;
 
-            // old
-            // invoice total in ledger
-            // Ledger::create([
-            //     'customer_id' => $query->customer_id,
-            //     'amount' => $old_total,
-            //     'type' => 'credit',
-            //     'transaction_date' => return_todays_date()
-            // ]);
             $ledger = Ledger::where('customer_id', $query->customer_id)
                             ->where('invoice_id', $query->id)
                             ->where('amount', $old_total)
@@ -57,12 +49,6 @@ class Invoice extends Model
             }
             // amount pay
             if($query->old_payment == 'cash'){
-                // Ledger::create([
-                //     'customer_id' => $query->customer_id,
-                //     'amount' => $old_amount_pay,
-                //     'type' => 'debit',
-                //     'transaction_date' => return_todays_date()
-                // ]);
                 $ledger = Ledger::where('customer_id', $query->customer_id)
                                 ->where('invoice_id', $query->id)
                                 ->where('amount', $old_amount_pay)
@@ -96,13 +82,6 @@ class Invoice extends Model
         });
 
         static::deleting(function ($query) {
-            // invoice total in ledger
-            // Ledger::create([
-            //     'customer_id' => $query->customer_id,
-            //     'amount' => $query->total,
-            //     'type' => 'credit',
-            //     'transaction_date' => return_todays_date()
-            // ]);
             $ledger = Ledger::where('customer_id', $query->customer_id)
                             ->where('invoice_id', $query->id)
                             ->where('amount', $query->total)
@@ -113,12 +92,6 @@ class Invoice extends Model
             
             // amount pay
             if($query->payment == 'cash'){
-                // Ledger::create([
-                //     'customer_id' => $query->customer_id,
-                //     'amount' => $query->amount_pay,
-                //     'type' => 'debit',
-                //     'transaction_date' => return_todays_date()
-                // ]);
                 $ledger = Ledger::where('customer_id', $query->customer_id)
                                 ->where('invoice_id', $query->id)
                                 ->where('amount', $query->amount_pay)

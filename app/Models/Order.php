@@ -17,6 +17,7 @@ class Order extends Model
         'amount_pay',
         'dispatch_date',
         'invoiced_items',
+        'invoiced_from',
         'created_by',
         'modified_by'
     ];

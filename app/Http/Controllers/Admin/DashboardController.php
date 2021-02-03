@@ -40,8 +40,8 @@ class DashboardController extends Controller
             $total_cost_value += $product->purchase_price;
             $total_sales_value += $product->consumer_selling_price;
         }
-        $total_cost_value = $total_cost_value / count($products);
-        $total_sales_value = $total_sales_value / count($products);
+        $total_cost_value = $total_cost_value / ((count($products) > 0) ? count($products) : 1);
+        $total_sales_value = $total_sales_value / ((count($products) > 0) ? count($products) : 1);
 
         // total receivables and total payables
         $total_receivables = 0;
@@ -54,10 +54,10 @@ class DashboardController extends Controller
         }
 
         // return_decimal_number
-        $total_cost_value = return_decimal_number($total_cost_value);
-        $total_sales_value = return_decimal_number($total_sales_value);
-        $total_receivables = return_decimal_number($total_receivables);
-        $total_payables = return_decimal_number($total_payables);
+        $total_cost_value = number_format($total_cost_value, 2);
+        $total_sales_value = number_format($total_sales_value, 2);
+        $total_receivables = number_format($total_receivables, 2);
+        $total_payables = number_format($total_payables, 2);
 
         return view('admin.dashboard.dashboard', compact('customers', 'vendors', 'products', 'staff', 'riders', 'total_cost_value', 'total_sales_value', 'total_receivables', 'total_payables'));   
     }

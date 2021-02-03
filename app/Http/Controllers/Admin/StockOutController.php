@@ -36,11 +36,15 @@ class StockOutController extends Controller
     
     public function store(Request $request)
     {
+        // dd($request->all());
         $validator = Validator::make($request->all(), [
-            'customer_id' => 'required|int',
-            'product_id' => 'required|int',
-            'quantity' => 'required',
-            'transaction_date' => 'sometimes'
+            'customer_id' => 'sometimes',
+            'product_id' => 'sometimes',
+            'quantity' => 'sometimes',
+            'price' => 'sometimes',
+            'transaction_date' => 'sometimes',
+            'expense_type' => 'sometimes',
+            'narration' => 'sometimes',
         ]);
 
         if($validator->fails())
@@ -75,10 +79,13 @@ class StockOutController extends Controller
         }
 
         $validator = Validator::make($request->all(), [
-            'customer_id' => 'sometimes|int',
-            'product_id' => 'sometimes|int',
-            'quantity' => 'sometimes',
-            'transaction_date' => 'sometimes'
+            'customer_id' => 'sometimes',
+            'product_id' => 'sometimes',
+            'quantity' => 'somtimes',
+            'price' => 'sometimes',
+            'transaction_date' => 'sometimes',
+            'expense_type' => 'sometimes',
+            'narration' => 'sometimes',
         ]);
 
         if($validator->fails())

@@ -101,7 +101,7 @@
   </div>
 </div>
 
- <!-- Create view -->
+<!-- Create view -->
 <div class="modal fade" id="addStockOutModal" tabindex="-1" role="dialog" aria-labelledby="addStockOutModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered modal-xl">
     <div class="modal-content">
@@ -186,6 +186,9 @@ $(document).ready(function(){
   var element = $('li a[href*="'+ window.location.pathname +'"]');
   element.parent().parent().parent().addClass('menu-open');
   element.addClass('active');
+  // hide expense type element on document ready
+  $('.expense_type_wrapper').fadeOut();
+  $('.narration_wrapper').fadeOut();
 
   // create
   $('#add_stockOut').on('click', function(){
@@ -215,6 +218,20 @@ $(document).ready(function(){
 
     $('#deleteStockOutModalLabel').text('Delete Stock Out?');
     $('#deleteStockOutModal').modal('show');
+  });
+
+  // on is_adjustment change
+  $('.is_adjustment').on('click', function(){
+    if($(this).is(':checked')){
+      $('.expense_type_wrapper').fadeIn(200);
+      $('.narration_wrapper').fadeIn(200);
+    }
+    else{
+      $('.expense_type_wrapper').fadeOut(200);
+      $('.narration_wrapper').fadeOut(200);
+      $('.expense_type').val("");
+      $('.narration').val("");
+    }
   });
 
 });

@@ -93,7 +93,8 @@ class InvoiceController extends Controller
 
         // update order with invoiced_items
         $this->orderService->update([
-            'invoiced_items' => $invoiced_items
+            'invoiced_items' => $invoiced_items,
+            'invoiced_from' => 1
         ], $request->order_id);
 
         return redirect()->back();

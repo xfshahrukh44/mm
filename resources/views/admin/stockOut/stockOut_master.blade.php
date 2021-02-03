@@ -4,7 +4,6 @@
     <!-- customer_id -->
     <div class="form-group col-md-6">
         <label for=""><i class="nav-icon fas fa-users"></i> Customer</label>
-        <div class="form-group {{$errors->has('customer_id') ? 'has-error' : ''}} "></div>
         <select id="customer_id" name="customer_id" class="form-control customer_id" style="width: 100%; height: 35px;">
             <option value="">Select customer</option>
             @foreach($customers as $customer)
@@ -36,6 +35,32 @@
             <label for="">Transaction Date:</label>
             <input name="transaction_date" class="form-control transaction_date" id="transaction_date" type="date">
         </div>
+    </div>
+
+    <!-- is_adjustment -->
+    <div class="col-md-12">
+        <div class="form-group text-center">
+            <label for="">Adjustment Entry:</label>
+            <input name="is_adjustment" class="form-control is_adjustment" type="checkbox" style="box-shadow: none;">
+        </div>
+    </div>
+
+    <!-- expense_type -->
+    <div class="form-group col-md-6 expense_type_wrapper">
+        <label for="">Expense Type</label>
+        <select id="expense_type" name="expense_type" class="form-control expense_type" style="width: 100%; height: 35px;">
+            <option value="">Select Expense Type</option>
+            <option value="Misplaced">Misplaced</option>
+            <option value="Damaged">Damaged</option>
+            <option value="Theft">Theft</option>
+            <option value="Marketing Expense">Marketing Expense</option>
+        </select>
+    </div>
+
+    <!-- narration -->
+    <div class="form-group col-md-6 narration_wrapper">
+        <label for="">Narration</label>
+        <textarea type="text" name="narration" placeholder="Enter Payment Terms" class="form-control narration"></textarea>
     </div>
 
 </div>

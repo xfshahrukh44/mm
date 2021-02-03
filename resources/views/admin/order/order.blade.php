@@ -107,10 +107,12 @@
                                             <a href="#" class="detailButton" data-id="{{$order->id}}" data-type="{{$order->id}}">
                                                 <i class="fas fa-shopping-basket blue ml-1"></i>
                                             </a>
-                                            <!-- Edit -->
-                                            <a href="#" class="editButton" data-id="{{$order->id}}" data-type="{{$order->id}}">
-                                                <i class="fas fa-edit blue ml-1"></i>
-                                            </a>
+                                            @if($order->invoiced_from != 1)
+                                                <!-- Edit -->
+                                                <a href="#" class="editButton" data-id="{{$order->id}}" data-type="{{$order->id}}">
+                                                    <i class="fas fa-edit blue ml-1"></i>
+                                                </a>
+                                            @endif
                                             @can('isSuperAdmin')
                                                 <!-- Delete -->
                                                 <a href="#" class="deleteButton" data-id="{{$order->id}}" data-type="{{$order->id}}">

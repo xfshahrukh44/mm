@@ -178,6 +178,8 @@
             </tr>
         </table>
         <p style=" margin-left:23%; font-size:12px;">This is a computer generated invoice and requires no signature</p>
-        
+        <p style="margin-left:46.5%; margin-top:-1%; font-size:8px;">Powered By</p>
+        <img src="../public/img/core2plusIcon.jpg" alt="core2plusIcon" style="width: 4%; margin-left:47.4%; margin-top:-0.5%;">
+        <p style="margin-left:45.8%; font-size:8px;">core2plus.com</p>
     </body>
 </html>

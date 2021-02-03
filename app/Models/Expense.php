@@ -53,7 +53,7 @@ class Expense extends Model
     }
 
     protected $fillable = [
-        'detail', 'type', 'amount', 'date', 'created_by', 'modified_by'
+        'detail', 'type', 'amount', 'date', 'stock_out_id', 'created_by', 'modified_by'
     ];
 
     protected $dates = ['created_at', 'updated_at', 'deleted_at'];
