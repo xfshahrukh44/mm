@@ -193,6 +193,10 @@
                             <th>Amount Payment:</th>
                             <td><h6 id="amount_pay"></h6></td>
                         </tr>
+                        <tr>
+                            <th>Description:</th>
+                            <td><h6 id="description"></h6></td>
+                        </tr>
                     </table>
                     <div class="col-md-12">
                         <!-- MASTER INFO -->
@@ -439,6 +443,7 @@
         $('#address').text(invoice.customer.shop_name + ' - Shop # ' + invoice.customer.shop_number + ' - Floor # ' + invoice.customer.floor + ((invoice.customer && invoice.customer.market && invoice.customer.market.area) ? (' - ' + invoice.customer.market.name + ' - ' + invoice.customer.market.area.name) : ''));
         $('#detailTotal').text(invoice.total);
         $('#amount_pay').text(invoice.amount_pay);
+        $('#description').text(invoice.description);
 
         $('#detailInvoiceModal').modal('show');
 

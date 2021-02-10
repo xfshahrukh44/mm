@@ -18,6 +18,7 @@ class Order extends Model
         'dispatch_date',
         'invoiced_items',
         'invoiced_from',
+        'description',
         'created_by',
         'modified_by'
     ];

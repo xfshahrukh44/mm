@@ -84,7 +84,11 @@
             </tr>
             <tr role="row">
                 <td>Amount</td>
-                <td class=""><input id="amount" type="number" name="amount" placeholder="Enter amount" class="form-control amount" required min=0></td>
+                <td class=""><input id="amount" type="number" name="amount" placeholder="Enter amount" class="form-control amount" value=0 required min=0></td>
+            </tr>
+            <tr role="row" class="payment_date_wrapper" hidden>
+                <td>Payment Date</td>
+                <td class=""><input id="payment_date" type="date" name="payment_date" placeholder="Enter Payment Date" class="form-control payment_date" required min=0></td>
             </tr>
         </tbody>
     </table>

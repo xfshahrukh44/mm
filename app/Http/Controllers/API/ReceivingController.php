@@ -37,6 +37,7 @@ class ReceivingController extends Controller
         $validator = Validator::make($request->all(), [
             'invoice_id' => 'sometimes',
             'customer_id' => 'sometimes',
+            'payment_date' => 'sometimes',
             'amount' => 'sometimes'
         ]);
 
@@ -74,6 +75,7 @@ class ReceivingController extends Controller
         $validator = Validator::make($request->all(), [
             'invoice_id' => 'sometimes',
             'customer_id' => 'sometimes',
+            'payment_date' => 'sometimes',
             'amount' => 'sometimes'
         ]);
 

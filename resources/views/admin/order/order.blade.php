@@ -649,6 +649,7 @@
     $('.editButton').on('click', function(){
         fetch_order($(this).data('id'));
         $('#editOrderModal .hidden').val($(this).data('id'));
+        $('#editOrderModal .description').val(order.description);
 
         // select customer
         $('#editOrderModal .customer_id option[value="'+ order.customer_id +'"]').prop('selected', true);
@@ -710,12 +711,12 @@
         $('#invoiceOrderModal .order_id').val($(this).data('id')); 
 
         // select customer
-        // $('.customer_id').append('<option value="'+ data[i].id +'">'+ data[i].name +'</option>');
         $('#invoiceOrderModal .customer_id option[value="'+ order.customer_id +'"]').prop('selected', true);
         $('#invoiceOrderModal .customer_id').trigger('change.select2'); 
         $('#invoiceOrderModal .customer_id').change();
-        // $('#invoiceOrderModal .customer_id').selectmenu();
-        // $('#invoiceOrderModal .customer_id').selectmenu('refresh', true);
+
+        // set description
+        $('#invoiceOrderModal .description').val(order.description);
 
         // payment credit by default
         $('#invoiceOrderModal .payment option[value="credit"]').prop('selected', true);

@@ -50,10 +50,10 @@
         <label for="">Expense Type</label>
         <select id="expense_type" name="expense_type" class="form-control expense_type" style="width: 100%; height: 35px;">
             <option value="">Select Expense Type</option>
-            <option value="Misplaced">Misplaced</option>
-            <option value="Damaged">Damaged</option>
-            <option value="Theft">Theft</option>
-            <option value="Marketing Expense">Marketing Expense</option>
+            <option value="Stock damage">Stock damage</option>
+            <option value="Stock misplace">Stock misplace</option>
+            <option value="Stock theft">Stock theft</option>
+            <option value="Marketing expense">Marketing expense</option>
         </select>
     </div>
 

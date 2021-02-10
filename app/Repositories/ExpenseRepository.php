@@ -157,7 +157,7 @@ abstract class ExpenseRepository implements RepositoryInterface
         }
         else{
             // all filtered expenses
-            $expenses = Expense::where('type', 'LIKE', '%Trans%')
+            $expenses = Expense::where('type', $data['type'])
                                 ->where('date', '>=', $data['date_from'])
                                 ->where('date', '<=', $data['date_to'])
                                 ->orderBy('date', 'ASC')

@@ -17,6 +17,13 @@ class StockOut extends Model
 
         static::creating(function ($query) {
             $query->created_by = auth()->user()->id;
+
+            // damaged, misplaced, theft
+            if($query->customer_id == NULL && $query->product_id != NULL){
+                // find product
+                $product = Product::withTrashed()->find($query->product_id);
+                $query->price = $product->purchase_price;
+            }
         });
 
         static::updating(function ($query) {
@@ -58,7 +65,7 @@ class StockOut extends Model
                 Expense::create([
                     'stock_out_id' => $query->id,
                     'type' => $new_expense_type,
-                    'amount' => $product->purchase_price,
+                    'amount' => $product->purchase_price * $query->quantity,
                     'detail' => $query->narration,
                     'date' => return_todays_date()
                 ]);
@@ -102,11 +109,12 @@ class StockOut extends Model
 
             // adjustment expense entry
             if($query->expense_type != NULL){
+                $product_name = ($product->category ? $product->category->name : '') . '-' . ($product->brand ? $product->brand->name : '') . '-' . ($product->article ? $product->article : '');
                 Expense::create([
                     'stock_out_id' => $query->id,
                     'type' => $query->expense_type,
-                    'amount' => $product->purchase_price,
-                    'detail' => $query->narration,
+                    'amount' => $product->purchase_price * $query->quantity,
+                    'detail' => 'Product('. $product_name .') | ' . $query->narration,
                     'date' => return_todays_date()
                 ]);
             }

@@ -41,7 +41,8 @@ class OrderController extends Controller
         $validator = Validator::make($request->all(), [
             'customer_id' => 'required',
             'total' => 'sometimes',
-            'status' => 'sometimes'
+            'status' => 'sometimes',
+            'description' => 'sometimes'
         ]);
 
         if($validator->fails())
@@ -91,7 +92,8 @@ class OrderController extends Controller
         $validator = Validator::make($request->all(), [
             'customer_id' => 'sometimes',
             'total' => 'sometimes',
-            'status' => 'sometimes'
+            'status' => 'sometimes',
+            'description' => 'sometimes'
         ]);
 
         if($validator->fails())

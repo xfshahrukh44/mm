@@ -26,23 +26,10 @@ class Receiving extends Model
             $new_amount = $query->amount;
             $old_invoice_id = $query->getOriginal('invoice_id');
             $new_invoice_id = $query->invoice_id;
+            $old_payment_date = $query->getOriginal('payment_date');
+            $new_payment_date = $query->payment_date;
 
             // old
-            // if($old_invoice_id != NULL){
-            //     // fetch invoice
-            //     $invoice = Invoice::find($old_invoice_id);
-            //     // update invoice
-            //     $invoice->amount_pay -= $old_amount;
-            //     $invoice->save();
-            // }
-
-            // ledger entry
-            // Ledger::create([
-            //     'customer_id' => $invoice->customer_id,
-            //     'amount' => $old_amount,
-            //     'type' => 'debit',
-            //     'transaction_date' => return_todays_date()
-            // ]);
             $ledger = Ledger::where('customer_id', $query->customer_id)
                             ->where('receiving_id', $query->id)
                             ->where('amount', $old_amount)
@@ -50,16 +37,14 @@ class Receiving extends Model
             if($ledger){
                 $ledger->delete();
             }
+            // if any amount paid or not
+            if($old_invoice_id != NULL && $old_amount != NULL && $old_payment_date !=NULL){
+                $invoice = Invoice::withTrashed()->find($old_invoice_id);
+                $invoice->amount_pay -= intval($old_amount);
+                $invoice->save();
+            }
 
             // new
-            // if($new_invoice_id != NULL){
-            //     // fetch invoice
-            //     $invoice = Invoice::find($new_invoice_id);
-            //     // update invoice
-            //     $invoice->amount_pay += $new_amount;
-            //     $invoice->save();
-            // }
-
             // ledger entry
             Ledger::create([
                 'customer_id' => $query->customer_id,
@@ -68,23 +53,15 @@ class Receiving extends Model
                 'type' => 'credit',
                 'transaction_date' => return_todays_date()
             ]);
+            // if any amount paid or not
+            if($new_invoice_id != NULL && $new_amount != NULL && $new_payment_date !=NULL){
+                $invoice = Invoice::withTrashed()->find($new_invoice_id);
+                $invoice->amount_pay += intval($new_amount);
+                $invoice->save();
+            }
         });
 
         static::deleting(function ($query) {
-            // if($query->invoice_id != NULL){
-            //     // update invoice
-            //     $invoice = Invoice::find($query->invoice_id);
-            //     $invoice->amount_pay -= $query->amount;
-            //     $invoice->save();
-            // }
-
-            // ledger entry
-            // Ledger::create([
-            //     'customer_id' => $invoice->customer_id,
-            //     'amount' => $query->amount,
-            //     'type' => 'debit',
-            //     'transaction_date' => return_todays_date()
-            // ]);
             $ledger = Ledger::where('customer_id', $query->customer_id)
                             ->where('receiving_id', $query->id)
                             ->where('amount', $query->amount)
@@ -92,16 +69,16 @@ class Receiving extends Model
             if($ledger){
                 $ledger->delete();
             }
+
+            // if any amount paid or not
+            if($query->invoice_id != NULL && $query->amount != NULL && $query->payment_date !=NULL){
+                $invoice = Invoice::withTrashed()->find($query->invoice_id);
+                $invoice->amount_pay -= intval($query->amount);
+                $invoice->save();
+            }
         });
 
         static::created(function ($query) {
-            // if($query->invoice_id != NULL){
-            //     // update invoice
-            //     $invoice = Invoice::find($query->invoice_id);
-            //     $invoice->amount_pay += $query->amount;
-            //     $invoice->save();
-            // }
-
             // ledger entry
             Ledger::create([
                 'customer_id' => $query->customer_id,
@@ -111,11 +88,18 @@ class Receiving extends Model
                 'type' => 'credit',
                 'transaction_date' => return_todays_date()
             ]);
+
+            // if any amount paid or not
+            if($query->invoice_id != NULL && $query->amount != NULL && $query->payment_date !=NULL){
+                $invoice = Invoice::withTrashed()->find($query->invoice_id);
+                $invoice->amount_pay += intval($query->amount);
+                $invoice->save();
+            }
         });
     }
     
     protected $fillable = [
-        'invoice_id', 'customer_id', 'amount', 'created_by', 'modified_by',
+        'invoice_id', 'customer_id', 'amount', 'payment_date', 'created_by', 'modified_by',
     ];
 
     protected $dates = ['created_at', 'updated_at', 'deleted_at'];

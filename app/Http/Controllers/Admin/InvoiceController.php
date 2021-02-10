@@ -57,7 +57,8 @@ class InvoiceController extends Controller
             'rider_id' => 'sometimes',
             'total' => 'sometimes',
             'payment' => 'sometimes',
-            'amount_pay' => 'sometimes'
+            'amount_pay' => 'sometimes',
+            'description' => 'sometimes'
         ]);
 
         if($validator->fails())
@@ -126,7 +127,8 @@ class InvoiceController extends Controller
             'rider_id' => 'sometimes',
             'total' => 'sometimes',
             'payment' => 'sometimes',
-            'amount_pay' => 'sometimes'
+            'amount_pay' => 'sometimes',
+            'description' => 'sometimes'
         ]);
 
         if($validator->fails())

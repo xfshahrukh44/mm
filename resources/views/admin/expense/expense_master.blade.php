@@ -15,8 +15,9 @@
             <option value="Repair and maintenance">Repair and maintenance</option>
             <option value="Other charges">Other charges</option>
             <option value="Commission">Commission</option>
-            <option value="Stock demage">Stock demage</option>
+            <option value="Stock damage">Stock damage</option>
             <option value="Stock misplace">Stock misplace</option>
+            <option value="Stock theft">Stock theft</option>
             <option value="Costumer discount">Costumer discount</option>
         </select>
     </div>

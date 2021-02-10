@@ -205,7 +205,14 @@ $(document).ready(function(){
         data: {invoice_id: id},
         dataType: 'JSON',
         success: function (data) {
-            invoice = data.invoice;
+            if(data.success == true){
+              invoice = data.invoice;
+              $('.payment_date_wrapper').removeAttr('hidden');
+            }
+            else{
+              $('.payment_date_wrapper').prop('hidden', true);
+              invoice = "";
+            }
         }
     });
   }
@@ -247,12 +254,14 @@ $(document).ready(function(){
   // on invoice number selection
   $('.invoice_id').on('change', function(){
     fetch_invoice($(this).val());
-    $('.order_id').html(invoice.order.id);
-    $('.customer').html(invoice.order.customer.name);
-    $('.outstanding_balance').html(invoice.order.customer.outstanding_balance);
-    $('.total').html(invoice.total);
-    $('.amount_pay').html(invoice.amount_pay);
-    $('.invoice_due').html(invoice.total - invoice.amount_pay);
+    if(invoice){
+      $('.order_id').html(invoice.order.id);
+      $('.customer').html(invoice.order.customer.name);
+      $('.outstanding_balance').html(invoice.order.customer.outstanding_balance);
+      $('.total').html(invoice.total);
+      $('.amount_pay').html(invoice.amount_pay);
+      $('.invoice_due').html(invoice.total - invoice.amount_pay);
+    }
   });
   // on customer change
   $('.customer_id').on('change', function(){
@@ -270,6 +279,7 @@ $(document).ready(function(){
       
       // init select2
       $('.invoice_id').select2();
+      $('.invoice_id').change ();
     }
     // else
     else{
@@ -277,6 +287,7 @@ $(document).ready(function(){
       $('.invoice_id').html('<option value="">Select invoice</option>');
       // init select2
       $('.invoice_id').select2();
+      $('.invoice_id').change ();
     }
   });
 

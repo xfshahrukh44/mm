@@ -14,7 +14,6 @@
                 </select>
             </div>
         </div>
-
         <!-- rider_id -->
         <div class="col-md-12 rider_wrapper" hidden>
             <div class="form-group">
@@ -27,7 +26,6 @@
                 </select>
             </div>
         </div>
-
         <!-- order_id -->
         <input type="hidden" class="order_id" name="order_id">
         <!-- total -->
@@ -83,7 +81,13 @@
                 <input type="number" name="balance_due" class="balance_due form-control" min=0 readonly style="background-color: white;" value=0>
             </div>
         </div>
-        
+        <!-- description -->
+        <div class="col-md-12 p-3 description_wrapper">
+            <div class="form-group">
+                <label>Description</label>
+                <textarea type="text" name="description" placeholder="Enter Payment Terms" class="form-control description"></textarea>
+            </div>
+        </div>
     </div>
 
     <hr>

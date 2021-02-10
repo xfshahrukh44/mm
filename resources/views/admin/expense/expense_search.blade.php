@@ -26,15 +26,16 @@
                                 <option value="All">All</option>
                                 <option value="Transport">Transport</option>
                                 <option value="Riders Fuel">Riders Fuel</option>
-                                <option value="Marketing expense">Marketing expense</option>
+                                <option value="Marketing Expense">Marketing expense</option>
                                 <option value="Salary & wages">Salary & wages</option>
                                 <option value="Staff entertainment">Staff entertainment</option>
                                 <option value="Lunch">Lunch</option>
                                 <option value="Repair and maintenance">Repair and maintenance</option>
                                 <option value="Other charges">Other charges</option>
                                 <option value="Commission">Commission</option>
-                                <option value="Stock demage">Stock demage</option>
+                                <option value="Stock damage">Stock damage</option>
                                 <option value="Stock misplace">Stock misplace</option>
+                                <option value="Stock theft">Stock theft</option>
                                 <option value="Costumer discount">Costumer discount</option>
                             </select>
                         </div>

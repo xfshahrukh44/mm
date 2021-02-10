@@ -18,6 +18,7 @@ class Invoice extends Model
         'payment',
         'amount_pay',
         'previous_balance',
+        'description',
         'created_by',
         'modified_by'
     ];

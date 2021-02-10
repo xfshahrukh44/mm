@@ -54,7 +54,8 @@ class OrderController extends Controller
             'status' => 'sometimes',
             'payment' => 'sometimes',
             'amount_pay' => 'sometimes',
-            'dispatch_date' => 'sometimes'
+            'dispatch_date' => 'sometimes',
+            'description' => 'sometimes'
         ]);
 
         if($validator->fails())
@@ -110,7 +111,8 @@ class OrderController extends Controller
             'status' => 'sometimes',
             'payment' => 'sometimes',
             'amount_pay' => 'sometimes',
-            'dispatch_date' => 'sometimes'
+            'dispatch_date' => 'sometimes',
+            'description' => 'sometimes'
         ]);
 
         if($validator->fails())
