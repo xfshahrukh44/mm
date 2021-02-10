@@ -27,7 +27,7 @@ Route::group(['middleware' => 'auth', 'prefix' => 'admin'], function() {
     Route::get('/dashboard', 'Admin\DashboardController@index')->name('dashboard');
     Route::get('/user/rider', 'Admin\UserController@getRiders')->name('rider');
     Route::get('/user/staff', 'Admin\UserController@index')->name('staff');
-    Route::get('/marketing', 'HomeController@marketing')->name('marketing');
+    Route::get('/search_marketing', 'HomeController@search_marketing')->name('search_marketing');
     // -----------------------------------------------------------------------------
 
     // all() ROUTES-------------------------------------------------------------------
@@ -54,6 +54,7 @@ Route::group(['middleware' => 'auth', 'prefix' => 'admin'], function() {
     Route::apiResources(['receiving'=>'Admin\ReceivingController']);
     Route::apiResources(['payment'=>'Admin\PaymentController']);
     Route::apiResources(['expense'=>'Admin\ExpenseController']);
+    Route::apiResources(['marketing'=>'Admin\MarketingController']);
     // --------------------------------------------------------------
 
     // SEARCH ROUTES--------------------------------------------------------------------------------------------
@@ -69,6 +70,7 @@ Route::group(['middleware' => 'auth', 'prefix' => 'admin'], function() {
     Route::get('/search_receivings', 'Admin\ReceivingController@search_receivings')->name('search_receivings');
     Route::get('/search_payments', 'Admin\PaymentController@search_payments')->name('search_payments');
     Route::get('/search_expenses', 'Admin\ExpenseController@search_expenses')->name('search_expenses');
+    Route::get('/search_marketings', 'Admin\MarketingController@search_marketings')->name('search_marketings');
     Route::get('/search_customer_ledgers', 'Admin\LedgerController@search_customer_ledgers')->name('search_customer_ledgers');
     Route::get('/search_vendor_ledgers', 'Admin\LedgerController@search_vendor_ledgers')->name('search_vendor_ledgers');
     // ---------------------------------------------------------------------------------------------------------
@@ -119,6 +121,8 @@ Route::group(['middleware' => 'auth', 'prefix' => 'admin'], function() {
     Route::post('/generate_vendors_excel', 'HomeController@generate_vendors_excel')->name('generate_vendors_excel');
     // generate_products_excel
     Route::post('/generate_products_excel', 'HomeController@generate_products_excel')->name('generate_products_excel');
+    // assign_marketing_rider_for_customer
+    Route::get('/assign_marketing_rider_for_customer', 'HomeController@assign_marketing_rider_for_customer')->name('assign_marketing_rider_for_customer');
     // ----------------------------------------------------------------------------------------------------------------------
     
     

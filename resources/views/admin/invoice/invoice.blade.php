@@ -195,7 +195,7 @@
                         </tr>
                         <tr>
                             <th>Description:</th>
-                            <td><h6 id="description"></h6></td>
+                            <td><p id="description"></p></td>
                         </tr>
                     </table>
                     <div class="col-md-12">

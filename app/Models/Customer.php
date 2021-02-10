@@ -113,4 +113,9 @@ class Customer extends Model
         return $this->hasMany('App\Models\Receiving');
     }
 
+    public function marketings()
+    {
+        return $this->hasMany('App\Models\Marketing');
+    }
+
 }

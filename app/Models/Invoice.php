@@ -153,4 +153,9 @@ class Invoice extends Model
         return $this->hasMany('App\Models\Ledger');
     }
 
+    public function marketings()
+    {
+        return $this->hasMany('App\Models\Marketing');
+    }
+
 }

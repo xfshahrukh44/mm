@@ -193,13 +193,13 @@
         <div class="row text-center">
             <!-- sui dhaaga -->
             <div class="text-center" style="margin-right:5rem;">
-                <img src="../public/img/sdpl4.png" alt="core2plusIcon" style="width: 6%; margin-top:-0.94rem;">
+                <img src="../public/img/sdpl4.png" alt="core2plusIcon" style="width: 6%; margin-top:-0.08rem;">
                 <p style="font-size:8px;">domain-name.com</p>
             </div>
             <!-- powered by core2plus -->
             <div class="text-center" style="margin-left:5rem;">
                 <p style="margin-top:-0.87rem; font-size:8px;">Powered By</p>
-                <img src="../public/img/core2plusIcon.jpg" alt="core2plusIcon" style="width: 4%; margin-top:-1rem;">
+                <img src="../public/img/core2plusIcon.jpg" alt="core2plusIcon" style="width: 4%; margin-top:-0.5rem;">
                 <p style="font-size:8px;">core2plus.com</p>
             </div>
         </div>

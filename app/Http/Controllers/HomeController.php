@@ -7,6 +7,8 @@ use App\Models\Product;
 use App\Models\Customer;
 use App\Models\StockOut;
 use App\Models\Order;
+use App\Models\Marketing;
+use App\User;
 use App\Services\InvoiceService;
 use App\Services\InvoiceProductService;
 use App\Services\ProductService;
@@ -390,14 +392,45 @@ class HomeController extends Controller
         return Excel::download($export, 'Products - ' . return_date_pdf(Carbon::now()) . '.xls');
     }
 
-    public function marketing()
+    public function search_marketing(Request $request)
     {
-        $today =lcfirst(Carbon::today()->format('l'));
-        $tomorrow =lcfirst(Carbon::tomorrow()->format('l'));
+        if(array_key_exists('date', $request->all())){
+            $date = Carbon::parse($request->date);
+        }
+        else{
+            $date = Carbon::today();
+        }
+        $today =lcfirst($date->format('l'));
+        $ymd = $date->format('Y-m-d');
+        // $tomorrow =lcfirst(Carbon::tomorrow()->format('l'));
 
+        $riders = User::where('type', 'rider')->get();
         $customers = Customer::where('visiting_days', $today)->get();
         $orders = Order::where('dispatch_date', Carbon::now()->format('Y-m-d'))->get();
 
-        return view('admin.marketing.marketing', compact('customers', 'orders'));
+        return view('admin.marketing.marketing', compact('customers', 'orders', 'riders', 'date', 'ymd'));
+    }
+
+    public function assign_marketing_rider_for_customer(Request $request)
+    {
+        // fetch old and delete
+        $marketing = Marketing::where('customer_id', $request->customer_id)
+                                ->where('date', $request->date)
+                                ->first();
+        if($marketing){
+            $marketing->forceDelete();
+        }
+        
+        // create new
+        Marketing::create([
+            'customer_id' => $request->customer_id,
+            'user_id' => $request->rider_id,
+            'date' => $request->date
+        ]);
+
+        // get rider name
+        $rider = User::find($request->rider_id);
+
+        return $rider->name;
     }
 }

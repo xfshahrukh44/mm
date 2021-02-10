@@ -63,8 +63,13 @@ class Order extends Model
 
     public function all_invoiced()
     {
-        $this->whereHas('order_products', function ($query) {
+        return $this->whereHas('order_products', function ($query) {
             return $query->where('invoiced', '=', 1);
         })->get();
+    }
+
+    public function marketings()
+    {
+        return $this->hasMany('App\Models\Marketing');
     }
 }

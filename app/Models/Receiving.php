@@ -118,4 +118,9 @@ class Receiving extends Model
     {
         return $this->belongsTo('App\Models\Customer');
     }
+
+    public function marketings()
+    {
+        return $this->hasMany('App\Models\Marketing');
+    }
 }

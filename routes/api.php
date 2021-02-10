@@ -69,6 +69,9 @@ Route::group(['middleware' => ['auth:api', 'cors'], 'prefix' => 'auth'], functio
     // invoice
     Route::apiResources(['invoice'=>'API\InvoiceController']);
 
+    // marketing
+    Route::apiResources(['marketing'=>'API\MarketingController']);
+
     // helpers
     Route::get('/fetch_specific_markets', 'API\MarketController@fetch_specific_markets');
 

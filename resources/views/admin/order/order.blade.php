@@ -303,6 +303,10 @@
                             <th>Order Status:</th>
                             <td><h6 id="status"></h6></td>
                         </tr>
+                        <tr>
+                            <th>Description:</th>
+                            <td><p id="description"></p></td>
+                        </tr>
                     </table>
                     <div class="col-md-12">
                         <!-- MASTER INFO -->
@@ -785,6 +789,7 @@
         $('#address').text(order.customer.shop_name + ' - Shop # ' + order.customer.shop_number + ' - Floor # ' + order.customer.floor + ((customer.market && customer.market.area) ? (' - ' + order.customer.market.name + ' - ' + order.customer.market.area.name) : ''));
         $('#detailTotal').text(order.total);
         $('#status').text(order.status);
+        $('#description').text(order.description);
 
         $('#detailOrderModal').modal('show');
 
