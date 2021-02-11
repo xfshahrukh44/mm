@@ -8,6 +8,7 @@ use App\Models\Customer;
 use App\Models\StockOut;
 use App\Models\Order;
 use App\Models\Marketing;
+use App\Models\Receiving;
 use App\User;
 use App\Services\InvoiceService;
 use App\Services\InvoiceProductService;
@@ -406,9 +407,16 @@ class HomeController extends Controller
 
         $riders = User::where('type', 'rider')->get();
         $customers = Customer::where('visiting_days', $today)->get();
+        $receivings = Receiving::where('payment_date', $date)->get();
         $orders = Order::where('dispatch_date', Carbon::now()->format('Y-m-d'))->get();
+        $invoices = [];
+        foreach($orders as $order){
+            foreach($order->invoices as $invoice){
+                array_push($invoices, $invoice);
+            }
+        }
 
-        return view('admin.marketing.marketing', compact('customers', 'orders', 'riders', 'date', 'ymd'));
+        return view('admin.marketing.marketing', compact('customers', 'receivings', 'invoices', 'riders', 'date', 'ymd'));
     }
 
     public function assign_marketing_rider_for_customer(Request $request)
@@ -424,6 +432,52 @@ class HomeController extends Controller
         // create new
         Marketing::create([
             'customer_id' => $request->customer_id,
+            'user_id' => $request->rider_id,
+            'date' => $request->date
+        ]);
+
+        // get rider name
+        $rider = User::find($request->rider_id);
+
+        return $rider->name;
+    }
+
+    public function assign_marketing_rider_for_receiving(Request $request)
+    {
+        // fetch old and delete
+        $marketing = Marketing::where('receiving_id', $request->receiving_id)
+                                ->where('date', $request->date)
+                                ->first();
+        if($marketing){
+            $marketing->forceDelete();
+        }
+        
+        // create new
+        Marketing::create([
+            'receiving_id' => $request->receiving_id,
+            'user_id' => $request->rider_id,
+            'date' => $request->date
+        ]);
+
+        // get rider name
+        $rider = User::find($request->rider_id);
+
+        return $rider->name;
+    }
+
+    public function assign_marketing_rider_for_invoice(Request $request)
+    {
+        // fetch old and delete
+        $marketing = Marketing::where('invoice_id', $request->invoice_id)
+                                ->where('date', $request->date)
+                                ->first();
+        if($marketing){
+            $marketing->forceDelete();
+        }
+        
+        // create new
+        Marketing::create([
+            'invoice_id' => $request->invoice_id,
             'user_id' => $request->rider_id,
             'date' => $request->date
         ]);

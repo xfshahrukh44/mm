@@ -88,7 +88,7 @@
             </tr>
             <tr role="row" class="payment_date_wrapper" hidden>
                 <td>Payment Date</td>
-                <td class=""><input id="payment_date" type="date" name="payment_date" placeholder="Enter Payment Date" class="form-control payment_date" required min=0></td>
+                <td class=""><input id="payment_date" type="date" name="payment_date" placeholder="Enter Payment Date" class="form-control payment_date"></td>
             </tr>
         </tbody>
     </table>

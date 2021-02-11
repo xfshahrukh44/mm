@@ -123,6 +123,10 @@ Route::group(['middleware' => 'auth', 'prefix' => 'admin'], function() {
     Route::post('/generate_products_excel', 'HomeController@generate_products_excel')->name('generate_products_excel');
     // assign_marketing_rider_for_customer
     Route::get('/assign_marketing_rider_for_customer', 'HomeController@assign_marketing_rider_for_customer')->name('assign_marketing_rider_for_customer');
+    // assign_marketing_rider_for_receiving
+    Route::get('/assign_marketing_rider_for_receiving', 'HomeController@assign_marketing_rider_for_receiving')->name('assign_marketing_rider_for_receiving');
+    // assign_marketing_rider_for_invoice
+    Route::get('/assign_marketing_rider_for_invoice', 'HomeController@assign_marketing_rider_for_invoice')->name('assign_marketing_rider_for_invoice');
     // ----------------------------------------------------------------------------------------------------------------------
     
     

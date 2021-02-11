@@ -158,7 +158,7 @@ abstract class InvoiceRepository implements RepositoryInterface
     {
         $invoice = ($this->find($invoice_id))['invoice'];
         $pdf_name = $invoice->id.' - '.return_date_pdf(Carbon::now()).' - '.$invoice->customer->name.'.pdf';
-        $customPaper = array(0,0,650,600);
+        $customPaper = array(0,0,800,600);
         $pdf = PDF::loadview('admin.invoice.invoice_pdf', compact('invoice', 'pdf_name'))->setPaper( $customPaper , 'landscape');
         return $pdf->stream($pdf_name, array('Attachment'=>0));
         // return redirect()->away($pdf->stream(Carbon::now() . '.pdf'));

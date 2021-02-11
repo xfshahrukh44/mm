@@ -43,3 +43,25 @@ function return_marketing_rider_for_customer($customer_id, $date)
 
     return $rider->name;
 }
+
+function return_marketing_rider_for_receiving($receiving_id, $date)
+{
+    if(!$marketing = Marketing::where('receiving_id', $receiving_id)-> where('date', $date)->first()){
+        return '';
+    }
+    if(!$rider = User::find($marketing->user_id)){
+        return '';
+    }
+    return $rider->name;
+}
+
+function return_marketing_rider_for_invoice($invoice_id, $date)
+{
+    if(!$marketing = Marketing::where('invoice_id', $invoice_id)-> where('date', $date)->first()){
+        return '';
+    }
+    if(!$rider = User::find($marketing->user_id)){
+        return '';
+    }
+    return $rider->name;
+}

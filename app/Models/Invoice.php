@@ -46,6 +46,8 @@ class Invoice extends Model
                             ->where('amount', $old_total)
                             ->first();
             if($ledger){
+                $temp_created_at = $ledger->created_at;
+                $temp_transaction_date = $ledger->transaction_date;
                 $ledger->delete();
             }
             // amount pay
@@ -67,7 +69,8 @@ class Invoice extends Model
                 'invoice_id' => $query->id,
                 'amount' => $new_total,
                 'type' => 'debit',
-                'transaction_date' => return_todays_date()
+                'transaction_date' => $temp_transaction_date,
+                'created_at' => $temp_created_at
             ]);
             // amount pay
             if($query->new_payment == 'cash'){
