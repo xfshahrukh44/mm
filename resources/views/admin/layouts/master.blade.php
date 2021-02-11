@@ -288,6 +288,16 @@
             </a>
           </li>
 
+          <!-- Your Marketing Tasks -->
+          <li class="nav-item">
+            <a href="{{route('search_marketing_tasks')}}" class="nav-link">
+              <i class="nav-icon fas fa-tasks"></i>
+              <p>
+                Your Marketing Tasks
+              </p>
+            </a>
+          </li>
+
           <!-- user management -->
           <li class="nav-item has-treeview">
             <a href="#" class="nav-link">

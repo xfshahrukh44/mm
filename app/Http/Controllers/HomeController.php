@@ -487,4 +487,22 @@ class HomeController extends Controller
 
         return $rider->name;
     }
+    
+    public function search_marketing_tasks(Request $request)
+    {
+        if(array_key_exists('date', $request->all())){
+            $date = Carbon::parse($request->date);
+        }
+        else{
+            $date = Carbon::today();
+        }
+
+        $ymd = $date->format('Y-m-d');
+
+        $customer_marketings = Marketing::whereNotNull('customer_id')->where('date', $date)->where('user_id', auth()->user()->id)->get();
+        $receiving_marketings = Marketing::whereNotNull('receiving_id')->where('date', $date)->where('user_id', auth()->user()->id)->get();
+        $invoice_marketings = Marketing::whereNotNull('invoice_id')->where('date', $date)->where('user_id', auth()->user()->id)->get();
+
+        return view('admin.marketing.task', compact('customer_marketings', 'receiving_marketings', 'invoice_marketings', 'date', 'ymd'));
+    }
 }

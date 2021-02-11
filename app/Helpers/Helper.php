@@ -32,11 +32,9 @@ function return_decimal_number($foo)
 
 function return_marketing_rider_for_customer($customer_id, $date)
 {
-    // $marketing = Marketing::where('customer_id', $customer_id)-> where('date', $date)->first();
     if(!$marketing = Marketing::where('customer_id', $customer_id)-> where('date', $date)->first()){
         return '';
     }
-    // $rider = User::find($marketing->user_id);
     if(!$rider = User::find($marketing->user_id)){
         return '';
     }

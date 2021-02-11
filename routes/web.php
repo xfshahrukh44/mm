@@ -28,6 +28,7 @@ Route::group(['middleware' => 'auth', 'prefix' => 'admin'], function() {
     Route::get('/user/rider', 'Admin\UserController@getRiders')->name('rider');
     Route::get('/user/staff', 'Admin\UserController@index')->name('staff');
     Route::get('/search_marketing', 'HomeController@search_marketing')->name('search_marketing');
+    Route::get('/smk', 'HomeController@search_marketing_tasks')->name('search_marketing_tasks');
     // -----------------------------------------------------------------------------
 
     // all() ROUTES-------------------------------------------------------------------
