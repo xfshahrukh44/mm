@@ -9,7 +9,7 @@
 </head>
 
     <style>
-        table,td,th{
+        .table3, .tbl_3{
             border: 1px solid black;
         }
         label, input, td, th{
@@ -44,22 +44,11 @@
         h6{
             font-size: 17px;
         }
-        .bills, .date{
-            width: 30%;
-        }
-        .date_lable{
-            margin-left: 24.5%;
-        }
         .ms{
             width: 90%;
         }
-        table{
+        .table3{
             width: 100%;
-        }
-        .border_none{
-            border: none;
-            /* border-bottom: 1px solid gray; */
-            margin-top:1%;
         }
     </style>
     <body>
@@ -75,116 +64,132 @@
             <p style="font-size: 14px;">Plot 247, sector 16b, Malik Anwar goth, Gabol town, North Karachi.</p>
         </div>
     
-        <div>
-            <br>
-            <label for="" style="position: absolute; top:0.8rem;" ><strong>Customer Name:</strong>
-                <input type="text" class="border_none" value="{{$invoice->customer ? $invoice->customer->name : NULL}}" style="margin-top: 0.72%;">
-            </label>
-           
-            <label for="" class="" style="position: absolute; top:9.5rem; left:35rem;"><strong>Rider Name:</strong>
-                 <input type="text" class="border_none" value="{{$invoice->rider_id ? return_user_name($invoice->rider_id) : NULL}}"  style="margin-top: 3.1%;">
-            </label>
-            
-            <label style="position: absolute; top:12.35rem; left:35.02rem;width: 20rem;"><strong>Supplier</strong></label>
-            <label class="" style="position: absolute; top:11.5rem; left:38.47rem;width: 20rem;"><strong>:</strong>
-                <input type="text" class="border_none" value="Master material" style="margin-top: 1.55%;">
-            </label>
+        <div class="row">
+            <div>
+                <table class="table-sm" align="right">
+                    <tbody>
+                        <tr>
+                            <th class="text-right">Rider Name:</th>
+                            <td class="text-left" value="{{$invoice->rider_id ? return_user_name($invoice->rider_id) : NULL}}">{{$invoice->rider_id ? return_user_name($invoice->rider_id) : NULL}}</td>
+                        </tr>
+                        <tr>
+                            <th class="text-right">Supplier:</th>
+                            <td class="text-left" value="Master material">Master material</td>
+                        </tr>
+                        <tr>
+                            <th class="text-right">Contact:</th>
+                            <td class="text-left" value="0311-1039785">0311-1039785</td>
+                        </tr>
+                        <tr>
+                            <th class="text-right">Date:</th>
+                            <td class="text-left" value="{{return_date_pdf($invoice->created_at)}}">{{return_date_pdf($invoice->created_at)}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
 
-            <label style="position: absolute; top:13.62rem; left:35.02rem;width: 20rem;"><strong>Contact</strong></label>
-            <label for="" class="" style="position: absolute; top:12.8rem; left:38.46rem;width: 20rem;"><strong>:</strong>
-                <input type="text" class="border_none" value="0311-1039785"  style="margin-top: 1.55%;">
-            </label>
+            <div>
+                <table class="table-sm" align="left">
+                    <tbody>
+                        <tr>
+                            <th class="text-right">Id:</th>
+                            <td class="text-left" value="{{$invoice->id}}">{{$invoice->id}}</td>
+                        </tr>
+                        <tr>
+                            <th class="text-right">Customer Name:</th>
+                            <td class="text-left" value="{{$invoice->customer ? $invoice->customer->name : NULL}}">{{$invoice->customer ? $invoice->customer->name : NULL}}</td>
+                        </tr>
+                        <tr>
+                            <th class="text-right">Order:</th>
+                            <td class="text-left" value="{{$invoice->order ? $invoice->order->id : NULL}}">{{$invoice->order ? $invoice->order->id : NULL}}</td>
+                        </tr>
+                        <tr>
+                            <th class="text-right">Shop Name:</th>
+                            <td class="text-left" value="{{$invoice->customer ? $invoice->customer->shop_name . ' - ' . $invoice->customer->shop_number : NULL}}">
+                            {{$invoice->customer ? $invoice->customer->shop_name . ' - ' . $invoice->customer->shop_number : NULL}}
+                            </td>
+                        </tr>
+                        <tr>
+                            <th class="text-right">Contact Number:</th>
+                            <td class="text-left" value="{{$invoice->customer ? $invoice->customer->contact_number : NULL}}">
+                            {{$invoice->customer ? $invoice->customer->contact_number : NULL}}
+                            </td>
+                        </tr>
+                        <tr>
+                            <th class="text-right">Market & area:</th>
+                            <td class="text-left" value="{{($invoice->customer && $invoice->customer->market && $invoice->customer->market->area) ? $invoice->customer->market->name.'-'.$invoice->customer->market->area->name : NULL}}">
+                            {{($invoice->customer && $invoice->customer->market && $invoice->customer->market->area) ? $invoice->customer->market->name.'-'.$invoice->customer->market->area->name : NULL}}
+                            </td>
+                        </tr>
 
-            <label style="position: absolute; top:14.825rem; left:35.02rem;width: 20rem;"><strong>Date</strong></label>
-            <label for="" class="date_lable"  style="position: absolute; top:14rem; left:27.58rem; width: 20rem;"><strong>:</strong>
-                <input type="text" class="date border_none" value="{{return_date_pdf($invoice->created_at)}}" style="margin-top: 1.65%;">
-            </label>
+                    </tbody>
+                </table>
+            </div>
         </div>
-        {{-- <br> --}}
-        <div>
-            <label for="" style="margin-top: 1%;"><strong>Invoice</strong></label>
-            <label for="" style="margin-top: 1%; margin-left: 2.355rem"><strong>:</strong></label>
-            <input type="text" class="border_none" value="{{$invoice->id}}" style="margin-top: 1.3%;">
-        </div>
-        <div>
-            <label for=""><strong>Order</strong></label>
-            <label for="" style="margin-left: 2.81rem"><strong>:</strong></label>
-            <input type="text" class="border_none" value="{{$invoice->order ? $invoice->order->id : NULL}}" style="margin-top: 0.27%;">
-        </div>
-        <div style="margin-top:-1%;">
-            <label for=""><strong>Shop name & #</strong></label>
-            <label for="" style="margin-left: 0rem"><strong>:</strong></label>
-            <input type="text" class="border_none" value="{{$invoice->customer ? $invoice->customer->shop_name . ' - ' . $invoice->customer->shop_number : NULL}}" style="margin-top: 0.25%;">
-        </div>
-        <div style="margin-top:-1%;">
-            <label for=""><strong>Mobile #</strong></label>
-            <label for="" style="margin-left: 2.01rem"><strong>:</strong></label>
-            <input type="text" class="border_none" value="{{$invoice->customer ? $invoice->customer->contact_number : NULL}}" style="margin-top: 0.3%;">
-        </div>
-        <div style="margin-top:-1%;">
-            <label for=""><strong>Market & area</strong></label>
-            <label for="" style="margin-left: 0.41rem"><strong>:</strong></label>
-            <input type="text" class="border_none" value="{{($invoice->customer && $invoice->customer->market && $invoice->customer->market->area) ? $invoice->customer->market->name.'-'.$invoice->customer->market->area->name : NULL}}" style="margin-top: 0.3%; width:60%;">
-        </div>
-        <div>
-            <img src="../public/pdf_img/NULK.png" alt="" style="width: 25%; position:absolute; z-index:-111; left:35%; opacity:0.4;">
-        </div>
-    
-        <table>
-            <tr>
-              <th>Qty.</th>
-              <th>Details</th>
-              <th>Rate</th>
-              <th>Amount</th>
-            </tr>
-            @foreach($invoice->invoice_products as $invoice_product)
-                <tr>
-                    <td style="text-align: center">{{number_format(intval($invoice_product->quantity))}}</td>
-                    <td style="text-align: center">{{$invoice_product->product ? ($invoice_product->product->category->name . ' - ' . $invoice_product->product->brand->name . ' - ' . $invoice_product->product->article) : NULL}}</td>
-                    <td style="text-align: center">{{number_format(intval($invoice_product->price))}}</td>
-                    <td style="text-align: center">{{number_format(intval($invoice_product->quantity * $invoice_product->price))}}</td>
-                </tr>
-            @endforeach
-            <tr>
-                <td style="border: none"></td>
-                <td style="border: none"></td>
-                <td style="border: none; font-size:14px;">Total</td>
-                <td style="text-align: right">{{number_format(intval($invoice->total))}}</td>
-            </tr>
-            <tr>
-                <td style="border: none"></td>
-                <td style="border: none"></td>
-                <td style="border: none; font-size:14px;">Previous Bal.</td>
-                <td style="text-align: right">{{number_format(intval($invoice->previous_balance))}}</td>
-                <!-- <td style="text-align: right">{{$invoice->customer->outstanding_balance + $invoice->amount_pay - $invoice->total}}</td> -->
-                <!-- <td style="text-align: right">{{$invoice->customer->outstanding_balance - $invoice->amount_pay}}</td> -->
-            </tr>
-            <tr>
-                <td style="border: none"></td>
-                <td style="border: none"></td>
-                <td style="border: none; font-size:14px;">Total Due</td>
-                <td style="text-align: right">{{number_format(intval($invoice->total + $invoice->previous_balance))}}</td>
-                <!-- <td style="text-align: right">{{$invoice->customer->outstanding_balance + $invoice->amount_pay}}</td> -->
-                <!-- <td style="text-align: right">{{$invoice->customer->outstanding_balance - $invoice->amount_pay}}</td> -->
-            </tr>
-            <tr>
-                <td style="border: none"></td>
-                <td style="border: none">
-                    <input type="text">
-                    <br>
-                    <label  style="margin-left:5%;" for="">Customer Receiving</label>
-                </td>
-                <td style="border: none; font-size:14px;">Amount Received</td>
-                <td style="text-align: right">{{($invoice->amount_pay != 0) ? number_format(intval($invoice->amount_pay)) : ""}}</td>
-            </tr>
-            <tr>
-                <td style="border: none"></td>
-                <td style="border: none"></td>
-                <td style="border: none; font-size:14px;">Balance Due</td>
-                <td style="text-align: right">{{(($invoice->amount_pay != 0) ? number_format(intval(($invoice->total + $invoice->previous_balance) - $invoice->amount_pay)) : "")}}</td>
-                <!-- <td style="text-align: right">{{$invoice->customer->outstanding_balance}}</td> -->
-            </tr>
-        </table>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+            <img src="../public/pdf_img/NULK.png" alt="" style="width: 25%; position:absolute; z-index:-111; left:35%; opacity:0.4; top:32%;">
+            <div class="mt-5">
+                <table class="table3">
+                    <tr>
+                    <th class="tbl_3">Qty.</th>
+                    <th class="tbl_3">Details</th>
+                    <th class="tbl_3">Rate</th>
+                    <th class="tbl_3">Amount</th>
+                    </tr>
+                    @foreach($invoice->invoice_products as $invoice_product)
+                        <tr>
+                            <td class="tbl_3" style="text-align: center">{{number_format(intval($invoice_product->quantity))}}</td>
+                            <td class="tbl_3" style="text-align: center">{{$invoice_product->product ? ($invoice_product->product->category->name . ' - ' . $invoice_product->product->brand->name . ' - ' . $invoice_product->product->article) : NULL}}</td>
+                            <td class="tbl_3" style="text-align: center">{{number_format(intval($invoice_product->price))}}</td>
+                            <td class="tbl_3" style="text-align: center">{{number_format(intval($invoice_product->quantity * $invoice_product->price))}}</td>
+                        </tr>
+                    @endforeach
+                    <tr>
+                        <td class="tbl_3" style="border: none"></td>
+                        <td class="tbl_3" style="border: none"></td>
+                        <td class="tbl_3" style="border: none; font-size:14px;">Total</td>
+                        <td class="tbl_3" style="text-align: right">{{number_format(intval($invoice->total))}}</td>
+                    </tr>
+                    <tr>
+                        <td style="border: none"></td>
+                        <td style="border: none"></td>
+                        <td style="border: none; font-size:14px;">Previous Bal.</td>
+                        <td class="tbl_3" style="text-align: right">{{number_format(intval($invoice->previous_balance))}}</td>
+                        <!-- <td style="text-align: right">{{$invoice->customer->outstanding_balance + $invoice->amount_pay - $invoice->total}}</td> -->
+                        <!-- <td style="text-align: right">{{$invoice->customer->outstanding_balance - $invoice->amount_pay}}</td> -->
+                    </tr>
+                    <tr>
+                        <td style="border: none"></td>
+                        <td style="border: none"></td>
+                        <td style="border: none; font-size:14px;">Total Due</td>
+                        <td class="tbl_3" style="text-align: right">{{number_format(intval($invoice->total + $invoice->previous_balance))}}</td>
+                        <!-- <td style="text-align: right">{{$invoice->customer->outstanding_balance + $invoice->amount_pay}}</td> -->
+                        <!-- <td style="text-align: right">{{$invoice->customer->outstanding_balance - $invoice->amount_pay}}</td> -->
+                    </tr>
+                    <tr>
+                        <td style="border: none"></td>
+                        <td style="border: none">
+                            <input type="text">
+                            <br>
+                            <label  style="margin-left:5%;" for="">Customer Receiving</label>
+                        </td>
+                        <td style="border: none; font-size:14px;">Amount Received</td>
+                        <td class="tbl_3" style="text-align: right">{{($invoice->amount_pay != 0) ? number_format(intval($invoice->amount_pay)) : ""}}</td>
+                    </tr>
+                    <tr>
+                        <td style="border: none"></td>
+                        <td style="border: none"></td>
+                        <td style="border: none; font-size:14px;">Balance Due</td>
+                        <td class="tbl_3" style="text-align: right">{{(($invoice->amount_pay != 0) ? number_format(intval(($invoice->total + $invoice->previous_balance) - $invoice->amount_pay)) : "")}}</td>
+                        <!-- <td style="text-align: right">{{$invoice->customer->outstanding_balance}}</td> -->
+                    </tr>
+                </table>
+            </div>
+
         <!-- message -->
         <div class="row text-center">
             <p style="font-size:12px;">This is a computer generated invoice and requires no signature</p>
@@ -192,14 +197,14 @@
         <!-- logos -->
         <div class="row text-center">
             <!-- sui dhaaga -->
-            <div class="text-center" style="margin-right:5rem;">
-                <img src="../public/img/sdpl4.png" alt="core2plusIcon" style="width: 6%; margin-top:-0.08rem;">
-                <p style="font-size:8px;">domain-name.com</p>
+            <div class="text-center" style="margin-right:4.8rem;">
+                <img src="../public/img/sdpl4.png" alt="core2plusIcon" style="width: 10%; margin-top:-0.08rem;">
+                <p style="font-size:8px;">www.masterdhaga.com</p>
             </div>
             <!-- powered by core2plus -->
-            <div class="text-center" style="margin-left:5rem;">
-                <p style="margin-top:-0.87rem; font-size:8px;">Powered By</p>
-                <img src="../public/img/core2plusIcon.jpg" alt="core2plusIcon" style="width: 4%; margin-top:-0.5rem;">
+            <div class="text-center" style="margin-left:4.8rem;">
+                <p style="font-size:8px;">Powered By</p>
+                <img src="../public/img/core2plusIcon.jpg" alt="core2plusIcon" style="width: 6%; margin-top:-0.5rem;">
                 <p style="font-size:8px;">core2plus.com</p>
             </div>
         </div>

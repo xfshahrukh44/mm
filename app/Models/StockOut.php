@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Models\Product;
+use App\Models\Customer;
 use App\Models\Expense;
 
 class StockOut extends Model
@@ -107,6 +108,15 @@ class StockOut extends Model
             
             $product->save();
 
+            // fetch customer if id given
+            if($query->customer_id != NULL){
+                $customer = Customer::find($query->customer_id);
+                $customer_name = ($customer->name) . ($customer->market ? ', ' . $customer->market->name : '') . ($customer->market && $customer->market->area ? ', ' . $customer->market->area->name : '');
+            }
+            else{
+                $customer_name = NULL;
+            }
+
             // adjustment expense entry
             if($query->expense_type != NULL){
                 $product_name = ($product->category ? $product->category->name : '') . '-' . ($product->brand ? $product->brand->name : '') . '-' . ($product->article ? $product->article : '');
@@ -114,7 +124,7 @@ class StockOut extends Model
                     'stock_out_id' => $query->id,
                     'type' => $query->expense_type,
                     'amount' => $product->purchase_price * $query->quantity,
-                    'detail' => 'Product('. $product_name .') | ' . $query->narration,
+                    'detail' => ($customer_name != NULL ? 'Customer('. $customer_name .') | ' : '') . 'Product('. $product_name .') | ' . $query->narration,
                     'date' => return_todays_date()
                 ]);
             }

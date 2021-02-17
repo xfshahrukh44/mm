@@ -130,6 +130,29 @@
     </div>
 </div>
 
+<!-- Create view -->
+<div class="modal fade" id="addInvoiceModal" tabindex="-1" role="dialog" aria-labelledby="addInvoiceModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addInvoiceModalLabel">Add New invoice</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form class="col-md-12" method="POST" action="{{route('invoice.store')}}">
+                @method('POST')
+                @include('admin.invoice.invoice_master')
+
+                <!-- buttons -->
+                <div class="modal-footer">
+                    <button name="completed_status" type="submit" class="btn btn-primary" id="createButton">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
 <!-- Delete view -->
 <div class="modal fade" id="deleteInvoiceModal" tabindex="-1" role="dialog" aria-labelledby="deleteInvoiceModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
@@ -343,6 +366,23 @@
     var special_discount = 0;
     var invoice_id = "";
 
+    // adding items dynamically*
+    var x = 1; //Initial field counter is 1
+    var maxField = 40; //Input fields increment limitation
+    var addButton = $('.add_button'); //Add button selector
+    var minField = 1; //Input fields decrement limitation
+    var removeButton = $('.remove_button'); //Remove button selector
+    var wrapper = $('.field_wrapper'); //Input field wrappervar x = 1; //Initial field counter is 1
+
+    // div strings
+    var startDiv = '<div class="row">';
+    var productDiv = '<div class="col-md-4"><div class="ui-widget"><input class="form-control product_search" name="products[]"><input class="hidden_product_search" type="hidden" name="hidden_product_ids[]"></div></div>';
+    var priceDiv = '<div class="form-group col-md-4"><input type="number" class="form-control prices" name="prices[]" required min=0></div>';
+    var quantityDiv = '<div class="form-group col-md-3"><input type="number" class="form-control quantities" name="quantities[]" required value=0></div>';
+    var removeChildDiv = '<div class="form-group col-md-0 ml-1 remove_button mt-1" style="display: table; vertical-align: middle;"><a class="btn btn-primary"><i class="fas fa-minus" style="color:white;"></i></a></div>';
+    var endDiv = '</div>';
+    var fieldHTML = startDiv + productDiv + priceDiv + quantityDiv + removeChildDiv + endDiv;
+
     // fetch product labels
     function fetch_product_labels(){
         // fetch products
@@ -400,12 +440,120 @@
             }
         });
     }
+    
+    // count order total
+    function get_order_total(form){
+        var quantities = $(form + ' .quantities');
+        var prices = $(form + ' .prices');
+        var total = 0;
+        for(var i = 0; i < prices.length; i++){
+            total += ($(form + ' .prices')[i].value * $(form + ' .quantities')[i].value);
+        }
+        $(form + ' .total').val(total);
+        // final_amount
+        $(form + ' .final_amount').val(parseInt($(form + ' .total').val()) + parseInt($(form + ' .previous_amount').val()));
+        $(form + ' .balance_due').val(parseInt($(form + ' .final_amount').val()) - parseInt($(form + ' .amount_pay').val()));
+    }
+
+    // fetch_by_customer_and_product
+    function fetch_by_customer_and_product(){
+        $.ajax({
+            url: "<?php echo(route('fetch_by_customer_and_product')); ?>",
+            type: 'GET',
+            async: false,
+            data: {
+                customer_id: customer.id,
+                product_id: product.id
+            },
+            dataType: 'JSON',
+            success: function (data) {
+                if(data.success == true){
+                    special_discount = data.special_discount.amount;
+                }
+                else{
+                    special_discount = 0;
+                }
+            }
+        });
+    }
+
+    // ONCHANGE FUNCTIONS
+    $('#addInvoiceModal').on('change', '.quantities', function(){
+        get_order_total('#addInvoiceModal');
+    });
+    // on customer change
+    $('.customer_id').on('change', function(){
+        var user_id = $(this).val();
+        fetch_customer(user_id);
+        $('.previous_amount').val(customer.outstanding_balance);
+        get_order_total('#addInvoiceModal');
+    })
+    // on payment change
+    $('.payment').on('change', function(){
+        if($(this).val() == 'credit'){
+            $('.amount_pay').val(0);
+            $('.amount_pay').prop('readonly', true);
+            $('.amount_pay').change();
+            return 0;
+        }
+        $('.amount_pay').prop('readonly', false);
+    })
+    // on amount_pay change
+    $('.amount_pay').on('change', function(){
+        $('.balance_due').val(parseInt($('.final_amount').val()) - parseInt($('.amount_pay').val()));
+    })
+
+    // autocomplete items only
+    function initAutocompleteItems(input, wrapper, source){
+        $(input).autocomplete({
+            source: source,
+            appendTo: wrapper,
+            select: function(event, ui) {
+                // update current product
+                fetch_product(ui.item.value);
+
+                $(this).val(ui.item.label);
+                $(this).siblings('input').val(ui.item.value);
+                
+                // check for special discount
+                fetch_by_customer_and_product();
+                if(special_discount != 0){
+                    $(this).parent().parent().next().find('input').val(special_discount);
+                }
+                else{
+                    if(customer.type == "consumer"){
+                        $(this).parent().parent().next().find('input').val(ui.item.consumer_selling_price);
+                    }
+                    if(customer.type == "retailer" || customer.type == "distributor"){
+                        $(this).parent().parent().next().find('input').val(ui.item.retailer_selling_price);
+                    }
+                }
+
+                return false;
+            },
+        });
+    }
 
     //Add Items
     $('#detailInvoiceModal').on("click", ".addItem", function(){
     // $('.addItem').on('click', function(){
         $('#detailInvoiceModal').modal('hide');
         $('a[data-id="'+ current_invoice_id +'"]')[1].click();
+    });
+
+    // create*
+    $('#add_program').on('click', function(){
+        var url = $(this).data('route');
+
+        // empty wrapper
+        $('.field_wrapper').html('');
+        
+        // append in wrapper
+        $('#addInvoiceModal .field_wrapper').prepend(fieldHTML);
+
+        initAutocompleteItems(".product_search", "#addInvoiceModal .ui-widget", product_labels);
+
+        $('#addInvoiceModal').modal('show');
     });
 
     //*** delete ***//
@@ -487,6 +635,28 @@
         get_invoice_total('#editInvoiceModal');
 
         $('#editInvoiceModal').modal('show');
+    });
+
+    //Once add button is clicked on create*
+    $('#addInvoiceModal').on("click", ".add_button", function(){
+        //Check maximum number of input fields
+        if(x < maxField){ 
+            x++; //Increment field counter
+            $(wrapper).prepend(fieldHTML); //Add field html
+
+            // initialize autocomplete
+            initAutocompleteItems(".product_search", "#addInvoiceModal .ui-widget", product_labels);
+        }
+    });
+
+    //Once remove button is clicked on create
+    $('#addInvoiceModal').on("click", ".remove_button", function(e){
+        e.preventDefault();
+        if(x > minField){
+            $(this).parent('div').remove(); //Remove field html
+            x--; //Decrement field counter
+            get_order_total('#addInvoiceModal');
+        }
     });
 
   });

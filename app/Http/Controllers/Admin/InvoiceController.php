@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Services\InvoiceService;
 use App\Services\CustomerService;
 use App\Services\ProductService;
+use App\Services\UserService;
 use App\Services\InvoiceProductService;
 use App\Services\OrderProductService;
 use App\Services\OrderService;
@@ -23,8 +24,9 @@ class InvoiceController extends Controller
     private $invoiceProductService;
     private $orderProductService;
     private $orderService;
+    private $userService;
 
-    public function __construct(InvoiceService $invoiceService, CustomerService $customerService, ProductService $productService, InvoiceProductService $invoiceProductService, OrderProductService $orderProductService, OrderService $orderService)
+    public function __construct(InvoiceService $invoiceService, CustomerService $customerService, ProductService $productService, InvoiceProductService $invoiceProductService, OrderProductService $orderProductService, OrderService $orderService, UserService $userService)
     {
         $this->invoiceService = $invoiceService;
         $this->customerService = $customerService;
@@ -32,6 +34,7 @@ class InvoiceController extends Controller
         $this->invoiceProductService = $invoiceProductService;
         $this->orderProductService = $orderProductService;
         $this->orderService = $orderService;
+        $this->userService = $userService;
         $this->middleware('auth');
     }
     
@@ -40,7 +43,8 @@ class InvoiceController extends Controller
         $invoices = $this->invoiceService->paginate(env('PAGINATE'));
         $customers = $this->customerService->all();
         $products = $this->productService->all();
-        return view('admin.invoice.invoice', compact('invoices', 'customers', 'products'));
+        $riders = $this->userService->all_riders();
+        return view('admin.invoice.invoice', compact('invoices', 'customers', 'products', 'riders'));
     }
 
     public function all()
@@ -75,12 +79,14 @@ class InvoiceController extends Controller
         $invoiced_items = 0;
         if($request->products){
             for($i = 0; $i < count($request->products); $i++){
-                // mark order product as invoiced
-                $this->orderProductService->update([
-                    'invoiced' => 1
-                ], $request->order_products_ids[$i]);
-                // increment invoiced_items
-                $invoiced_items += 1;
+                // mark order product as invoiced if order_id given
+                if($request->order_id != NULL){
+                    $this->orderProductService->update([
+                        'invoiced' => 1
+                    ], $request->order_products_ids[$i]);
+                    // increment invoiced_items
+                    $invoiced_items += 1;
+                }
 
                 // create invoice product
                 $this->invoiceProductService->create([
@@ -92,14 +98,15 @@ class InvoiceController extends Controller
             }
         }
 
-        // update order with invoiced_items
-        $this->orderService->update([
-            'invoiced_items' => $invoiced_items,
-            'invoiced_from' => 1
-        ], $request->order_id);
+        // update order with invoiced_items if order_id given
+        if($request->order_id != NULL){
+            $this->orderService->update([
+                'invoiced_items' => $invoiced_items,
+                'invoiced_from' => 1
+            ], $request->order_id);
+        }
 
         return redirect()->back();
-        // return $this->invoiceService->generate_invoice_pdf($invoice->id);
     }
     
     public function show(Request $request, $id)

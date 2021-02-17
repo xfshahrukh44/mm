@@ -131,39 +131,41 @@ Route::group(['middleware' => 'auth', 'prefix' => 'admin'], function() {
     // ----------------------------------------------------------------------------------------------------------------------
     
     
-    // ARTISAN COMMAND ROUTES---------------------------------------
-    Route::get('/install', function () {
-        Illuminate\Support\Facades\Artisan::call('migrate:fresh', [
-            '--seed' => true
-        ]);
-    });
-    Route::get('/migrate', function () {
-        Illuminate\Support\Facades\Artisan::call('migrate');
-    });
-    Route::get('/stepmigrate', function () {
-        Illuminate\Support\Facades\Artisan::call('migrate:rollback', [
-            '--step' => 3
-        ]);
-    });
-    Route::get('/clear', function () {
-        Illuminate\Support\Facades\Artisan::call('cache:clear');
-        Illuminate\Support\Facades\Artisan::call('config:clear');
-        Illuminate\Support\Facades\Artisan::call('view:clear');
-        Illuminate\Support\Facades\Artisan::call('config:cache');
-    });
-    Route::get('/passport', function () {
-        Illuminate\Support\Facades\Artisan::call('passport:install');
-    });
-    Route::get('/key', function () {
-        Illuminate\Support\Facades\Artisan::call('key:generate');
-    });
-    Route::get('/storage', function () {
-        Illuminate\Support\Facades\Artisan::call('storage:link');
-    });
-    Route::get('/composer-du', function()
-    {
-        Illuminate\Support\Facades\Artisan::call('dump-autoload');
-    });
-    //--------------------------------------------------------------
+    
 });
+
+// ARTISAN COMMAND ROUTES---------------------------------------
+Route::get('/install', function () {
+    // Illuminate\Support\Facades\Artisan::call('migrate:fresh', [
+    //     '--seed' => true
+    // ]);
+});
+Route::get('/migrate', function () {
+    Illuminate\Support\Facades\Artisan::call('migrate');
+});
+Route::get('/stepmigrate', function () {
+    Illuminate\Support\Facades\Artisan::call('migrate:rollback', [
+        '--step' => 3
+    ]);
+});
+Route::get('/clear', function () {
+    Illuminate\Support\Facades\Artisan::call('cache:clear');
+    Illuminate\Support\Facades\Artisan::call('config:clear');
+    Illuminate\Support\Facades\Artisan::call('config:cache');
+    Illuminate\Support\Facades\Artisan::call('view:clear');
+});
+Route::get('/passport', function () {
+    Illuminate\Support\Facades\Artisan::call('passport:install');
+});
+Route::get('/key', function () {
+    Illuminate\Support\Facades\Artisan::call('key:generate');
+});
+Route::get('/storage', function () {
+    Illuminate\Support\Facades\Artisan::call('storage:link');
+});
+Route::get('/composer-du', function()
+{
+    Illuminate\Support\Facades\Artisan::call('dump-autoload');
+});
+//--------------------------------------------------------------
 

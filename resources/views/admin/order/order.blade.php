@@ -436,11 +436,9 @@
     var productDiv = '<div class="col-md-4"><div class="ui-widget"><input class="form-control product_search" name="products[]"><input class="hidden_product_search" type="hidden" name="hidden_product_ids[]"></div></div>';
     var priceDiv = '<div class="form-group col-md-4"><input type="number" class="form-control prices" name="prices[]" required min=0></div>';
     var quantityDiv = '<div class="form-group col-md-3"><input type="number" class="form-control quantities" name="quantities[]" required value=0></div>';
-    // var addChildDiv = '<div class="form-group col-md-0 add_button" style="display: table; vertical-align: middle;"><a class="btn btn-primary"><i class="fas fa-plus" style="color:white;"></i></a></div>';
     var removeChildDiv = '<div class="form-group col-md-0 ml-1 remove_button mt-1" style="display: table; vertical-align: middle;"><a class="btn btn-primary"><i class="fas fa-minus" style="color:white;"></i></a></div>';
     var endDiv = '</div>';
     var fieldHTML = startDiv + productDiv + priceDiv + quantityDiv + removeChildDiv + endDiv;
-    // var invoice = '<input type="checkbox" class = "mt-2">';
 
     // fetch product labels
     function fetch_product_labels(){
@@ -617,7 +615,6 @@
                     }
                 }
 
-                // console.log(special_discount);
                 return false;
             },
         });
