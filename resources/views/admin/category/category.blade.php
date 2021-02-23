@@ -143,13 +143,13 @@
 <script>
     $(document).ready(function(){
          //*** datatables ***//
-        $('#example1').dataTable({
-            "bPaginate": false,
-            "bLengthChange": false,
-            "bFilter": true,
-            "bInfo": false,
-            "searching":false
-        });
+        // $('#example1').dataTable({
+        //     "bPaginate": false,
+        //     "bLengthChange": false,
+        //     "bFilter": true,
+        //     "bInfo": false,
+        //     "searching":false
+        // });
 
         // persistent active sidebar
         var element = $('li a[href*="'+ window.location.pathname +'"]');
