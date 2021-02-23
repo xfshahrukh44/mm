@@ -6,8 +6,6 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Services\BrandService;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Arr;
-use Illuminate\Support\Str;
 use Storage;
 
 class BrandController extends Controller

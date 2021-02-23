@@ -14,10 +14,9 @@
 @section('content_body')
 <!-- Index view -->
 <div class="row">
-  <div class="col-md-12">
+  <div class="col-md-12 col-sm-12">
     <div class="card">
       <div class="card-header">
-        <!-- <h3 class="card-title">Customers</h3> -->
         <div class="card-tools">
           <!-- generate excel -->
           <form action="{{route('generate_customers_excel')}}" target="_blank" method="post">
@@ -36,11 +35,11 @@
         <form action="{{route('search_customers')}}" class="form-wrapper">
           <div class="row">
               <!-- search bar -->
-              <div class="topnav col-md-4">
+              <div class="topnav col-md-4 col-sm-4">
                 <input name="query" class="form-control" id="search_content" type="text" placeholder="Search..">
               </div>
               <!-- search button-->
-              <button type="submit" class="btn btn-primary col-md-0 justify-content-start" id="search_button">
+              <button type="submit" class="btn btn-primary col-md-0 col-sm-0 justify-content-start" id="search_button">
                 <i class="fas fa-search"></i>
               </button>
           </div>
@@ -48,7 +47,7 @@
       </div>
       <!-- /.card-header -->
       <div class="card-body">
-        <div class="col-md-12">
+        <div class="col-md-12 col-sm-12" style="overflow-x:auto;">
           <table id="example1" class="table table-bordered table-striped dataTable dtr-inline " role="grid" aria-describedby="example1_info">
             <thead>
               <tr role="row">
@@ -78,14 +77,16 @@
                       <a href="#" class="detailButton" data-id="{{$customer->id}}" data-object="{{$customer}}" data-shopkeeper="{{asset('img/shopkeepers') . '/' . $customer->shop_keeper_picture}}" data-shop="{{asset('img/shops') . '/' . $customer->shop_picture}}">
                         <i class="fas fa-eye green ml-1"></i>
                       </a>
-                      <!-- Edit -->
-                      <a href="#" class="editButton" data-id="{{$customer->id}}" data-object="{{$customer}}">
-                        <i class="fas fa-edit blue ml-1"></i>
-                      </a>
-                      <!-- Delete -->
-                      <a href="#" class="deleteButton" data-id="{{$customer->id}}" data-object="{{$customer}}">
-                        <i class="fas fa-trash red ml-1"></i>
-                      </a>
+                      @can('isSuperAdmin')
+                        <!-- Edit -->
+                        <a href="#" class="editButton" data-id="{{$customer->id}}" data-object="{{$customer}}">
+                          <i class="fas fa-edit blue ml-1"></i>
+                        </a>
+                        <!-- Delete -->
+                        <a href="#" class="deleteButton" data-id="{{$customer->id}}" data-object="{{$customer}}">
+                          <i class="fas fa-trash red ml-1"></i>
+                        </a>
+                      @endcan
                     </td>
                   </tr>
                 @endforeach
@@ -94,12 +95,7 @@
               @endif
             </tbody>
             <tfoot>
-              <!-- <tr>
-                <th rowspan="1" colspan="1">Name</th>
-                <th rowspan="1" colspan="1">Unit</th>
-                <th rowspan="1" colspan="1">Pre-defined Sizes</th>
-                <th rowspan="1" colspan="1">Actions</th>
-              </tr> -->
+            
             </tfoot>
           </table>
         </div>
@@ -186,7 +182,7 @@
               <!-- basic customer info -->
               <div class="tab-pane fade show active" id="bci">
                 <div class="card-body">
-                  <div class="col-md-12">
+                  <div class="col-md-12 col-sm-12">
                     <img class="shop_keeper_picture" src="{{asset('img/logo.png')}}" width="150">
                     <hr style="color:gray;">
                     <table class="table table-bordered table-striped">
@@ -215,7 +211,7 @@
               <!-- Shop info -->
               <div class="tab-pane fade" id="si">
                 <div class="card-body">
-                  <div class="col-md-12">
+                  <div class="col-md-12 col-sm-12">
                     <img class="shop_picture" src="{{asset('img/logo.png')}}" width="150">
                     <hr style="color:gray;">
                     <table class="table table-bordered table-striped">
@@ -248,7 +244,7 @@
               <!-- Payment info -->
               <div class="tab-pane fade" id="pi">
                 <div class="card-body">
-                  <div class="col-md-12">
+                  <div class="col-md-12 col-sm-12">
                     <hr style="color:gray;">
                     <table class="table table-bordered table-striped">
                         <tbody id="table_row_wrapper">
@@ -354,9 +350,9 @@ $(document).ready(function(){
 
   // div strings
   var startDiv = '<div class="row">';
-  var productDiv = '<div class="col-md-6 form-group"><select name="products[]" class="form-control products" style="width: 100%; max-height: 20px;"><option value="">Select Product</option>@foreach($products as $product)<option value="{{$product->id}}">{{$product->article}}</option>@endforeach</select></div>';
-  var amountDiv = '<div class="form-group col-md-5"><input type="number" class="form-control amounts" name="amounts[]" min=0></div>';
-  var removeChildDiv = '<div class="form-group col-md-0 remove_button ml-1" style="display: table; vertical-align: middle;"><a class="btn btn-primary"><i class="fas fa-minus" style="color:white;"></i></a></div>';
+  var productDiv = '<div class="col-md-6 col-sm-6 col-sm-6 form-group"><select name="products[]" class="form-control products" style="width: 100%; max-height: 20px;"><option value="">Select Product</option>@foreach($products as $product)<option value="{{$product->id}}">{{$product->article}}</option>@endforeach</select></div>';
+  var amountDiv = '<div class="form-group col-md-5 col-sm-5 col-sm-5"><input type="number" class="form-control amounts" name="amounts[]" min=0></div>';
+  var removeChildDiv = '<div class="form-group col-md-0 col-sm-0 col-sm-0 remove_button ml-1" style="display: table; vertical-align: middle;"><a class="btn btn-primary"><i class="fas fa-minus" style="color:white;"></i></a></div>';
   var endDiv = '</div>';
   var fieldHTML = startDiv + productDiv + amountDiv + removeChildDiv + endDiv;
 
@@ -374,9 +370,6 @@ $(document).ready(function(){
             $('.market_id').append('<option value="'+ data[i].id +'">'+ data[i].name +'</option>');
             $('.market_id').fadeIn(200);
           }
-          // $('#market_id').select2({
-          //   dropdownParent: $('#addCustomerModal')
-          // });
         },
         error: function(data){
           $('.market_id').html('<option value="">Select market</option>');
@@ -402,8 +395,6 @@ $(document).ready(function(){
 
   // create
   $('#add_customer').on('click', function(){
-    // fetch_all_stores();
-    // fetch_all_brands();
     // market_id
     $('.market_id').hide();
   });
@@ -413,7 +404,6 @@ $(document).ready(function(){
     $('.market_id').hide();
     var id = $(this).data('id');
     fetch_customer(id);
-    // var customer = $(this).data('object');
     $('#hidden').val(id);
     
     $('#editForm .name').val($('.name' + id).html());
@@ -427,11 +417,8 @@ $(document).ready(function(){
 
     if(customer.market && customer.market.area){
       $('#editForm .area_id option[value="'+ customer.market.area.id +'"]').prop('selected', true);
-      // fetch_specific_markets(customer.market.area.id);
       $('#editForm  .area_id').change();
       $('#editForm .market_id option[value="'+ customer.market.id +'"]').prop('selected', true);
-      // $('[name=market_id] option[value='+ customer.market.id +']').prop('selected',true);
-      // $('#editForm .market_id').val(customer.market.id);
     }
 
     $('#editForm .status option[value="'+ customer.status +'"]').prop('selected', true);
@@ -520,9 +507,6 @@ $(document).ready(function(){
       if(x < maxField){ 
           x++; //Increment field counter
           $(wrapper).prepend(fieldHTML); //Add field html
-
-          // initialize autocomplete
-          // initAutocompleteItems(".product_search", "#addOrderModal .ui-widget", product_labels);
           $('.products').select2();
       }
   });
@@ -533,9 +517,6 @@ $(document).ready(function(){
       if(x < maxField){ 
           x++; //Increment field counter
           $(wrapper).prepend(fieldHTML); //Add field html
-
-          // initialize autocomplete
-          // initAutocompleteItems(".product_search", "#editOrderModal .ui-widget", product_labels);
           $('.products').select2();
       }
   });
@@ -546,9 +527,6 @@ $(document).ready(function(){
       if(x > minField){
           $(this).parent('div').remove(); //Remove field html
           x--; //Decrement field counter
-          // get_order_total('#editOrderModal');
-          // get_order_total('#addOrderModal');
-          // initAutocompleteItems(".product_search", "#editOrderModal .ui-widget", product_labels);
           $('#addCustomerModal .products').select2();
       }
   });
@@ -559,11 +537,7 @@ $(document).ready(function(){
       if(x > minField){
           $(this).parent('div').remove(); //Remove field html
           x--; //Decrement field counter
-          // get_order_total('#editOrderModal');
-          // get_order_total('#addOrderModal');
-          // initAutocompleteItems(".product_search", "#editOrderModal .ui-widget", product_labels);
           $('#editCustomerModal .products').select2();
-          console.log(x);
       }
   });
 

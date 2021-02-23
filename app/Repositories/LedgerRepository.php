@@ -9,11 +9,6 @@ use App\Exceptions\Ledger\DeleteLedgerException;
 use App\Models\Ledger;
 use App\Models\Customer;
 use App\Models\Vendor;
-use Illuminate\Support\Facades\DB;
-use Hash;
-use JWTAuth;
-use Tymon\JWTAuth\Exceptions\JWTException;
-use Illuminate\Support\Str;
 
 abstract class LedgerRepository implements RepositoryInterface
 {

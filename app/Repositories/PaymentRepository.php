@@ -7,12 +7,6 @@ use App\Exceptions\Payment\CreatePaymentException;
 use App\Exceptions\Payment\UpdatePaymentException;
 use App\Exceptions\Payment\DeletePaymentException;
 use App\Models\Payment;
-use App\Models\Customer;
-use Illuminate\Support\Facades\DB;
-use Hash;
-use JWTAuth;
-use Tymon\JWTAuth\Exceptions\JWTException;
-use Illuminate\Support\Str;
 
 abstract class PaymentRepository implements RepositoryInterface
 {

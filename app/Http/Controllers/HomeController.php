@@ -58,16 +58,10 @@ class HomeController extends Controller
 
     public function plug_n_play(Request $request)
     {
-        // dd($request->all());
-        // $products = Product::where('type', 'other')->get();
-        // foreach($products as $product){
-        //     $product->gender = 'both';
-        //     $product->save();
-        // }
-
-        $today =lcfirst(Carbon::today()->format('l'));
-        $tomorrow =lcfirst(Carbon::tomorrow()->format('l'));
-        dd($today, $tomorrow);
+        $users = User::withTrashed()->whereNotNull('deleted_at')->get();
+        foreach($users as $user){
+            $user->forceDelete();
+        }
     }
 
     public function generate_invoice_pdf($id)

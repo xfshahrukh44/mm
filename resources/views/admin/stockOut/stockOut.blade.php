@@ -17,7 +17,6 @@
   <div class="col-md-12">
     <div class="card">
       <div class="card-header">
-        <!-- <h3 class="card-title">StockOuts</h3> -->
         <div class="card-tools">
           <button class="btn btn-success" id="add_stockOut" data-toggle="modal" data-target="#addStockOutModal">
             <i class="fas fa-plus"></i> Add New StockOut</button>
@@ -38,7 +37,7 @@
       </div>
       <!-- /.card-header -->
       <div class="card-body">
-        <div class="col-md-12">
+        <div class="col-md-12" style="overflow-x:auto;">
           <table id="example1" class="table table-bordered table-striped dataTable dtr-inline" role="grid" aria-describedby="example1_info">
             <thead>
               <tr role="row">
@@ -62,10 +61,6 @@
                     <td class="{{'created_by'.$stockOut->id}}">{{return_user_name($stockOut->created_by)}}</td>
                     <td class="{{'modified_by'.$stockOut->id}}">{{return_user_name($stockOut->modified_by)}}</td>
                     <td>
-                      <!-- Detail -->
-                      <!-- <a href="#" class="detailButton" data-id="{{$stockOut->id}}">
-                        <i class="fas fa-eye green ml-1"></i>
-                      </a> -->
                       <!-- Edit -->
                       <a href="#" class="editButton" data-id="{{$stockOut->id}}" data-object="{{$stockOut}}">
                         <i class="fas fa-edit blue ml-1"></i>
@@ -82,12 +77,7 @@
               @endif
             </tbody>
             <tfoot>
-              <!-- <tr>
-                <th rowspan="1" colspan="1">Name</th>
-                <th rowspan="1" colspan="1">Unit</th>
-                <th rowspan="1" colspan="1">Pre-defined Sizes</th>
-                <th rowspan="1" colspan="1">Actions</th>
-              </tr> -->
+            
             </tfoot>
           </table>
         </div>
@@ -192,8 +182,7 @@ $(document).ready(function(){
 
   // create
   $('#add_stockOut').on('click', function(){
-    // fetch_all_stores();
-    // fetch_all_brands();
+    
   });
 
   // edit

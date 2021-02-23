@@ -10,8 +10,6 @@ use App\Services\ProductService;
 use App\Services\OrderProductService;
 use App\Services\UserService;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Arr;
-use Illuminate\Support\Str;
 
 class OrderController extends Controller
 {
@@ -69,9 +67,7 @@ class OrderController extends Controller
 
         // create order
         $order = ($this->orderService->create($request->all()))['order']['order'];
-
-        // dd($order);
-
+        
         if($request->products){
             for($i = 0; $i < count($request->products); $i++){
                 $this->orderProductService->create([

@@ -10,11 +10,6 @@ use App\Models\Order;
 use App\Models\Customer;
 use App\Services\CustomerService;
 use Illuminate\Support\Facades\DB;
-use Hash;
-use JWTAuth;
-use Tymon\JWTAuth\Exceptions\JWTException;
-use Illuminate\Support\Str;
-use Storage;
 
 abstract class OrderRepository implements RepositoryInterface
 {
@@ -137,10 +132,6 @@ abstract class OrderRepository implements RepositoryInterface
     {
         // foreign fields
         // customers
-        // $customers = Customer::select('id')
-        //             ->where('name', 'LIKE', '%'.$query.'%')
-        //             ->orWhere('phone', 'LIKE', '%'.$query.'%')
-        //             ->get();
         $customers = $this->customerService->search_customers($query);
         $customer_ids = [];
         foreach($customers as $customer){

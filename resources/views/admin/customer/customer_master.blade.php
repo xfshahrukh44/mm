@@ -1,22 +1,22 @@
 @csrf
 <div class="modal-body row">
     <!-- name -->
-    <div class="form-group col-md-3">
+    <div class="form-group col-md-3  col-sm-3">
         <label for="">Name</label>
         <input type="text" name="name" placeholder="Enter name" class="form-control name" required>
     </div>
     <!-- contact_number -->
-    <div class="form-group col-md-2">
+    <div class="form-group col-md-2  col-sm-2">
         <label for="">Contact #</label>
         <input type="text" name="contact_number" placeholder="Enter Contact #" class="form-control contact_number">
     </div>
     <!-- whatsapp_number -->
-    <div class="form-group col-md-2">
+    <div class="form-group col-md-2  col-sm-2">
         <label for="">Whatsapp #</label>
         <input type="text" name="whatsapp_number" placeholder="Enter Whatsapp #" class="form-control whatsapp_number">
     </div>
     <!-- type -->
-    <div class="form-group col-md-2">
+    <div class="form-group col-md-2  col-sm-2">
         <label for="">Customer Type</label>
         <select name="type" class="form-control type" style="width: 100%; height: 35px;">
             <option value="">Select Customer Type</option>
@@ -112,21 +112,6 @@
         <label for="">Opening Balance</label>
         <input type="number" name="opening_balance" placeholder="Enter Opening Balance" class="form-control opening_balance">
     </div>
-    <!-- business_to_date -->
-    <!-- <div class="form-group col-md-3" hidden>
-        <label for="">Business to Date</label>
-        <input type="number" min=0 name="business_to_date" placeholder="Enter Business to Date" class="form-control business_to_date">
-    </div> -->
-    <!-- outstanding_balance -->
-    <!-- <div class="form-group col-md-3" hidden>
-        <label for="">Outstanding Balance</label>
-        <input type="number" min=0 name="outstanding_balance" placeholder="Enter Outstanding Balance" class="form-control outstanding_balance">
-    </div> -->
-    <!-- special_discount -->
-    <!-- <div class="form-group col-md-3" hidden>
-        <label for="">Special Discount</label>
-        <input type="number" min=0 name="special_discount" placeholder="Enter Special Discount" class="form-control special_discount">
-    </div> -->
     <!-- payment_terms -->
     <div class="form-group col-md-12">
         <label for="">Payment Terms</label>

@@ -7,11 +7,6 @@ use App\Exceptions\Brand\CreateBrandException;
 use App\Exceptions\Brand\UpdateBrandException;
 use App\Exceptions\Brand\DeleteBrandException;
 use App\Models\Brand;
-use Illuminate\Support\Facades\DB;
-use Hash;
-use JWTAuth;
-use Tymon\JWTAuth\Exceptions\JWTException;
-use Illuminate\Support\Str;
 
 abstract class BrandRepository implements RepositoryInterface
 {

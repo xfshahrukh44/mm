@@ -12,8 +12,6 @@ use Illuminate\Http\Request;
 use App\Services\StockInService;
 use App\Services\ProductService;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Http\JsonResponse;
-use Illuminate\Support\Facades\Auth;
 
 class StockInController extends Controller
 {

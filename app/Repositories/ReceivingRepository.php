@@ -7,12 +7,6 @@ use App\Exceptions\Receiving\CreateReceivingException;
 use App\Exceptions\Receiving\UpdateReceivingException;
 use App\Exceptions\Receiving\DeleteReceivingException;
 use App\Models\Receiving;
-use App\Models\Customer;
-use Illuminate\Support\Facades\DB;
-use Hash;
-use JWTAuth;
-use Tymon\JWTAuth\Exceptions\JWTException;
-use Illuminate\Support\Str;
 
 abstract class ReceivingRepository implements RepositoryInterface
 {

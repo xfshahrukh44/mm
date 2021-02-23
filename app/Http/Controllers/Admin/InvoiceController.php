@@ -12,8 +12,6 @@ use App\Services\InvoiceProductService;
 use App\Services\OrderProductService;
 use App\Services\OrderService;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Arr;
-use Illuminate\Support\Str;
 
 class InvoiceController extends Controller
 {
@@ -54,7 +52,6 @@ class InvoiceController extends Controller
     
     public function store(Request $request)
     {
-        // dd($request->all());
         $validator = Validator::make($request->all(), [
             'customer_id' => 'required',
             'order_id' => 'sometimes',

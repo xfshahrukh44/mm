@@ -16,8 +16,6 @@ use App\Services\OrderService;
 use App\Services\ReceivingService;
 use App\Services\UserService;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Http\JsonResponse;
-use Illuminate\Support\Facades\Auth;
 
 class MarketingController extends Controller
 {

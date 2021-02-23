@@ -13,8 +13,6 @@ use App\Services\StockOutService;
 use App\Services\ProductService;
 use App\Services\CustomerService;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Http\JsonResponse;
-use Illuminate\Support\Facades\Auth;
 
 class StockOutController extends Controller
 {

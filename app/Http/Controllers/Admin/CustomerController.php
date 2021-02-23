@@ -48,7 +48,6 @@ class CustomerController extends Controller
     
     public function store(Request $request)
     {
-        // dd($request->all());
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
             'market_id' => 'required|int',
@@ -106,7 +105,6 @@ class CustomerController extends Controller
             }
         }
 
-        // return redirect()->route('customer.index');
         return redirect()->back();
     }
     
@@ -199,8 +197,7 @@ class CustomerController extends Controller
         if($request->identifier == 'rider'){
             return $this->getRiders($request);
         }
-
-        // return redirect()->route('customer.index');
+        
         return redirect()->back();
     }
     

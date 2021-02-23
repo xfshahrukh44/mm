@@ -8,9 +8,6 @@ use App\Services\StockInService;
 use App\Services\ProductService;
 use App\Services\VendorService;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Arr;
-use Illuminate\Support\Str;
-use Storage;
 
 class StockInController extends Controller
 {

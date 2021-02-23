@@ -7,11 +7,6 @@ use App\Exceptions\Unit\CreateUnitException;
 use App\Exceptions\Unit\UpdateUnitException;
 use App\Exceptions\Unit\DeleteUnitException;
 use App\Models\Unit;
-use Illuminate\Support\Facades\DB;
-use Hash;
-use JWTAuth;
-use Tymon\JWTAuth\Exceptions\JWTException;
-use Illuminate\Support\Str;
 
 abstract class UnitRepository implements RepositoryInterface
 {

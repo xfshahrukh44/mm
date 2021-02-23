@@ -12,8 +12,6 @@ use Illuminate\Http\Request;
 use App\Services\VendorService;
 use App\Services\MarketService;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Http\JsonResponse;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use Storage;
 

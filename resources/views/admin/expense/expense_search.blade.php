@@ -84,7 +84,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <table class="table table-bordered table-striped table-condensed table-sm">
+                <table class="table table-bordered table-striped table-condensed table-sm" style="overflow-x:auto;">
                 <thead>
                     <!-- outstanding balance row -->
                     <tr class="table-info">

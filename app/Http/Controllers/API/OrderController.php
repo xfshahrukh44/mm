@@ -13,8 +13,6 @@ use App\Services\OrderService;
 use App\Services\OrderProductService;
 use App\Services\CustomerService;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Http\JsonResponse;
-use Illuminate\Support\Facades\Auth;
 
 class OrderController extends Controller
 {
@@ -37,7 +35,6 @@ class OrderController extends Controller
     
     public function store(Request $request)
     {
-        // dd($request->all());
         $validator = Validator::make($request->all(), [
             'customer_id' => 'required',
             'total' => 'sometimes',

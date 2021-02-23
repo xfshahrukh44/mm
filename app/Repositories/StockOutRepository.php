@@ -9,11 +9,6 @@ use App\Exceptions\StockOut\DeleteStockOutException;
 use App\Models\StockOut;
 use App\Models\Customer;
 use App\Models\Product;
-use Illuminate\Support\Facades\DB;
-use Hash;
-use JWTAuth;
-use Tymon\JWTAuth\Exceptions\JWTException;
-use Illuminate\Support\Str;
 
 abstract class StockOutRepository implements RepositoryInterface
 {

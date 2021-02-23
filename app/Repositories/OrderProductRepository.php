@@ -7,12 +7,6 @@ use App\Exceptions\OrderProduct\CreateOrderProductException;
 use App\Exceptions\OrderProduct\UpdateOrderProductException;
 use App\Exceptions\OrderProduct\DeleteOrderProductException;
 use App\Models\OrderProduct;
-use Illuminate\Support\Facades\DB;
-use Hash;
-use JWTAuth;
-use Tymon\JWTAuth\Exceptions\JWTException;
-use Illuminate\Support\Str;
-use Storage;
 
 abstract class OrderProductRepository implements RepositoryInterface
 {

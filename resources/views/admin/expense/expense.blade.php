@@ -22,23 +22,10 @@
           <button class="btn btn-success" id="add_expense" data-toggle="modal" data-target="#addExpenseModal">
             <i class="fas fa-plus"></i> Add New Expense</button>
         </div>
-        <!-- search bar -->
-        <!-- <form action="{{route('search_expenses')}}" class="form-wrapper">
-          <div class="row"> -->
-              <!-- search bar -->
-              <!-- <div class="topnav col-md-4">
-                <input name="query" class="form-control" id="search_content" type="text" placeholder="Search..">
-              </div> -->
-              <!-- search button-->
-              <!-- <button type="submit" class="btn btn-primary col-md-0 justify-content-start" id="search_button">
-                <i class="fas fa-search"></i>
-              </button>
-          </div>
-        </form> -->
       </div>
       <!-- /.card-header -->
       <div class="card-body">
-        <div class="col-md-12">
+        <div class="col-md-12" style="overflow-x:auto;">
           <table id="example1" class="table table-bordered table-striped dataTable dtr-inline" role="grid" aria-describedby="example1_info">
             <thead>
               <tr role="row">
@@ -62,10 +49,6 @@
                     <td class="{{'created_by'.$expense->id}}">{{return_user_name($expense->created_by)}}</td>
                     <td class="{{'modified_by'.$expense->id}}">{{return_user_name($expense->modified_by)}}</td>
                     <td>
-                      <!-- Detail -->
-                      <!-- <a href="#" class="detailButton" data-id="{{$expense->id}}">
-                        <i class="fas fa-eye green ml-1"></i>
-                      </a> -->
                       <!-- Edit -->
                       <a href="#" class="editButton" data-id="{{$expense->id}}" data-object="{{$expense}}">
                         <i class="fas fa-edit blue ml-1"></i>
@@ -82,12 +65,7 @@
               @endif
             </tbody>
             <tfoot>
-              <!-- <tr>
-                <th rowspan="1" colspan="1">Name</th>
-                <th rowspan="1" colspan="1">Unit</th>
-                <th rowspan="1" colspan="1">Pre-defined Sizes</th>
-                <th rowspan="1" colspan="1">Actions</th>
-              </tr> -->
+            
             </tfoot>
           </table>
         </div>

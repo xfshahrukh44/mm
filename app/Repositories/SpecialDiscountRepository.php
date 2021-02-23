@@ -7,11 +7,6 @@ use App\Exceptions\SpecialDiscount\CreateSpecialDiscountException;
 use App\Exceptions\SpecialDiscount\UpdateSpecialDiscountException;
 use App\Exceptions\SpecialDiscount\DeleteSpecialDiscountException;
 use App\Models\SpecialDiscount;
-use Illuminate\Support\Facades\DB;
-use Hash;
-use JWTAuth;
-use Tymon\JWTAuth\Exceptions\JWTException;
-use Illuminate\Support\Str;
 
 abstract class SpecialDiscountRepository implements RepositoryInterface
 {

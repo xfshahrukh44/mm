@@ -62,11 +62,6 @@ class Vendor extends Model
         return $this->belongsTo('App\Models\Area');
     }
 
-    // public function orders()
-    // {
-    //     return $this->hasMany('App\Models\Order');
-    // }
-
     public function ledgers()
     {
         return $this->hasMany('App\Models\Ledger');

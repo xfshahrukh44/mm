@@ -9,12 +9,6 @@ use App\Exceptions\Invoice\DeleteInvoiceException;
 use App\Models\Invoice;
 use App\Models\Customer;
 use App\Services\CustomerService;
-use Illuminate\Support\Facades\DB;
-use Hash;
-use JWTAuth;
-use Tymon\JWTAuth\Exceptions\JWTException;
-use Illuminate\Support\Str;
-use Storage;
 use Barryvdh\DomPDF\Facade as PDF;
 use Carbon\Carbon;
 

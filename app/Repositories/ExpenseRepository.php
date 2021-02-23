@@ -7,14 +7,6 @@ use App\Exceptions\Expense\CreateExpenseException;
 use App\Exceptions\Expense\UpdateExpenseException;
 use App\Exceptions\Expense\DeleteExpenseException;
 use App\Models\Expense;
-use App\Models\Area;
-use App\Models\Market;
-use Illuminate\Support\Facades\DB;
-use Hash;
-use JWTAuth;
-use Tymon\JWTAuth\Exceptions\JWTException;
-use Illuminate\Support\Str;
-use Storage;
 
 abstract class ExpenseRepository implements RepositoryInterface
 {

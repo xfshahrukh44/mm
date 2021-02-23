@@ -13,8 +13,6 @@ use App\Services\OrderProductService;
 use App\Services\ProductService;
 use App\Services\OrderService;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Http\JsonResponse;
-use Illuminate\Support\Facades\Auth;
 
 class OrderProductController extends Controller
 {

@@ -22,7 +22,6 @@
     <div class="col-md-12">
         <div class="card">
             <div class="card-header">
-              <!-- <h3 class="card-title">Items</h3> -->
               <div class="card-tools">
                 @if($user_type == 'staff')
                     @can('isSuperAdmin')
@@ -57,7 +56,7 @@
          </div>
          <!-- /.card-header -->
          <div class="card-body">
-            <div class="col-md-12">
+            <div class="col-md-12" style="overflow-x:auto;">
                 <table id="example1" class="table table-bordered table-striped dataTable dtr-inline" role="grid" aria-describedby="example1_info">
                     <thead>
                         <tr role="row">
@@ -175,7 +174,7 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="card-body">
+            <div class="card-body" style="overflow-x:auto;">
                 <img class="profile" src="{{asset('img/logo.png')}}" width="150" style="position: relative; left:33%;">
                 <hr style="color:gray;">
                 <table class="table table-bordered table-striped">
@@ -311,7 +310,6 @@
 
         //*** View Profile ***//        
         $('.viewProfileButton').on('click', function(){
-            // $(".profile").attr("src","{{asset('img/logo2.png')}}");
             var id = $(this).data('id');
             var url = $(this).data('route');
             var type = $(this).data('type');
@@ -321,9 +319,7 @@
                 url: url,
                 dataType: 'json',                   
                 success: function(response){
-                    // alert(response['name']);
                     $('#viewUserModal').modal('show');
-                    // console.log(response);fullname
                     $('.fullname').html(response.user.name);
                     if(response['profile_picture'] == null){
                         $(".profile").attr("src","{{asset('img/logo.png')}}");
@@ -361,7 +357,7 @@
 
         // create
         $('#add_item').on('click', function(){
-            // fetch_all_zones();
+            
         });
 
         //*** edit ***//
@@ -372,7 +368,6 @@
             $('#editForm').attr('action', "{{route('user.update', 1)}}");
             $('#hidden').val(id);
             $('.user_type').val(user_type);
-            // alert($('#hidden').val());
             
             $('#editForm #name').val($('.name' + id).html());
             $('#editForm #email').val($('.email' + id).html());

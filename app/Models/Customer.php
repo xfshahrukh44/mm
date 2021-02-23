@@ -48,7 +48,6 @@ class Customer extends Model
         });
 
         static::created(function ($query) {
-            // sales ledger account number
             $query->account_number = '4010' . $query->id;
             $query->save();
             if($query->opening_balance != NULL){
@@ -71,8 +70,6 @@ class Customer extends Model
                     ]);
                 }
             }
-            // set business_to_date to 0. First debit entry.
-            // $query->business_to_date = 0;
         });   
     }
 

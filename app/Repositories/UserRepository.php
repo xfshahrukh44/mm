@@ -12,6 +12,7 @@ use Hash;
 use JWTAuth;
 use Tymon\JWTAuth\Exceptions\JWTException;
 use Illuminate\Support\Str;
+use Illuminate\Support\Arr;
 
 abstract class UserRepository implements RepositoryInterface
 {
@@ -54,6 +55,12 @@ abstract class UserRepository implements RepositoryInterface
                     'message' => 'Could`nt find user',
                 ]);
             }
+
+            // make phone null before deleting snippet
+            $user = ($this->find($id))['user'];
+            $user->phone = NULL;
+            $user->save();
+
             $this->model->destroy($id);
             return response()->json([
                 'success' => true,
@@ -69,6 +76,12 @@ abstract class UserRepository implements RepositoryInterface
     public function update(array $data, $id)
     {
         try {
+            // password hashing
+            if($data['password'])
+            {
+                $data['password'] = Hash::make($data['password']);
+            }
+            
             if(!$temp = $this->model->find($id))
             {
                 return response()->json([

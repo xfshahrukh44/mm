@@ -17,7 +17,6 @@
   <div class="col-md-12">
     <div class="card">
       <div class="card-header">
-        <!-- <h3 class="card-title">Vendors</h3> -->
         <div class="card-tools">
           <form action="{{route('generate_vendors_excel')}}" target="_blank" method="post">
             @csrf
@@ -25,7 +24,7 @@
                 <i class="fas fa-file-excel"></i>
                 Generate Excel
             </button>
-            <button class="btn btn-success" id="add_vendor" data-toggle="modal" data-target="#addVendorModal">
+            <button class="btn btn-success" id="add_vendor" data-toggle="modal" data-target="#addVendorModal" type="button">
               <i class="fas fa-plus"></i>
               Add New Vendor
             </button>
@@ -47,7 +46,7 @@
       </div>
       <!-- /.card-header -->
       <div class="card-body">
-        <div class="col-md-12">
+        <div class="col-md-12" style="overflow-x:auto;">
           <table id="example1" class="table table-bordered table-striped dataTable dtr-inline" role="grid" aria-describedby="example1_info">
             <thead>
               <tr role="row">
@@ -95,12 +94,7 @@
               @endif
             </tbody>
             <tfoot>
-              <!-- <tr>
-                <th rowspan="1" colspan="1">Name</th>
-                <th rowspan="1" colspan="1">Unit</th>
-                <th rowspan="1" colspan="1">Pre-defined Sizes</th>
-                <th rowspan="1" colspan="1">Actions</th>
-              </tr> -->
+            
             </tfoot>
           </table>
         </div>
@@ -351,14 +345,10 @@ $(document).ready(function(){
             $('.market_id').append('<option value="'+ data[i].id +'">'+ data[i].name +'</option>');
             $('.market_id').fadeIn(200);
           }
-          // $('#market_id').select2({
-          //   dropdownParent: $('#addVendorModal')
-          // });
         },
         error: function(data){
           $('.market_id').html('<option value="">Select market</option>');
           $('.market_id').fadeOut(200);
-          // $('.market_id').select2();
         }
     });
   }
@@ -379,9 +369,6 @@ $(document).ready(function(){
 
   // create
   $('#add_vendor').on('click', function(){
-    // fetch_all_stores();
-    // fetch_all_brands();
-    // market_id
     $('.market_id').hide();
   });
 
@@ -390,7 +377,6 @@ $(document).ready(function(){
     $('.market_id').hide();
     var id = $(this).data('id');
     fetch_vendor(id);
-    // var vendor = $(this).data('object');
     $('#hidden').val(id);
     
     $('#editForm .name').val($('.name' + id).html());
@@ -403,8 +389,6 @@ $(document).ready(function(){
     $('#editForm .floor').val(vendor.floor);
 
     $('#editForm .area_id option[value="'+ vendor.area.id +'"]').prop('selected', true);
-    // fetch_specific_markets(vendor.area.id);
-    // $('#editForm .market_id option[value="'+ vendor.area.id +'"]').prop('selected', true);
 
     $('#editForm .status option[value="'+ vendor.status +'"]').prop('selected', true);
     $('#editForm .visiting_days option[value="'+ vendor.visiting_days +'"]').prop('selected', true);
@@ -416,18 +400,7 @@ $(document).ready(function(){
     $('#editForm .special_discount').val(vendor.special_discount);
 
     $('#editForm .payment_terms').val(vendor.payment_terms);
-
-    // children work
-    // if(vendor.special_discounts.length > 0){
-    //   $('.field_wrapper').html('');
-    //   for(var i = 0; i < vendor.special_discounts.length; i++){
-    //     $('.field_wrapper').prepend(fieldHTML);
-    //     $('#editVendorModal .products:first option[value="'+ vendor.special_discounts[i].product_id +'"]').prop('selected', true);
-    //     $('#editVendorModal .amounts:first').val(vendor.special_discounts[i].amount);
-    //     $('.products').select2();
-    //   }
-    // }
-
+    
     $('#editVendorModal').modal('show');
 
   });
@@ -484,9 +457,7 @@ $(document).ready(function(){
       if(x < maxField){ 
           x++; //Increment field counter
           $(wrapper).prepend(fieldHTML); //Add field html
-
-          // initialize autocomplete
-          // initAutocompleteItems(".product_search", "#addOrderModal .ui-widget", product_labels);
+          
           $('.products').select2();
       }
   });
@@ -498,8 +469,6 @@ $(document).ready(function(){
           x++; //Increment field counter
           $(wrapper).prepend(fieldHTML); //Add field html
 
-          // initialize autocomplete
-          // initAutocompleteItems(".product_search", "#editOrderModal .ui-widget", product_labels);
           $('.products').select2();
       }
   });
@@ -510,9 +479,6 @@ $(document).ready(function(){
       if(x > minField){
           $(this).parent('div').remove(); //Remove field html
           x--; //Decrement field counter
-          // get_order_total('#editOrderModal');
-          // get_order_total('#addOrderModal');
-          // initAutocompleteItems(".product_search", "#editOrderModal .ui-widget", product_labels);
           $('.products').select2();
       }
   });

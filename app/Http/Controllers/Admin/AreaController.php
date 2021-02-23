@@ -62,7 +62,6 @@ class AreaController extends Controller
     
     public function update(Request $request, $id)
     {
-        // dd($request->all());
         $id = $request->hidden;
 
         if(!(auth()->user()->id == $id || auth()->user()->type == "superadmin"))

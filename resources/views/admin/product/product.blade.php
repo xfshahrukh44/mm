@@ -17,7 +17,6 @@
   <div class="col-md-12">
     <div class="card">
       <div class="card-header">
-        <!-- <h3 class="card-title">Products</h3> -->
         <div class="card-tools">
           <!-- generate excel -->
           <form action="{{route('generate_products_excel')}}" target="_blank" method="post">
@@ -26,7 +25,7 @@
                 <i class="fas fa-file-excel"></i>
                 Generate Excel
             </button>
-            <button class="btn btn-success" id="add_product" data-toggle="modal" data-target="#addProductModal">
+            <button class="btn btn-success" id="add_product" data-toggle="modal" data-target="#addProductModal" type="button">
               <i class="fas fa-plus"></i>
               Add New Product
             </button>
@@ -48,7 +47,7 @@
       </div>
       <!-- /.card-header -->
       <div class="card-body">
-        <div class="col-md-12">
+        <div class="col-md-12" style="overflow-x:auto;">
           <table id="example1" class="table table-bordered table-striped dataTable dtr-inline" role="grid" aria-describedby="example1_info">
             <thead>
               <tr role="row">
@@ -63,7 +62,6 @@
                 <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1">Quantity in Hand</th>
                 <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1">Cost Value</th>
                 <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1">Sales Value</th>
-                <!-- <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1">Opening Quantity</th> -->
                 <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1">M.O.Q</th>
                 <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1">Actions</th>
               </tr>
@@ -98,21 +96,22 @@
                     </td>
                     <td class="{{'cost_value'.$product->id}}">{{'Rs. ' .number_format($product->cost_value)}}</td>
                     <td class="{{'sales_value'.$product->id}}">{{'Rs. ' .number_format($product->sales_value)}}</td>
-                    <!-- <td class="{{'opening_quantity'.$product->id}}">{{$product->opening_quantity}}</td> -->
                     <td class="{{'moq'.$product->id}}">{{$product->moq}}</td>
                     <td>
                       <!-- Detail -->
                       <a href="#" class="detailButton" data-id="{{$product->id}}" data-object="{{$product}}" data-product="{{asset('img/products') . '/' . $product->product_picture}}">
                         <i class="fas fa-eye green ml-1"></i>
                       </a>
-                      <!-- Edit -->
-                      <a href="#" class="editButton" data-id="{{$product->id}}" data-object="{{$product}}">
-                        <i class="fas fa-edit blue ml-1"></i>
-                      </a>
-                      <!-- Delete -->
-                      <a href="#" class="deleteButton" data-id="{{$product->id}}" data-object="{{$product}}">
-                        <i class="fas fa-trash red ml-1"></i>
-                      </a>
+                      @can('isSuperAdmin')
+                        <!-- Edit -->
+                        <a href="#" class="editButton" data-id="{{$product->id}}" data-object="{{$product}}">
+                          <i class="fas fa-edit blue ml-1"></i>
+                        </a>
+                        <!-- Delete -->
+                        <a href="#" class="deleteButton" data-id="{{$product->id}}" data-object="{{$product}}">
+                          <i class="fas fa-trash red ml-1"></i>
+                        </a>
+                      @endcan
                     </td>
                   </tr>
                 @endforeach
@@ -121,12 +120,7 @@
               @endif
             </tbody>
             <tfoot>
-              <!-- <tr>
-                <th rowspan="1" colspan="1">Name</th>
-                <th rowspan="1" colspan="1">Unit</th>
-                <th rowspan="1" colspan="1">Pre-defined Sizes</th>
-                <th rowspan="1" colspan="1">Actions</th>
-              </tr> -->
+            
             </tfoot>
           </table>
         </div>
@@ -259,10 +253,6 @@
               <div class="col-md-4">
                 <table class="table table-bordered table-striped">
                     <tbody id="table_row_wrapper">
-                        <!-- <tr role="row" class="odd">
-                            <td class="">Opening Quantity</td>
-                            <td class="opening_quantity"></td>
-                        </tr> -->
                         <tr role="row" class="odd">
                             <td class="">Quantity in Hand</td>
                             <td class="quantity_in_hand"></td>
@@ -413,8 +403,7 @@ $(document).ready(function(){
 
   // create
   $('#add_product').on('click', function(){
-    // fetch_all_stores();
-    // fetch_all_brands();
+    
   });
 
   // edit
@@ -440,28 +429,6 @@ $(document).ready(function(){
     $('#editForm .quantity_in_hand').val(product.quantity_in_hand);
     $('#editForm .moq').val(product.moq);
 
-
-    // $('#editForm #shop_name').val(product.shop_name);
-    // $('#editForm #shop_number').val(product.shop_number);
-    // $('#editForm #floor').val(product.floor);
-
-    // $('#editForm #area_id option[value="'+ product.market.area.id +'"]').prop('selected', true);
-    // fetch_specific_markets(product.market.area.id);
-    // $('#editForm #market_id option[value="'+ product.market.id +'"]').prop('selected', true);
-
-    // $('#editForm #status option[value="'+ product.status +'"]').prop('selected', true);
-    // $('#editForm #visiting_days option[value="'+ product.visiting_days +'"]').prop('selected', true);
-    // $('#editForm #cash_on_delivery option[value="'+ product.cash_on_delivery +'"]').prop('selected', true);
-
-    // $('#editForm #opening_balance').val(product.opening_balance);
-    // $('#editForm #business_to_date').val(product.business_to_date);
-    // $('#editForm #outstanding_balance').val(product.outstanding_balance);
-    // $('#editForm #special_discount').val(product.special_discount);
-
-    // $('#editForm #payment_terms').val(product.payment_terms);
-
-    
-
     $('#editProductModal').modal('show');
   });
 
@@ -485,7 +452,6 @@ $(document).ready(function(){
       var product_path = $(this).data('product');
       $('.product_picture').attr('src', product_path);
     }
-    // $('.product_picture').html(product.product_picture);
 
     $('.category_id').html(product.category.name);
     $('.brand_id').html(product.brand.name);

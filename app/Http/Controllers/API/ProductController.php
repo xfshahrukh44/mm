@@ -14,8 +14,6 @@ use App\Services\CategoryService;
 use App\Services\BrandService;
 use App\Services\UnitService;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Http\JsonResponse;
-use Illuminate\Support\Facades\Auth;
 
 class ProductController extends Controller
 {

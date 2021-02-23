@@ -24,7 +24,6 @@
   <div class="col-md-12">
     <div class="card">
       <div class="card-header">
-        <!-- <h3 class="card-title">Ledgers</h3> -->
         <div class="card-tools">
           <button class="btn btn-success" id="add_ledger" data-toggle="modal" data-target="#addLedgerModal">
             <i class="fas fa-plus"></i> Add New Ledger</button>
@@ -49,7 +48,7 @@
       </div>
       <!-- /.card-header -->
       <div class="card-body">
-        <div class="col-md-12">
+        <div class="col-md-12" style="overflow-x:auto;">
           <table id="example1" class="table table-bordered table-striped dataTable dtr-inline" role="grid" aria-describedby="example1_info">
             <thead>
               <tr role="row">
@@ -109,12 +108,7 @@
               @endif
             </tbody>
             <tfoot>
-              <!-- <tr>
-                <th rowspan="1" colspan="1">Name</th>
-                <th rowspan="1" colspan="1">Unit</th>
-                <th rowspan="1" colspan="1">Pre-defined Sizes</th>
-                <th rowspan="1" colspan="1">Actions</th>
-              </tr> -->
+            
             </tfoot>
           </table>
         </div>
@@ -211,7 +205,7 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <div class="modal-body">
+      <div class="modal-body" style="overflow-x:auto;">
         <table class="table table-bordered table-striped table-condensed table-sm">
           <thead>
             <!-- outstanding balance row -->
@@ -299,8 +293,7 @@ $(document).ready(function(){
 
   // create
   $('#add_ledger').on('click', function(){
-    // fetch_all_stores();
-    // fetch_all_brands();
+    
   });
 
   // edit

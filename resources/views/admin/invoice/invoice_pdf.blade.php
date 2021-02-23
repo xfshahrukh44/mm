@@ -159,16 +159,12 @@
                         <td style="border: none"></td>
                         <td style="border: none; font-size:14px;">Previous Bal.</td>
                         <td class="tbl_3" style="text-align: right">{{number_format(intval($invoice->previous_balance))}}</td>
-                        <!-- <td style="text-align: right">{{$invoice->customer->outstanding_balance + $invoice->amount_pay - $invoice->total}}</td> -->
-                        <!-- <td style="text-align: right">{{$invoice->customer->outstanding_balance - $invoice->amount_pay}}</td> -->
                     </tr>
                     <tr>
                         <td style="border: none"></td>
                         <td style="border: none"></td>
                         <td style="border: none; font-size:14px;">Total Due</td>
                         <td class="tbl_3" style="text-align: right">{{number_format(intval($invoice->total + $invoice->previous_balance))}}</td>
-                        <!-- <td style="text-align: right">{{$invoice->customer->outstanding_balance + $invoice->amount_pay}}</td> -->
-                        <!-- <td style="text-align: right">{{$invoice->customer->outstanding_balance - $invoice->amount_pay}}</td> -->
                     </tr>
                     <tr>
                         <td style="border: none"></td>
@@ -185,7 +181,6 @@
                         <td style="border: none"></td>
                         <td style="border: none; font-size:14px;">Balance Due</td>
                         <td class="tbl_3" style="text-align: right">{{(($invoice->amount_pay != 0) ? number_format(intval(($invoice->total + $invoice->previous_balance) - $invoice->amount_pay)) : "")}}</td>
-                        <!-- <td style="text-align: right">{{$invoice->customer->outstanding_balance}}</td> -->
                     </tr>
                 </table>
             </div>

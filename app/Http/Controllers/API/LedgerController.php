@@ -12,8 +12,6 @@ use Illuminate\Http\Request;
 use App\Services\LedgerService;
 use App\Services\CustomerService;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Http\JsonResponse;
-use Illuminate\Support\Facades\Auth;
 
 class LedgerController extends Controller
 {

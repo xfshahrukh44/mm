@@ -13,8 +13,6 @@ use App\Services\InvoiceProductService;
 use App\Services\ProductService;
 use App\Services\InvoiceService;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Http\JsonResponse;
-use Illuminate\Support\Facades\Auth;
 
 class InvoiceProductController extends Controller
 {

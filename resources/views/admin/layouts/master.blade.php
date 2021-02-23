@@ -84,31 +84,22 @@
 
     <!-- Sidebar -->
     <div class="sidebar">
-      <!-- Sidebar user panel (optional) -->
-      <!-- <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-        <div class="image">
-          <img src="{{ asset('img/profile.png') }}" class="img-circle elevation-2" alt="User Image">
-        </div>
-        <div class="info">
-          <a href="#" class="d-block">{{ucfirst(Auth::user()->name)}}</a>
-        </div>
-      </div> -->
 
       <!-- Sidebar Menu -->
       <nav class="mt-2">
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-          <!-- Add icons to the links using the .nav-icon class
-           with font-awesome or any other icon font library -->
 
-          <!-- Dashboard -->
-          <li class="nav-item">
-            <a href="{{route('dashboard')}}" class="nav-link">
-              <i class="nav-icon fas fa-tachometer-alt "></i>
-              <p>
-                Dashboard
-              </p>
-            </a>
-          </li>
+          @can('isSuperAdmin')
+            <!-- Dashboard -->
+            <li class="nav-item">
+              <a href="{{route('dashboard')}}" class="nav-link">
+                <i class="nav-icon fas fa-tachometer-alt "></i>
+                <p>
+                  Dashboard
+                </p>
+              </a>
+            </li>
+          @endcan
 
           <!-- Client Database -->
           <li class="nav-item has-treeview">
@@ -126,12 +117,14 @@
                   <p>Customers</p>
                 </a>
               </li>
-              <li class="nav-item">
-                <a href="{{route('vendor.index')}}" class="nav-link">
-                  <i class="nav-icon fas fa-users"></i>
-                  <p>Vendors</p>
-                </a>
-              </li>
+              @canany(['isSuperAdmin', 'isUser'])
+                <li class="nav-item">
+                  <a href="{{route('vendor.index')}}" class="nav-link">
+                    <i class="nav-icon fas fa-users"></i>
+                    <p>Vendors</p>
+                  </a>
+                </li>
+              @endcanany
               <li class="nav-item">
                 <a href="{{route('area.index')}}" class="nav-link">
                   <i class="nav-icon  fas fa-map-marked-alt"></i>
@@ -157,18 +150,22 @@
                   <p>Products</p>
                 </a>
               </li>
-              <li class="nav-item">
-                <a href="{{route('stock_in.index')}}" class="nav-link">
-                  <i class="nav-icon fas fa-sign-in-alt"></i>
-                  <p>Stock In</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="{{route('stock_out.index')}}" class="nav-link">
-                  <i class="nav-icon fas fa-sign-out-alt"></i>
-                  <p>Stock Out</p>
-                </a>
-              </li>
+              @canany(['isSuperAdmin', 'isUser'])
+                <li class="nav-item">
+                  <a href="{{route('stock_in.index')}}" class="nav-link">
+                    <i class="nav-icon fas fa-sign-in-alt"></i>
+                    <p>Stock In</p>
+                  </a>
+                </li>
+              @endcanany
+              @can('isSuperAdmin')
+                <li class="nav-item">
+                  <a href="{{route('stock_out.index')}}" class="nav-link">
+                    <i class="nav-icon fas fa-sign-out-alt"></i>
+                    <p>Stock Out</p>
+                  </a>
+                </li>
+              @endcan
               <li class="nav-item">
                 <a href="{{route('category.index')}}" class="nav-link">
                   <i class="nav-icon fas fa-copyright"></i>
@@ -200,54 +197,54 @@
               </p>
             </a>
             <ul class="nav nav-treeview ml-2">
-              <!-- <li class="nav-item">
-                <a href="{{route('ledger.index')}}" class="nav-link">
-                  <i class="fas fa-book nav-icon"></i>
-                  <p>Ledgers</p>
-                </a>
-              </li> -->
               <li class="nav-item">
                 <a href="{{route('get_customer_ledgers')}}" class="nav-link">
                   <i class="fas fa-book nav-icon"></i>
                   <p>Customer Ledgers</p>
                 </a>
               </li>
-              <li class="nav-item">
-                <a href="{{route('get_vendor_ledgers')}}" class="nav-link">
-                  <i class="fas fa-book nav-icon"></i>
-                  <p>Vendor Ledgers</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="{{route('sales_ledgers')}}" class="nav-link">
-                  <i class="fas fa-book nav-icon"></i>
-                  <p>Sales Ledgers</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="{{route('receiving.index')}}" class="nav-link">
-                  <i class="fas fa-book nav-icon"></i>
-                  <p>Receipts</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="{{route('payment.index')}}" class="nav-link">
-                  <i class="fas fa-book nav-icon"></i>
-                  <p>Payments</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="{{route('expense.index')}}" class="nav-link">
-                  <i class="fas fa-book nav-icon"></i>
-                  <p>Expenses</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="{{route('expenses')}}" class="nav-link">
-                  <i class="fas fa-book nav-icon"></i>
-                  <p>Expense Ledgers</p>
-                </a>
-              </li>
+              @can('isSuperAdmin')
+                <li class="nav-item">
+                  <a href="{{route('get_vendor_ledgers')}}" class="nav-link">
+                    <i class="fas fa-book nav-icon"></i>
+                    <p>Vendor Ledgers</p>
+                  </a>
+                </li>
+              @endcan
+              @canany(['isSuperAdmin', 'isUser'])
+                <li class="nav-item">
+                  <a href="{{route('sales_ledgers')}}" class="nav-link">
+                    <i class="fas fa-book nav-icon"></i>
+                    <p>Sales Ledgers</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="{{route('receiving.index')}}" class="nav-link">
+                    <i class="fas fa-book nav-icon"></i>
+                    <p>Receipts</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="{{route('payment.index')}}" class="nav-link">
+                    <i class="fas fa-book nav-icon"></i>
+                    <p>Payments</p>
+                  </a>
+                </li>
+              @endcanany
+              @can('isSuperAdmin')
+                <li class="nav-item">
+                  <a href="{{route('expense.index')}}" class="nav-link">
+                    <i class="fas fa-book nav-icon"></i>
+                    <p>Expenses</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="{{route('expenses')}}" class="nav-link">
+                    <i class="fas fa-book nav-icon"></i>
+                    <p>Expense Ledgers</p>
+                  </a>
+                </li>
+              @endcan
             </ul>
           </li>
 
@@ -268,25 +265,29 @@
                   <p>Orders</p>
                 </a>
               </li>
-              <!-- invoices -->
-              <li class="nav-item">
-                <a href="{{route('invoice.index')}}" class="nav-link">
-                  <i class="nav-icon fas fa-file-invoice-dollar"></i>
-                  <p>Invoices</p>
-                </a>
-              </li>
+              @canany(['isSuperAdmin', 'isUser'])
+                <!-- invoices -->
+                <li class="nav-item">
+                  <a href="{{route('invoice.index')}}" class="nav-link">
+                    <i class="nav-icon fas fa-file-invoice-dollar"></i>
+                    <p>Invoices</p>
+                  </a>
+                </li>
+              @endcanany
             </ul>
           </li>
 
           <!-- Marketing Plan -->
-          <li class="nav-item">
-            <a href="{{route('search_marketing')}}" class="nav-link">
-              <i class="nav-icon fa fa-cart-arrow-down"></i>
-              <p>
-                Marketing Plan
-              </p>
-            </a>
-          </li>
+          @can('isSuperAdmin')
+            <li class="nav-item">
+              <a href="{{route('search_marketing')}}" class="nav-link">
+                <i class="nav-icon fa fa-cart-arrow-down"></i>
+                <p>
+                  Marketing Plan
+                </p>
+              </a>
+            </li>
+          @endcan
 
           <!-- Your Marketing Tasks -->
           <li class="nav-item">
@@ -299,29 +300,31 @@
           </li>
 
           <!-- user management -->
-          <li class="nav-item has-treeview">
-            <a href="#" class="nav-link">
-              <i class="nav-icon fas fa-user "></i>
-              <p>
-                User Management
-                <i class="right fas fa-angle-left"></i>
-              </p>
-            </a>
-            <ul class="nav nav-treeview ml-2">
-              <li class="nav-item">
-                <a href="{{route('user.index')}}" class="nav-link">
-                  <i class="nav-icon fas fa-users"></i>
-                  <p>Staff</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="{{route('rider')}}" class="nav-link">
-                  <i class="fas fa-motorcycle nav-icon"></i>
-                  <p>Riders</p>
-                </a>
-              </li>
-            </ul>
-          </li>
+          @can('isSuperAdmin')
+            <li class="nav-item has-treeview">
+              <a href="#" class="nav-link">
+                <i class="nav-icon fas fa-user "></i>
+                <p>
+                  User Management
+                  <i class="right fas fa-angle-left"></i>
+                </p>
+              </a>
+              <ul class="nav nav-treeview ml-2">
+                <li class="nav-item">
+                  <a href="{{route('user.index')}}" class="nav-link">
+                    <i class="nav-icon fas fa-users"></i>
+                    <p>Staff</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="{{route('rider')}}" class="nav-link">
+                    <i class="fas fa-motorcycle nav-icon"></i>
+                    <p>Riders</p>
+                  </a>
+                </li>
+              </ul>
+            </li>
+          @endcan
 
         </ul>
       </nav>
@@ -383,7 +386,6 @@
 
   var channel = pusher.subscribe('my-channel');
   channel.bind('threshold_reached', function(data) {
-      // console.log(JSON.stringify(data));
 
       toastr.options = {
       "closeButton": true,

@@ -7,12 +7,6 @@ use App\Exceptions\InvoiceProduct\CreateInvoiceProductException;
 use App\Exceptions\InvoiceProduct\UpdateInvoiceProductException;
 use App\Exceptions\InvoiceProduct\DeleteInvoiceProductException;
 use App\Models\InvoiceProduct;
-use Illuminate\Support\Facades\DB;
-use Hash;
-use JWTAuth;
-use Tymon\JWTAuth\Exceptions\JWTException;
-use Illuminate\Support\Str;
-use Storage;
 
 abstract class InvoiceProductRepository implements RepositoryInterface
 {

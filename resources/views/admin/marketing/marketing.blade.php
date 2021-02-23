@@ -69,7 +69,7 @@
                 <button type="button" class="collapsible">
                     <h5>Customers to Visit: {{count($customers)}}</h5>
                 </button>
-                <div class="col-md-12 cntnt customers_to_visit">
+                <div class="col-md-12 cntnt customers_to_visit" style="overflow-x:auto;">
                     <!-- <h5>Customers to Visit: {{count($customers)}}</h5> -->
                     <table class="table table-striped table-bordered col-md-12 table-sm">
                         <thead>
@@ -116,7 +116,7 @@
                 <button type="button" class="collapsible">
                     <h5>Payments to Receive: {{count($receivings)}}</h5>
                 </button>
-                <div class="col-md-12 cntnt payments_to_receive">
+                <div class="col-md-12 cntnt payments_to_receive" style="overflow-x:auto;">
                     <table class="table table-striped table-bordered col-md-12 table-sm">
                         <thead>
                             <tr>
@@ -170,7 +170,7 @@
                 <button type="button" class="collapsible">
                     <h5>Orders to Dispatch: {{count($invoices)}}</h5>
                 </button>
-                <div class="col-md-12 cntnt orders_to_dispatch">
+                <div class="col-md-12 cntnt orders_to_dispatch" style="overflow-x:auto;">
                     <table class="table table-striped table-bordered col-md-12 table-sm">
                         <thead>
                             <tr>
@@ -239,7 +239,7 @@
                 <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body">
+            <div class="modal-body" style="overflow-x:auto;">
                 <table class="table table-bordered table-striped table-condensed table-sm">
                 <thead>
                     <!-- outstanding balance row -->
@@ -300,7 +300,6 @@
                 date = date.val();
                 var rider_id = $(this).val();
                 if(rider_id){
-                    // console.log(customer_id, rider_id, date);
                     $.ajax({
                         url: "<?php echo(route('assign_marketing_rider_for_customer')); ?>",
                         type: 'GET',
@@ -327,7 +326,6 @@
                 date = date.val();
                 var rider_id = $(this).val();
                 if(rider_id){
-                    // console.log(customer_id, rider_id, date);
                     $.ajax({
                         url: "<?php echo(route('assign_marketing_rider_for_receiving')); ?>",
                         type: 'GET',
@@ -354,7 +352,6 @@
                 date = date.val();
                 var rider_id = $(this).val();
                 if(rider_id){
-                    // console.log(customer_id, rider_id, date);
                     $.ajax({
                         url: "<?php echo(route('assign_marketing_rider_for_invoice')); ?>",
                         type: 'GET',

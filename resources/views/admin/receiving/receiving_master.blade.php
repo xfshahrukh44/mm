@@ -19,42 +19,6 @@
             <option value="">Select invoice</option>
         </select>
     </div>
-    
-    <!-- order_id -->
-    <!-- <div class="form-group col-md-2">
-        <label for="">Order ID</label>
-        <input id="order_id" type="number" name="order_id" class="form-control order_id" readonly>
-    </div> -->
-
-    <!-- customer -->
-    <!-- <div class="form-group col-md-2">
-        <label for="">Customer Name</label>
-        <input id="customer" type="text" name="customer" class="form-control customer" readonly>
-    </div> -->
-
-    <!-- outstanding_balance -->
-    <!-- <div class="form-group col-md-2">
-        <label for="">Outstanding Balance</label>
-        <input id="outstanding_balance" type="number" name="outstanding_balance" class="form-control outstanding_balance" readonly>
-    </div> -->
-
-    <!-- total -->
-    <!-- <div class="form-group col-md-2">
-        <label for="">Invoice Total</label>
-        <input id="total" type="number" name="total" class="form-control total" readonly>
-    </div> -->
-
-    <!-- amount_pay -->
-    <!-- <div class="form-group col-md-2">
-        <label for="">Amount Paid</label>
-        <input id="amount_pay" type="number" name="amount_pay" class="form-control amount_pay" readonly>
-    </div> -->
-
-    <!-- amount -->
-    <!-- <div class="form-group col-md-2">
-        <label for="">Amount</label>
-        <input id="amount" type="number" name="amount" placeholder="Enter amount" class="form-control amount" required min=0>
-    </div> -->
 
     <table class="table table-bordered table-striped">
         <tbody>

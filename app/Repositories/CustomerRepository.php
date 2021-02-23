@@ -9,12 +9,6 @@ use App\Exceptions\Customer\DeleteCustomerException;
 use App\Models\Customer;
 use App\Models\Area;
 use App\Models\Market;
-use Illuminate\Support\Facades\DB;
-use Hash;
-use JWTAuth;
-use Tymon\JWTAuth\Exceptions\JWTException;
-use Illuminate\Support\Str;
-use Storage;
 
 abstract class CustomerRepository implements RepositoryInterface
 {

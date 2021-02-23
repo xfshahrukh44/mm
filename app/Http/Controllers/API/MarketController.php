@@ -12,8 +12,6 @@ use Illuminate\Http\Request;
 use App\Services\MarketService;
 use App\Services\AreaService;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Http\JsonResponse;
-use Illuminate\Support\Facades\Auth;
 
 class MarketController extends Controller
 {

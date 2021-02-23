@@ -26,12 +26,6 @@ class Payment extends Model
 
             // old
             // ledger entry
-            // Ledger::create([
-            //     'vendor_id' => $query->vendor_id,
-            //     'amount' => $old_amount,
-            //     'type' => 'credit',
-            //     'transaction_date' => return_todays_date()
-            // ]);
             $ledger = Ledger::where('vendor_id', $query->vendor_id)
                             ->where('payment_id', $query->id)
                             ->where('amount', $old_amount)
@@ -53,12 +47,6 @@ class Payment extends Model
 
         static::deleting(function ($query) {
             // ledger entry
-            // Ledger::create([
-            //     'vendor_id' => $query->vendor_id,
-            //     'amount' => $query->amount,
-            //     'type' => 'credit',
-            //     'transaction_date' => return_todays_date()
-            // ]);
             $ledger = Ledger::where('vendor_id', $query->vendor_id)
                             ->where('payment_id', $query->id)
                             ->where('amount', $query->amount)

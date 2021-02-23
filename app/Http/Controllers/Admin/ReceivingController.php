@@ -8,9 +8,6 @@ use App\Services\ReceivingService;
 use App\Services\InvoiceService;
 use App\Services\CustomerService;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Arr;
-use Illuminate\Support\Str;
-use Storage;
 
 class ReceivingController extends Controller
 {

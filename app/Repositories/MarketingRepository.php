@@ -7,19 +7,12 @@ use App\Exceptions\Marketing\CreateMarketingException;
 use App\Exceptions\Marketing\UpdateMarketingException;
 use App\Exceptions\Marketing\DeleteMarketingException;
 use App\Models\Marketing;
-use App\Models\Area;
 use App\Models\Market;
 use App\Models\Customer;
 use App\Models\Invoice;
 use App\Models\Order;
 use App\Models\Receiving;
 use App\User;
-use Illuminate\Support\Facades\DB;
-use Hash;
-use JWTAuth;
-use Tymon\JWTAuth\Exceptions\JWTException;
-use Illuminate\Support\Str;
-use Storage;
 
 abstract class MarketingRepository implements RepositoryInterface
 {

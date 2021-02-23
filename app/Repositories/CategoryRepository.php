@@ -7,11 +7,6 @@ use App\Exceptions\Category\CreateCategoryException;
 use App\Exceptions\Category\UpdateCategoryException;
 use App\Exceptions\Category\DeleteCategoryException;
 use App\Models\Category;
-use Illuminate\Support\Facades\DB;
-use Hash;
-use JWTAuth;
-use Tymon\JWTAuth\Exceptions\JWTException;
-use Illuminate\Support\Str;
 
 abstract class CategoryRepository implements RepositoryInterface
 {

@@ -17,7 +17,6 @@
   <div class="col-md-12">
     <div class="card">
       <div class="card-header">
-        <!-- <h3 class="card-title">Receivings</h3> -->
         <div class="card-tools">
           <button class="btn btn-success" id="add_receiving" data-toggle="modal" data-target="#addReceivingModal">
             <i class="fas fa-plus"></i> Add New Receipt</button>
@@ -38,7 +37,7 @@
       </div>
       <!-- /.card-header -->
       <div class="card-body">
-        <div class="col-md-12">
+        <div class="col-md-12" style="overflow-x:auto;">
           <table id="example1" class="table table-bordered table-striped dataTable dtr-inline" role="grid" aria-describedby="example1_info">
             <thead>
               <tr role="row">
@@ -64,18 +63,16 @@
                     <td class="{{'created_by'.$receiving->id}}">{{return_user_name($receiving->created_by)}}</td>
                     <td class="{{'modified_by'.$receiving->id}}">{{return_user_name($receiving->modified_by)}}</td>
                     <td>
-                      <!-- Detail -->
-                      <!-- <a href="#" class="detailButton" data-id="{{$receiving->id}}">
-                        <i class="fas fa-eye green ml-1"></i>
-                      </a> -->
-                      <!-- Edit -->
-                      <a href="#" class="editButton" data-id="{{$receiving->id}}">
-                        <i class="fas fa-edit blue ml-1"></i>
-                      </a>
-                      <!-- Delete -->
-                      <a href="#" class="deleteButton" data-id="{{$receiving->id}}">
-                        <i class="fas fa-trash red ml-1"></i>
-                      </a>
+                      @can('isSuperAdmin')
+                        <!-- Edit -->
+                        <a href="#" class="editButton" data-id="{{$receiving->id}}">
+                          <i class="fas fa-edit blue ml-1"></i>
+                        </a>
+                        <!-- Delete -->
+                        <a href="#" class="deleteButton" data-id="{{$receiving->id}}">
+                          <i class="fas fa-trash red ml-1"></i>
+                        </a>
+                      @endcan
                     </td>
                   </tr>
                 @endforeach
@@ -84,12 +81,7 @@
               @endif
             </tbody>
             <tfoot>
-              <!-- <tr>
-                <th rowspan="1" colspan="1">Name</th>
-                <th rowspan="1" colspan="1">Unit</th>
-                <th rowspan="1" colspan="1">Pre-defined Sizes</th>
-                <th rowspan="1" colspan="1">Actions</th>
-              </tr> -->
+            
             </tfoot>
           </table>
         </div>
@@ -293,12 +285,8 @@ $(document).ready(function(){
 
   // create
   $('#add_receiving').on('click', function(){
-    // fetch_all_stores();
-    // fetch_all_brands();
-
     $('#addReceivingModal .invoice_id').select2();
     $('#addReceivingModal .customer_id').select2();
-    // $('.invoice_id').select2();
   });
 
   // edit
@@ -318,8 +306,6 @@ $(document).ready(function(){
       $('#editForm .invoice_id option[value="'+ receiving.invoice_id +'"]').prop('selected', true);
       $('#editForm .invoice_id').change();
     }
-    // $('#editForm .invoice_id option[value="'+ receiving.invoice_id +'"]').prop('selected', true);
-    // $('#editForm .invoice_id').change();
 
     // amount
     $('#editForm .amount').val(receiving.amount);

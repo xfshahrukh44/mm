@@ -36,7 +36,6 @@ class UserController extends Controller
     
     public function store(Request $request)
     {
-        // dd($request->all());
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
             'password' => 'required|string|min:4',
@@ -62,7 +61,6 @@ class UserController extends Controller
     
     public function update(Request $request, $id)
     {
-        // dd($request->all());
         $id = $request->hidden;
         
         if(!(auth()->user()->id == $id || auth()->user()->type == "superadmin"))
@@ -102,7 +100,6 @@ class UserController extends Controller
     
     public function destroy(Request $request, $id)
     {
-        // dd($request->all());
         $id = $request->hidden;
 
         $this->userService->delete($id);

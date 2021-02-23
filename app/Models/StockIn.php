@@ -37,12 +37,6 @@ class StockIn extends Model
             $product->quantity_in_hand -= $old_quantity;
 
             // update vendor ledger
-            // Ledger::create([
-            //     'vendor_id' => $query->vendor_id,
-            //     'amount' => $old_amount,
-            //     'type' => 'debit',
-            //     'transaction_date' => return_todays_date()
-            // ]);
             $ledger = Ledger::where('vendor_id', $query->vendor_id)
                             ->where('amount', $query->amount)
                             ->first();
@@ -114,12 +108,6 @@ class StockIn extends Model
             $product->save();
 
             // update vendor ledger
-            // Ledger::create([
-            //     'vendor_id' => $query->vendor_id,
-            //     'amount' => $query->amount,
-            //     'type' => 'debit',
-            //     'transaction_date' => return_todays_date()
-            // ]);
             $ledger = Ledger::where('vendor_id', $query->vendor_id)
                             ->where('amount', $query->amount)
                             ->first();

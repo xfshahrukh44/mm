@@ -12,8 +12,6 @@ use Illuminate\Http\Request;
 use App\Services\ReceivingService;
 use App\Services\InvoiceService;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Http\JsonResponse;
-use Illuminate\Support\Facades\Auth;
 
 class ReceivingController extends Controller
 {

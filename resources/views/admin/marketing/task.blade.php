@@ -69,7 +69,7 @@
                 <button type="button" class="collapsible">
                     <h5>Customers to Visit: {{count($customer_marketings)}}</h5>
                 </button>
-                <div class="col-md-12 cntnt customers_to_visit">
+                <div class="col-md-12 cntnt customers_to_visit" style="overflow-x:auto;">
                     <table class="table table-striped table-bordered col-md-12 table-sm">
                         <thead>
                             <tr>
@@ -98,7 +98,7 @@
                 <button type="button" class="collapsible">
                     <h5>Payments to Receive: {{count($receiving_marketings)}}</h5>
                 </button>
-                <div class="col-md-12 cntnt payments_to_receive">
+                <div class="col-md-12 cntnt payments_to_receive" style="overflow-x:auto;">
                     <table class="table table-striped table-bordered col-md-12 table-sm">
                         <thead>
                             <tr>
@@ -116,15 +116,15 @@
                         <tbody>
                             @foreach($receiving_marketings as $receiving_marketing)
                                 <tr>
-                                    <td>{{$receiving_marketings->receiving->customer ? $receiving_marketings->receiving->customer->name : ''}}</td>
-                                    <td>{{$receiving_marketings->receiving->customer ? $receiving_marketings->receiving->customer->contact_number : ''}}</td>
-                                    <td>{{$receiving_marketings->receiving->customer ? $receiving_marketings->receiving->customer->shop_name : ''}}</td>
-                                    <td>{{($receiving_marketings->receiving->customer && $receiving_marketings->receiving->customer->market) ? $receiving_marketings->receiving->customer->market->name : ''}}</td>
-                                    <td>{{($receiving_marketings->receiving->customer && $receiving_marketings->receiving->customer->market && $receiving_marketings->receiving->customer->market->area) ? $receiving_marketings->receiving->customer->market->area->name : ''}}</td>
-                                    <td>{{$receiving_marketings->receiving->invoice ? $receiving_marketings->receiving->invoice->id : ''}}</td>
-                                    <td>Rs. {{$receiving_marketings->receiving->invoice ? number_format($receiving_marketings->receiving->invoice->total) : ''}}</td>
-                                    <td>Rs. {{$receiving_marketings->receiving->invoice ? number_format($receiving_marketings->receiving->invoice->amount_pay) : ''}}</td>
-                                    <td>Rs. {{$receiving_marketings->receiving->invoice ? number_format($receiving_marketings->receiving->invoice->total - $receiving_marketings->receiving->invoice->amount_pay) : ''}}</td>
+                                    <td>{{$receiving_marketing->receiving->customer ? $receiving_marketing->receiving->customer->name : ''}}</td>
+                                    <td>{{$receiving_marketing->receiving->customer ? $receiving_marketing->receiving->customer->contact_number : ''}}</td>
+                                    <td>{{$receiving_marketing->receiving->customer ? $receiving_marketing->receiving->customer->shop_name : ''}}</td>
+                                    <td>{{($receiving_marketing->receiving->customer && $receiving_marketing->receiving->customer->market) ? $receiving_marketing->receiving->customer->market->name : ''}}</td>
+                                    <td>{{($receiving_marketing->receiving->customer && $receiving_marketing->receiving->customer->market && $receiving_marketing->receiving->customer->market->area) ? $receiving_marketing->receiving->customer->market->area->name : ''}}</td>
+                                    <td>{{$receiving_marketing->receiving->invoice ? $receiving_marketing->receiving->invoice->id : ''}}</td>
+                                    <td>Rs. {{$receiving_marketing->receiving->invoice ? number_format($receiving_marketing->receiving->invoice->total) : ''}}</td>
+                                    <td>Rs. {{$receiving_marketing->receiving->invoice ? number_format($receiving_marketing->receiving->invoice->amount_pay) : ''}}</td>
+                                    <td>Rs. {{$receiving_marketing->receiving->invoice ? number_format($receiving_marketing->receiving->invoice->total - $receiving_marketing->receiving->invoice->amount_pay) : ''}}</td>
                                 </tr>
                             @endforeach
                         </tbody>
@@ -135,7 +135,7 @@
                 <button type="button" class="collapsible">
                     <h5>Orders to Dispatch: {{count($invoice_marketings)}}</h5>
                 </button>
-                <div class="col-md-12 cntnt orders_to_dispatch">
+                <div class="col-md-12 cntnt orders_to_dispatch" style="overflow-x:auto;">
                     <table class="table table-striped table-bordered col-md-12 table-sm">
                         <thead>
                             <tr>

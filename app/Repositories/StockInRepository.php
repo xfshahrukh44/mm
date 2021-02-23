@@ -9,11 +9,6 @@ use App\Exceptions\StockIn\DeleteStockInException;
 use App\Models\StockIn;
 use App\Models\Product;
 use App\Models\Vendor;
-use Illuminate\Support\Facades\DB;
-use Hash;
-use JWTAuth;
-use Tymon\JWTAuth\Exceptions\JWTException;
-use Illuminate\Support\Str;
 
 abstract class StockInRepository implements RepositoryInterface
 {

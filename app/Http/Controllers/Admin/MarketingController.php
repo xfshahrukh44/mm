@@ -11,9 +11,6 @@ use App\Services\OrderService;
 use App\Services\ReceivingService;
 use App\Services\UserService;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Arr;
-use Illuminate\Support\Str;
-use Storage;
 
 class MarketingController extends Controller
 {

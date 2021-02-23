@@ -27,7 +27,6 @@
         <div class="card">
             <div class="card-header">
                 <div class="card-tools">
-                    <!-- <h3 class="">Orders</h3> -->
                     <button class="btn btn-success testbtn" id="add_program" data-route="{{route('order.store')}}"">
                         <i class="fas fa-plus"></i> Add New Order
                     </button>
@@ -48,7 +47,7 @@
             </div>
             <!-- /.card-header -->
             <div class="card-body">
-                <div class="col-md-12">
+                <div class="col-md-12" style="overflow-x:auto;">
                     <table id="example1" class="table table-bordered table-striped dataTable dtr-inline" role="grid" aria-describedby="example1_info">
                         <thead>
                             <tr role="row">
@@ -64,7 +63,6 @@
                                     <th class="sorting">Punched By</th> 
                                     <th class="sorting">Modified By</th> 
                                 @endcan
-                              <!-- <th class="sorting_asc" tabindex="0" rowspan="1" colspan="1">Items</th> -->
                               <th tabindex="0" rowspan="1" colspan="1">Actions</th>
                           </tr>
                         </thead>
@@ -87,15 +85,9 @@
 
                                             @if ($order->status == "pending")
                                                 <span class="badge badge-pill badge-warning" style="font-size: 0.9rem; color: white;">Pending</span>
-                                                <!-- <i class="fa fa-circle text-warning"></i>
-                                                {{$order->status}} -->
                                             @else
                                                 <span class="badge badge-pill badge-success" style="font-size: 0.9rem; color: white;">Completed</span>
-                                                <!-- <i class="fa fa-circle text-success"></i> -->
-                                                <!-- {{$order->status}} -->
                                             @endif
-
-                                            <!--  {{$order->status}} -->
                                         </td>
                                         <td class="{{'rider'.$order->id}}">{{return_user_name($order->rider_id)}}</td>
                                         @can('isSuperAdmin')
@@ -107,13 +99,13 @@
                                             <a href="#" class="detailButton" data-id="{{$order->id}}" data-type="{{$order->id}}">
                                                 <i class="fas fa-shopping-basket blue ml-1"></i>
                                             </a>
-                                            @if($order->invoiced_from != 1)
-                                                <!-- Edit -->
-                                                <a href="#" class="editButton" data-id="{{$order->id}}" data-type="{{$order->id}}">
-                                                    <i class="fas fa-edit blue ml-1"></i>
-                                                </a>
-                                            @endif
                                             @can('isSuperAdmin')
+                                                @if($order->invoiced_from != 1)
+                                                    <!-- Edit -->
+                                                    <a href="#" class="editButton" data-id="{{$order->id}}" data-type="{{$order->id}}">
+                                                        <i class="fas fa-edit blue ml-1"></i>
+                                                    </a>
+                                                @endif
                                                 <!-- Delete -->
                                                 <a href="#" class="deleteButton" data-id="{{$order->id}}" data-type="{{$order->id}}">
                                                     <i class="fas fa-trash red ml-1"></i>
@@ -168,15 +160,6 @@
                 <!-- buttons -->
                 <div class="modal-footer">
                     <button name="completed_status" type="submit" class="btn btn-primary" id="createButton">Save</button>
-                    <!-- <div class="btn-group">
-                        <button name="pending_status" type="submit" class="btn btn-success save_as_pending"><i class="fas fa-clock mr-2 mt-1"></i>Save as pending</button>
-                        <button type="button" class="btn btn-success dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <span class="sr-only">Toggle Dropdown</span>
-                        </button>
-                        <div class="dropdown-menu">
-                            <button name="completed_status" type="submit" class="dropdown-item save_as_completed" href="#"><i class="fas fa-check-double mr-2"></i>Save as completed</button>
-                        </div>
-                    </div> -->
                 </div>
             </form>
         </div>
@@ -201,15 +184,6 @@
                 <!-- buttons -->
                 <div class="modal-footer">
                     <button name="completed_status" type="submit" class="btn btn-primary" id="createButton">Update</button>
-                    <!-- <div class="btn-group">
-                        <button name="pending_status" type="submit" class="btn btn-success save_as_pending"><i class="fas fa-clock mr-2 mt-1"></i>Save as pending</button>
-                        <button type="button" class="btn btn-success dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <span class="sr-only">Toggle Dropdown</span>
-                        </button>
-                        <div class="dropdown-menu">
-                            <button name="completed_status" type="submit" class="dropdown-item save_as_completed" href="#"><i class="fas fa-check-double mr-2"></i>Save as completed</button>
-                        </div>
-                    </div> -->
                 </div>
 
             </form>
@@ -277,7 +251,7 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <div class="modal-body">
+                <div class="modal-body" style="overflow-x:auto;">
                     <table class=" table-bordered table-striped p-2" style="width:100%; border: 1px solid black;height: 20px;">
                         <tr role="row">
                             <th>Order id:</th>
@@ -317,7 +291,7 @@
                         </a>
                         <br>
                         <br>
-                        <div class="row">
+                        <div class="row" style="overflow-x:auto;">
                             <!-- CHILD INFO -->
                             <table id="itemTable" class="table table-bordered table-hover dtr-inline" role="grid" aria-describedby="example2_info">
                                 <thead>
@@ -367,7 +341,7 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="card-body">
+            <div class="card-body" style="overflow-x:auto;">
                 <img class="profile" src="{{asset('img/logo.png')}}" width="150" style="position: relative; left:33%;">
                 <hr style="color:gray;">
                 <table class="table table-bordered table-striped">
@@ -479,7 +453,6 @@
             dataType: 'JSON',
             success: function (data) {
                 order = data.order;
-                console.log(order);
             }
         });
     }
@@ -505,7 +478,6 @@
     function get_order_total(form){
         var quantities = $(form + ' .quantities');
         var prices = $(form + ' .prices');
-        // console.log(quantities, prices);
         var total = 0;
         for(var i = 0; i < prices.length; i++){
             total += ($(form + ' .prices')[i].value * $(form + ' .quantities')[i].value);
@@ -656,9 +628,6 @@
         $('#editOrderModal .customer_id option[value="'+ order.customer_id +'"]').prop('selected', true);
         $('#editOrderModal .customer_id').trigger('change.select2'); 
         $('#editOrderModal .customer_id').change();
-        // $('#editOrderModal .customer_id').attr("readonly", true);
-        // $('#editOrderModal .customer_id').selectmenu();
-        // $('#editOrderModal .customer_id').selectmenu('refresh', true);
         $('#editOrderModal .dispatch_date').val(order.dispatch_date);
         
         // remove required attribute on rider_id
@@ -768,8 +737,6 @@
 
         fetch_order(order_id);
 
-        // console.log(order);
-
         // empty wrapper
         $('#table_row_wrapper').html('');
         // loop over retrieved items
@@ -789,9 +756,6 @@
         $('#description').text(order.description);
 
         $('#detailOrderModal').modal('show');
-
-        // append in table_row_wrapper empty first
-        // $('#table_row_wrapper').child('td').remove();
 
     });
 

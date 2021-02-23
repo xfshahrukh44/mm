@@ -25,7 +25,7 @@
             </div>
             <!-- /.card-header -->
             <div class="card-body">
-                <div class="col-md-12">
+                <div class="col-md-12" style="overflow-x:auto;">
                     <table id="example1" class="table table-bordered table-striped dataTable dtr-inline" role="grid" aria-describedby="example1_info">
                         <thead>
                             <tr role="row">
@@ -40,14 +40,16 @@
                             <tr role="row" class="odd">
                                 <td class="{{'name'.$unit->id}}">{{$unit->name}}</td>
                                 <td>
-                                    <!-- Edit -->
-                                    <a href="#" class="editButton" data-id="{{$unit->id}}">
-                                        <i class="fas fa-edit blue ml-1"></i>
-                                    </a>
-                                    <!-- Delete -->
-                                    <a href="#" class="deleteButton" data-id="{{$unit->id}}">
-                                        <i class="fas fa-trash red ml-1"></i>
-                                    </a>
+                                    @can('isSuperAdmin')
+                                        <!-- Edit -->
+                                        <a href="#" class="editButton" data-id="{{$unit->id}}">
+                                            <i class="fas fa-edit blue ml-1"></i>
+                                        </a>
+                                        <!-- Delete -->
+                                        <a href="#" class="deleteButton" data-id="{{$unit->id}}">
+                                            <i class="fas fa-trash red ml-1"></i>
+                                        </a>
+                                    @endcan
                                 </td>
                             </tr>
                             @endforeach

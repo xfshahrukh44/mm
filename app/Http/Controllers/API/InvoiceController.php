@@ -13,8 +13,6 @@ use App\Services\InvoiceService;
 use App\Services\InvoiceProductService;
 use App\Services\CustomerService;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Http\JsonResponse;
-use Illuminate\Support\Facades\Auth;
 
 class InvoiceController extends Controller
 {
@@ -37,7 +35,6 @@ class InvoiceController extends Controller
     
     public function store(Request $request)
     {
-        // dd($request->all());
         $validator = Validator::make($request->all(), [
             'customer_id' => 'required',
             'order_id' => 'sometimes',
@@ -142,7 +139,6 @@ class InvoiceController extends Controller
 
     public function generate_invoice_pdf(Request $request)
     {
-        // dd($request->all());
         return $this->invoiceService->generate_invoice_pdf($request->invoice_id);
     }
 }

@@ -7,11 +7,6 @@ use App\Exceptions\Area\CreateAreaException;
 use App\Exceptions\Area\UpdateAreaException;
 use App\Exceptions\Area\DeleteAreaException;
 use App\Models\Area;
-use Illuminate\Support\Facades\DB;
-use Hash;
-use JWTAuth;
-use Tymon\JWTAuth\Exceptions\JWTException;
-use Illuminate\Support\Str;
 
 abstract class AreaRepository implements RepositoryInterface
 {

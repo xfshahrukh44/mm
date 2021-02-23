@@ -12,8 +12,6 @@ use Illuminate\Http\Request;
 use App\Services\PaymentService;
 use App\Services\VendorService;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Http\JsonResponse;
-use Illuminate\Support\Facades\Auth;
 
 class PaymentController extends Controller
 {

@@ -48,7 +48,7 @@
             </div>
             <!-- /.card-header -->
             <div class="card-body">
-                <div class="col-md-12">
+                <div class="col-md-12" style="overflow-x:auto;">
                     <table id="example1" class="table table-bordered table-striped dataTable dtr-inline" role="grid" aria-describedby="example1_info">
                         <thead>
                             <tr role="row">
@@ -190,7 +190,7 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <div class="modal-body">
+                <div class="modal-body" style="overflow-x:auto;">
                     <table class=" table-binvoiceed table-striped p-2" style="width:100%; binvoice: 1px solid black;height: 20px;">
                         <tr role="row">
                             <th>Invoice id:</th>
@@ -225,7 +225,7 @@
                         <!-- MASTER INFO -->
                         <!-- Invoice id -->
                         <br>
-                        <div class="row">
+                        <div class="row" style="overflow-x:auto;">
                             <!-- CHILD INFO -->
                             <table id="itemTable" class="table table-bordered table-hover dtr-inline" role="grid" aria-describedby="example2_info">
                                 <thead>
@@ -284,15 +284,6 @@
                 <!-- buttons -->
                 <div class="modal-footer">
                     <button name="completed_status" type="submit" class="btn btn-primary" id="createButton">Update</button>
-                    <!-- <div class="btn-group">
-                        <button name="pending_status" type="submit" class="btn btn-success save_as_pending"><i class="fas fa-clock mr-2 mt-1"></i>Save as pending</button>
-                        <button type="button" class="btn btn-success dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <span class="sr-only">Toggle Dropdown</span>
-                        </button>
-                        <div class="dropdown-menu">
-                            <button name="completed_status" type="submit" class="dropdown-item save_as_completed" href="#"><i class="fas fa-check-double mr-2"></i>Save as completed</button>
-                        </div>
-                    </div> -->
                 </div>
 
             </form>
@@ -310,7 +301,7 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="card-body">
+            <div class="card-body" style="overflow-x:auto;">
                 <img class="profile" src="{{asset('img/logo.png')}}" width="150" style="position: relative; left:33%;">
                 <hr style="color:gray;">
                 <table class="table table-binvoiceed table-striped">

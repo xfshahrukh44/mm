@@ -7,11 +7,6 @@ use App\Exceptions\Market\CreateMarketException;
 use App\Exceptions\Market\UpdateMarketException;
 use App\Exceptions\Market\DeleteMarketException;
 use App\Models\Market;
-use Illuminate\Support\Facades\DB;
-use Hash;
-use JWTAuth;
-use Tymon\JWTAuth\Exceptions\JWTException;
-use Illuminate\Support\Str;
 
 abstract class MarketRepository implements RepositoryInterface
 {

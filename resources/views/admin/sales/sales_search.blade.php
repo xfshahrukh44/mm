@@ -59,7 +59,6 @@
                     <div class="col-5">
                         <div class="form-group">
                             <label>Customer:</label>
-                            <!-- <select class="form-control customer_id" name="customer_id"> -->
                             <select class="form-control customer_id" name="customer_ids[]" multiple="multiple">
                                 <option value="">Select Customer</option>
                                 @foreach($customers as $customer)
@@ -215,7 +214,7 @@
                 <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body">
+            <div class="modal-body" style="overflow-x:auto;">
                 <table class="table table-bordered table-striped table-condensed table-sm">
                 <thead>
                     <!-- outstanding balance row -->
@@ -266,7 +265,7 @@
                 <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body">
+            <div class="modal-body" style="overflow-x:auto;">
                 <table class="table table-bordered table-striped table-condensed table-sm">
                 <thead>
                     <!-- outstanding balance row -->
@@ -317,7 +316,7 @@
                 <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body">
+            <div class="modal-body" style="overflow-x:auto;">
                 <table class="table table-bordered table-striped table-condensed table-sm">
                 <thead>
                     <!-- outstanding balance row -->
@@ -368,7 +367,7 @@
                 <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body">
+            <div class="modal-body" style="overflow-x:auto;">
                 <table class="table table-bordered table-striped table-condensed table-sm">
                 <thead>
                     <!-- outstanding balance row -->
@@ -436,7 +435,6 @@
             }
             // fetch_customer_wise_sales
             function fetch_customer_wise_sales(customer_id, date_from, date_to){
-                console.log(customer_id);
                 $.ajax({
                     url: "<?php echo(route('customer_wise_sales')); ?>",
                     type: 'GET',
@@ -575,8 +573,7 @@
                 // if sales > 0 append in wrapper
                 if(all_sales.sales.length > 0){
                     for(var i = 0; i < all_sales.sales.length; i++){
-                        $('#all_modal .ledger_wrapper').prepend('<tr><td class="transaction_dates">'+new Date(all_sales.sales[i].transaction_date).toDateString()+'</td><td class="customers">'+all_sales.sales[i].customer+'</td><td class="products">'+all_sales.sales[i].product+'</td><td class="prices">Rs.'+all_sales.sales[i].price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")+'</td><td class="quantities">'+all_sales.sales[i].quantity.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")+'</td></tr>');
-                        // <tr><td>12.12.12</td><td>Advance wala customer</td><td>Dhaaga</td><td>Price</td><td>Quantity</td></tr>
+                        $('#all_modal .ledger_wrapper').prepend('<tr><td class="transaction_dates">'+new Date(all_sales.sales[i].transaction_date).toDateString()+'</td><td class="customers">'+all_sales.sales[i].customer+'</td><td class="products">'+all_sales.sales[i].product+'</td><td class="prices">Rs.'+(all_sales.sales[i].price ? (all_sales.sales[i].price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")) : '')+'</td><td class="quantities">'+all_sales.sales[i].quantity.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")+'</td></tr>');
                     }
                 }
                 else{
@@ -617,7 +614,7 @@
                 // if sales > 0 append in wrapper
                 if(customer_wise_sales.sales.length > 0){
                     for(var i = 0; i < customer_wise_sales.sales.length; i++){
-                        $('#customer_wise_modal .ledger_wrapper').prepend('<tr><td class="transaction_dates">'+new Date(customer_wise_sales.sales[i].transaction_date).toDateString()+'</td><td class="customers">'+customer_wise_sales.sales[i].customer+'</td><td class="products">'+customer_wise_sales.sales[i].product+'</td><td class="prices">Rs.'+customer_wise_sales.sales[i].price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")+'</td><td class="quantities">'+customer_wise_sales.sales[i].quantity.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")+'</td></tr>');
+                        $('#customer_wise_modal .ledger_wrapper').prepend('<tr><td class="transaction_dates">'+new Date(customer_wise_sales.sales[i].transaction_date).toDateString()+'</td><td class="customers">'+customer_wise_sales.sales[i].customer+'</td><td class="products">'+customer_wise_sales.sales[i].product+'</td><td class="prices">Rs.'+(customer_wise_sales.sales[i].price ? (customer_wise_sales.sales[i].price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")) : '')+'</td><td class="quantities">'+customer_wise_sales.sales[i].quantity.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")+'</td></tr>');
                     }
                 }
                 else{
@@ -640,12 +637,6 @@
                 fetch_product_wise_sales(product_id, date_from, date_to);
 
                 // set modal title
-                // var product_name = $('.product_wise .product_id').find("option:selected").text();
-                // var df = new Date(date_from).toDateString();
-                // var dt = new Date(date_to).toDateString();
-                // var dates = ' '+df+'-'+dt;
-                // var small_dates = '<small>('+dates+')</small>';
-                // $('#product_wise_modal .title').html('Sales for: ' + product_name + small_dates);
                 var product_names = "";
                 var product_count = 0;
                 $('.product_wise .product_id option:selected').each(function(){
@@ -663,8 +654,7 @@
                 // if sales > 0 append in wrapper
                 if(product_wise_sales.sales.length > 0){
                     for(var i = 0; i < product_wise_sales.sales.length; i++){
-                        $('#product_wise_modal .ledger_wrapper').prepend('<tr><td class="transaction_dates">'+new Date(product_wise_sales.sales[i].transaction_date).toDateString()+'</td><td class="customers">'+product_wise_sales.sales[i].customer+'</td><td class="products">'+product_wise_sales.sales[i].product+'</td><td class="prices">Rs.'+product_wise_sales.sales[i].price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")+'</td><td class="quantities">'+product_wise_sales.sales[i].quantity.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")+'</td></tr>');
-                        // <tr><td>12.12.12</td><td>Customer</td><td>Price</td><td>Quantity</td></tr>
+                        $('#product_wise_modal .ledger_wrapper').prepend('<tr><td class="transaction_dates">'+new Date(product_wise_sales.sales[i].transaction_date).toDateString()+'</td><td class="customers">'+product_wise_sales.sales[i].customer+'</td><td class="products">'+product_wise_sales.sales[i].product+'</td><td class="prices">Rs.'+(product_wise_sales.sales[i].price ? (product_wise_sales.sales[i].price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")) : '')+'</td><td class="quantities">'+product_wise_sales.sales[i].quantity.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")+'</td></tr>');
                     }
                 }
                 else{
@@ -714,7 +704,7 @@
                 // if sales > 0 append in wrapper
                 if(combined_sales.sales.length > 0){
                     for(var i = 0; i < combined_sales.sales.length; i++){
-                        $('#combined_modal .ledger_wrapper').prepend('<tr><td class="transaction_dates">'+new Date(combined_sales.sales[i].transaction_date).toDateString()+'</td><td class="customers">'+combined_sales.sales[i].customer+'</td><td class="products">'+combined_sales.sales[i].product+'</td><td class="prices">Rs.'+combined_sales.sales[i].price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")+'</td><td class="quantities">'+combined_sales.sales[i].quantity.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")+'</td></tr>');
+                        $('#combined_modal .ledger_wrapper').prepend('<tr><td class="transaction_dates">'+new Date(combined_sales.sales[i].transaction_date).toDateString()+'</td><td class="customers">'+combined_sales.sales[i].customer+'</td><td class="products">'+combined_sales.sales[i].product+'</td><td class="prices">Rs.'+(combined_sales.sales[i].price ? (combined_sales.sales[i].price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")) : '')+'</td><td class="quantities">'+combined_sales.sales[i].quantity.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")+'</td></tr>');
                     }
                 }
                 else{

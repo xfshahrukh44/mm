@@ -30,7 +30,7 @@
             </div>
             <!-- /.card-header -->
             <div class="card-body">
-                <div class="col-md-12">
+                <div class="col-md-12" style="overflow-x:auto;">
                     <table id="example1" class="table table-bordered table-striped dataTable dtr-inline" role="grid" aria-describedby="example1_info">
                         <thead>
                             <tr role="row">
@@ -52,22 +52,16 @@
                                             @endforeach
                                         </td>
                                         <td>
-                                            <!-- Detail -->
-                                            <!-- <a href="#" class="detailButton" data-id="{{$area->id}}" data-area="{{$area}}" data-route="{{route('area.show', 0)}}">
-                                                <i class="fas fa-eye green ml-1"></i>
-                                            </a>
-                                            | -->
-                                            <!-- Edit -->
-                                            <!-- <button class="btn btn-success xs col-md-1" id="add_program" data-toggle="modal" data-target="#addUserModal">
-                                                <i class="fas fa-user-plus fa-lg mr-2"></i>Add new
-                                            </button> -->
-                                            <a href="#" class="editButton" data-id="{{$area->id}}" data-route="{{route('area.show', 0)}}">
-                                                <i class="fas fa-edit blue ml-1"></i>
-                                            </a>
-                                            <!-- Delete -->
-                                            <a href="#" class="deleteButton" data-id="{{$area->id}}">
-                                                <i class="fas fa-trash red ml-1"></i>
-                                            </a>
+                                            @can('isSuperAdmin')
+                                                <!-- Detail -->
+                                                <a href="#" class="editButton" data-id="{{$area->id}}" data-route="{{route('area.show', 0)}}">
+                                                    <i class="fas fa-edit blue ml-1"></i>
+                                                </a>
+                                                <!-- Delete -->
+                                                <a href="#" class="deleteButton" data-id="{{$area->id}}">
+                                                    <i class="fas fa-trash red ml-1"></i>
+                                                </a>
+                                            @endcan
                                         </td>
                                     </tr>
                                 @endforeach
@@ -417,8 +411,7 @@
                 data: {market_id: market_id},
                 dataType: 'JSON',
                 success: function (data) {
-                    // $('.marketHeading').text('Markets');
-                    // $('.table_row_wrapper').append('<tr role="row" class="odd"><td class="">'+data.name+'</td><td class="" width="20%"><a href="#" class="editMarketButton" data-id="'+data.id+'"><i class="fas fa-edit blue ml-1"></i></a><a href="#" class="deleteMarketButton" data-id="'+data.id+'"><i class="fas fa-trash red ml-1"></i></a></td></tr>');
+                    
                 }
             });
 
@@ -452,7 +445,6 @@
                 dataType: 'JSON',
                 success: function (data) {
                     $('#editMarketModal').modal('hide');
-                    console.log(data);
                     parent_tr_to_remove.remove();
                     $('.table_row_wrapper').append('<tr role="row" class="odd"><td class="">'+data.name+'</td><td class="" width="20%"><a href="#" class="editMarketButton" data-id="'+data.id+'" data-route="{{route("market.update", 1)}}"><i class="fas fa-edit blue ml-1"></i></a><a href="#" class="deleteMarketButton" data-id="'+data.id+'" data-route="{{route("market.destroy", 1)}}"><i class="fas fa-trash red ml-1"></i></a></td></tr>');
                 }

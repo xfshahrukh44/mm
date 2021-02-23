@@ -8,9 +8,6 @@ use App\Services\StockOutService;
 use App\Services\CustomerService;
 use App\Services\ProductService;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Arr;
-use Illuminate\Support\Str;
-use Storage;
 
 class StockOutController extends Controller
 {
@@ -36,7 +33,6 @@ class StockOutController extends Controller
     
     public function store(Request $request)
     {
-        // dd($request->all());
         $validator = Validator::make($request->all(), [
             'customer_id' => 'sometimes',
             'product_id' => 'sometimes',
@@ -52,8 +48,6 @@ class StockOutController extends Controller
             $errors = $validator->errors();
             return redirect()->back()->with(compact('errors'));
         }
-        //     return response()->json($validator->errors()->toArray(), 400);
-        //     return response()->json($validator->errors()->toArray(), 400);
 
         $this->stockOutService->create($request->all());
 
