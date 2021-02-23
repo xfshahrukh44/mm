@@ -22,11 +22,11 @@
             @csrf
             <button type="submit" class="btn btn-success generate_ledgers_excel">
                 <i class="fas fa-file-excel"></i>
-                Generate Excel
+
             </button>
             <button class="btn btn-success" id="add_vendor" data-toggle="modal" data-target="#addVendorModal" type="button">
               <i class="fas fa-plus"></i>
-              Add New Vendor
+
             </button>
           </form>
         </div>
@@ -94,7 +94,7 @@
               @endif
             </tbody>
             <tfoot>
-            
+
             </tfoot>
           </table>
         </div>
@@ -167,7 +167,7 @@
             <ul class="nav nav-pills nav-fill" id="myTab" role="tablist">
               <li class="nav-item" role="presentation">
                 <a class="nav-link active bci" data-toggle="tab" href="#bci">Basic Vendor Information</a>
-              </li> 
+              </li>
               <li class="nav-item" role="presentation" >
                 <a class="nav-link" data-toggle="tab" href="#si">Shop Information</a>
               </li>
@@ -175,7 +175,7 @@
                 <a class="nav-link" data-toggle="tab" href="#pi">Payment Information</a>
               </li>
             </ul>
-            
+
             <!-- TAB CONTENT -->
             <div class="tab-content" id="myTabContent">
               <!-- basic vendor info -->
@@ -378,7 +378,7 @@ $(document).ready(function(){
     var id = $(this).data('id');
     fetch_vendor(id);
     $('#hidden').val(id);
-    
+
     $('#editForm .name').val($('.name' + id).html());
     $('#editForm .contact_number').val($('.contact_number' + id).html());
     $('#editForm .whatsapp_number').val(vendor.whatsapp_number);
@@ -400,7 +400,7 @@ $(document).ready(function(){
     $('#editForm .special_discount').val(vendor.special_discount);
 
     $('#editForm .payment_terms').val(vendor.payment_terms);
-    
+
     $('#editVendorModal').modal('show');
 
   });
@@ -410,7 +410,7 @@ $(document).ready(function(){
     $('.bci').trigger('click');
 
     var vendor = $(this).data('object');
-    
+
     $('.name').html(vendor.name);
     $('.contact_number').html(vendor.contact_number);
     $('.whatsapp_number').html(vendor.whatsapp_number);
@@ -454,10 +454,10 @@ $(document).ready(function(){
   //Once add button is clicked on create*
   $('#addVendorModal').on("click", ".add_button", function(){
       //Check maximum number of input fields
-      if(x < maxField){ 
+      if(x < maxField){
           x++; //Increment field counter
           $(wrapper).prepend(fieldHTML); //Add field html
-          
+
           $('.products').select2();
       }
   });
@@ -465,14 +465,14 @@ $(document).ready(function(){
   //Once add button is clicked on edit*
   $('#editVendorModal').on("click", ".add_button", function(){
       //Check maximum number of input fields
-      if(x < maxField){ 
+      if(x < maxField){
           x++; //Increment field counter
           $(wrapper).prepend(fieldHTML); //Add field html
 
           $('.products').select2();
       }
   });
-    
+
   //Once remove button is clicked*
   $('.modal').on("click", ".remove_button", function(e){
       e.preventDefault();

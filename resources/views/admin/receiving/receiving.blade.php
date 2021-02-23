@@ -19,7 +19,7 @@
       <div class="card-header">
         <div class="card-tools">
           <button class="btn btn-success" id="add_receiving" data-toggle="modal" data-target="#addReceivingModal">
-            <i class="fas fa-plus"></i> Add New Receipt</button>
+            <i class="fas fa-plus"></i></button>
         </div>
         <!-- search bar -->
         <form action="{{route('search_receivings')}}" class="form-wrapper">
@@ -81,7 +81,7 @@
               @endif
             </tbody>
             <tfoot>
-            
+
             </tfoot>
           </table>
         </div>
@@ -268,7 +268,7 @@ $(document).ready(function(){
       for(var i = (customer.invoices.length - 1); i >= 0; i--){
         $('.invoice_id').append('<option value="'+customer.invoices[i].id+'">Invoice # '+customer.invoices[i].id+', Items: '+customer.invoices[i].invoice_products.length+', Total: Rs.'+customer.invoices[i].total+'</option>');
       }
-      
+
       // init select2
       $('.invoice_id').select2();
       $('.invoice_id').change ();
@@ -293,7 +293,7 @@ $(document).ready(function(){
   $('.editButton').on('click', function(){
     var id = $(this).data('id');
     fetch_receiving(id);
-    
+
     $('#editForm .hidden').val(id);
 
     // if customer_id

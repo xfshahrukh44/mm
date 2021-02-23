@@ -23,11 +23,11 @@
             @csrf
             <button type="submit" class="btn btn-success generate_ledgers_excel">
                 <i class="fas fa-file-excel"></i>
-                Generate Excel
+
             </button>
             <button class="btn btn-success" type="button" id="add_customer" data-toggle="modal" data-target="#addCustomerModal">
               <i class="fas fa-plus"></i>
-              Add New Customer
+
             </button>
           </form>
         </div>
@@ -95,7 +95,7 @@
               @endif
             </tbody>
             <tfoot>
-            
+
             </tfoot>
           </table>
         </div>
@@ -168,7 +168,7 @@
             <ul class="nav nav-pills nav-fill" id="myTab" role="tablist">
               <li class="nav-item" role="presentation">
                 <a class="nav-link active bci" data-toggle="tab" href="#bci">Basic Customer Information</a>
-              </li> 
+              </li>
               <li class="nav-item" role="presentation" >
                 <a class="nav-link" data-toggle="tab" href="#si">Shop Information</a>
               </li>
@@ -176,7 +176,7 @@
                 <a class="nav-link" data-toggle="tab" href="#pi">Payment Information</a>
               </li>
             </ul>
-            
+
             <!-- TAB CONTENT -->
             <div class="tab-content" id="myTabContent">
               <!-- basic customer info -->
@@ -405,7 +405,7 @@ $(document).ready(function(){
     var id = $(this).data('id');
     fetch_customer(id);
     $('#hidden').val(id);
-    
+
     $('#editForm .name').val($('.name' + id).html());
     $('#editForm .contact_number').val($('.contact_number' + id).html());
     $('#editForm .whatsapp_number').val(customer.whatsapp_number);
@@ -454,7 +454,7 @@ $(document).ready(function(){
     $('.bci').trigger('click');
 
     var customer = $(this).data('object');
-    
+
     $('.name').html(customer.name);
     $('.contact_number').html(customer.contact_number);
     $('.whatsapp_number').html(customer.whatsapp_number);
@@ -504,7 +504,7 @@ $(document).ready(function(){
   //Once add button is clicked on create*
   $('#addCustomerModal').on("click", ".add_button", function(){
       //Check maximum number of input fields
-      if(x < maxField){ 
+      if(x < maxField){
           x++; //Increment field counter
           $(wrapper).prepend(fieldHTML); //Add field html
           $('.products').select2();
@@ -514,13 +514,13 @@ $(document).ready(function(){
   //Once add button is clicked on edit*
   $('#editCustomerModal').on("click", ".add_button", function(){
       //Check maximum number of input fields
-      if(x < maxField){ 
+      if(x < maxField){
           x++; //Increment field counter
           $(wrapper).prepend(fieldHTML); //Add field html
           $('.products').select2();
       }
   });
-    
+
   //Once remove button is clicked on create*
   $('#addCustomerModal').on("click", ".remove_button", function(e){
       // e.preventDefault();

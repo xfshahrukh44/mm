@@ -19,7 +19,7 @@
       <div class="card-header">
         <div class="card-tools">
           <button class="btn btn-success" id="add_payment" data-toggle="modal" data-target="#addPaymentModal">
-            <i class="fas fa-plus"></i> Add New Payment</button>
+            <i class="fas fa-plus"></i></button>
         </div>
         <!-- search bar -->
         <form action="{{route('search_payments')}}" class="form-wrapper">
@@ -75,7 +75,7 @@
               @endif
             </tbody>
             <tfoot>
-            
+
             </tfoot>
           </table>
         </div>
@@ -202,7 +202,7 @@ $(document).ready(function(){
 
   // create
   $('#add_payment').on('click', function(){
-    
+
   });
 
   // edit
@@ -215,7 +215,7 @@ $(document).ready(function(){
     $('#editForm #amount').val(payment.amount);
     $('#editForm #type option[value="'+ payment.type +'"]').prop('selected', true);
     $('#editForm #transaction_date').val(payment.transaction_date);
-    
+
     $('#editPaymentModal').modal('show');
   });
 

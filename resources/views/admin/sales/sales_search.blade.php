@@ -23,21 +23,21 @@
             <div class="col-md-10 offset-md-1" data-select2-id="11">
                 <div class="row" data-select2-id="10" style="border: 1px solid #dee2e6; border-radius: 8px; padding: 10px;">
                     <!-- date from -->
-                    <div class="col-5">
+                    <div class="col-md-5 col-sm-12">
                         <div class="form-group">
                             <label>Date(from):</label>
                             <input type="date" class="form-control date_from" name="date_from">
                         </div>
                     </div>
                     <!-- date to -->
-                    <div class="col-5">
+                    <div class="col-md-5 col-sm-12">
                         <div class="form-group">
                             <label>Date(to):</label>
                             <input type="date" class="form-control date_to" name="date_to">
                         </div>
                     </div>
                     <!-- search button -->
-                    <div class="col-2">
+                    <div class="col-md-2 col-sm-12">
                         <div class="form-group">
                             <label>&nbsp</label>
                             <button type="button" class="btn btn-block btn-primary form-control fetch_sales" disabled="disabled"><i class="fas fa-search"></i></button>
@@ -56,7 +56,7 @@
             <div class="col-md-10 offset-md-1" data-select2-id="11">
                 <div class="row" data-select2-id="10" style="border: 1px solid #dee2e6; border-radius: 8px; padding: 10px;">
                     <!-- customer_id -->
-                    <div class="col-5">
+                    <div class="col-md-5 col-sm-12">
                         <div class="form-group">
                             <label>Customer:</label>
                             <select class="form-control customer_id" name="customer_ids[]" multiple="multiple">
@@ -68,21 +68,21 @@
                         </div>
                     </div>
                     <!-- date from -->
-                    <div class="col-3">
+                    <div class="col-md-3 col-sm-12">
                         <div class="form-group">
                             <label>Date(from):</label>
                             <input type="date" class="form-control date_from" name="date_from">
                         </div>
                     </div>
                     <!-- date to -->
-                    <div class="col-3">
+                    <div class="col-md-3 col-sm-12">
                         <div class="form-group">
                             <label>Date(to):</label>
                             <input type="date" class="form-control date_to" name="date_to">
                         </div>
                     </div>
                     <!-- search button -->
-                    <div class="col-1">
+                    <div class="col-md-1 col-sm-12">
                         <div class="form-group">
                             <label>&nbsp</label>
                             <button type="button" class="btn btn-block btn-primary form-control fetch_sales" disabled="disabled"><i class="fas fa-search"></i></button>
@@ -102,7 +102,7 @@
             <div class="col-md-10 offset-md-1" data-select2-id="11">
                 <div class="row" data-select2-id="10" style="border: 1px solid #dee2e6; border-radius: 8px; padding: 10px;">
                     <!-- product_id -->
-                    <div class="col-5">
+                    <div class="col-md-5">
                         <div class="form-group">
                             <label>Product:</label>
                             <select class="form-control product_id" name="product_id" multiple="multiple">
@@ -114,21 +114,21 @@
                         </div>
                     </div>
                     <!-- date from -->
-                    <div class="col-3">
+                    <div class="col-md-3 col-sm-12">
                         <div class="form-group">
                             <label>Date(from):</label>
                             <input type="date" class="form-control date_from" name="date_from">
                         </div>
                     </div>
                     <!-- date to -->
-                    <div class="col-3">
+                    <div class="col-md-3 col-sm-12">
                         <div class="form-group">
                             <label>Date(to):</label>
                             <input type="date" class="form-control date_to" name="date_to">
                         </div>
                     </div>
                     <!-- search button -->
-                    <div class="col-1">
+                    <div class="col-md-1 col-sm-12">
                         <div class="form-group">
                             <label>&nbsp</label>
                             <button type="button" class="btn btn-block btn-primary form-control fetch_sales" disabled="disabled"><i class="fas fa-search"></i></button>
@@ -148,7 +148,7 @@
             <div class="col-md-10 offset-md-1" data-select2-id="11">
                 <div class="row" data-select2-id="10" style="border: 1px solid #dee2e6; border-radius: 8px; padding: 10px;">
                     <!-- customer_id -->
-                    <div class="col-3">
+                    <div class="col-md-3 col-sm-12">
                         <div class="form-group">
                             <label>Customer:</label>
                             <select class="form-control customer_id" name="customer_id" multiple="multiple">
@@ -160,7 +160,7 @@
                         </div>
                     </div>
                     <!-- product_id -->
-                    <div class="col-3">
+                    <div class="col-md-3 col-sm-12">
                         <div class="form-group">
                             <label>Product:</label>
                             <select class="form-control product_id" name="product_id" multiple="multiple">
@@ -172,21 +172,21 @@
                         </div>
                     </div>
                     <!-- date from -->
-                    <div class="col-2">
+                    <div class="col-md-2 col-sm-12">
                         <div class="form-group">
                             <label>Date(from):</label>
                             <input type="date" class="form-control date_from" name="date_from">
                         </div>
                     </div>
                     <!-- date to -->
-                    <div class="col-2">
+                    <div class="col-md-2 col-sm-12">
                         <div class="form-group">
                             <label>Date(to):</label>
                             <input type="date" class="form-control date_to" name="date_to">
                         </div>
                     </div>
                     <!-- search button -->
-                    <div class="col-2">
+                    <div class="col-md-2 col-sm-12">
                         <div class="form-group">
                             <label>&nbsp</label>
                             <button type="button" class="btn btn-block btn-primary form-control fetch_sales" disabled="disabled"><i class="fas fa-search"></i></button>
@@ -478,7 +478,7 @@
             $('.product_wise .product_id').select2();
             $('.combined .customer_id').select2();
             $('.combined .product_id').select2();
-            
+
 
             // check if all fields are filled
             function check_fields_all(){

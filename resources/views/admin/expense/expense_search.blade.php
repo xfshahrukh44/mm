@@ -18,7 +18,7 @@
             <div class="col-md-10 offset-md-1" data-select2-id="11">
                 <div class="row" data-select2-id="10" style="border: 1px solid #dee2e6; border-radius: 8px; padding: 10px;">
                     <!-- Type -->
-                    <div class="col-5">
+                    <div class="col-md-5 col-sm-12">
                         <div class="form-group">
                             <label>Type:</label>
                             <select class="form-control type" name="type">
@@ -41,21 +41,21 @@
                         </div>
                     </div>
                     <!-- date from -->
-                    <div class="col-3">
+                    <div class="col-md-3 col-sm-12">
                         <div class="form-group">
                             <label>Date(from):</label>
                             <input type="date" class="form-control date_from" name="date_from">
                         </div>
                     </div>
                     <!-- date to -->
-                    <div class="col-3">
+                    <div class="col-md-3 col-sm-12">
                         <div class="form-group">
                             <label>Date(to):</label>
                             <input type="date" class="form-control date_to" name="date_to">
                         </div>
                     </div>
                     <!-- search button -->
-                    <div class="col-1">
+                    <div class="col-md-1 col-sm-12">
                         <div class="form-group">
                             <label>&nbsp</label>
                             <button type="button" class="btn btn-block btn-primary form-control fetch_expenses" disabled="disabled"><i class="fas fa-search"></i></button>
@@ -191,7 +191,7 @@
                 else{
                     // if wild card
                     wild_card = ($('.type').val() == 'All') ? 1 : 0;
-                    
+
                     // append ledger entries
                     for(var i = 0; i < expenses.length; i++){
                         $('.ledger_wrapper').prepend('<tr><td class="transaction_dates">'+new Date(expenses[i].date).toDateString() +((wild_card == 1) ? (' <strong>('+expenses[i].type+')</strong>') : '')+'</td><td class="amounts">Rs.'+expenses[i].amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")+'</td><td class="details">'+(expenses[i].detail ? expenses[i].detail : '')+'</td></tr>');

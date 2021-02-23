@@ -19,7 +19,7 @@
       <div class="card-header">
         <div class="card-tools">
           <button class="btn btn-success" id="add_stockIn" data-toggle="modal" data-target="#addStockInModal">
-            <i class="fas fa-plus"></i> Add New StockIn</button>
+            <i class="fas fa-plus"></i></button>
         </div>
         <!-- search bar -->
         <form action="{{route('search_stockIns')}}" class="form-wrapper">
@@ -81,7 +81,7 @@
               @endif
             </tbody>
             <tfoot>
-            
+
             </tfoot>
           </table>
         </div>
@@ -183,7 +183,7 @@ $(document).ready(function(){
 
   // create
   $('#add_stockIn').on('click', function(){
-    
+
   });
 
   // edit
@@ -198,7 +198,7 @@ $(document).ready(function(){
     $('#editForm #rate').val(stockIn.rate);
     $('#editForm #amount').val(stockIn.amount);
     $('#editForm #transaction_date').val(stockIn.transaction_date);
-    
+
     $('#editStockInModal').modal('show');
   });
 

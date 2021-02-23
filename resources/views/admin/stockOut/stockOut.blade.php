@@ -19,7 +19,7 @@
       <div class="card-header">
         <div class="card-tools">
           <button class="btn btn-success" id="add_stockOut" data-toggle="modal" data-target="#addStockOutModal">
-            <i class="fas fa-plus"></i> Add New StockOut</button>
+            <i class="fas fa-plus"></i></button>
         </div>
         <!-- search bar -->
         <form action="{{route('search_stockOuts')}}" class="form-wrapper">
@@ -77,7 +77,7 @@
               @endif
             </tbody>
             <tfoot>
-            
+
             </tfoot>
           </table>
         </div>
@@ -182,7 +182,7 @@ $(document).ready(function(){
 
   // create
   $('#add_stockOut').on('click', function(){
-    
+
   });
 
   // edit
@@ -195,7 +195,7 @@ $(document).ready(function(){
     $('#editForm #product_id option[value="'+ stockOut.product_id +'"]').prop('selected', true);
     $('#editForm #quantity').val(stockOut.quantity);
     $('#editForm #transaction_date').val(stockOut.transaction_date);
-    
+
     $('#editStockOutModal').modal('show');
   });
 

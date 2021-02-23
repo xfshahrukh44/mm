@@ -8,7 +8,7 @@
     @else
     <h1 class="m-0 text-dark"><i class="fas fa-motorcycle nav-icon"></i> Riders</h1>
     @endif
-    
+
 </div>
 </div>
 <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
@@ -26,12 +26,12 @@
                 @if($user_type == 'staff')
                     @can('isSuperAdmin')
                         <button class="btn btn-success" id="add_item" data-toggle="modal" data-target="#addUserModal">
-                            <i class="fas fa-plus"></i> Add New Staff
+                            <i class="fas fa-plus"></i>
                         </button>
                     @endcan
                 @else
                     <button class="btn btn-success" id="add_item" data-toggle="modal" data-target="#addUserModal">
-                        <i class="fas fa-plus"></i> Add New Rider
+                        <i class="fas fa-plus"></i>
                     </button>
                 @endif
              </div>
@@ -308,7 +308,7 @@
         element.parent().parent().parent().addClass('menu-open');
 
 
-        //*** View Profile ***//        
+        //*** View Profile ***//
         $('.viewProfileButton').on('click', function(){
             var id = $(this).data('id');
             var url = $(this).data('route');
@@ -317,7 +317,7 @@
             $.ajax({
                 type: 'GET',
                 url: url,
-                dataType: 'json',                   
+                dataType: 'json',
                 success: function(response){
                     $('#viewUserModal').modal('show');
                     $('.fullname').html(response.user.name);
@@ -357,7 +357,7 @@
 
         // create
         $('#add_item').on('click', function(){
-            
+
         });
 
         //*** edit ***//
@@ -368,7 +368,7 @@
             $('#editForm').attr('action', "{{route('user.update', 1)}}");
             $('#hidden').val(id);
             $('.user_type').val(user_type);
-            
+
             $('#editForm #name').val($('.name' + id).html());
             $('#editForm #email').val($('.email' + id).html());
             $('#editForm #phone').val($('.phone' + id).html());
@@ -386,7 +386,7 @@
             $('#deleteForm').attr('action', "{{route('user.destroy', 1)}}");
             $('#deleteForm .hidden').val(id);
             $('.user_type').val(user_type);
-            
+
             if(user_type == 'staff'){
                 $('#deleteUserModalLabel').text('Delete User: ' + $('.name' + id).html() + "?");
             }

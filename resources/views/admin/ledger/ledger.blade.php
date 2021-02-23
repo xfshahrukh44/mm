@@ -26,7 +26,7 @@
       <div class="card-header">
         <div class="card-tools">
           <button class="btn btn-success" id="add_ledger" data-toggle="modal" data-target="#addLedgerModal">
-            <i class="fas fa-plus"></i> Add New Ledger</button>
+            <i class="fas fa-plus"></i> </button>
         </div>
         <!-- search bar -->
         @if($client_type == 'customer')
@@ -108,7 +108,7 @@
               @endif
             </tbody>
             <tfoot>
-            
+
             </tfoot>
           </table>
         </div>
@@ -293,7 +293,7 @@ $(document).ready(function(){
 
   // create
   $('#add_ledger').on('click', function(){
-    
+
   });
 
   // edit
@@ -306,7 +306,7 @@ $(document).ready(function(){
     $('#editForm #amount').val(ledger.amount);
     $('#editForm #type option[value="'+ ledger.type +'"]').prop('selected', true);
     $('#editForm #transaction_date').val(ledger.transaction_date);
-    
+
     $('#editLedgerModal').modal('show');
   });
 
@@ -349,7 +349,7 @@ $(document).ready(function(){
         else{
           var color = "table-danger";
         }
-        
+
         // check if record has receiving_id
         if(client.ledgers[i].receiving_id){
           var detail = " Received";

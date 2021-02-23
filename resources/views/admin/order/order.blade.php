@@ -28,7 +28,7 @@
             <div class="card-header">
                 <div class="card-tools">
                     <button class="btn btn-success testbtn" id="add_program" data-route="{{route('order.store')}}"">
-                        <i class="fas fa-plus"></i> Add New Order
+                        <i class="fas fa-plus"></i>
                     </button>
                 </div>
                 <!-- search bar -->
@@ -60,8 +60,8 @@
                               <th class="sorting " tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Status: activate to sort column ascending">Status <i class="fa fa-arrow-up arrow_up_down"></i><i class="fa fa-arrow-down arrow_up_down"></i></th>
                               <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Total: activate to sort column ascending">Rider</th>
                                 @can('isSuperAdmin')
-                                    <th class="sorting">Punched By</th> 
-                                    <th class="sorting">Modified By</th> 
+                                    <th class="sorting">Punched By</th>
+                                    <th class="sorting">Modified By</th>
                                 @endcan
                               <th tabindex="0" rowspan="1" colspan="1">Actions</th>
                           </tr>
@@ -396,7 +396,7 @@
     var order = "";
     var current_order_id = 0;
     var special_discount = 0;
-    
+
     // adding items dynamically*
     var x = 1; //Initial field counter is 1
     var maxField = 40; //Input fields increment limitation
@@ -572,7 +572,7 @@
 
                 $(this).val(ui.item.label);
                 $(this).siblings('input').val(ui.item.value);
-                
+
                 // check for special discount
                 fetch_by_customer_and_product();
                 if(special_discount != 0){
@@ -597,7 +597,7 @@
         // rider_id
         $("#invoiceOrderModal .rider_id").prop("required", true);
     }
-    
+
     // remove required attribute from rider
     function rider_not_required(){
         $("#invoiceOrderModal .rider_id").prop("required", false);
@@ -617,7 +617,7 @@
         $("#rider_id").prop('required', false);
 
     })
-    
+
     // edit
     $('.editButton').on('click', function(){
         fetch_order($(this).data('id'));
@@ -626,10 +626,10 @@
 
         // select customer
         $('#editOrderModal .customer_id option[value="'+ order.customer_id +'"]').prop('selected', true);
-        $('#editOrderModal .customer_id').trigger('change.select2'); 
+        $('#editOrderModal .customer_id').trigger('change.select2');
         $('#editOrderModal .customer_id').change();
         $('#editOrderModal .dispatch_date').val(order.dispatch_date);
-        
+
         // remove required attribute on rider_id
         $("#editOrderModal .rider_id").prop("required", false);
 
@@ -656,7 +656,7 @@
     // invoice
     $('.invoiceButton').on('click', function(){
         fetch_order($(this).data('id'));
-        
+
         // un hide fields
         $('#invoiceOrderModal .payment_wrapper').removeAttr('hidden');
         $('#invoiceOrderModal .amount_pay_wrapper').removeAttr('hidden');
@@ -678,11 +678,11 @@
         $('#invoiceOrderModal .final_amount_wrapper').addClass('col-md-4');
 
         // set order_id
-        $('#invoiceOrderModal .order_id').val($(this).data('id')); 
+        $('#invoiceOrderModal .order_id').val($(this).data('id'));
 
         // select customer
         $('#invoiceOrderModal .customer_id option[value="'+ order.customer_id +'"]').prop('selected', true);
-        $('#invoiceOrderModal .customer_id').trigger('change.select2'); 
+        $('#invoiceOrderModal .customer_id').trigger('change.select2');
         $('#invoiceOrderModal .customer_id').change();
 
         // set description
@@ -726,7 +726,7 @@
         var id = $(this).data('id');
         $('#deleteForm').attr('action', "{{route('order.update', 1)}}");
         $('#deleteForm .hidden').val(id);
-        
+
         $('#deleteOrderModalLabel').text('Delete Order: ' + $('.order_id' + id).html() + "?");
         $('#deleteOrderModal').modal('show');
     });
@@ -765,7 +765,7 @@
 
         // empty wrapper
         $('.field_wrapper').html('');
-        
+
         // append in wrapper
         $('#addOrderModal .field_wrapper').prepend(fieldHTML);
 
@@ -776,11 +776,11 @@
 
         $('#addOrderModal').modal('show');
     });
-    
+
     //Once add button is clicked on create*
     $('#addOrderModal').on("click", ".add_button", function(){
         //Check maximum number of input fields
-        if(x < maxField){ 
+        if(x < maxField){
             x++; //Increment field counter
             $(wrapper).prepend(fieldHTML); //Add field html
 
@@ -792,7 +792,7 @@
     //Once add button is clicked on edit*
     $('#editOrderModal').on("click", ".add_button", function(){
         //Check maximum number of input fields
-        if(x < maxField){ 
+        if(x < maxField){
             x++; //Increment field counter
             $(wrapper).prepend(fieldHTML); //Add field html
 
@@ -804,7 +804,7 @@
     //Once add button is clicked on invoice*
     $('#invoiceOrderModal').on("click", ".add_button", function(){
         //Check maximum number of input fields
-        if(x < maxField){ 
+        if(x < maxField){
             x++; //Increment field counter
             $(wrapper).prepend(fieldHTML); //Add field html
 
@@ -812,7 +812,7 @@
             initAutocompleteItems(".product_search", "#invoiceOrderModal .ui-widget", product_labels);
         }
     });
-    
+
     //Once remove button is clicked*
     $('.modal').on("click", ".remove_button", function(e){
         e.preventDefault();
@@ -825,7 +825,7 @@
             // initAutocompleteItems(".product_search", "#editOrderModal .ui-widget", product_labels);
         }
     });
-    
+
   });
 
 </script>

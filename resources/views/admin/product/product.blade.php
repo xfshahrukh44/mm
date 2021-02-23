@@ -23,11 +23,11 @@
             @csrf
             <button type="submit" class="btn btn-success generate_ledgers_excel">
                 <i class="fas fa-file-excel"></i>
-                Generate Excel
+                {{-- Generate Excel --}}
             </button>
             <button class="btn btn-success" id="add_product" data-toggle="modal" data-target="#addProductModal" type="button">
               <i class="fas fa-plus"></i>
-              Add New Product
+              {{-- Add New Product --}}
             </button>
           </form>
         </div>
@@ -120,7 +120,7 @@
               @endif
             </tbody>
             <tfoot>
-            
+
             </tfoot>
           </table>
         </div>
@@ -188,7 +188,7 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            
+
             <!-- tables -->
             <div class="card-body row">
               <!-- main info -->
@@ -265,7 +265,7 @@
                 </table>
               </div>
             </div>
-              
+
 
             <div class="card-footer">
                 <button class="btn btn-primary" data-dismiss="modal" style="float: right;">Close</button>
@@ -403,7 +403,7 @@ $(document).ready(function(){
 
   // create
   $('#add_product').on('click', function(){
-    
+
   });
 
   // edit
@@ -411,7 +411,7 @@ $(document).ready(function(){
     var id = $(this).data('id');
     var product = $(this).data('object');
     $('#hidden').val(id);
-    
+
     $('#editForm .article').val(product.article);
     $('#editForm .gender option[value="'+ product.gender +'"]').prop('selected', true);
 
@@ -424,7 +424,7 @@ $(document).ready(function(){
     $('#editForm .retailer_selling_price').val(product.retailer_selling_price);
     $('#editForm .cost_value').val(product.cost_value);
     $('#editForm .sales_value').val(product.sales_value);
-    
+
     $('#editForm .opening_quantity').val(product.opening_quantity);
     $('#editForm .quantity_in_hand').val(product.quantity_in_hand);
     $('#editForm .moq').val(product.moq);
@@ -435,14 +435,14 @@ $(document).ready(function(){
   // detail
   $('.detailButton').on('click', function(){
     var product = $(this).data('object');
-    
+
     $('.article').html(product.article);
     // gender
     if(product.gender == 'male'){
       $('.gender').html('<i class="fas fa-mars blue"></i> ' + product.gender);
     }
     else if(product.gender == 'female'){
-      
+
       $('.gender').html('<i class="fas fa-venus pink"></i> ' + product.gender);
     }
     else{
@@ -504,7 +504,7 @@ $(document).ready(function(){
             $('.category_id').append("<option value='"+ data.id +"'>"+ data.name +"</option>");
             $('#categoryName').val("");
           }
-      }); 
+      });
   });
 
   // create brand modal
@@ -525,7 +525,7 @@ $(document).ready(function(){
             $('.brand_id').append("<option value='"+ data.id +"'>"+ data.name +"</option>");
             $('#brandName').val("");
           }
-      }); 
+      });
   });
 
   // create unit modal
@@ -546,7 +546,7 @@ $(document).ready(function(){
             $('.unit_id').append("<option value='"+ data.id +"'>"+ data.name +"</option>");
             $('#unitName').val("");
           }
-      }); 
+      });
   });
 
 });

@@ -29,7 +29,7 @@
                 <div class="card-tools">
                     <!-- <h3 class="">Invoices</h3> -->
                     <button class="btn btn-success testbtn" id="add_program" data-route="{{route('invoice.store')}}"">
-                        <i class="fas fa-plus"></i> Add New Invoice
+                        <i class="fas fa-plus"></i>
                     </button>
                 </div>
                 <!-- search bar -->
@@ -61,8 +61,8 @@
                               <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Total: activate to sort column ascending">Total</th>
                               <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Amount Paid: activate to sort column ascending">Amount Paid</th>
                                 @can('isSuperAdmin')
-                                    <th class="sorting">Created By</th> 
-                                    <th class="sorting">Modified By</th> 
+                                    <th class="sorting">Created By</th>
+                                    <th class="sorting">Modified By</th>
                                 @endcan
                               <!-- <th class="sorting_asc" tabindex="0" rowspan="1" colspan="1">Items</th> -->
                               <th tabindex="0" rowspan="1" colspan="1">Actions</th>
@@ -291,7 +291,7 @@
     </div>
 </div>
 
-<!-- Profile view --> 
+<!-- Profile view -->
 <div class="modal fade" id="viewUserModal" tabindex="-1" role="dialog" aria-labelledby="addUserModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -431,7 +431,7 @@
             }
         });
     }
-    
+
     // count order total
     function get_order_total(form){
         var quantities = $(form + ' .quantities');
@@ -505,7 +505,7 @@
 
                 $(this).val(ui.item.label);
                 $(this).siblings('input').val(ui.item.value);
-                
+
                 // check for special discount
                 fetch_by_customer_and_product();
                 if(special_discount != 0){
@@ -538,7 +538,7 @@
 
         // empty wrapper
         $('.field_wrapper').html('');
-        
+
         // append in wrapper
         $('#addInvoiceModal .field_wrapper').prepend(fieldHTML);
 
@@ -552,7 +552,7 @@
         var id = $(this).data('id');
         $('#deleteForm').attr('action', "{{route('invoice.update', 1)}}");
         $('#deleteForm .hidden').val(id);
-        
+
         $('#deleteInvoiceModalLabel').text('Delete Invoice: ' + $('.invoice_id' + id).html() + "?");
         $('#deleteInvoiceModal').modal('show');
     });
@@ -598,13 +598,13 @@
 
         // select customer
         $('#editInvoiceModal .customer_id option[value="'+ invoice.customer_id +'"]').prop('selected', true);
-        $('#editInvoiceModal .customer_id').trigger('change.select2'); 
+        $('#editInvoiceModal .customer_id').trigger('change.select2');
         $('#editInvoiceModal .customer_id').change();
         // $('#editInvoiceModal .customer_id').attr("readonly", true);
         // $('#editInvoiceModal .customer_id').selectmenu();
         // $('#editInvoiceModal .customer_id').selectmenu('refresh', true);
         $('#editInvoiceModal .dispatch_date').val(invoice.dispatch_date);
-        
+
         // remove required attribute on rider_id
         $("#editInvoiceModal .rider_id").prop("required", false);
 
@@ -631,7 +631,7 @@
     //Once add button is clicked on create*
     $('#addInvoiceModal').on("click", ".add_button", function(){
         //Check maximum number of input fields
-        if(x < maxField){ 
+        if(x < maxField){
             x++; //Increment field counter
             $(wrapper).prepend(fieldHTML); //Add field html
 
