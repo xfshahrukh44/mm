@@ -8,6 +8,7 @@ use App\Services\UserService;
 use Illuminate\Support\Facades\Validator;
 use Hash;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Gate;
 
 class UserController extends Controller
 {
@@ -21,6 +22,9 @@ class UserController extends Controller
     
     public function index()
     {
+        if(!Gate::allows('isSuperAdmin')){
+            return redirect()->route('search_marketing_tasks');
+        }
         $users = $this->userService->paginate_staff(env('PAGINATE'));
         $user_type = 'staff';
         return view('admin.user.user', compact('users', 'user_type'));
@@ -28,6 +32,9 @@ class UserController extends Controller
 
     public function getRiders(Request $request)
     {
+        if(!Gate::allows('isSuperAdmin')){
+            return redirect()->route('search_marketing_tasks');
+        }
         // paginate_riders
         $users = $this->userService->paginate_riders(env('PAGINATE'));
         $user_type = 'rider';

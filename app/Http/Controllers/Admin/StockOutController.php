@@ -8,6 +8,7 @@ use App\Services\StockOutService;
 use App\Services\CustomerService;
 use App\Services\ProductService;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Gate;
 
 class StockOutController extends Controller
 {
@@ -25,6 +26,9 @@ class StockOutController extends Controller
     
     public function index()
     {
+        if(!Gate::allows('isSuperAdmin')){
+            return redirect()->route('search_marketing_tasks');
+        }
         $stockOuts = $this->stockOutService->paginate(env('PAGINATE'));
         $customers = $this->customerService->all();
         $products = $this->productService->all();

@@ -12,6 +12,7 @@ use App\Services\InvoiceProductService;
 use App\Services\OrderProductService;
 use App\Services\OrderService;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Gate;
 
 class InvoiceController extends Controller
 {
@@ -38,6 +39,9 @@ class InvoiceController extends Controller
     
     public function index()
     {
+        if(!Gate::allows('isSuperAdmin') && !Gate::allows('isUser')){
+            return redirect()->route('search_marketing_tasks');
+        }
         $invoices = $this->invoiceService->paginate(env('PAGINATE'));
         $customers = $this->customerService->all();
         $products = $this->productService->all();

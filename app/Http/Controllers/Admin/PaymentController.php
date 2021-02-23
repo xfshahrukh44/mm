@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Services\PaymentService;
 use App\Services\VendorService;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Gate;
 
 class PaymentController extends Controller
 {
@@ -22,6 +23,9 @@ class PaymentController extends Controller
     
     public function index()
     {
+        if(!Gate::allows('isSuperAdmin') && !Gate::allows('isUser')){
+            return redirect()->route('search_marketing_tasks');
+        }
         $payments = $this->paymentService->paginate(env('PAGINATE'));
         $vendors = $this->vendorService->all();
         return view('admin.payment.payment', compact('payments', 'vendors'));

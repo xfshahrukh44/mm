@@ -8,6 +8,7 @@ use App\Services\LedgerService;
 use App\Services\CustomerService;
 use App\Services\VendorService;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Gate;
 
 class LedgerController extends Controller
 {
@@ -42,6 +43,9 @@ class LedgerController extends Controller
 
     public function get_vendor_ledgers()
     {
+        if(!Gate::allows('isSuperAdmin')){
+            return redirect()->route('search_marketing_tasks');
+        }
         $ledgers = $this->ledgerService->paginate_vendor_ledgers(env('PAGINATE'));
         $customers = $this->customerService->all();
         $vendors = $this->vendorService->all();

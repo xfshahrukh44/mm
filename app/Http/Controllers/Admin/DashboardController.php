@@ -8,6 +8,7 @@ use App\Services\CustomerService;
 use App\Services\VendorService;
 use App\Services\ProductService;
 use App\Services\UserService;
+use Illuminate\Support\Facades\Gate;
 
 class DashboardController extends Controller
 {
@@ -27,6 +28,9 @@ class DashboardController extends Controller
 
     public function index()
     {
+        if(!Gate::allows('isSuperAdmin')){
+            return redirect()->route('search_marketing_tasks');
+        }
         $customers = $this->customerService->all();
         $vendors = $this->vendorService->all();
         $products = $this->productService->all();

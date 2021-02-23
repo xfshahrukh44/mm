@@ -8,6 +8,7 @@ use App\Services\StockInService;
 use App\Services\ProductService;
 use App\Services\VendorService;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Gate;
 
 class StockInController extends Controller
 {
@@ -25,6 +26,9 @@ class StockInController extends Controller
     
     public function index()
     {
+        if(!Gate::allows('isSuperAdmin') && !Gate::allows('isUser')){
+            return redirect()->route('search_marketing_tasks');
+        }
         $stockIns = $this->stockInService->paginate(env('PAGINATE'));
         $products = $this->productService->all();
         $vendors = $this->vendorService->all();

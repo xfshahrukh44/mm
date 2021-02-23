@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Services\ExpenseService;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Gate;
 
 class ExpenseController extends Controller
 {
@@ -19,6 +20,9 @@ class ExpenseController extends Controller
     
     public function index()
     {
+        if(!Gate::allows('isSuperAdmin')){
+            return redirect()->route('search_marketing_tasks');
+        }
         $expenses = $this->expenseService->paginate(env('PAGINATE'));
         return view('admin.expense.expense', compact('expenses'));
     }

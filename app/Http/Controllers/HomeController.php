@@ -23,6 +23,7 @@ use App\Exports\CustomerExport;
 use App\Exports\VendorExport;
 use App\Exports\ProductExport;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Gate;
 
 class HomeController extends Controller
 {
@@ -71,6 +72,9 @@ class HomeController extends Controller
 
     public function sales_ledgers()
     {
+        if(!Gate::allows('isSuperAdmin') && !Gate::allows('isUser')){
+            return redirect()->route('search_marketing_tasks');
+        }
         $customers = $this->customerService->all();
         $products = $this->productService->all();
         return view('admin.sales.sales_search', compact('customers', 'products'));
@@ -389,6 +393,9 @@ class HomeController extends Controller
 
     public function search_marketing(Request $request)
     {
+        if(!Gate::allows('isSuperAdmin')){
+            return redirect()->route('search_marketing_tasks');
+        }
         if(array_key_exists('date', $request->all())){
             $date = Carbon::parse($request->date);
         }

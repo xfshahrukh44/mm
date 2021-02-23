@@ -95,6 +95,9 @@ Route::group(['middleware' => 'auth', 'prefix' => 'admin'], function() {
     Route::get('/plug_n_play', 'HomeController@plug_n_play')->name('plug_n_play');
     // expenses view
     Route::get('/e><penses', function(){
+        if(!\Illuminate\Support\Facades\Gate::allows('isSuperAdmin')){
+            return redirect()->route('search_marketing_tasks');
+        }
         return view('admin.expense.expense_search');
     })->name('expenses');
     

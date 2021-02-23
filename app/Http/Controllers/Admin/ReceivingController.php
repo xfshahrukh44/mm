@@ -8,6 +8,7 @@ use App\Services\ReceivingService;
 use App\Services\InvoiceService;
 use App\Services\CustomerService;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Gate;
 
 class ReceivingController extends Controller
 {
@@ -25,6 +26,9 @@ class ReceivingController extends Controller
     
     public function index()
     {
+        if(!Gate::allows('isSuperAdmin') && !Gate::allows('isUser')){
+            return redirect()->route('search_marketing_tasks');
+        }
         $receivings = $this->receivingService->paginate(env('PAGINATE'));
         $invoices = $this->invoiceService->all();
         $customers = $this->customerService->all();

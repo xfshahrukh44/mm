@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use Storage;
+use Illuminate\Support\Facades\Gate;
 
 class VendorController extends Controller
 {
@@ -34,6 +35,9 @@ class VendorController extends Controller
 
     public function index()
     {
+        if(!Gate::allows('isSuperAdmin') && !Gate::allows('isUser')){
+            return redirect()->route('search_marketing_tasks');
+        }
         $vendors = $this->vendorService->paginate(env('PAGINATE'));
         $areas = $this->areaService->all();
         $markets = $this->marketService->all();
