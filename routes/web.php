@@ -147,9 +147,9 @@ Route::get('/migrate', function () {
     Illuminate\Support\Facades\Artisan::call('migrate');
 });
 Route::get('/stepmigrate', function () {
-    Illuminate\Support\Facades\Artisan::call('migrate:rollback', [
-        '--step' => 3
-    ]);
+    // Illuminate\Support\Facades\Artisan::call('migrate:rollback', [
+    //     '--step' => 3
+    // ]);
 });
 Route::get('/clear', function () {
     Illuminate\Support\Facades\Artisan::call('cache:clear');
