@@ -406,14 +406,14 @@ $(document).ready(function(){
     fetch_customer(id);
     $('#hidden').val(id);
 
-    $('#editForm .name').val($('.name' + id).html());
-    $('#editForm .contact_number').val($('.contact_number' + id).html());
-    $('#editForm .whatsapp_number').val(customer.whatsapp_number);
-    $('#editForm .type').val(customer.type);
+    $('#editForm .name').val(customer.name ? customer.name : '');
+    $('#editForm .contact_number').val(customer.contact_number ? customer.contact_number : '');
+    $('#editForm .whatsapp_number').val(customer.whatsapp_number ? customer.whatsapp_number : '');
+    $('#editForm .type').val(customer.type ? customer.type : '');
 
-    $('#editForm .shop_name').val(customer.shop_name);
-    $('#editForm .shop_number').val(customer.shop_number);
-    $('#editForm .floor').val(customer.floor);
+    $('#editForm .shop_name').val(customer.shop_name ? customer.shop_name : '');
+    $('#editForm .shop_number').val(customer.shop_number ? ustomer.shop_number : '');
+    $('#editForm .floor').val(customer.floor ? customer.floor : '');
 
     if(customer.market && customer.market.area){
       $('#editForm .area_id option[value="'+ customer.market.area.id +'"]').prop('selected', true);
@@ -421,16 +421,16 @@ $(document).ready(function(){
       $('#editForm .market_id option[value="'+ customer.market.id +'"]').prop('selected', true);
     }
 
-    $('#editForm .status option[value="'+ customer.status +'"]').prop('selected', true);
-    $('#editForm .visiting_days option[value="'+ customer.visiting_days +'"]').prop('selected', true);
-    $('#editForm .cash_on_delivery option[value="'+ customer.cash_on_delivery +'"]').prop('selected', true);
+    $('#editForm .status option[value="'+ (customer.status ? customer.status : '') +'"]').prop('selected', true);
+    $('#editForm .visiting_days option[value="'+ (customer.visiting_days ? customer.visiting_days : '') +'"]').prop('selected', true);
+    $('#editForm .cash_on_delivery option[value="'+ (customer.cash_on_delivery ? customer.cash_on_delivery : '') +'"]').prop('selected', true);
 
-    $('#editForm .opening_balance').val(customer.opening_balance);
-    $('#editForm .business_to_date').val(customer.business_to_date);
-    $('#editForm .outstanding_balance').val(customer.outstanding_balance);
-    $('#editForm .special_discount').val(customer.special_discount);
+    $('#editForm .opening_balance').val(customer.opening_balance ? customer.opening_balance : '');
+    $('#editForm .business_to_date').val(customer.business_to_date ? customer.business_to_date : '');
+    $('#editForm .outstanding_balance').val(customer.outstanding_balance ? customer.outstanding_balance : '');
+    $('#editForm .special_discount').val(customer.special_discount ? customer.special_discount : '');
 
-    $('#editForm .payment_terms').val(customer.payment_terms);
+    $('#editForm .payment_terms').val(customer.payment_terms ? customer.payment_terms : '');
 
     // children work
     if(customer.special_discounts.length > 0){
@@ -453,34 +453,36 @@ $(document).ready(function(){
   $('.detailButton').on('click', function(){
     $('.bci').trigger('click');
 
-    var customer = $(this).data('object');
+    var id = $(this).data('id');
+    fetch_customer(id);
+    // var customer = $(this).data('object');
 
-    $('.name').html(customer.name);
-    $('.contact_number').html(customer.contact_number);
+    $('.name').html(customer.name ? customer.name : '');
+    $('.contact_number').html(customer.contact_number ? customer.contact_number : '');
     $('.whatsapp_number').html(customer.whatsapp_number);
-    if(customer.shop_keeper_picture){
+    if(customer.shop_keeper_picture ? customer.shop_keeper_picture : ''){
       var shop_path = $(this).data('shopkeeper');
       $('.shop_keeper_picture').attr('src', shop_path);
     }
-    $('.type').html(customer.type);
+    $('.type').html(customer.type ? customer.type : '');
 
-    $('.shop_name').html(customer.shop_name);
-    $('.shop_number').html(customer.shop_number);
-    $('.floor').html(customer.floor);
-    $('.area').html(customer.market.area.name);
-    $('.market').html(customer.market.name);
+    $('.shop_name').html(customer.shop_name ? customer.shop_name : '');
+    $('.shop_number').html(customer.shop_number ? customer.shop_number : '');
+    $('.floor').html(customer.floor ? customer.floor : '');
+    $('.area').html((customer.market && customer.market.area) ? customer.market.area.name : '');
+    $('.market').html(customer.market ? customer.market.name : '');
     if(customer.shop_picture){
       var shop_path = $(this).data('shop');
       $('.shop_picture').attr('src', shop_path);
     }
 
-    $('.status').html(customer.status);
-    $('.visiting_days').html(customer.visiting_days);
-    $('.cash_on_delivery').html(customer.cash_on_delivery);
-    $('.opening_balance').html("Rs. " + customer.opening_balance.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
-    $('.business_to_date').html("Rs. " + customer.business_to_date.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
-    $('.outstanding_balance').html("Rs. " + customer.outstanding_balance.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
-    $('.special_discount').html("Rs. " + customer.special_discount);
+    $('.status').html(customer.status ? customer.status : '');
+    $('.visiting_days').html(customer.visiting_days ? customer.visiting_days : '');
+    $('.cash_on_delivery').html(customer.cash_on_delivery ? customer.cash_on_delivery : '');
+    $('.opening_balance').html(customer.opening_balance ? ("Rs. " + customer.opening_balance.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")) : '');
+    $('.business_to_date').html(customer.business_to_date ? ("Rs. " + customer.business_to_date.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")) : '');
+    $('.outstanding_balance').html(customer.outstanding_balance ? ("Rs. " + customer.outstanding_balance.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")) : '');
+    // $('.special_discount').html(customer.special_discount ? ("Rs. " + customer.special_discount) : '');
 
     $('#viewCustomerModal').modal('show');
   });

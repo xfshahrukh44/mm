@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Services\ReceivingService;
 use App\Services\InvoiceService;
 use App\Services\CustomerService;
+use App\Services\UserService;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Gate;
 
@@ -15,20 +16,19 @@ class ReceivingController extends Controller
     private $receivingService;
     private $invoiceService;
     private $customerService;
+    private $userService;
 
-    public function __construct(ReceivingService $receivingService, InvoiceService $invoiceService, CustomerService $customerService)
+    public function __construct(ReceivingService $receivingService, InvoiceService $invoiceService, CustomerService $customerService, UserService $userService)
     {
         $this->receivingService = $receivingService;
         $this->invoiceService = $invoiceService;
         $this->customerService = $customerService;
+        $this->userService = $userService;
         $this->middleware('auth');
     }
     
     public function index()
     {
-        if(!Gate::allows('isSuperAdmin') && !Gate::allows('isUser')){
-            return redirect()->route('search_marketing_tasks');
-        }
         $receivings = $this->receivingService->paginate(env('PAGINATE'));
         $invoices = $this->invoiceService->all();
         $customers = $this->customerService->all();
@@ -104,5 +104,18 @@ class ReceivingController extends Controller
         $invoices = $this->invoiceService->all();
 
         return view('admin.receiving.receiving', compact('receivings', 'invoices'));
+    }
+
+    public function receiving_logs(Request $request){
+        $users = $this->userService->all();
+        return view('admin.receiving.receiving_search', compact('users'));
+    }
+
+    public function fetch_receivings(Request $request)
+    {
+        $data['user_id'] = $request->user_id;
+        $data['date'] = $request->date;
+
+        return $this->receivingService->fetch_receivings($data);
     }
 }

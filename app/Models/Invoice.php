@@ -45,7 +45,7 @@ class Invoice extends Model
                             ->where('invoice_id', $query->id)
                             ->where('amount', $old_total)
                             ->first();
-            if($ledger){
+            if($ledger && ($old_total != new_total)){ // experiment
                 $temp_created_at = $ledger->created_at;
                 $temp_transaction_date = $ledger->transaction_date;
                 $ledger->delete();
@@ -64,14 +64,16 @@ class Invoice extends Model
 
             // new
             // invoice total in ledger
-            Ledger::create([
-                'customer_id' => $query->customer_id,
-                'invoice_id' => $query->id,
-                'amount' => $new_total,
-                'type' => 'debit',
-                'transaction_date' => $temp_transaction_date,
-                'created_at' => $temp_created_at
-            ]);
+            if($old_total != new_total){ // experiment
+                Ledger::create([
+                    'customer_id' => $query->customer_id,
+                    'invoice_id' => $query->id,
+                    'amount' => $new_total,
+                    'type' => 'debit',
+                    'transaction_date' => $temp_transaction_date,
+                    'created_at' => $temp_created_at
+                ]);
+            }
             // amount pay
             if($query->new_payment == 'cash'){
                 Ledger::create([

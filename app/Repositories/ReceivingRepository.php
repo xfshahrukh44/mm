@@ -134,4 +134,17 @@ abstract class ReceivingRepository implements RepositoryInterface
 
         return $receivings;
     }
+
+    public function fetch_receivings(array $data){
+        $receivings = $this->model->with('customer.market.area', 'invoice.order')->where('created_by', $data['user_id'])->where('payment_date', $data['date'])->get();
+        $total = 0;
+        foreach($receivings as $receiving){
+            $total += $receiving->amount;
+        }
+
+        return [
+            'receivings' => $receivings,
+            'total' => $total
+        ];
+    }
 }

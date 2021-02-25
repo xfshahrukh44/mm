@@ -29,6 +29,8 @@ Route::group(['middleware' => 'auth', 'prefix' => 'admin'], function() {
     Route::get('/user/staff', 'Admin\UserController@index')->name('staff');
     Route::get('/search_marketing', 'HomeController@search_marketing')->name('search_marketing');
     Route::get('/smk', 'HomeController@search_marketing_tasks')->name('search_marketing_tasks');
+    // return receipt logs blade
+    Route::get('/rlogs', 'Admin\ReceivingController@receiving_logs')->name('receiving_logs');
     // -----------------------------------------------------------------------------
 
     // all() ROUTES-------------------------------------------------------------------
@@ -131,6 +133,8 @@ Route::group(['middleware' => 'auth', 'prefix' => 'admin'], function() {
     Route::get('/assign_marketing_rider_for_receiving', 'HomeController@assign_marketing_rider_for_receiving')->name('assign_marketing_rider_for_receiving');
     // assign_marketing_rider_for_invoice
     Route::get('/assign_marketing_rider_for_invoice', 'HomeController@assign_marketing_rider_for_invoice')->name('assign_marketing_rider_for_invoice');
+    // fetch fetch_receivings
+    Route::get('/fetch_receivings', 'Admin\ReceivingController@fetch_receivings')->name('fetch_receivings');
     // ----------------------------------------------------------------------------------------------------------------------
     
     

@@ -90,7 +90,7 @@
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
 
           <!-- Dashboard -->
-          @can('isSuperAdmin')
+          @canany(['isSuperAdmin', 'isUser'])
             <li class="nav-item">
               <a href="{{route('dashboard')}}" class="nav-link">
                 <i class="nav-icon fas fa-tachometer-alt "></i>
@@ -99,7 +99,7 @@
                 </p>
               </a>
             </li>
-          @endcan
+          @endcanany
 
           <!-- Client Database -->
           <li class="nav-item has-treeview">
@@ -218,12 +218,22 @@
                     <p>Sales Ledgers</p>
                   </a>
                 </li>
+              @endcanany
+              <li class="nav-item">
+                <a href="{{route('receiving.index')}}" class="nav-link">
+                  <i class="fas fa-book nav-icon"></i>
+                  <p>Receipts</p>
+                </a>
+              </li>
+              @can('isSuperAdmin')
                 <li class="nav-item">
-                  <a href="{{route('receiving.index')}}" class="nav-link">
+                  <a href="{{route('receiving_logs')}}" class="nav-link">
                     <i class="fas fa-book nav-icon"></i>
-                    <p>Receipts</p>
+                    <p>Receipt Logs</p>
                   </a>
                 </li>
+              @endcan
+              @canany(['isSuperAdmin', 'isUser'])
                 <li class="nav-item">
                   <a href="{{route('payment.index')}}" class="nav-link">
                     <i class="fas fa-book nav-icon"></i>

@@ -7,7 +7,7 @@
     <!-- Customers -->
     <div class="col-sm-6 col-md-4">
         <div class="info-box top-left">
-            <span class="info-box-icon bg-success elevation-1"><i class="nav-icon fas fa-users"></i></span>
+            <span class="info-box-icon bg-info elevation-1"><i class="nav-icon fas fa-users"></i></span>
 
             <div class="info-box-content">
             <a href="{{route('customer.index')}}"><span class="info-box-text">Customers</span></a>
@@ -26,7 +26,7 @@
     <!-- Vendors -->
     <div class="col-sm-6 col-md-4">
         <div class="info-box top-top">
-            <span class="info-box-icon bg-success elevation-1"><i class="nav-icon fas fa-users"></i></span>
+            <span class="info-box-icon bg-info elevation-1"><i class="nav-icon fas fa-users"></i></span>
 
             <div class="info-box-content">
             <a href="{{route('vendor.index')}}"><span class="info-box-text">Vendors</span></a>
@@ -94,7 +94,57 @@
     </div>
 </div>
 
+<hr>
+
 <div class="row">
+    <!-- Invoices -->
+    <div class="col-12 col-sm-6 col-md-3">
+        <div class="info-box top-left">
+            <span class="info-box-icon bg-success elevation-1"><i class="fas fa-file-invoice-dollar" aria-hidden="true"></i></span>
+            <div class="info-box-content">
+            <a href="{{route('invoice.index')}}"><span class="info-box-text">Invoices</span></a>
+            <span class="info-box-number">
+                {{$total_invoices}}
+            </span>
+            </div>
+        </div>
+    </div>
+    <!-- Orders -->
+    <div class="col-12 col-sm-6 col-md-3">
+        <div class="info-box top-top">
+            <span class="info-box-icon bg-success elevation-1"><i class="fa fa-clipboard" aria-hidden="true"></i></span>
+            <div class="info-box-content">
+            <a href="{{route('order.index')}}"><span class="info-box-text">Orders</span></a>
+            <span class="info-box-number">
+                {{$total_orders}}
+            </span>
+            </div>
+        </div>
+    </div>
+    <!-- Receipts -->
+    <div class="col-12 col-sm-6 col-md-3">
+        <div class="info-box top-top">
+            <span class="info-box-icon bg-success elevation-1"><i class="fas fa-book" aria-hidden="true"></i></span>
+            <div class="info-box-content">
+            <a href="{{route('receiving.index')}}"><span class="info-box-text">Receipts</span></a>
+            <span class="info-box-number">
+                {{$total_orders}}
+            </span>
+            </div>
+        </div>
+    </div>
+    <!-- Payments -->
+    <div class="col-12 col-sm-6 col-md-3">
+        <div class="info-box top-top">
+            <span class="info-box-icon bg-success elevation-1"><i class="fas fa-book" aria-hidden="true"></i></span>
+            <div class="info-box-content">
+            <a href="{{route('payment.index')}}"><span class="info-box-text">Payments</span></a>
+            <span class="info-box-number">
+                {{$total_payments}}
+            </span>
+            </div>
+        </div>
+    </div>
 </div>
 
 <a href="{{route('plug_n_play')}}" class="red">.</a>

@@ -56,13 +56,17 @@
                 <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1">Brand</th>
                 <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1">Unit</th>
                 <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1">Gender</th>
-                <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1">Purchase Price</th>
+                @can('isSuperAdmin')
+                  <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1">Purchase Price</th>
+                @endcan
                 <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1">Consumer Selling Price</th>
-                <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1">Retailer Selling Price</th>
-                <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1">Quantity in Hand</th>
-                <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1">Cost Value</th>
-                <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1">Sales Value</th>
-                <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1">M.O.Q</th>
+                @can('isSuperAdmin')
+                  <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1">Retailer Selling Price</th>
+                  <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1">Quantity in Hand</th>
+                  <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1">Cost Value</th>
+                  <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1">Sales Value</th>
+                  <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1">M.O.Q</th>
+                @endcan
                 <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1">Actions</th>
               </tr>
             </thead>
@@ -84,19 +88,23 @@
                       @endif
                       {{$product->gender ? $product->gender : NULL}}
                     </td>
-                    <td class="{{'purchase_price'.$product->id}}">{{'Rs. ' .number_format($product->purchase_price, 2)}}</td>
+                    @can('isSuperAdmin')
+                      <td class="{{'purchase_price'.$product->id}}">{{'Rs. ' .number_format($product->purchase_price, 2)}}</td>
+                    @endcan
                     <td class="{{'consumer_selling_price'.$product->id}}">{{'Rs. ' .number_format($product->consumer_selling_price)}}</td>
-                    <td class="{{'retailer_selling_price'.$product->id}}">{{'Rs. ' .number_format($product->retailer_selling_price)}}</td>
-                    <!-- quantity_in_hand -->
-                    <td class="{{'quantity_in_hand'.$product->id}}">
-                      @if($product->quantity_in_hand <= $product->moq)
-                        <i class="fas fa-exclamation-circle red"></i>
-                      @endif
-                      {{$product->quantity_in_hand}}
-                    </td>
-                    <td class="{{'cost_value'.$product->id}}">{{'Rs. ' .number_format($product->cost_value)}}</td>
-                    <td class="{{'sales_value'.$product->id}}">{{'Rs. ' .number_format($product->sales_value)}}</td>
-                    <td class="{{'moq'.$product->id}}">{{$product->moq}}</td>
+                    @can('isSuperAdmin')
+                      <td class="{{'retailer_selling_price'.$product->id}}">{{'Rs. ' .number_format($product->retailer_selling_price)}}</td>
+                        <!-- quantity_in_hand -->
+                        <td class="{{'quantity_in_hand'.$product->id}}">
+                          @if($product->quantity_in_hand <= $product->moq)
+                            <i class="fas fa-exclamation-circle red"></i>
+                          @endif
+                          {{$product->quantity_in_hand}}
+                        </td>
+                        <td class="{{'cost_value'.$product->id}}">{{'Rs. ' .number_format($product->cost_value)}}</td>
+                        <td class="{{'sales_value'.$product->id}}">{{'Rs. ' .number_format($product->sales_value)}}</td>
+                        <td class="{{'moq'.$product->id}}">{{$product->moq}}</td>
+                    @endcan
                     <td>
                       <!-- Detail -->
                       <a href="#" class="detailButton" data-id="{{$product->id}}" data-object="{{$product}}" data-product="{{asset('img/products') . '/' . $product->product_picture}}">
@@ -226,44 +234,50 @@
               <div class="col-md-4">
                 <table class="table table-bordered table-striped">
                     <tbody id="table_row_wrapper">
-                        <tr role="row" class="odd">
-                            <td class="">Purchase Price</td>
-                            <td class="purchase_price"></td>
-                        </tr>
+                        @can('isSuperAdmin')
+                          <tr role="row" class="odd">
+                              <td class="">Purchase Price</td>
+                              <td class="purchase_price"></td>
+                          </tr>
+                        @endcan
                         <tr role="row" class="odd">
                             <td class="">Consumer Selling Price</td>
                             <td class="consumer_selling_price"></td>
                         </tr>
-                        <tr role="row" class="odd">
+                        @can('isSuperAdmin')
+                          <tr role="row" class="odd">
                             <td class="">Retailer Selling Price</td>
                             <td class="retailer_selling_price"></td>
-                        </tr>
-                        <tr role="row" class="odd">
-                            <td class="">Cost Value</td>
-                            <td class="cost_value"></td>
-                        </tr>
-                        <tr role="row" class="odd">
-                            <td class="">Sales Value</td>
-                            <td class="sales_value"></td>
-                        </tr>
+                          </tr>
+                          <tr role="row" class="odd">
+                              <td class="">Cost Value</td>
+                              <td class="cost_value"></td>
+                          </tr>
+                          <tr role="row" class="odd">
+                              <td class="">Sales Value</td>
+                              <td class="sales_value"></td>
+                          </tr>
+                        @endcan
                     </tbody>
                 </table>
               </div>
               <!-- section 3 -->
-              <div class="col-md-4">
-                <table class="table table-bordered table-striped">
-                    <tbody id="table_row_wrapper">
-                        <tr role="row" class="odd">
-                            <td class="">Quantity in Hand</td>
-                            <td class="quantity_in_hand"></td>
-                        </tr>
-                        <tr role="row" class="odd">
-                            <td class="">Minimum Ordering Quantity</td>
-                            <td class="moq"></td>
-                        </tr>
-                    </tbody>
-                </table>
-              </div>
+              @can('isSuperAdmin')
+                <div class="col-md-4">
+                  <table class="table table-bordered table-striped">
+                      <tbody id="table_row_wrapper">
+                          <tr role="row" class="odd">
+                              <td class="">Quantity in Hand</td>
+                              <td class="quantity_in_hand"></td>
+                          </tr>
+                          <tr role="row" class="odd">
+                              <td class="">Minimum Ordering Quantity</td>
+                              <td class="moq"></td>
+                          </tr>
+                      </tbody>
+                  </table>
+                </div>
+              @endcan
             </div>
 
 
