@@ -6,6 +6,8 @@
     overflow : auto;
 }
 </style>
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
 @endsection
 
 @section('content_body')
@@ -21,10 +23,11 @@
                     <div class="col-md-6 col-sm-12">
                         <div class="form-group">
                             <label>User:</label>
+                            
                             <select class="form-control user_id" name="user_id">
                                 <option value="">Select user</option>
                                 @foreach($users as $user)
-                                    <option value="{{$user->id}}">{{$user->name}}</option>
+                                    <option value="{{$user->id}}">{{$user->name . ' ('.$user->type.')'}}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -115,6 +118,9 @@
             element.parent().parent().parent().addClass('menu-open');
             element.addClass('active');
 
+            // select2
+            $('.user_id').select2();
+
             // global vars
             var receivings = {};
             var total = 0;
@@ -173,7 +179,7 @@
                 // if no entries
                 if(receivings.length == 0){
                     // no entries row
-                    $('.ledger_wrapper').prepend('<tr class="table-warning"><td class="text-center" colspan=6>No Receiving Entries</td></tr>');
+                    $('.ledger_wrapper').prepend('<tr class="table-warning"><td class="text-center" colspan=6>No Receipt Logs</td></tr>');
                     // set total amount
                     $('.detail_total').html('Rs. 0');
                 }

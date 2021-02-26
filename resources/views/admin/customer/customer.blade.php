@@ -412,7 +412,7 @@ $(document).ready(function(){
     $('#editForm .type').val(customer.type ? customer.type : '');
 
     $('#editForm .shop_name').val(customer.shop_name ? customer.shop_name : '');
-    $('#editForm .shop_number').val(customer.shop_number ? ustomer.shop_number : '');
+    $('#editForm .shop_number').val(customer.shop_number ? customer.shop_number : '');
     $('#editForm .floor').val(customer.floor ? customer.floor : '');
 
     if(customer.market && customer.market.area){

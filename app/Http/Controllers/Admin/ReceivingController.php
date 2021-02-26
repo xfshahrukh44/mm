@@ -113,6 +113,9 @@ class ReceivingController extends Controller
 
     public function fetch_receivings(Request $request)
     {
+        if(!Gate::allows('isSuperAdmin')){
+            return redirect()->route('search_marketing_tasks');
+        }
         $data['user_id'] = $request->user_id;
         $data['date'] = $request->date;
 

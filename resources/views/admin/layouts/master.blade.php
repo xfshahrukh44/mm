@@ -114,21 +114,21 @@
               <li class="nav-item">
                 <a href="{{route('customer.index')}}" class="nav-link">
                   <i class="nav-icon fas fa-users"></i>
-                  <p>Customers</p>
+                  <small>Customers</small>
                 </a>
               </li>
               @canany(['isSuperAdmin', 'isUser'])
                 <li class="nav-item">
                   <a href="{{route('vendor.index')}}" class="nav-link">
                     <i class="nav-icon fas fa-users"></i>
-                    <p>Vendors</p>
+                    <small>Vendors</small>
                   </a>
                 </li>
               @endcanany
               <li class="nav-item">
                 <a href="{{route('area.index')}}" class="nav-link">
                   <i class="nav-icon  fas fa-map-marked-alt"></i>
-                  <p>Areas and Markets</p>
+                  <small>Areas and Markets</small>
                 </a>
               </li>
             </ul>
@@ -147,14 +147,14 @@
               <li class="nav-item">
                 <a href="{{route('product.index')}}" class="nav-link">
                   <i class="nav-icon fab fa-product-hunt"></i>
-                  <p>Products</p>
+                  <small>Products</small>
                 </a>
               </li>
               @canany(['isSuperAdmin', 'isUser'])
                 <li class="nav-item">
                   <a href="{{route('stock_in.index')}}" class="nav-link">
                     <i class="nav-icon fas fa-sign-in-alt"></i>
-                    <p>Stock In</p>
+                    <small>Stock In</small>
                   </a>
                 </li>
               @endcanany
@@ -162,26 +162,26 @@
                 <li class="nav-item">
                   <a href="{{route('stock_out.index')}}" class="nav-link">
                     <i class="nav-icon fas fa-sign-out-alt"></i>
-                    <p>Stock Out</p>
+                    <small>Stock Out</small>
                   </a>
                 </li>
               @endcan
               <li class="nav-item">
                 <a href="{{route('category.index')}}" class="nav-link">
                   <i class="nav-icon fas fa-copyright"></i>
-                  <p>Categories</p>
+                  <small>Categories</small>
                 </a>
               </li>
               <li class="nav-item">
                 <a href="{{route('brand.index')}}" class="nav-link">
                   <i class="nav-icon fab fa-bootstrap"></i>
-                  <p>Brands</p>
+                  <small>Brands</small>
                 </a>
               </li>
               <li class="nav-item">
                 <a href="{{route('unit.index')}}" class="nav-link">
                   <i class="nav-icon fas fa-balance-scale-left"></i>
-                  <p>Units</p>
+                  <small>Units</small>
                 </a>
               </li>
             </ul>
@@ -200,14 +200,14 @@
               <li class="nav-item">
                 <a href="{{route('get_customer_ledgers')}}" class="nav-link">
                   <i class="fas fa-book nav-icon"></i>
-                  <p>Customer Ledgers</p>
+                  <small>Customer Ledgers</small>
                 </a>
               </li>
               @can('isSuperAdmin')
                 <li class="nav-item">
                   <a href="{{route('get_vendor_ledgers')}}" class="nav-link">
                     <i class="fas fa-book nav-icon"></i>
-                    <p>Vendor Ledgers</p>
+                    <small>Vendor Ledgers</small>
                   </a>
                 </li>
               @endcan
@@ -215,21 +215,21 @@
                 <li class="nav-item">
                   <a href="{{route('sales_ledgers')}}" class="nav-link">
                     <i class="fas fa-book nav-icon"></i>
-                    <p>Sales Ledgers</p>
+                    <small>Sales Ledgers</small>
                   </a>
                 </li>
               @endcanany
               <li class="nav-item">
                 <a href="{{route('receiving.index')}}" class="nav-link">
                   <i class="fas fa-book nav-icon"></i>
-                  <p>Receipts</p>
+                  <small>Receipts</small>
                 </a>
               </li>
               @can('isSuperAdmin')
                 <li class="nav-item">
                   <a href="{{route('receiving_logs')}}" class="nav-link">
                     <i class="fas fa-book nav-icon"></i>
-                    <p>Receipt Logs</p>
+                    <small>Receipt Logs</small>
                   </a>
                 </li>
               @endcan
@@ -237,7 +237,7 @@
                 <li class="nav-item">
                   <a href="{{route('payment.index')}}" class="nav-link">
                     <i class="fas fa-book nav-icon"></i>
-                    <p>Payments</p>
+                    <small>Payments</small>
                   </a>
                 </li>
               @endcanany
@@ -245,13 +245,13 @@
                 <li class="nav-item">
                   <a href="{{route('expense.index')}}" class="nav-link">
                     <i class="fas fa-book nav-icon"></i>
-                    <p>Expenses</p>
+                    <small>Expenses</small>
                   </a>
                 </li>
                 <li class="nav-item">
                   <a href="{{route('expenses')}}" class="nav-link">
                     <i class="fas fa-book nav-icon"></i>
-                    <p>Expense Ledgers</p>
+                    <small>Expense Ledgers</small>
                   </a>
                 </li>
               @endcan
@@ -272,7 +272,7 @@
               <li class="nav-item">
                 <a href="{{route('order.index')}}" class="nav-link">
                   <i class="nav-icon fa fa-clipboard"></i>
-                  <p>Orders</p>
+                  <small>Orders</small>
                 </a>
               </li>
               @canany(['isSuperAdmin', 'isUser'])
@@ -280,7 +280,7 @@
                 <li class="nav-item">
                   <a href="{{route('invoice.index')}}" class="nav-link">
                     <i class="nav-icon fas fa-file-invoice-dollar"></i>
-                    <p>Invoices</p>
+                    <small>Invoices</small>
                   </a>
                 </li>
               @endcanany
@@ -323,13 +323,13 @@
                 <li class="nav-item">
                   <a href="{{route('user.index')}}" class="nav-link">
                     <i class="nav-icon fas fa-users"></i>
-                    <p>Staff</p>
+                    <small>Staff</small>
                   </a>
                 </li>
                 <li class="nav-item">
                   <a href="{{route('rider')}}" class="nav-link">
                     <i class="fas fa-motorcycle nav-icon"></i>
-                    <p>Riders</p>
+                    <small>Riders</small>
                   </a>
                 </li>
               </ul>

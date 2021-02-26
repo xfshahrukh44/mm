@@ -115,4 +115,9 @@ class Customer extends Model
         return $this->hasMany('App\Models\Marketing');
     }
 
+    public function customer_images()
+    {
+        return $this->hasMany('App\Models\CustomerImage');
+    }
+
 }
