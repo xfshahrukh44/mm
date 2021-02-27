@@ -128,7 +128,7 @@
             <div class="info-box-content">
             <a href="{{route('receiving.index')}}"><span class="info-box-text">Receipts</span></a>
             <span class="info-box-number">
-                {{$total_orders}}
+                {{$total_receivings}}
             </span>
             </div>
         </div>

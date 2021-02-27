@@ -514,10 +514,19 @@
     $('#addOrderModal').on('change', '.quantities', function(){
         get_order_total('#addOrderModal');
     });
-    $('#editOrderModal').on('change', '.quantities', function(){
-        get_order_total('#editOrderModal');
+    $('#addOrderModal').on('change', '.prices', function(){
+        get_order_total('#addOrderModal');
+    });
+    $('#addOrderModal').on('change', '.quantities', function(){
+        get_order_total('#addOrderModal');
+    });
+    $('#addOrderModal').on('change', '.prices', function(){
+        get_order_total('#addOrderModal');
     });
     $('#invoiceOrderModal').on('change', '.quantities', function(){
+        get_order_total('#invoiceOrderModal');
+    });
+    $('#invoiceOrderModal').on('change', '.prices', function(){
         get_order_total('#invoiceOrderModal');
     });
     // on customer change

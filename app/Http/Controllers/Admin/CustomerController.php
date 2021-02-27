@@ -235,4 +235,14 @@ class CustomerController extends Controller
 
         return $new_customers;
     }
+
+    public function customer_schedule()
+    {
+        if(!Gate::allows('isSuperAdmin')){
+            return redirect()->route('search_marketing_tasks');
+        }
+        $areas = $this->areaService->all();
+        $customers = $this->customerService->all();
+        return view('admin.customer.customer_schedule', compact('areas', 'customers'));
+    }
 }

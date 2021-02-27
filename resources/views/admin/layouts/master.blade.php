@@ -117,6 +117,14 @@
                   <small>Customers</small>
                 </a>
               </li>
+              @can('isSuperAdmin')
+                <li class="nav-item">
+                  <a href="{{route('customer_schedule')}}" class="nav-link">
+                    <i class="nav-icon fas fa-users"></i>
+                    <small>Customer Schedule</small>
+                  </a>
+                </li>
+              @endcan
               @canany(['isSuperAdmin', 'isUser'])
                 <li class="nav-item">
                   <a href="{{route('vendor.index')}}" class="nav-link">

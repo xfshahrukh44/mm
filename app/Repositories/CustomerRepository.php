@@ -85,9 +85,9 @@ abstract class CustomerRepository implements RepositoryInterface
     
     public function find($id)
     {
-        try 
-        {
-            $customer = $this->model::with('market.area', 'special_discounts.product', 'ledgers.invoice.invoice_products', 'invoices.invoice_products', 'customer_images')->find($id);
+        // try 
+        // {
+            $customer = $this->model::with('market.area', 'special_discounts.product', 'ledgers.invoice.invoice_products', 'invoices.invoice_products')->find($id);
             if(!$customer)
             {
                 return [
@@ -99,10 +99,10 @@ abstract class CustomerRepository implements RepositoryInterface
                 'success' => true,
                 'customer' => $customer,
             ];
-        }
-        catch (\Exception $exception) {
+        // }
+        // catch (\Exception $exception) {
 
-        }
+        // }
     }
     
     public function all()

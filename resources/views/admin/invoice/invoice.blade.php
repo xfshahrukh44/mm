@@ -472,6 +472,9 @@
     $('#addInvoiceModal').on('change', '.quantities', function(){
         get_order_total('#addInvoiceModal');
     });
+    $('#addInvoiceModal').on('change', '.prices', function(){
+        get_order_total('#addInvoiceModal');
+    });
     // on customer change
     $('.customer_id').on('change', function(){
         var user_id = $(this).val();

@@ -47,4 +47,14 @@ class MarketController extends Controller
     {
         return $this->marketService->fetch_specific_markets($request->area_id);
     }
+
+    public function fetch_customer_count(Request $request)
+    {
+        return $this->marketService->fetch_customer_count($request->market_id);
+    }
+
+    public function set_customer_schedule(Request $request)
+    {
+        return $this->marketService->set_customer_schedule($request->all());
+    }
 }

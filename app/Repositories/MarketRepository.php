@@ -7,6 +7,7 @@ use App\Exceptions\Market\CreateMarketException;
 use App\Exceptions\Market\UpdateMarketException;
 use App\Exceptions\Market\DeleteMarketException;
 use App\Models\Market;
+use App\Models\Customer;
 
 abstract class MarketRepository implements RepositoryInterface
 {
@@ -116,5 +117,23 @@ abstract class MarketRepository implements RepositoryInterface
     public function fetch_specific_markets($area_id)
     {
         return $this->model::with('area', 'customers')->where('area_id', $area_id)->get();
+    }
+
+    public function fetch_customer_count($market_id)
+    {
+        return count(Customer::where('market_id', $market_id)->get());
+    }
+
+    public function set_customer_schedule($data)
+    {
+        $customers = Customer::where('market_id', $data['market_id'])->get();
+        foreach($customers as $customer){
+            $customer->visiting_days = $data['visiting_day'];
+            $customer->save();
+        }
+        return response()->json([
+            'success' => true,
+            'message' => "Customers' Scheduled changed successfully!"
+        ]);
     }
 }

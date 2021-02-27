@@ -80,11 +80,14 @@ Route::group(['middleware' => 'auth', 'prefix' => 'admin'], function() {
 
     // HELPERS---------------------------------------------------------------------------------------------------------------
     Route::get('/fetch_specific_markets', 'Admin\MarketController@fetch_specific_markets')->name('fetch_specific_markets');
+    Route::get('/fetch_customer_count', 'Admin\MarketController@fetch_customer_count')->name('fetch_customer_count');
+    Route::get('/set_customer_schedule', 'Admin\MarketController@set_customer_schedule')->name('set_customer_schedule');
     Route::get('/create_category', 'Admin\ProductController@create_category')->name('create_category');
     Route::get('/create_brand', 'Admin\ProductController@create_brand')->name('create_brand');
     Route::get('/create_unit', 'Admin\ProductController@create_unit')->name('create_unit');
     Route::get('/fetch_product_labels', 'Admin\ProductController@fetch_product_labels')->name('fetch_product_labels');
     Route::get('/fetch_customer_labels', 'Admin\CustomerController@fetch_customer_labels')->name('fetch_customer_labels');
+    Route::get('/cschedule', 'Admin\CustomerController@customer_schedule')->name('customer_schedule');
     Route::get('/fetch_order_products', 'Admin\OrderController@fetch_order_products')->name('fetch_order_products');
     Route::get('/fetch_by_customer_and_product', 'Admin\SpecialDiscountController@fetch_by_customer_and_product')->name('fetch_by_customer_and_product');
     Route::get('/get_customer_ledgers', 'Admin\LedgerController@get_customer_ledgers')->name('get_customer_ledgers');
