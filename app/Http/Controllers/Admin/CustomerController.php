@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use Storage;
+use Illuminate\Support\Facades\Gate;
 
 class CustomerController extends Controller
 {
@@ -34,7 +35,13 @@ class CustomerController extends Controller
 
     public function index()
     {
-        $customers = $this->customerService->paginate(env('PAGINATE'));
+        // customer status buttons filters on top
+        if(array_key_exists('status_button', $_REQUEST)){
+            $customers = $this->customerService->paginate_by_status(env('PAGINATE'), $_REQUEST['status_button']);
+        }
+        else{
+            $customers = $this->customerService->paginate(env('PAGINATE'));
+        }
         $areas = $this->areaService->all();
         $markets = $this->marketService->all();
         $products = $this->productService->all();

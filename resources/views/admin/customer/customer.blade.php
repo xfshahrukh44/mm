@@ -45,6 +45,39 @@
           </div>
         </form>
       </div>
+      <!-- status buttons -->
+      <div class="col-md-12 row p-2 m-0">
+        <div class="form-group ml-1">
+          <form action="{{route('customer.index')}}">
+            @csrf
+            <button class="btn btn-primary form-control" type="submit" name="status_button" value="active">Active</button>
+          </form>
+        </div>
+        <div class="form-group ml-1">
+          <form action="{{route('customer.index')}}">
+            @csrf
+            <button class="btn btn-primary form-control" type="submit" name="status_button" value="inactive">Inactive</button>
+          </form>
+        </div>
+        <div class="form-group ml-1">
+          <form action="{{route('customer.index')}}">
+            @csrf
+            <button class="btn btn-primary form-control" type="submit" name="status_button" value="interested">Interested</button>
+          </form>
+        </div>
+        <div class="form-group ml-1">
+          <form action="{{route('customer.index')}}">
+            @csrf
+            <button class="btn btn-primary form-control" type="submit" name="status_button" value="follow_up">Follow up</button>
+          </form>
+        </div>
+        <div class="form-group ml-1">
+          <form action="{{route('customer.index')}}">
+            @csrf
+            <button class="btn btn-primary form-control" type="submit" name="status_button" value="not_interested">Not Interested</button>
+          </form>
+        </div>
+      </div>
       <!-- /.card-header -->
       <div class="card-body">
         <div class="col-md-12 col-sm-12" style="overflow-x:auto;">

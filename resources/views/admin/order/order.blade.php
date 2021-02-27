@@ -159,7 +159,7 @@
 
                 <!-- buttons -->
                 <div class="modal-footer">
-                    <button name="completed_status" type="submit" class="btn btn-primary" id="createButton">Save</button>
+                    <button name="pending_status" type="submit" class="btn btn-primary" id="createButton">Save</button>
                 </div>
             </form>
         </div>
@@ -726,8 +726,8 @@
     //Add Items
     $('#detailOrderModal').on("click", ".addItem", function(){
     // $('.addItem').on('click', function(){
-        $('#detailOrderModal').modal('hide');
-        $('a[data-id="'+ current_order_id +'"]')[1].click();
+        // $('#detailOrderModal').modal('hide');
+        // $('a[data-id="'+ current_order_id +'"]')[1].click();
     });
 
     //*** delete ***//
