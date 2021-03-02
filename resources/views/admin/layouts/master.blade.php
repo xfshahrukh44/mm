@@ -173,6 +173,12 @@
                     <small>Stock Out</small>
                   </a>
                 </li>
+                <li class="nav-item">
+                  <a href="{{route('special_discounts')}}" class="nav-link">
+                    <i class="nav-icon fas fa-percentage"></i>
+                    <small>Special Discounts</small>
+                  </a>
+                </li>
               @endcan
               <li class="nav-item">
                 <a href="{{route('category.index')}}" class="nav-link">

@@ -31,6 +31,7 @@ Route::group(['middleware' => 'auth', 'prefix' => 'admin'], function() {
     Route::get('/smk', 'HomeController@search_marketing_tasks')->name('search_marketing_tasks');
     // return receipt logs blade
     Route::get('/rlogs', 'Admin\ReceivingController@receiving_logs')->name('receiving_logs');
+    Route::get('/special_discounts', 'Admin\ProductController@special_discounts')->name('special_discounts');
     // -----------------------------------------------------------------------------
 
     // all() ROUTES-------------------------------------------------------------------
@@ -48,6 +49,7 @@ Route::group(['middleware' => 'auth', 'prefix' => 'admin'], function() {
     Route::apiResources(['brand'=>'Admin\BrandController']);
     Route::apiResources(['unit'=>'Admin\UnitController']);
     Route::apiResources(['product'=>'Admin\ProductController']);
+    Route::apiResources(['special_discount'=>'Admin\SpecialDiscountController']);
     Route::apiResources(['ledger'=>'Admin\LedgerController']);
     Route::apiResources(['stock_in'=>'Admin\StockInController']);
     Route::apiResources(['stock_out'=>'Admin\StockOutController']);
@@ -86,6 +88,7 @@ Route::group(['middleware' => 'auth', 'prefix' => 'admin'], function() {
     Route::get('/create_brand', 'Admin\ProductController@create_brand')->name('create_brand');
     Route::get('/create_unit', 'Admin\ProductController@create_unit')->name('create_unit');
     Route::get('/fetch_product_labels', 'Admin\ProductController@fetch_product_labels')->name('fetch_product_labels');
+    Route::get('/fetch_by_category_and_brand', 'Admin\ProductController@fetch_by_category_and_brand')->name('fetch_by_category_and_brand');
     Route::get('/fetch_customer_labels', 'Admin\CustomerController@fetch_customer_labels')->name('fetch_customer_labels');
     Route::get('/cschedule', 'Admin\CustomerController@customer_schedule')->name('customer_schedule');
     Route::get('/fetch_order_products', 'Admin\OrderController@fetch_order_products')->name('fetch_order_products');

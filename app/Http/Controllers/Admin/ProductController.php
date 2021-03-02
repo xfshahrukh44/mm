@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use Storage;
+use Illuminate\Support\Facades\Gate;
 
 class ProductController extends Controller
 {
@@ -195,5 +196,20 @@ class ProductController extends Controller
             ]);
         }
         return $new_products;
+    }
+
+    public function special_discounts()
+    {
+        if(!Gate::allows('isSuperAdmin')){
+            return redirect()->route('search_marketing_tasks');
+        }
+        $categories = $this->categoryService->all();
+        $brands = $this->brandService->all();
+        return view('admin.product.special_discounts', compact('categories', 'brands'));
+    }
+
+    public function fetch_by_category_and_brand(Request $request)
+    {
+        return $this->productService->fetch_by_category_and_brand($request->all());
     }
 }

@@ -88,7 +88,7 @@ abstract class ProductRepository implements RepositoryInterface
     {
         try 
         {
-            $product = $this->model::with('category', 'brand', 'unit', 'special_discounts')->find($id);
+            $product = $this->model::with('category', 'brand', 'unit', 'special_discounts.customer.market.area')->find($id);
             if(!$product)
             {
                 return [
@@ -186,6 +186,27 @@ abstract class ProductRepository implements RepositoryInterface
         return Unit::create([
             'name' => $data['name']
         ]);
+    }
+
+    public function fetch_by_category_and_brand(array $data)
+    {
+        $category_id = $data['category_id'];
+        $brand_id = $data['brand_id'];
+
+        if($category_id != NULL && $brand_id != NULL){
+            $products = $this->model::where('category_id', $category_id)->where('brand_id', $brand_id)->get();
+        }
+        else if($category_id != NULL && $brand_id == NULL){
+            $products = $this->model::where('category_id', $category_id)->get();
+        }
+        else if($category_id == NULL && $brand_id != NULL){
+            $products = $this->model::where('brand_id', $brand_id)->get();
+        }
+        else{
+            $products = [];
+        }
+
+        return $products;
     }
     
 }
