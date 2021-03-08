@@ -5,6 +5,7 @@ use App\User;
 use App\Models\Marketing;
 use App\Models\Customer;
 use App\Models\Product;
+use App\Models\Order;
 
 function return_date($date)
 {
@@ -82,4 +83,11 @@ function customer_shop_name($customer_id)
 function count_by_status($status)
 {
     return count(Customer::where('status', $status)->get());
+}
+
+function last_order_dispatched_at($customer_id){
+    $customer = Customer::find($customer_id);
+    $customer_name = customer_shop_name($customer_id);
+    $order = Order::where('customer_id', $customer_id)->where('deleted_at', NULL)->latest()->first();
+    return ($order ? return_date_wo_time($order->dispatch_date) : '');
 }
