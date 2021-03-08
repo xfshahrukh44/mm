@@ -22,12 +22,12 @@
             width: 10%;
         }
         .master_img{
-            width: 25%; 
-            margin-left: 24%;
+            width: 10%;
+            margin-left: 39.5%;
             /* margin-top: 10%; */
         }
         .gold_img{
-            width: 25%; 
+            width: 10%;
             margin-left: 50%;
             margin-top: -19%;
             margin-bottom: 10%;
@@ -35,7 +35,7 @@
         .headin_gs{
             /* font-family: inherit !important; */
             text-align: center;
-            margin-top: -9%; 
+            margin-top: -9%;
         }
         h5{
             margin-bottom: -3px;
@@ -55,33 +55,33 @@
         <div class="master_img">
             <img class="img-fluid" src="../public/pdf_img/mg-02.jpg" alt="Master">
         </div>
-    
+
         <div class="gold_img">
             <img class="img-fluid" src="../public/pdf_img/mg-01.jpg" alt="Gold">
         </div>
-    
+
         <div class="headin_gs">
             <p style="font-size: 14px;">Plot 247, sector 16b, Malik Anwar goth, Gabol town, North Karachi.</p>
         </div>
-    
+
         <div class="row">
             <div>
                 <table class="table-sm" align="right">
                     <tbody>
                         <tr>
-                            <th class="text-right">Rider Name:</th>
+                            <th class="text-left">Rider Name:</th>
                             <td class="text-left" value="{{$invoice->rider_id ? return_user_name($invoice->rider_id) : NULL}}">{{$invoice->rider_id ? return_user_name($invoice->rider_id) : NULL}}</td>
                         </tr>
                         <tr>
-                            <th class="text-right">Supplier:</th>
+                            <th class="text-left">Supplier:</th>
                             <td class="text-left" value="Master material">Master material</td>
                         </tr>
                         <tr>
-                            <th class="text-right">Contact:</th>
+                            <th class="text-left">Contact:</th>
                             <td class="text-left" value="0311-1039785">0311-1039785</td>
                         </tr>
                         <tr>
-                            <th class="text-right">Date:</th>
+                            <th class="text-left">Date:</th>
                             <td class="text-left" value="{{return_date_pdf($invoice->created_at)}}">{{return_date_pdf($invoice->created_at)}}</td>
                         </tr>
                     </tbody>
@@ -92,31 +92,31 @@
                 <table class="table-sm" align="left">
                     <tbody>
                         <tr>
-                            <th class="text-right">Id:</th>
+                            <th class="text-left">Id:</th>
                             <td class="text-left" value="{{$invoice->id}}">{{$invoice->id}}</td>
                         </tr>
                         <tr>
-                            <th class="text-right">Customer Name:</th>
+                            <th class="text-left">Customer Name:</th>
                             <td class="text-left" value="{{$invoice->customer ? $invoice->customer->name : NULL}}">{{$invoice->customer ? $invoice->customer->name : NULL}}</td>
                         </tr>
                         <tr>
-                            <th class="text-right">Order:</th>
+                            <th class="text-left">Order:</th>
                             <td class="text-left" value="{{$invoice->order ? $invoice->order->id : NULL}}">{{$invoice->order ? $invoice->order->id : NULL}}</td>
                         </tr>
                         <tr>
-                            <th class="text-right">Shop Name:</th>
+                            <th class="text-left">Shop Name:</th>
                             <td class="text-left" value="{{$invoice->customer ? $invoice->customer->shop_name . ' - ' . $invoice->customer->shop_number : NULL}}">
                             {{$invoice->customer ? $invoice->customer->shop_name . ' - ' . $invoice->customer->shop_number : NULL}}
                             </td>
                         </tr>
                         <tr>
-                            <th class="text-right">Contact Number:</th>
+                            <th class="text-left">Contact Number:</th>
                             <td class="text-left" value="{{$invoice->customer ? $invoice->customer->contact_number : NULL}}">
                             {{$invoice->customer ? $invoice->customer->contact_number : NULL}}
                             </td>
                         </tr>
                         <tr>
-                            <th class="text-right">Market & area:</th>
+                            <th class="text-left">Market & area:</th>
                             <td class="text-left" value="{{($invoice->customer && $invoice->customer->market && $invoice->customer->market->area) ? $invoice->customer->market->name.'-'.$invoice->customer->market->area->name : NULL}}">
                             {{($invoice->customer && $invoice->customer->market && $invoice->customer->market->area) ? $invoice->customer->market->name.'-'.$invoice->customer->market->area->name : NULL}}
                             </td>

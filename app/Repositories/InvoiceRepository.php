@@ -16,19 +16,19 @@ abstract class InvoiceRepository implements RepositoryInterface
 {
     private $model;
     private $customerService;
-    
+
     public function __construct(Invoice $invoice, CustomerService $customerService)
     {
         $this->model = $invoice;
         $this->customerService = $customerService;
     }
-    
+
     public function create(array $data)
     {
-        try 
+        try
         {
             $invoice = $this->model->create($data);
-            
+
             return [
                 'invoice' => $this->find($invoice->id)
             ];
@@ -37,7 +37,7 @@ abstract class InvoiceRepository implements RepositoryInterface
             return $exception->getMessage();
         }
     }
-    
+
     public function delete($id)
     {
         try {
@@ -61,7 +61,7 @@ abstract class InvoiceRepository implements RepositoryInterface
             throw new DeleteInvoiceException($exception->getMessage());
         }
     }
-    
+
     public function update(array $data, $id)
     {
         try {
@@ -75,7 +75,7 @@ abstract class InvoiceRepository implements RepositoryInterface
 
             $temp->update($data);
             $temp->save();
-            
+
             return [
                 'success' => true,
                 'message' => 'Updated successfully!',
@@ -86,10 +86,10 @@ abstract class InvoiceRepository implements RepositoryInterface
             throw new UpdateInvoiceException($exception->getMessage());
         }
     }
-    
+
     public function find($id)
     {
-        try 
+        try
         {
             $invoice = $this->model::with('customer.market.area', 'invoice_products.product.brand', 'invoice_products.product.unit', 'invoice_products.product.category', 'order.customer.market.area')->find($id);
             if(!$invoice)
@@ -108,7 +108,7 @@ abstract class InvoiceRepository implements RepositoryInterface
 
         }
     }
-    
+
     public function all()
     {
         try {
@@ -141,6 +141,7 @@ abstract class InvoiceRepository implements RepositoryInterface
 
         // search block
         $invoices = Invoice::whereIn('customer_id', $customer_ids)
+                        ->orWhere('id', 'LIKE', '%'.$query.'%')
                         ->orWhere('total', 'LIKE', '%'.$query.'%')
                         ->orWhere('amount_pay', 'LIKE', '%'.$query.'%')
                         ->paginate(env('PAGINATION'));
