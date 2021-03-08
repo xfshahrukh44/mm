@@ -46,6 +46,7 @@
                 <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1">Customer Name</th>
                 <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1">Invoice Total</th>
                 <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1">Payment Received</th>
+                <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1">Approved</th>
                 <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1">Created By</th>
                 <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1">Modified By</th>
                 <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1">Actions</th>
@@ -60,6 +61,11 @@
                     <td class="{{'customer'.$receiving->id}}">{{$receiving->customer? $receiving->customer->name : NULL}}</td>
                     <td class="{{'total'.$receiving->id}}">{{$receiving->invoice ? 'Rs.' . number_format($receiving->invoice->total) : NULL}}</td>
                     <td class="{{'amount'.$receiving->id}}">{{$receiving->amount ? 'Rs.' . number_format($receiving->amount) : NULL}}</td>
+                    <td class="{{'is_received'.$receiving->id}} text-center">
+                      @if ($receiving->is_received == 1)
+                          <span class="badge badge-pill badge-success" style="font-size: 0.9rem; color: white;">Approved</span>
+                      @endif
+                    </td>
                     <td class="{{'created_by'.$receiving->id}}">{{return_user_name($receiving->created_by)}}</td>
                     <td class="{{'modified_by'.$receiving->id}}">{{return_user_name($receiving->modified_by)}}</td>
                     <td>
@@ -77,7 +83,7 @@
                   </tr>
                 @endforeach
               @else
-                <tr><td colspan="8"><h6 align="center">No receiving(s) found</h6></td></tr>
+                <tr><td colspan="9"><h6 align="center">No receiving(s) found</h6></td></tr>
               @endif
             </tbody>
             <tfoot>
@@ -247,9 +253,9 @@ $(document).ready(function(){
   $('.invoice_id').on('change', function(){
     fetch_invoice($(this).val());
     if(invoice){
-      $('.order_id').html(invoice.order.id);
-      $('.customer').html(invoice.order.customer.name);
-      $('.outstanding_balance').html(invoice.order.customer.outstanding_balance);
+      $('.order_id').html(invoice.order ? invoice.order.id : '');
+      $('.customer').html((invoice.order && invoice.order.customer) ? invoice.order.customer.name : '');
+      // $('.outstanding_balance').html((invoice.order && invoice.order.customer) ? invoice.order.customer.outstanding_balance : '');
       $('.total').html(invoice.total);
       $('.amount_pay').html(invoice.amount_pay);
       $('.invoice_due').html(invoice.total - invoice.amount_pay);
@@ -258,6 +264,7 @@ $(document).ready(function(){
   // on customer change
   $('.customer_id').on('change', function(){
     fetch_customer($(this).val());
+    $('.outstanding_balance').html(customer.outstanding_balance);
 
     // if customer found and invoices found
     if(customer && customer.invoices.length > 0){
@@ -287,6 +294,14 @@ $(document).ready(function(){
   $('#add_receiving').on('click', function(){
     $('#addReceivingModal .invoice_id').select2();
     $('#addReceivingModal .customer_id').select2();
+    $('.order_id').html('');
+    $('.customer').html('');
+    $('.outstanding_balance').html('');
+    $('.total').html('');
+    $('.amount_pay').html('');
+    $('.invoice_due').html('');
+    $('#amount').val('');
+    $('#payment_date').val('');
   });
 
   // edit

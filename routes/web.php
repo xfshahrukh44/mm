@@ -12,8 +12,12 @@
 */
 
 Auth::routes();
+Auth::routes(['register' => false]);
 
 Route::get('/', 'Admin\DashboardController@index')->name('home');
+Route::get('/register', function(){
+    return redirect('/login');
+});
 
 // ADMIN PANEL ROUTES---------------------------------------
 Route::group(['middleware' => 'auth', 'prefix' => 'admin'], function() {
@@ -104,7 +108,7 @@ Route::group(['middleware' => 'auth', 'prefix' => 'admin'], function() {
     // expenses view
     Route::get('/e><penses', function(){
         if(!\Illuminate\Support\Facades\Gate::allows('isSuperAdmin')){
-            return redirect()->route('search_marketing_tasks');
+            return redirect('/login')->route('search_marketing_tasks');
         }
         return view('admin.expense.expense_search');
     })->name('expenses');
@@ -141,6 +145,8 @@ Route::group(['middleware' => 'auth', 'prefix' => 'admin'], function() {
     Route::get('/assign_marketing_rider_for_invoice', 'HomeController@assign_marketing_rider_for_invoice')->name('assign_marketing_rider_for_invoice');
     // fetch fetch_receivings
     Route::get('/fetch_receivings', 'Admin\ReceivingController@fetch_receivings')->name('fetch_receivings');
+    // toggle_is_received
+    Route::get('/toggle_is_received', 'Admin\ReceivingController@toggle_is_received')->name('toggle_is_received');
     // ----------------------------------------------------------------------------------------------------------------------
     
     

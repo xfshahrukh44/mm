@@ -255,6 +255,9 @@ $(document).ready(function(){
   //   "searching":false
   // });
 
+  $('#customer_id').select2();
+  $('#vendor_id').select2();
+
   // persistent active sidebar
   var element = $('li a[href*="'+ window.location.pathname +'"]');
   element.parent().parent().parent().addClass('menu-open');
@@ -357,6 +360,7 @@ $(document).ready(function(){
         else{
           var detail = "";
         }
+        console.log(client.ledgers[i]);
 
         // check if record has invoice_id
         if(client.ledgers[i].invoice_id){
@@ -364,6 +368,9 @@ $(document).ready(function(){
           temp_route = temp_route.replace(':id', client.ledgers[i].invoice_id);
           // var detailHTML = '<a href="'+temp_route+'" target="_blank">Invoice # '+client.ledgers[i].invoice_id+', Items: '+client.ledgers[i].invoice.invoice_products.length+', Total: '+client.ledgers[i].invoice.total+'</a>';
           var detailHTML = 'Invoice # <a href="'+temp_route+'" target="_blank">'+client.ledgers[i].invoice_id+'</a>'+', Items: '+client.ledgers[i].invoice.invoice_products.length+', Total: Rs.'+client.ledgers[i].invoice.total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        }
+        else if(client.ledgers[i].expense){
+          var detailHTML = '<strong>Expense</strong> ( '+client.ledgers[i].expense.type+' )';
         }
         else{
           var detailHTML = '';

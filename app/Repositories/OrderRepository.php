@@ -128,21 +128,38 @@ abstract class OrderRepository implements RepositoryInterface
         }
     }
 
-    public function search_orders($query)
+    public function search_orders($data)
     {
+        $query = $data['query'];
+
         // foreign fields
         // customers
-        $customers = $this->customerService->search_customers($query);
+        $customers = $this->customerService->search_customers_all($query);
         $customer_ids = [];
         foreach($customers as $customer){
             array_push($customer_ids, $customer->id);
         }
 
         // search block
-        $orders = Order::whereIn('customer_id', $customer_ids)
-                        ->orWhere('total', 'LIKE', '%'.$query.'%')
-                        ->orWhere('status', 'LIKE', '%'.$query.'%')
-                        ->paginate(env('PAGINATION'));
+        if($data['dispatch_date'] == NULL){
+            $orders = Order::whereIn('customer_id', $customer_ids)
+                            ->orWhere('id', 'LIKE', '%'.$query.'%')
+                            ->orWhere('total', 'LIKE', '%'.$query.'%')
+                            ->orWhere('status', 'LIKE', '%'.$query.'%')
+                            ->paginate(env('PAGINATION'));
+        }
+        else{
+            $dispatch_date = $data['dispatch_date'];
+
+            $orders = Order::whereDate('dispatch_date', $dispatch_date)
+                            ->where(function($q) use($customer_ids, $query){
+                                $q->orWhereIn('customer_id', $customer_ids);
+                                $q->orWhere('id', 'LIKE', '%'.$query.'%');
+                                $q->orWhere('total', 'LIKE', '%'.$query.'%');
+                                $q->orWhere('status', 'LIKE', '%'.$query.'%');
+                            })
+                            ->paginate(env('PAGINATION'));
+        }
 
         return $orders;
     }

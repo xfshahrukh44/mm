@@ -9,6 +9,7 @@ use App\Services\AreaService;
 use App\Services\MarketService;
 use App\Services\ProductService;
 use App\Services\SpecialDiscountService;
+use App\Services\CustomerImageService;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
@@ -22,14 +23,16 @@ class CustomerController extends Controller
     private $marketService;
     private $productService;
     private $specialDiscountService;
+    private $customerImageService;
 
-    public function __construct(CustomerService $customerService, AreaService $areaService, MarketService $marketService, ProductService $productService, SpecialDiscountService $specialDiscountService)
+    public function __construct(CustomerService $customerService, AreaService $areaService, MarketService $marketService, ProductService $productService, SpecialDiscountService $specialDiscountService, CustomerImageService $customerImageService)
     {
         $this->customerService = $customerService;
         $this->areaService = $areaService;
         $this->marketService = $marketService;
         $this->productService = $productService;
         $this->specialDiscountService = $specialDiscountService;
+        $this->customerImageService = $customerImageService;
         $this->middleware('auth');
     }
 
@@ -55,6 +58,7 @@ class CustomerController extends Controller
     
     public function store(Request $request)
     {
+        // dd($request->all());
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
             'market_id' => 'required|int',
@@ -80,7 +84,7 @@ class CustomerController extends Controller
             return response()->json($validator->errors()->toArray(), 400);
 
         // image work
-        $req = Arr::except($request->all(),['shop_picture', 'shop_keeper_picture']);
+        $req = Arr::except($request->all(),['shop_picture', 'shop_keeper_picture', 'customer_images']);
         // shop_picture
         if($request->shop_picture){
             $image = $request->shop_picture;
@@ -97,7 +101,25 @@ class CustomerController extends Controller
             $req['shop_keeper_picture'] = $imageName;
         }
 
+        // create customer
         $customer = ($this->customerService->create($req))['customer']['customer'];
+        
+        // customer_images (multiple)
+        if($request->customer_images){
+            $customer_images = [];
+            foreach($request->customer_images as $customer_image){
+                $image = $customer_image;
+                $imageName = Str::random(10).'.png';
+                Storage::disk('customer_images')->put($imageName, \File::get($image));
+                array_push($customer_images, $imageName);
+            }
+            foreach($customer_images as $customer_image){
+                $this->customerImageService->create([
+                    'customer_id' => $customer->id,
+                    'location' => $customer_image,
+                ]);
+            }
+        }
 
         // special discount work
         if($request->products){
@@ -183,6 +205,23 @@ class CustomerController extends Controller
         }
 
         $customer = ($this->customerService->update($req, $id))['customer']['customer'];
+
+        // customer_images (multiple)
+        if($request->customer_images){
+            $customer_images = [];
+            foreach($request->customer_images as $customer_image){
+                $image = $customer_image;
+                $imageName = Str::random(10).'.png';
+                Storage::disk('customer_images')->put($imageName, \File::get($image));
+                array_push($customer_images, $imageName);
+            }
+            foreach($customer_images as $customer_image){
+                $this->customerImageService->create([
+                    'customer_id' => $customer->id,
+                    'location' => $customer_image,
+                ]);
+            }
+        }
 
         // special discount work
         if($request->products){

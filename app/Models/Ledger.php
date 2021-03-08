@@ -237,7 +237,7 @@ class Ledger extends Model
     }
     
     protected $fillable = [
-        'customer_id', 'vendor_id', 'amount', 'type', 'invoice_id', 'receiving_id', 'payment_id', 'created_by', 'modified_by', 'transaction_date'
+        'customer_id', 'vendor_id', 'amount', 'type', 'invoice_id', 'receiving_id', 'payment_id', 'expense_id', 'created_by', 'modified_by', 'transaction_date'
     ];
 
     protected $dates = ['created_at', 'updated_at', 'deleted_at'];
@@ -265,5 +265,10 @@ class Ledger extends Model
     public function payment()
     {
         return $this->belongsTo('App\Models\Payment');
+    }
+
+    public function expense()
+    {
+        return $this->belongsTo('App\Models\Expense');
     }
 }

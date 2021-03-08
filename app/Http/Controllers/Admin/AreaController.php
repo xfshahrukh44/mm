@@ -62,6 +62,7 @@ class AreaController extends Controller
     
     public function update(Request $request, $id)
     {
+        // dd($request->all());
         $id = $request->hidden;
 
         if(!(auth()->user()->id == $id || auth()->user()->type == "superadmin"))
@@ -81,22 +82,33 @@ class AreaController extends Controller
         // UPDATE AREA
         $area = ($this->areaService->update($request->all(), $id))['updated_area']['area'];
 
-        // delete all previous markets
-        foreach($area->markets as $market)
-        {
-            $this->marketService->delete($market->id);
-        }
-
         // check if markets' info provided
         if($request->market_names)
         {
-            // create markets
-            foreach($request->market_names as $market_name)
-            {
-                $this->marketService->create([
-                    'name' => $market_name,
-                    'area_id' => $area->id
-                ]);
+            // delete old
+            foreach($area->markets as $market){
+                if(in_array($market->id, $request->market_ids)){
+                    continue;
+                }
+                else{
+                    $market->delete();
+                }
+            }
+            // create new
+            for($i = 0; $i < count($request->market_names); $i++) {
+                // if id null create
+                if($request->market_ids[$i] == NULL){
+                    $this->marketService->create([
+                        'name' => $request->market_names[$i],
+                        'area_id' => $area->id
+                    ]);
+                }
+                // else update
+                else{
+                    $this->marketService->update([
+                        'name' => $request->market_names[$i],
+                    ], $request->market_ids[$i]);
+                }
             }
         }
 

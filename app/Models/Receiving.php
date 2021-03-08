@@ -41,7 +41,7 @@ class Receiving extends Model
             if($old_invoice_id != NULL && $old_amount != NULL && $old_payment_date !=NULL){
                 $invoice = Invoice::withTrashed()->find($old_invoice_id);
                 $invoice->amount_pay -= intval($old_amount);
-                $invoice->save();
+                $invoice->saveQuietly();
             }
 
             // new
@@ -57,7 +57,7 @@ class Receiving extends Model
             if($new_invoice_id != NULL && $new_amount != NULL && $new_payment_date !=NULL){
                 $invoice = Invoice::withTrashed()->find($new_invoice_id);
                 $invoice->amount_pay += intval($new_amount);
-                $invoice->save();
+                $invoice->saveQuietly();
             }
         });
 
@@ -74,7 +74,7 @@ class Receiving extends Model
             if($query->invoice_id != NULL && $query->amount != NULL && $query->payment_date !=NULL){
                 $invoice = Invoice::withTrashed()->find($query->invoice_id);
                 $invoice->amount_pay -= intval($query->amount);
-                $invoice->save();
+                $invoice->saveQuietly();
             }
         });
 
@@ -93,16 +93,23 @@ class Receiving extends Model
             if($query->invoice_id != NULL && $query->amount != NULL && $query->payment_date !=NULL){
                 $invoice = Invoice::withTrashed()->find($query->invoice_id);
                 $invoice->amount_pay += intval($query->amount);
-                $invoice->save();
+                $invoice->saveQuietly();
             }
         });
     }
     
     protected $fillable = [
-        'invoice_id', 'customer_id', 'amount', 'payment_date', 'created_by', 'modified_by',
+        'invoice_id', 'customer_id', 'amount', 'payment_date', 'is_received', 'created_by', 'modified_by',
     ];
 
     protected $dates = ['created_at', 'updated_at', 'deleted_at'];
+
+    public function saveQuietly(array $options = [])
+    {
+        return static::withoutEvents(function () use ($options) {
+            return $this->save($options);
+        });
+    }
 
     public function invoice()
     {

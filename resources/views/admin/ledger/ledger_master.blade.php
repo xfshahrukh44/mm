@@ -7,7 +7,7 @@
         <select id="customer_id" name="customer_id" class="form-control customer_id" style="width: 100%; height: 35px;">
             <option value="">Select customer</option>
             @foreach($customers as $customer)
-                <option value="{{$customer->id}}">{{$customer->name}}</option>
+                <option value="{{$customer->id}}">{{customer_shop_name($customer->id)}}</option>
             @endforeach
         </select>
     </div>

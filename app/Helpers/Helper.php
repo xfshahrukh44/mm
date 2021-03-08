@@ -3,10 +3,16 @@
 use Carbon\Carbon;
 use App\User;
 use App\Models\Marketing;
+use App\Models\Customer;
+use App\Models\Product;
 
 function return_date($date)
 {
     return Carbon::parse($date)->format('j F, Y. h:i a');
+}
+
+function return_date_wo_time($date){
+    return Carbon::parse($date)->format('j F, Y.');
 }
 
 function return_date_pdf($date)
@@ -62,4 +68,18 @@ function return_marketing_rider_for_invoice($invoice_id, $date)
         return '';
     }
     return $rider->name;
+}
+
+function customer_shop_name($customer_id)
+{
+    $customer = Customer::find($customer_id);
+    $shop = (($customer->shop_name) ? (' | ' . $customer->shop_name) : '');
+    $market = (($customer->market && $customer->market->name) ? (' | ' . $customer->market->name) : '');
+    $area = (($customer->market && $customer->market->area &&  $customer->market->area->name) ? (' | ' . $customer->market->area->name) : '');
+    return $customer->name . $shop . $market . $area;
+}
+
+function count_by_status($status)
+{
+    return count(Customer::where('status', $status)->get());
 }

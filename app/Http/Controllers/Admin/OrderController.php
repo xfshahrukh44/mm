@@ -10,6 +10,9 @@ use App\Services\ProductService;
 use App\Services\OrderProductService;
 use App\Services\UserService;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Arr;
+use Illuminate\Support\Str;
+use Storage;
 
 class OrderController extends Controller
 {
@@ -53,6 +56,7 @@ class OrderController extends Controller
             'payment' => 'sometimes',
             'amount_pay' => 'sometimes',
             'dispatch_date' => 'sometimes',
+            'image' => 'sometimes',
             'description' => 'sometimes'
         ]);
 
@@ -65,8 +69,19 @@ class OrderController extends Controller
         if($request->has('completed_status'))
             $request['status'] = 'completed';
 
+        // image work
+        $req = Arr::except($request->all(),['image']);
+        // image
+        if($request->image){
+            // dd(Storage::disk('order_images'));
+            $image = $request->image;
+            $imageName = Str::random(10).'.png';
+            Storage::disk('order_images')->put($imageName, \File::get($image));
+            $req['image'] = $imageName;
+        }
+
         // create order
-        $order = ($this->orderService->create($request->all()))['order']['order'];
+        $order = ($this->orderService->create($req))['order']['order'];
         
         if($request->products){
             for($i = 0; $i < count($request->products); $i++){
@@ -108,14 +123,27 @@ class OrderController extends Controller
             'payment' => 'sometimes',
             'amount_pay' => 'sometimes',
             'dispatch_date' => 'sometimes',
+            'image' => 'sometimes',
             'description' => 'sometimes'
         ]);
 
         if($validator->fails())
             return response()->json($validator->errors()->toArray(), 400);
+        
+        // image work
+        $req = Arr::except($request->all(),['image']);
+
+        // image
+        if($request->image){
+            Storage::disk('order_images')->delete($customer->image);
+            $image = $request->image;
+            $imageName = Str::random(10).'.png';
+            Storage::disk('order_images')->put($imageName, \File::get($image));
+            $req['image'] = $imageName;
+        }
 
         // update order
-        $this->orderService->update($request->all(), $id);
+        $this->orderService->update($req, $id);
 
         if($request->products){
             // delete old
@@ -147,9 +175,11 @@ class OrderController extends Controller
 
     public function search_orders(Request $request)
     {
-        $query = $request['query'];
+        $data = [];
+        $data['query'] = $request['query'];
+        $data['dispatch_date'] = $request['dispatch_date'];
         
-        $orders = $this->orderService->search_orders($query);
+        $orders = $this->orderService->search_orders($data);
         $customers = $this->customerService->all();
         $products = $this->productService->all();
         $riders = $this->userService->all_riders();

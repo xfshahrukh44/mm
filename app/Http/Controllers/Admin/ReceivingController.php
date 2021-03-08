@@ -10,6 +10,7 @@ use App\Services\CustomerService;
 use App\Services\UserService;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Gate;
+use Carbon\Carbon;
 
 class ReceivingController extends Controller
 {
@@ -29,7 +30,12 @@ class ReceivingController extends Controller
     
     public function index()
     {
-        $receivings = $this->receivingService->paginate(env('PAGINATE'));
+        if(Gate::allows('isSuperAdmin')){
+            $receivings = $this->receivingService->paginate(env('PAGINATE'));
+        }
+        else{
+            $receivings = $this->receivingService->paginate_by_user_id(env('PAGINATE'), auth()->user()->id);
+        }
         $invoices = $this->invoiceService->all();
         $customers = $this->customerService->all();
         return view('admin.receiving.receiving', compact('receivings', 'invoices', 'customers'));
@@ -47,6 +53,10 @@ class ReceivingController extends Controller
         if($validator->fails())
             return response()->json($validator->errors()->toArray(), 400);
 
+        if($request->payment_date == NULL){
+            $request['payment_date'] = Carbon::today()->format('Y-m-d');
+        }
+
         $this->receivingService->create($request->all());
 
         return redirect()->back();
@@ -54,6 +64,9 @@ class ReceivingController extends Controller
     
     public function show(Request $request, $id)
     {
+        if(array_key_exists('id', $_REQUEST)){
+            return $this->receivingService->find($_REQUEST['id']);
+        }
         $id = $request->receiving_id;
         return $this->receivingService->find($id);
     }
@@ -102,8 +115,9 @@ class ReceivingController extends Controller
         
         $receivings = $this->receivingService->search_receivings($query);
         $invoices = $this->invoiceService->all();
+        $customers = $this->customerService->all();
 
-        return view('admin.receiving.receiving', compact('receivings', 'invoices'));
+        return view('admin.receiving.receiving', compact('receivings', 'invoices', 'customers'));
     }
 
     public function receiving_logs(Request $request){
@@ -120,5 +134,10 @@ class ReceivingController extends Controller
         $data['date'] = $request->date;
 
         return $this->receivingService->fetch_receivings($data);
+    }
+
+    public function toggle_is_received(Request $request)
+    {
+        return $this->receivingService->toggle_is_received($request->receiving_id);
     }
 }

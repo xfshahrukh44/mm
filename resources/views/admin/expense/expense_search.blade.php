@@ -36,7 +36,8 @@
                                 <option value="Stock damage">Stock damage</option>
                                 <option value="Stock misplace">Stock misplace</option>
                                 <option value="Stock theft">Stock theft</option>
-                                <option value="Costumer discount">Costumer discount</option>
+                                <option value="Customer discount">Customer discount</option>
+                                <option value="Bad Debt">Bad Debt</option>
                             </select>
                         </div>
                     </div>

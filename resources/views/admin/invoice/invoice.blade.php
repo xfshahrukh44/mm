@@ -75,7 +75,7 @@
                                     <tr role="row" class="odd">
                                         <td class="{{'invoice_id'.$invoice->id}}">{{$invoice->id}}</td>
                                         <td class="{{'order_id'.$invoice->id}}">{{$invoice->order ? $invoice->order->id : NULL}}</td>
-                                        <td class="{{'total'.$invoice->id}}">{{$invoice->created_at ? return_date($invoice->created_at) : NULL}}</td>
+                                        <td class="{{'total'.$invoice->id}}">{{$invoice->date ? return_date($invoice->date) : NULL}}</td>
                                         <td class="{{'customer_id'.$invoice->id}}" data-id="{{$invoice->customer ? $invoice->customer_id : NULL}}" data-object="{{$invoice->customer ? $invoice->customer : NULL}}">
                                             <a href="#" class="viewProfileButton" data-id="{{$invoice->customer ? $invoice->customer_id : NULL}}" data-type="{{$invoice->customer ? $invoice->customer->type : NULL}}" data-route="{{$invoice->customer ? route('customer.show',$invoice->customer->id) : '#'}}">
                                                 {{$invoice->customer ? $invoice->customer->name : NULL}}
@@ -97,6 +97,10 @@
                                             <!-- Edit -->
                                             <a href="#" class="editButton" data-id="{{$invoice->id}}" data-object="{{$invoice}}">
                                                 <i class="fas fa-edit blue ml-1"></i>
+                                            </a>
+                                            <!-- Print -->
+                                            <a href="{{route('generate_invoice_pdf', $invoice->id)}}" target="_blank">
+                                                <i class="fas fa-print"></i>
                                             </a>
                                             @can('isSuperAdmin')
                                                 <!-- Delete -->
@@ -219,6 +223,10 @@
                         <tr>
                             <th>Description:</th>
                             <td><p id="description"></p></td>
+                        </tr>
+                        <tr>
+                            <th>Date:</th>
+                            <td><p id="date"></p></td>
                         </tr>
                     </table>
                     <div class="col-md-12">
@@ -368,8 +376,8 @@
     // div strings
     var startDiv = '<div class="row">';
     var productDiv = '<div class="col-md-4"><div class="ui-widget"><input class="form-control product_search" name="products[]"><input class="hidden_product_search" type="hidden" name="hidden_product_ids[]"></div></div>';
-    var priceDiv = '<div class="form-group col-md-4"><input type="number" class="form-control prices" name="prices[]" required min=0></div>';
-    var quantityDiv = '<div class="form-group col-md-3"><input type="number" class="form-control quantities" name="quantities[]" required value=0></div>';
+    var priceDiv = '<div class="form-group col-md-4"><input type="number" class="form-control prices" name="prices[]" required min=0 step="0.01"></div>';
+    var quantityDiv = '<div class="form-group col-md-3"><input type="number" class="form-control quantities" name="quantities[]" required value=0 step="0.01"></div>';
     var removeChildDiv = '<div class="form-group col-md-0 ml-1 remove_button mt-1" style="display: table; vertical-align: middle;"><a class="btn btn-primary"><i class="fas fa-minus" style="color:white;"></i></a></div>';
     var endDiv = '</div>';
     var fieldHTML = startDiv + productDiv + priceDiv + quantityDiv + removeChildDiv + endDiv;
@@ -436,6 +444,7 @@
     function get_order_total(form){
         var quantities = $(form + ' .quantities');
         var prices = $(form + ' .prices');
+        var discount = $(form + ' .discount').val();
         var total = 0;
         for(var i = 0; i < prices.length; i++){
             total += ($(form + ' .prices')[i].value * $(form + ' .quantities')[i].value);
@@ -443,7 +452,7 @@
         $(form + ' .total').val(total);
         // final_amount
         $(form + ' .final_amount').val(parseInt($(form + ' .total').val()) + parseInt($(form + ' .previous_amount').val()));
-        $(form + ' .balance_due').val(parseInt($(form + ' .final_amount').val()) - parseInt($(form + ' .amount_pay').val()));
+        $(form + ' .balance_due').val(parseInt($(form + ' .final_amount').val()) - parseInt($(form + ' .amount_pay').val()) - discount);
     }
 
     // fetch_by_customer_and_product
@@ -473,6 +482,9 @@
         get_order_total('#addInvoiceModal');
     });
     $('#addInvoiceModal').on('change', '.prices', function(){
+        get_order_total('#addInvoiceModal');
+    });
+    $('#addInvoiceModal').on('change', '.discount', function(){
         get_order_total('#addInvoiceModal');
     });
     // on customer change
@@ -576,7 +588,16 @@
         // loop over retrieved items
         for(var i = 0; i < invoice.invoice_products.length; i++)
         {
-            $('#table_row_wrapper').append(' <tr role="row" class="odd"><td name="invoice_products[]" value="'+invoice.invoice_products[i].id+'" hidden></td><td class="">'+invoice.invoice_products[i].product.category.name+'</td><td class="">'+invoice.invoice_products[i].product.brand.name+'</td><td class="">'+invoice.invoice_products[i].product.article+'</td><td class="">'+invoice.invoice_products[i].quantity+'</td><td class="">'+invoice.invoice_products[i].price+'</td><td class="">'+invoice.invoice_products[i].product.unit.name+'</td></tr>');
+            var invoice_product = invoice.invoice_products[i];
+
+            var id = invoice_product.id;
+            var category = (invoice_product.product && invoice_product.product.category) ? (invoice_product.product.category.name) : '';
+            var brand = (invoice_product.product && invoice_product.product.brand) ? (invoice_product.product.brand.name) : '';
+            var article = (invoice_product.product) ? (invoice_product.product.article) : '';
+            var quantity = invoice_product.quantity;
+            var price = invoice_product.price;
+            var unit = (invoice_product.product && invoice_product.product.unit) ? (invoice_product.product.unit.name) : '';
+            $('#table_row_wrapper').append(' <tr role="row" class="odd"><td name="invoice_products[]" value="'+id+'" hidden></td><td class="">'+category+'</td><td class="">'+brand+'</td><td class="">'+article+'</td><td class="">'+quantity+'</td><td class="">'+price+'</td><td class="">'+unit+'</td></tr>');
         }
 
         $('#invoice_id').text(invoice.id);
@@ -586,6 +607,7 @@
         $('#detailTotal').text(invoice.total);
         $('#amount_pay').text(invoice.amount_pay);
         $('#description').text(invoice.description);
+        $('#date').text(invoice.date);
 
         $('#detailInvoiceModal').modal('show');
 
@@ -607,6 +629,8 @@
         // $('#editInvoiceModal .customer_id').selectmenu();
         // $('#editInvoiceModal .customer_id').selectmenu('refresh', true);
         $('#editInvoiceModal .dispatch_date').val(invoice.dispatch_date);
+        // set date
+        $('#editInvoiceModal .date').val(invoice.date);
 
         // remove required attribute on rider_id
         $("#editInvoiceModal .rider_id").prop("required", false);
@@ -616,8 +640,8 @@
 
         for(var i = 0; i < invoice.invoice_products.length; i++){
             var productDiv = '<div class="col-md-4"><div class="ui-widget"><input class="form-control product_search" name="products[]" value="'+ invoice.invoice_products[i].product.article +'"><input class="hidden_product_search" type="hidden" name="hidden_product_ids[]" value="'+ invoice.invoice_products[i].product.id +'"></div></div>';
-            var priceDiv = '<div class="form-group col-md-4"><input type="number" class="form-control prices" name="prices[]" required min=0 value="'+ invoice.invoice_products[i].price +'"></div>';
-            var quantityDiv = '<div class="form-group col-md-3"><input type="number" class="form-control quantities" name="quantities[]" required min=0  value="'+ invoice.invoice_products[i].quantity +'"></div>';
+            var priceDiv = '<div class="form-group col-md-4"><input type="number" class="form-control prices" name="prices[]" required min=0 step="0.01" value="'+ invoice.invoice_products[i].price +'"></div>';
+            var quantityDiv = '<div class="form-group col-md-3"><input type="number" class="form-control quantities" name="quantities[]" required min=0 step="0.01"  value="'+ invoice.invoice_products[i].quantity +'"></div>';
             var fieldHTML = startDiv + productDiv + priceDiv + quantityDiv + removeChildDiv + endDiv;
 
             $('.field_wrapper').prepend(fieldHTML);
@@ -626,7 +650,7 @@
 
         initAutocompleteItems(".product_search", "#editInvoiceModal .ui-widget", product_labels);
 
-        get_invoice_total('#editInvoiceModal');
+        get_order_total('#editInvoiceModal');
 
         $('#editInvoiceModal').modal('show');
     });

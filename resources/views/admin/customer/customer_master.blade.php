@@ -164,4 +164,18 @@
             </div>
         </div>
     </div>
+
+    <hr>
+    <h3>Additional Images</h3>
+    <hr>
+    <!-- Children Labels -->
+    <div class="col-md-12">
+        <div class="row">
+            <!-- image -->
+            <div class="form-group col-md-12">
+                <label>Image:</label> <br>
+                <input type="file" name="customer_images[]" class="form-control" multiple>
+            </div>
+        </div>
+    </div>
 </div>

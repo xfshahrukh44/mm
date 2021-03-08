@@ -8,6 +8,7 @@ use App\Services\ProductService;
 use App\Services\CategoryService;
 use App\Services\BrandService;
 use App\Services\UnitService;
+use App\Services\ProductImageService;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
@@ -20,13 +21,15 @@ class ProductController extends Controller
     private $categoryService;
     private $brandService;
     private $unitService;
+    private $productImageService;
 
-    public function __construct(ProductService $productService, CategoryService $categoryService, BrandService $brandService, UnitService $unitService)
+    public function __construct(ProductService $productService, CategoryService $categoryService, BrandService $brandService, UnitService $unitService, ProductImageService $productImageService)
     {
         $this->productService = $productService;
         $this->categoryService = $categoryService;
         $this->brandService = $brandService;
         $this->unitService = $unitService;
+        $this->productImageService = $productImageService;
         $this->middleware('auth');
     }
     
@@ -76,7 +79,24 @@ class ProductController extends Controller
             $req['product_picture'] = $imageName;
         }
 
-        $this->productService->create($req);
+        $product = ($this->productService->create($req))['product']['product'];
+
+        // product_images (multiple)
+        if($request->product_images){
+            $product_images = [];
+            foreach($request->product_images as $product_image){
+                $image = $product_image;
+                $imageName = Str::random(10).'.png';
+                Storage::disk('product_images')->put($imageName, \File::get($image));
+                array_push($product_images, $imageName);
+            }
+            foreach($product_images as $product_image){
+                $this->productImageService->create([
+                    'product_id' => $product->id,
+                    'location' => $product_image,
+                ]);
+            }
+        }
 
         return redirect()->back();
     }
@@ -136,7 +156,24 @@ class ProductController extends Controller
         }
 
         // dd($id);
-        $this->productService->update($req, $id);
+        $product = ($this->productService->update($req, $id))['product']['product'];
+
+        // product_images (multiple)
+        if($request->product_images){
+            $product_images = [];
+            foreach($request->product_images as $product_image){
+                $image = $product_image;
+                $imageName = Str::random(10).'.png';
+                Storage::disk('product_images')->put($imageName, \File::get($image));
+                array_push($product_images, $imageName);
+            }
+            foreach($product_images as $product_image){
+                $this->productImageService->create([
+                    'product_id' => $product->id,
+                    'location' => $product_image,
+                ]);
+            }
+        }
 
         if($request->identifier == 'rider'){
             return $this->getRiders($request);

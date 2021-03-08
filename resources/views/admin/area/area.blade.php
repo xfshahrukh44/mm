@@ -305,7 +305,7 @@
                         $('.children_wrapper').html('');
                         for(var i = 0; i < data.markets.length; i++)
                         {
-                            $('.children_wrapper').prepend('<div class="form-group"><input type="text" name="market_names[]" placeholder="Market name" class="form-control" required value="'+data.markets[i].name+'"></div>');
+                            $('.children_wrapper').prepend('<div class="form-group"><input hidden type="number" name="market_ids[]" value="'+data.markets[i].id+'"></input><input type="text" name="market_names[]" placeholder="Market name" class="form-control" required value="'+data.markets[i].name+'"></div>');
                         }
                     }
                     return 0;
@@ -452,13 +452,18 @@
         });
 
         // add markets on create area form
-        $('.addMarketButton2').on('click', function(){
-            $('.children_wrapper').prepend('<div class="form-group"><input type="text" name="market_names[]" placeholder="Market name" class="form-control" required></div>');
+        $('#addAreaModal .addMarketButton2').on('click', function(){
+            $('#addAreaModal .children_wrapper').prepend('<div class="form-group"><input type="text" name="market_names[]" placeholder="Market name" class="form-control" required></div>');
+        });
+        // add markets on create area form
+        $('#editAreaModal .addMarketButton2').on('click', function(){
+            $('#editAreaModal .children_wrapper').prepend('<div class="form-group"><input hidden type="number" name="market_ids[]" value=""></input><input type="text" name="market_names[]" placeholder="Market name" class="form-control" required></div>');
         });
         // remove markets on create area form
         $('.removeMarketButton2').on('click', function(){
             $('.children_wrapper div:first-child').remove();
         });
+        // <input hidden type="number" name="market_ids[]" value="'+data.markets[i].id+'"></input>
 
     });
 </script>

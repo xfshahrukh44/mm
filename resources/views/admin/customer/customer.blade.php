@@ -50,31 +50,31 @@
         <div class="form-group ml-1">
           <form action="{{route('customer.index')}}">
             @csrf
-            <button class="btn btn-primary form-control" type="submit" name="status_button" value="active">Active</button>
+            <button class="btn btn-primary form-control" type="submit" name="status_button" value="active">Active ({{count_by_status("active")}})</button>
           </form>
         </div>
         <div class="form-group ml-1">
           <form action="{{route('customer.index')}}">
             @csrf
-            <button class="btn btn-primary form-control" type="submit" name="status_button" value="inactive">Inactive</button>
+            <button class="btn btn-primary form-control" type="submit" name="status_button" value="inactive">Inactive ({{count_by_status("inactive")}})</button>
           </form>
         </div>
         <div class="form-group ml-1">
           <form action="{{route('customer.index')}}">
             @csrf
-            <button class="btn btn-primary form-control" type="submit" name="status_button" value="interested">Interested</button>
+            <button class="btn btn-primary form-control" type="submit" name="status_button" value="interested">Interested ({{count_by_status("interested")}})</button>
           </form>
         </div>
         <div class="form-group ml-1">
           <form action="{{route('customer.index')}}">
             @csrf
-            <button class="btn btn-primary form-control" type="submit" name="status_button" value="follow_up">Follow up</button>
+            <button class="btn btn-primary form-control" type="submit" name="status_button" value="follow_up">Follow up ({{count_by_status("follow_up")}})</button>
           </form>
         </div>
         <div class="form-group ml-1">
           <form action="{{route('customer.index')}}">
             @csrf
-            <button class="btn btn-primary form-control" type="submit" name="status_button" value="not_interested">Not Interested</button>
+            <button class="btn btn-primary form-control" type="submit" name="status_button" value="not_interested">Not Interested ({{count_by_status("not_interested")}})</button>
           </form>
         </div>
       </div>
@@ -208,6 +208,9 @@
               <li class="nav-item" role="presentation">
                 <a class="nav-link" data-toggle="tab" href="#pi">Payment Information</a>
               </li>
+              <li class="nav-item" role="presentation">
+                <a class="nav-link" data-toggle="tab" href="#ig">Image Gallery</a>
+              </li>
             </ul>
 
             <!-- TAB CONTENT -->
@@ -312,6 +315,24 @@
                         </tbody>
                     </table>
                   </div>
+                </div>
+              </div>
+              <!-- Image Gallery -->
+              <div class="tab-pane fade" id="ig">
+                <div class="card-body row overflow-auto col-md-12 p-3 gallery_wrapper" style="height:28rem;">
+                    <a target="_blank" href="{{asset('img/logo.png')}}" class="col-md-4 mb-3">
+                      <img class="col-md-12 shop_keeper_picture" src="{{asset('img/logo.png')}}">
+                    </a>
+                    <a target="_blank" href="{{asset('img/logo.png')}}" class="col-md-4 mb-3">
+                      <img class="col-md-12 shop_keeper_picture" src="{{asset('img/logo.png')}}">
+                    </a>
+                    <a target="_blank" href="{{asset('img/logo.png')}}" class="col-md-4 mb-3">
+                      <img class="col-md-12 shop_keeper_picture" src="{{asset('img/logo.png')}}">
+                    </a>
+                    <a target="_blank" href="{{asset('img/logo.png')}}" class="col-md-4 mb-3">
+                      <img class="col-md-12 shop_keeper_picture" src="{{asset('img/logo.png')}}">
+                    </a>
+                  <!-- </div> -->
                 </div>
               </div>
 
@@ -493,9 +514,13 @@ $(document).ready(function(){
     $('.name').html(customer.name ? customer.name : '');
     $('.contact_number').html(customer.contact_number ? customer.contact_number : '');
     $('.whatsapp_number').html(customer.whatsapp_number);
-    if(customer.shop_keeper_picture ? customer.shop_keeper_picture : ''){
+    if(customer.shop_keeper_picture){
       var shop_path = $(this).data('shopkeeper');
       $('.shop_keeper_picture').attr('src', shop_path);
+    }
+    else{
+        var shop_path = '{{asset("img/logo.png")}}';
+        $('.shop_keeper_picture').attr('src', shop_path);
     }
     $('.type').html(customer.type ? customer.type : '');
 
@@ -507,6 +532,18 @@ $(document).ready(function(){
     if(customer.shop_picture){
       var shop_path = $(this).data('shop');
       $('.shop_picture').attr('src', shop_path);
+    }
+    else{
+        var shop_path = '{{asset("img/logo.png")}}';
+        $('.shop_picture').attr('src', shop_path);
+    }
+
+    // image gallery work
+    $('.gallery_wrapper').html('');
+    if(customer.customer_images.length > 0){
+      for(var i = 0; i < customer.customer_images.length; i++){
+        $('.gallery_wrapper').append(`<a target="_blank" href="{{asset('img/customer_images')}}/`+customer.customer_images[i].location+`" class="col-md-4 mb-3"><img class="col-md-12 shop_keeper_picture" src="{{asset('img/customer_images')}}/`+customer.customer_images[i].location+`"></a>`);
+      }
     }
 
     $('.status').html(customer.status ? customer.status : '');

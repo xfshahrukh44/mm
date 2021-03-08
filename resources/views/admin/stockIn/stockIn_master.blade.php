@@ -26,19 +26,19 @@
     <!-- quantity -->
     <div class="form-group col-md-3">
         <label for="">Quantity</label>
-        <input id="quantity" type="number" name="quantity" placeholder="Enter quantity" class="form-control quantity" required min=0>
+        <input id="quantity" type="number" name="quantity" placeholder="Enter quantity" class="form-control quantity" required min=0 step="0.01">
     </div>
 
     <!-- rate -->
     <div class="form-group col-md-3">
         <label for="">Rate</label>
-        <input id="rate" type="number" name="rate" placeholder="Enter rate" class="form-control rate" required min=0>
+        <input id="rate" type="number" name="rate" placeholder="Enter rate" class="form-control rate" required min=0 step="0.01">
     </div>
 
     <!-- amount -->
     <div class="form-group col-md-3">
         <label for="">Amount</label>
-        <input id="amount" type="number" name="amount" placeholder="Enter amount" class="form-control amount" readonly required value=0>
+        <input id="amount" type="number" name="amount" placeholder="Enter amount" class="form-control amount" readonly required value=0 step="0.01">
     </div>
 
     <!-- transaction_date -->

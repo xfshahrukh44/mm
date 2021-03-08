@@ -19,6 +19,7 @@ class Order extends Model
         'invoiced_items',
         'invoiced_from',
         'description',
+        'image',
         'created_by',
         'modified_by'
     ];

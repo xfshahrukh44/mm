@@ -7,6 +7,7 @@ use App\Models\Product;
 use App\Models\Customer;
 use App\Models\StockOut;
 use App\Models\Order;
+use App\Models\Invoice;
 use App\Models\Marketing;
 use App\Models\Receiving;
 use App\User;
@@ -59,9 +60,14 @@ class HomeController extends Controller
 
     public function plug_n_play(Request $request)
     {
-        $users = User::withTrashed()->whereNotNull('deleted_at')->get();
-        foreach($users as $user){
-            $user->forceDelete();
+        $invoices = (Invoice::all());
+        dd($invoices);
+        foreach($invoices as $invoice){
+            if($invoice->date != NULL || !($invoice->order)){
+                continue;
+            }
+            $invoice->date = Carbon::parse($invoice->order->dispatch_date)->format('Y-m-d');
+            $invoice->saveQuietly();
         }
     }
 
@@ -408,16 +414,20 @@ class HomeController extends Controller
 
         $riders = User::where('type', 'rider')->get();
         $customers = Customer::where('visiting_days', $today)->get();
+        $customers_all = Customer::all();
         $receivings = Receiving::where('payment_date', $date)->get();
-        $orders = Order::where('dispatch_date', Carbon::now()->format('Y-m-d'))->get();
-        $invoices = [];
-        foreach($orders as $order){
-            foreach($order->invoices as $invoice){
-                array_push($invoices, $invoice);
-            }
-        }
+        $receivings_all = Receiving::whereNotNull('payment_date')->get();
+        // $orders = Order::where('dispatch_date', Carbon::now()->format('Y-m-d'))->get();
+        // $invoices = [];
+        // foreach($orders as $order){
+        //     foreach($order->invoices as $invoice){
+        //         array_push($invoices, $invoice);
+        //     }
+        // }
+        $invoices = Invoice::where('date', $ymd)->get();
+        $invoices_all = Invoice::all();
 
-        return view('admin.marketing.marketing', compact('customers', 'receivings', 'invoices', 'riders', 'date', 'ymd'));
+        return view('admin.marketing.marketing', compact('customers', 'customers_all', 'receivings', 'receivings_all', 'invoices', 'invoices_all', 'riders', 'date', 'ymd'));
     }
 
     public function assign_marketing_rider_for_customer(Request $request)

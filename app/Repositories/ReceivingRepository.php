@@ -85,7 +85,7 @@ abstract class ReceivingRepository implements RepositoryInterface
     {
         try 
         {
-            $receiving = $this->model::with('invoice.order.customer.market.area')->find($id);
+            $receiving = $this->model::with('invoice.order.customer.market.area', 'customer.market.area')->find($id);
             if(!$receiving)
             {
                 return [
@@ -123,6 +123,16 @@ abstract class ReceivingRepository implements RepositoryInterface
         }
     }
 
+    public function paginate_by_user_id($pagination, $user_id)
+    {
+        try {
+            return $this->model->where('created_by', $user_id)->orderBy('created_at', 'DESC')->paginate($pagination);
+        }
+        catch (\Exception $exception) {
+            throw new AllReceivingException($exception->getMessage());
+        }
+    }
+
     public function search_receivings($query)
     {
         // foreign fields
@@ -136,7 +146,7 @@ abstract class ReceivingRepository implements RepositoryInterface
     }
 
     public function fetch_receivings(array $data){
-        $receivings = $this->model->with('customer.market.area', 'invoice.order')->where('created_by', $data['user_id'])->where('payment_date', $data['date'])->get();
+        $receivings = $this->model->with('customer.market.area', 'invoice.order')->where('created_by', $data['user_id'])->whereDate('created_at', $data['date'])->get();
         $total = 0;
         foreach($receivings as $receiving){
             $total += $receiving->amount;
@@ -146,5 +156,12 @@ abstract class ReceivingRepository implements RepositoryInterface
             'receivings' => $receivings,
             'total' => $total
         ];
+    }
+
+    public function toggle_is_received($id)
+    {
+        $receiving = $this->model->find($id);
+        $receiving->is_received = ($receiving->is_received == 0) ? 1 : 0;
+        $receiving->saveQuietly();
     }
 }

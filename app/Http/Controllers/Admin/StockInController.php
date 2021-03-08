@@ -104,7 +104,8 @@ class StockInController extends Controller
         
         $stockIns = $this->stockInService->search_stockIns($query);
         $products = $this->productService->all();
+        $vendors = $this->vendorService->all();
 
-        return view('admin.stockIn.stockIn', compact('stockIns', 'products'));
+        return view('admin.stockIn.stockIn', compact('stockIns', 'products', 'vendors'));
     }
 }

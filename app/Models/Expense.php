@@ -62,4 +62,9 @@ class Expense extends Model
     {
         return $this->hasOne('App\Models\Payment');
     }
+
+    public function ledger()
+    {
+        return $this->hasOne('App\Models\Ledger');
+    }
 }

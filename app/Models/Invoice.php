@@ -19,6 +19,8 @@ class Invoice extends Model
         'amount_pay',
         'previous_balance',
         'description',
+        'date',
+        'discount',
         'created_by',
         'modified_by'
     ];
@@ -132,6 +134,13 @@ class Invoice extends Model
     }
 
     protected $dates = ['created_at', 'updated_at', 'deleted_at'];
+
+    public function saveQuietly(array $options = [])
+    {
+        return static::withoutEvents(function () use ($options) {
+            return $this->save($options);
+        });
+    }
 
     public function customer()
     {

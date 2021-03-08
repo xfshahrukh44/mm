@@ -88,6 +88,18 @@ return [
             'driver' => 'local',
             'root' => public_path('img/products'),
         ],
+        'order_images' => [
+            'driver' => 'local',
+            'root' => public_path('img/order_images'),
+        ],
+        'customer_images' => [
+            'driver' => 'local',
+            'root' => public_path('img/customer_images'),
+        ],
+        'product_images' => [
+            'driver' => 'local',
+            'root' => public_path('img/product_images'),
+        ],
     ],
 
 ];

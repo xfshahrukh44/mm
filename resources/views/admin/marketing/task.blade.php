@@ -84,10 +84,10 @@
                             @foreach($customer_marketings as $customer_marketing)
                                 <tr>
                                     <td>{{$customer_marketing->customer ? $customer_marketing->customer->name : ''}}</td>
-                                    <td>{{$customer_marketing->customer->contact_number ? $customer_marketing->customer->contact_number : ''}}</td>
-                                    <td>{{$customer_marketing->customer->shop_name ? $customer_marketing->customer->shop_name : ''}}</td>
-                                    <td>{{$customer_marketing->customer->market ? $customer_marketing->customer->market->name : ''}}</td>
-                                    <td>{{($customer_marketing->customer->market && $customer_marketing->customer->market->area) ? $customer_marketing->customer->market->area->name : ''}}</td>
+                                    <td>{{$customer_marketing->customer && $customer_marketing->customer->contact_number ? $customer_marketing->customer->contact_number : ''}}</td>
+                                    <td>{{$customer_marketing->customer && $customer_marketing->customer->shop_name ? $customer_marketing->customer->shop_name : ''}}</td>
+                                    <td>{{$customer_marketing->customer && $customer_marketing->customer->market ? $customer_marketing->customer->market->name : ''}}</td>
+                                    <td>{{($customer_marketing->customer && $customer_marketing->customer->market && $customer_marketing->customer->market->area) ? $customer_marketing->customer->market->area->name : ''}}</td>
                                 </tr>
                             @endforeach
                         </tbody>

@@ -19,17 +19,17 @@ abstract class ExpenseRepository implements RepositoryInterface
     
     public function create(array $data)
     {
-        try 
-        {
+        // try 
+        // {
             $expense = $this->model->create($data);
             
             return [
                 'expense' => $this->find($expense->id)
             ];
-        }
-        catch (\Exception $exception) {
-            return $exception->getMessage();
-        }
+        // }
+        // catch (\Exception $exception) {
+        //     return $exception->getMessage();
+        // }
     }
     
     public function delete($id)

@@ -9,7 +9,7 @@
                 <select name="customer_id" required class="form-control customer_id" style="width: 100%;">
                     <option value="">Select Customer</option>
                     @foreach($customers as $customer)
-                    <option value="{{$customer->id}}">{{$customer->name}}</option>
+                    <option value="{{$customer->id}}">{{customer_shop_name($customer->id)}}</option>
                     @endforeach
                 </select>
             </div>
@@ -26,29 +26,36 @@
                 </select>
             </div>
         </div>
+        <!-- date -->
+        <div class="col-md-12 date_wrapper">
+            <div class="form-group">
+                <label for="">Date</label>
+                <input type="date" name="date" class="date form-control" required>
+            </div>
+        </div>
         <!-- total -->
         <div class="col-md-4 p-3 total_wrapper">
             <div class="form-group">
                 <label>Current Amount</label>
-                <input type="number" name="total" class="total form-control" min=0 readonly style="background-color: white;" value=0>
+                <input type="number" name="total" class="total form-control" min=0 readonly style="background-color: white;" value=0 step="0.01">
             </div>
         </div>
         <!-- previous_amount -->
         <div class="col-md-4 p-3 previous_amount_wrapper">
             <div class="form-group">
                 <label>Previous Amount</label>
-                <input type="number" name="previous_amount" class="previous_amount form-control" min=0 readonly style="background-color: white;" value=0>
+                <input type="number" name="previous_amount" class="previous_amount form-control" min=0 readonly style="background-color: white;" value=0 step="0.01">
             </div>
         </div>
         <!-- final_amount -->
         <div class="col-md-4 p-3 final_amount_wrapper">
             <div class="form-group">
                 <label>Final Amount</label>
-                <input type="number" name="final_amount" class="final_amount form-control" min=0 readonly style="background-color: white;" value=0>
+                <input type="number" name="final_amount" class="final_amount form-control" min=0 readonly style="background-color: white;" value=0 step="0.01">
             </div>
         </div>
         <!-- payment -->
-        <div class="col-md-4 p-3 payment_wrapper">
+        <div class="col-md-3 p-3 payment_wrapper">
             <div class="form-group">
                 <label for="">Payment</label>
                 <select name="payment" class="form-control payment" style="width: 100%;">
@@ -59,17 +66,24 @@
             </div>
         </div>
         <!-- amount_pay -->
-        <div class="col-md-4 p-3 amount_pay_wrapper">
+        <div class="col-md-3 p-3 amount_pay_wrapper">
             <div class="form-group">
                 <label>Amount Pay</label>
-                <input type="number" name="amount_pay" class="amount_pay form-control" min=0 style="background-color: white;" value=0>
+                <input type="number" name="amount_pay" class="amount_pay form-control" min=0 style="background-color: white;" value=0 step="0.01">
+            </div>
+        </div>
+        <!-- discount -->
+        <div class="col-md-3 p-3 discount_wrapper">
+            <div class="form-group">
+                <label>Discount</label>
+                <input type="number" name="discount" class="discount form-control" min=0 style="background-color: white;" value=0 step="0.01">
             </div>
         </div>
         <!-- balance_due -->
-        <div class="col-md-4 p-3 balance_due_wrapper">
+        <div class="col-md-3 p-3 balance_due_wrapper">
             <div class="form-group">
                 <label>Balance Due</label>
-                <input type="number" name="balance_due" class="balance_due form-control" min=0 readonly style="background-color: white;" value=0>
+                <input type="number" name="balance_due" class="balance_due form-control" min=0 readonly style="background-color: white;" value=0 step="0.01">
             </div>
         </div>
         <!-- description -->

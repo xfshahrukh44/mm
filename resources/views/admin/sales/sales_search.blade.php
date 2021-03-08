@@ -62,7 +62,7 @@
                             <select class="form-control customer_id" name="customer_ids[]" multiple="multiple">
                                 <option value="">Select Customer</option>
                                 @foreach($customers as $customer)
-                                    <option value="{{$customer->id}}">{{$customer->name}}</option>
+                                    <option value="{{$customer->id}}">{{customer_shop_name($customer->id)}}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -154,7 +154,7 @@
                             <select class="form-control customer_id" name="customer_id" multiple="multiple">
                                 <option value="">Select Customer</option>
                                 @foreach($customers as $customer)
-                                    <option value="{{$customer->id}}">{{$customer->name}}</option>
+                                    <option value="{{$customer->id}}">{{customer_shop_name($customer->id)}}</option>
                                 @endforeach
                             </select>
                         </div>

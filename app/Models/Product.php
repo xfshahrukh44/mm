@@ -127,4 +127,9 @@ class Product extends Model
     {
         return $this->hasMany('App\Models\SpecialDiscount');
     }
+
+    public function product_images()
+    {
+        return $this->hasMany('App\Models\ProductImage');
+    }
 }

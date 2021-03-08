@@ -198,7 +198,7 @@
             </div>
 
             <!-- tables -->
-            <div class="card-body row">
+            <div class="card-body row row overflow-auto col-md-12" style="height:36rem;">
               <!-- main info -->
               <div class="col-md-12" style="text-align: center;">
                 <!-- product_image -->
@@ -278,6 +278,8 @@
                   </table>
                 </div>
               @endcan
+              <div class="gallery_wrapper col-md-12 row p-4">
+              </div>
             </div>
 
 
@@ -410,10 +412,28 @@ $(document).ready(function(){
   //   "searching":false
   // });
 
+  // global vars
+  var product = "";
+
   // persistent active sidebar
   var element = $('li a[href*="'+ window.location.pathname +'"]');
   element.parent().parent().parent().addClass('menu-open');
   element.addClass('active');
+
+  // fetch product
+  function fetch_product(id){
+        // fetch product
+        $.ajax({
+            url: "<?php echo(route('product.show', 1)); ?>",
+            type: 'GET',
+            async: false,
+            data: {id: id},
+            dataType: 'JSON',
+            success: function (data) {
+                product = data.product;
+            }
+        });
+    }
 
   // create
   $('#add_product').on('click', function(){
@@ -448,7 +468,9 @@ $(document).ready(function(){
 
   // detail
   $('.detailButton').on('click', function(){
-    var product = $(this).data('object');
+    // var product = $(this).data('object');
+    var id = $(this).data('id');
+    fetch_product(id);
 
     $('.article').html(product.article);
     // gender
@@ -465,6 +487,18 @@ $(document).ready(function(){
     if(product.product_picture){
       var product_path = $(this).data('product');
       $('.product_picture').attr('src', product_path);
+    }
+    else{
+        var product_path = '{{asset("img/logo.png")}}';
+        $('.product_picture').attr('src', product_path);
+    }
+
+    // image gallery work
+    $('.gallery_wrapper').html('');
+    if(product.product_images.length > 0){
+      for(var i = 0; i < product.product_images.length; i++){
+        $('.gallery_wrapper').append(`<a target="_blank" href="{{asset('img/product_images')}}/`+product.product_images[i].location+`" class="col-md-4 mb-3"><img class="col-md-12 shop_keeper_picture" src="{{asset('img/product_images')}}/`+product.product_images[i].location+`"></a>`);
+      }
     }
 
     $('.category_id').html(product.category.name);

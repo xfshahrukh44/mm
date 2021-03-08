@@ -101,4 +101,10 @@
         <label for="">Minimum Ordering Quantity</label>
         <input type="number" min=0 name="moq" placeholder="Enter Minimum Ordering Quantity" class="form-control moq" required value=0>
     </div>
+
+    <!-- image -->
+    <div class="form-group col-md-12">
+        <label>Additional Images:</label> <br>
+        <input type="file" name="product_images[]" class="form-control" multiple>
+    </div>
 </div>

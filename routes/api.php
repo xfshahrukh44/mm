@@ -19,7 +19,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 // open routes
 Route::post('login', 'API\AuthController@login');
-Route::post('register', 'API\AuthController@store');
+// Route::post('register', 'API\AuthController@store'); //toggle
 
 // closed routes
 Route::group(['middleware' => ['auth:api', 'cors'], 'prefix' => 'auth'], function() {

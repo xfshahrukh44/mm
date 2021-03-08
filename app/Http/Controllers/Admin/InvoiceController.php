@@ -56,6 +56,7 @@ class InvoiceController extends Controller
     
     public function store(Request $request)
     {
+        // dd($request->all());
         $validator = Validator::make($request->all(), [
             'customer_id' => 'required',
             'order_id' => 'sometimes',
@@ -63,7 +64,8 @@ class InvoiceController extends Controller
             'total' => 'sometimes',
             'payment' => 'sometimes',
             'amount_pay' => 'sometimes',
-            'description' => 'sometimes'
+            'description' => 'sometimes',
+            'date' => 'sometimes'
         ]);
 
         if($validator->fails())
@@ -113,6 +115,9 @@ class InvoiceController extends Controller
     
     public function show(Request $request, $id)
     {
+        if(array_key_exists('id', $_REQUEST)){
+            return $this->invoiceService->find($_REQUEST['id']);
+        }
         $id = $request->invoice_id;
         return $this->invoiceService->find($id);
     }
@@ -137,7 +142,8 @@ class InvoiceController extends Controller
             'total' => 'sometimes',
             'payment' => 'sometimes',
             'amount_pay' => 'sometimes',
-            'description' => 'sometimes'
+            'description' => 'sometimes',
+            'date' => 'sometimes'
         ]);
 
         if($validator->fails())
@@ -165,8 +171,9 @@ class InvoiceController extends Controller
         $invoices = $this->invoiceService->search_invoices($query);
         $customers = $this->customerService->all();
         $products = $this->productService->all();
+        $riders = $this->userService->all_riders();
 
-        return view('admin.invoice.invoice', compact('invoices', 'customers', 'products'));
+        return view('admin.invoice.invoice', compact('invoices', 'customers', 'products', 'riders'));
     }
 
     public function fetch_invoice_products(Request $request)

@@ -165,8 +165,22 @@ $(document).ready(function(){
   element.parent().parent().parent().addClass('menu-open');
   element.addClass('active');
 
+  $('#addExpenseModal .customer_id').select2();
+
   // global vars
   var expense = "";
+
+  // on option_customer_discount click
+  $('#addExpenseModal #type').on('change', function(){
+    if($(this).val() == 'Customer discount' || $(this).val() == 'Bad Debt'){
+      $('#addExpenseModal .customer_wrapper').removeAttr('hidden');
+      $("#addExpenseModal .customer_id").attr("required", true);
+    }
+    else{
+      $('#addExpenseModal .customer_wrapper').attr('hidden', 'hidden');
+      $("#addExpenseModal .customer_id").prop("required", false);
+    }
+  });
 
   // fetch expense
   function fetch_expense(id){
@@ -187,10 +201,14 @@ $(document).ready(function(){
   $('#add_expense').on('click', function(){
     // fetch_all_stores();
     // fetch_all_brands();
+      $('#addExpenseModal .customer_wrapper').attr('hidden', 'hidden');
+      $("#addExpenseModal .customer_id").prop("required", false);
   });
 
   // edit
   $('.editButton').on('click', function(){
+    $('#editExpenseModal .customer_wrapper').attr('hidden', 'hidden');
+    $("#editExpenseModal .customer_id").prop("required", false);
     var id = $(this).data('id');
     var expense = $(this).data('object');
     $('#hidden').val(id);

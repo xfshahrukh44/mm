@@ -76,7 +76,7 @@ abstract class ProductRepository implements RepositoryInterface
             return [
                 'success' => true,
                 'message' => 'Updated successfully!',
-                'updated_product' => $this->find($temp->id),
+                'product' => $this->find($temp->id),
             ];
         }
         catch (\Exception $exception) {
@@ -88,7 +88,7 @@ abstract class ProductRepository implements RepositoryInterface
     {
         try 
         {
-            $product = $this->model::with('category', 'brand', 'unit', 'special_discounts.customer.market.area')->find($id);
+            $product = $this->model::with('category', 'brand', 'unit', 'special_discounts.customer.market.area', 'product_images')->find($id);
             if(!$product)
             {
                 return [

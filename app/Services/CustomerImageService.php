@@ -2,11 +2,11 @@
 
 namespace App\Services;
 
-use App\Repositories\CustomerRepository;
+use App\Repositories\CustomerImageRepository;
 use Illuminate\Support\Facades\DB;
 
 
-class CustomerService extends CustomerRepository
+class CustomerImageService extends CustomerImageRepository
 {
     
 }

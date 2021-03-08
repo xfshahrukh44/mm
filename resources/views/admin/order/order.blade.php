@@ -27,7 +27,7 @@
         <div class="card">
             <div class="card-header">
                 <div class="card-tools">
-                    <button class="btn btn-success testbtn" id="add_program" data-route="{{route('order.store')}}"">
+                    <button class="btn btn-success testbtn" id="add_program" data-route="{{route('order.store')}}">
                         <i class="fas fa-plus"></i>
                     </button>
                 </div>
@@ -36,7 +36,11 @@
                     <div class="row">
                         <!-- search bar -->
                         <div class="topnav col-md-4">
-                            <input name="query" class="form-control" id="search_content" type="text" placeholder="Search..">
+                            <input name="query" class="form-control query" id="search_content" type="text" placeholder="Search..">
+                        </div>
+                        <!-- dispatch_date -->
+                        <div class="topnav col-md-4">
+                            <input name="dispatch_date" class="form-control dispatch_date2" id="search_content" type="date" placeholder="Dispatch Date">
                         </div>
                         <!-- search button-->
                         <button type="submit" class="btn btn-primary col-md-0 justify-content-start" id="search_button">
@@ -52,7 +56,8 @@
                         <thead>
                             <tr role="row">
                               <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Order ID: activate to sort column ascending"><i  class="fa fa-arrow-up arrow_up_down"></i><i class="fa fa-arrow-down arrow_up_down"></i>Order ID</th>
-                              <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Date: activate to sort column ascending">Date</th>
+                              <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Date: activate to sort column ascending">Date Punched</th>
+                              <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Date: activate to sort column ascending">Dispatch Date</th>
                               <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Customer Name: activate to sort column ascending">Customer Name</th>
                               <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Phone: activate to sort column ascending">Phone</th>
                               <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Address: activate to sort column ascending">Address</th>
@@ -72,7 +77,8 @@
                                 @foreach($orders as $order)
                                     <tr role="row" class="odd">
                                         <td class="{{'order_id'.$order->id}}">{{$order->id}}</td>
-                                        <td class="{{'total'.$order->id}}">{{$order->created_at ? return_date($order->created_at) : NULL}}</td>
+                                        <td class="{{'created_at'.$order->id}}">{{$order->created_at ? return_date($order->created_at) : NULL}}</td>
+                                        <td class="{{'dispatch_date'.$order->id}}">{{$order->dispatch_date ? return_date_wo_time($order->dispatch_date) : NULL}}</td>
                                         <td class="{{'customer_id'.$order->id}}" data-id="{{$order->customer_id}}" data-object="{{$order->customer ? $order->customer : NULL}}">
                                             <a href="#" class="viewProfileButton" data-id="{{$order->customer_id}}" data-type="{{$order->customer ? $order->customer->type : NULL}}" data-route="{{$order->customer ? route('customer.show',$order->customer->id) : '#'}}">
                                                 {{$order->customer ? $order->customer->name : NULL}}
@@ -96,7 +102,7 @@
                                         @endcan
                                         <td>
                                             <!-- Detail -->
-                                            <a href="#" class="detailButton" data-id="{{$order->id}}" data-type="{{$order->id}}">
+                                            <a href="#" class="detailButton" data-id="{{$order->id}}" data-type="{{$order->id}}" data-image="{{asset('img/order_images') . '/' . $order->image}}">
                                                 <i class="fas fa-shopping-basket blue ml-1"></i>
                                             </a>
                                             @can('isSuperAdmin')
@@ -122,7 +128,7 @@
                                 @endforeach
                             @else
                                 <tr>
-                                    <td colspan=11><h6 align="center">No order(s) found</h6></td>
+                                    <td colspan=12><h6 align="center">No order(s) found</h6></td>
                                 </tr>
                             @endif
                         </tbody>
@@ -153,7 +159,7 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form class="col-md-12" method="POST" action="{{route('order.store')}}">
+            <form class="col-md-12" method="POST" action="{{route('order.store')}}" enctype="multipart/form-data">
                 @method('POST')
                 @include('admin.order.order_master')
 
@@ -176,7 +182,7 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form id="editForm" method="POST" action="{{route('order.update', 1)}}">
+            <form id="editForm" method="POST" action="{{route('order.update', 1)}}" enctype="multipart/form-data">
                 <!-- hidden input -->
                 @method('PUT')
                 <input type="hidden" class="hidden" name="hidden">
@@ -201,7 +207,7 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form id="invoiceForm" method="POST" action="{{route('invoice.store')}}">
+            <form id="invoiceForm" method="POST" action="{{route('invoice.store')}}" enctype="multipart/form-data">
 
                 @include('admin.order.order_master')
                 <!-- buttons -->
@@ -252,6 +258,9 @@
                     </button>
                 </div>
                 <div class="modal-body" style="overflow-x:auto;">
+                    <a href="{{asset('img/logo.png')}}" target="_blank" class="order_image_wrapper">
+                        <img class="image" src="{{asset('img/logo.png')}}" width="150">
+                    </a>
                     <table class=" table-bordered table-striped p-2" style="width:100%; border: 1px solid black;height: 20px;">
                         <tr role="row">
                             <th>Order id:</th>
@@ -379,6 +388,16 @@
 <script>
 
   $(document).ready(function(){
+    $.urlParam = function(name){
+        var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
+        if (results==null) {
+            return null;
+        }
+        return decodeURI(results[1]) || 0;
+    }
+    // console.log($.urlParam('query'));
+    $('.query').val($.urlParam('query') ? $.urlParam('query') : '');
+    $('.dispatch_date2').val($.urlParam('dispatch_date') ? $.urlParam('dispatch_date') : '');
     // persistent active sidebar
     var element = $('li a[href*="'+ window.location.pathname +'"]');
     element.parent().parent().parent().addClass('menu-open');
@@ -408,8 +427,8 @@
     // div strings
     var startDiv = '<div class="row">';
     var productDiv = '<div class="col-md-4"><div class="ui-widget"><input class="form-control product_search" name="products[]"><input class="hidden_product_search" type="hidden" name="hidden_product_ids[]"></div></div>';
-    var priceDiv = '<div class="form-group col-md-4"><input type="number" class="form-control prices" name="prices[]" required min=0></div>';
-    var quantityDiv = '<div class="form-group col-md-3"><input type="number" class="form-control quantities" name="quantities[]" required value=0></div>';
+    var priceDiv = '<div class="form-group col-md-4"><input type="number" class="form-control prices" name="prices[]" required min=0 step="0.01"></div>';
+    var quantityDiv = '<div class="form-group col-md-3"><input type="number" class="form-control quantities" name="quantities[]" required value=0 step="0.01"></div>';
     var removeChildDiv = '<div class="form-group col-md-0 ml-1 remove_button mt-1" style="display: table; vertical-align: middle;"><a class="btn btn-primary"><i class="fas fa-minus" style="color:white;"></i></a></div>';
     var endDiv = '</div>';
     var fieldHTML = startDiv + productDiv + priceDiv + quantityDiv + removeChildDiv + endDiv;
@@ -478,6 +497,12 @@
     function get_order_total(form){
         var quantities = $(form + ' .quantities');
         var prices = $(form + ' .prices');
+        if(form == "#invoiceOrderModal"){
+            var discount = $(form + ' .discount').val();
+        }
+        else{
+            var discount = 0;
+        }
         var total = 0;
         for(var i = 0; i < prices.length; i++){
             total += ($(form + ' .prices')[i].value * $(form + ' .quantities')[i].value);
@@ -485,7 +510,7 @@
         $(form + ' .total').val(total);
         // final_amount
         $(form + ' .final_amount').val(parseInt($(form + ' .total').val()) + parseInt($(form + ' .previous_amount').val()));
-        $(form + ' .balance_due').val(parseInt($(form + ' .final_amount').val()) - parseInt($(form + ' .amount_pay').val()));
+        $(form + ' .balance_due').val(parseInt($(form + ' .final_amount').val()) - parseInt($(form + ' .amount_pay').val()) - discount);
     }
 
     // fetch_by_customer_and_product
@@ -517,16 +542,25 @@
     $('#addOrderModal').on('change', '.prices', function(){
         get_order_total('#addOrderModal');
     });
-    $('#addOrderModal').on('change', '.quantities', function(){
+    $('#addOrderModal').on('change', '.discount', function(){
         get_order_total('#addOrderModal');
     });
-    $('#addOrderModal').on('change', '.prices', function(){
-        get_order_total('#addOrderModal');
+    $('#editOrderModal').on('change', '.quantities', function(){
+        get_order_total('#editOrderModal');
+    });
+    $('#editOrderModal').on('change', '.prices', function(){
+        get_order_total('#editOrderModal');
+    });
+    $('#editOrderModal').on('change', '.discount', function(){
+        get_order_total('#editOrderModal');
     });
     $('#invoiceOrderModal').on('change', '.quantities', function(){
         get_order_total('#invoiceOrderModal');
     });
     $('#invoiceOrderModal').on('change', '.prices', function(){
+        get_order_total('#invoiceOrderModal');
+    });
+    $('#invoiceOrderModal').on('change', '.discount', function(){
         get_order_total('#invoiceOrderModal');
     });
     // on customer change
@@ -647,8 +681,8 @@
 
         for(var i = 0; i < order.order_products.length; i++){
             var productDiv = '<div class="col-md-4"><div class="ui-widget"><input class="form-control product_search" name="products[]" value="'+ order.order_products[i].product.article +'"><input class="hidden_product_search" type="hidden" name="hidden_product_ids[]" value="'+ order.order_products[i].product.id +'"></div></div>';
-            var priceDiv = '<div class="form-group col-md-4"><input type="number" class="form-control prices" name="prices[]" required min=0 value="'+ order.order_products[i].price +'"></div>';
-            var quantityDiv = '<div class="form-group col-md-3"><input type="number" class="form-control quantities" name="quantities[]" required min=0  value="'+ order.order_products[i].quantity +'"></div>';
+            var priceDiv = '<div class="form-group col-md-4"><input type="number" class="form-control prices" name="prices[]" required min=0 step="0.01" value="'+ order.order_products[i].price +'"></div>';
+            var quantityDiv = '<div class="form-group col-md-3"><input type="number" class="form-control quantities" name="quantities[]" required min=0 step="0.01" value="'+ order.order_products[i].quantity +'"></div>';
             var fieldHTML = startDiv + productDiv + priceDiv + quantityDiv + removeChildDiv + endDiv;
 
             $('.field_wrapper').prepend(fieldHTML);
@@ -669,13 +703,16 @@
         // un hide fields
         $('#invoiceOrderModal .payment_wrapper').removeAttr('hidden');
         $('#invoiceOrderModal .amount_pay_wrapper').removeAttr('hidden');
+        $('#invoiceOrderModal .discount_wrapper').removeAttr('hidden');
         $('#invoiceOrderModal .balance_due_wrapper').removeAttr('hidden');
         $('#invoiceOrderModal .rider_wrapper').removeAttr('hidden');
+        $('#invoiceOrderModal .date_wrapper').removeAttr('hidden');
 
         // hide fields
         $('#invoiceOrderModal .dispatch_date_wrapper').attr('hidden', 'hidden');
+        $('#invoiceOrderModal .image_wrapper').attr('hidden', 'hidden');
 
-        // remove required attribute on dispatch_date
+        // remove required attribute on 
         $("#invoiceOrderModal .dispatch_date").prop("required", false);
 
         // adjust bootstrap classes
@@ -688,14 +725,14 @@
 
         // set order_id
         $('#invoiceOrderModal .order_id').val($(this).data('id'));
-
         // select customer
         $('#invoiceOrderModal .customer_id option[value="'+ order.customer_id +'"]').prop('selected', true);
         $('#invoiceOrderModal .customer_id').trigger('change.select2');
         $('#invoiceOrderModal .customer_id').change();
-
         // set description
         $('#invoiceOrderModal .description').val(order.description);
+        // set date
+        $('#invoiceOrderModal .date').val(order.dispatch_date);
 
         // payment credit by default
         $('#invoiceOrderModal .payment option[value="credit"]').prop('selected', true);
@@ -707,8 +744,8 @@
         for(var i = 0; i < order.order_products.length; i++){
             if(order.order_products[i].invoiced == 0){
                 var productDiv = '<div class="col-md-4"><div class="ui-widget"><input name="order_products_ids[]" type="hidden" value="'+ order.order_products[i].id +'"><input class="form-control product_search" name="products[]" value="'+ order.order_products[i].product.category.name + ' - ' + order.order_products[i].product.brand.name + ' - ' + order.order_products[i].product.article +'"><input class="hidden_product_search" type="hidden" name="hidden_product_ids[]" value="'+ order.order_products[i].product.id +'"></div></div>';
-                var priceDiv = '<div class="form-group col-md-4"><input type="number" class="form-control prices" name="prices[]" required min=0 value="'+ order.order_products[i].price +'"></div>';
-                var quantityDiv = '<div class="form-group col-md-3"><input type="number" class="form-control quantities" name="quantities[]" required value="'+ order.order_products[i].quantity +'"></div>';
+                var priceDiv = '<div class="form-group col-md-4"><input type="number" class="form-control prices" name="prices[]" required min=0 step="0.01" value="'+ order.order_products[i].price +'"></div>';
+                var quantityDiv = '<div class="form-group col-md-3"><input type="number" class="form-control quantities" name="quantities[]" required step="0.01" value="'+ order.order_products[i].quantity +'"></div>';
                 var fieldHTML = startDiv + productDiv + priceDiv + quantityDiv + removeChildDiv + endDiv;
 
                 $('.field_wrapper').prepend(fieldHTML);
@@ -756,6 +793,18 @@
             $('#table_row_wrapper').append(' <tr role="row" class="odd"><td>'+ invoiced +'</td><td class="">'+order.order_products[i].product.category.name+'</td><td class="">'+order.order_products[i].product.brand.name+'</td><td class="">'+order.order_products[i].product.article+'</td><td class="">'+order.order_products[i].quantity+'</td><td class="">'+order.order_products[i].price+'</td><td class="">'+order.order_products[i].product.unit.name+'</td></tr>');
         }
 
+        if(order.image){
+            var image_path = $(this).data('image');
+            $('.image').attr('src', image_path);
+            $('.order_image_wrapper').attr('href', image_path);
+            // order_image_wrapper
+        }
+        else{
+            var image_path = '{{asset("img/logo.png")}}';
+            $('.image').attr('src', image_path);
+            $('.order_image_wrapper').attr('href', image_path);
+            // order_image_wrapper
+        }
         $('#order_id').text(order.id);
         $('#customer_name').text(order.customer.name);
         $('#contact_number').text(order.customer.contact_number);

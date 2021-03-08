@@ -171,6 +171,7 @@ $(document).ready(function(){
   //   "bInfo": false,
   //   "searching":false
   // });
+  $('#customer_id').select2();
 
   // persistent active sidebar
   var element = $('li a[href*="'+ window.location.pathname +'"]');

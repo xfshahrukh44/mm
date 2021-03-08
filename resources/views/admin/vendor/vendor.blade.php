@@ -388,7 +388,7 @@ $(document).ready(function(){
     $('#editForm .shop_number').val(vendor.shop_number);
     $('#editForm .floor').val(vendor.floor);
 
-    $('#editForm .area_id option[value="'+ vendor.area.id +'"]').prop('selected', true);
+    $('#editForm .area_id option[value="'+ (vendor.area? vendor.area.id: '') +'"]').prop('selected', true);
 
     $('#editForm .status option[value="'+ vendor.status +'"]').prop('selected', true);
     $('#editForm .visiting_days option[value="'+ vendor.visiting_days +'"]').prop('selected', true);
