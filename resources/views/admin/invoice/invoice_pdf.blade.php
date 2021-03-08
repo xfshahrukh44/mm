@@ -9,7 +9,7 @@
 </head>
 
     <style>
-        .table3, .tbl_3{
+        .table3,.table4, .tbl_3{
             border: 1px solid black;
         }
         label, input, td, th{
@@ -23,24 +23,17 @@
         }
         .master_img{
             width: 10%;
-            margin-left: 39.5%;
-            /* margin-top: 10%; */
         }
         .gold_img{
             width: 10%;
-            margin-left: 50%;
-            margin-top: -19%;
-            margin-bottom: 0%;
         }
         .both_img{
-            margin-top: -2%;
+            text-align: center;
         }
         .headin_gs{
-            /* font-family: inherit !important; */
             text-align: center;
         }
         h5{
-            margin-bottom: -3px;
             font-size: 18px;
         }
         h6{
@@ -51,21 +44,37 @@
         }
         .table3{
             width: 100%;
+            margin-top:-8%
+        }
+        .table4{
+            width: 100%;
+            margin-top:-14%
+        }
+        .nulki_img{
+            text-align: center;
+        }
+        .nulki_img img{
+            width: 25%;
+            margin-top: 10%;
+            opacity: 0.6;
+        }
+        .nulki_img2{
+            text-align: center;
+        }
+        .nulki_img2 img{
+            width: 25%;
+            margin-top: 13%;
+            opacity: 0.6;
         }
     </style>
     <body>
         <div class="both_img">
-            <div class="master_img">
-                <img class="img-fluid" src="../public/pdf_img/mg-02.jpg" alt="Master">
-            </div>
-
-            <div class="gold_img">
-                <img class="img-fluid" src="../public/pdf_img/mg-01.jpg" alt="Gold">
-            </div>
+            <img class="img-fluid master_img" src="../public/pdf_img/mg-02.jpg" alt="Master">
+            <img class="img-fluid gold_img" src="../public/pdf_img/mg-01.jpg" alt="Gold">
         </div>
 
         <div class="headin_gs">
-            <p style="font-size: 10px;  margin-top:0%;">Plot 247, sector 16b, Malik Anwar goth, Gabol town, North Karachi.</p>
+            <p style="font-size: 10px;">Plot 247, sector 16b, Malik Anwar goth, Gabol town, North Karachi.</p>
         </div>
 
         <div class="row">
@@ -130,13 +139,11 @@
                 </table>
             </div>
         </div>
-        <br>
-        <br>
-        <br>
-        <br>
-            <img src="../public/pdf_img/NULK.png" alt="" style="width: 25%; position:absolute; z-index:-111; left:38%; opacity:0.4; top:11%;">
-            <div class="mt-5">
-                <table class="table3">
+        <div class="nulki_img ">
+            <img src="../public/pdf_img/NULK.png" alt="">
+        </div>
+        <div class="">
+            <table class="table3">
                     <tr>
                     <th class="tbl_3">Qty.</th>
                     <th class="tbl_3">Details</th>
@@ -180,7 +187,7 @@
                         <td style="border: none">
                             <input type="text">
                             <br>
-                            <label  style="margin-left:5%;" for="">Customer Receiving</label>
+                            <label for="">Customer Receiving</label>
                         </td>
                         <td style="border: none; font-size: 10px; font-weight:700;">Amount Received</td>
                         <td class="tbl_3" style="text-align: right">{{($invoice->amount_pay != 0) ? number_format(intval($invoice->amount_pay)) : ""}}</td>
@@ -194,46 +201,36 @@
                 </table>
             </div>
 
-        <!-- message -->
-        <div class="row text-center">
-            <p style="font-size:12px;">Discription</p>
+            <!-- message -->
+            <div class="row text-center">
+                <p style="font-size:12px; margin-top:-3%;">Discription</p>
+            </div>
+            <!-- logos -->
+            {{-- <div class="row text-center">
+                <!-- sui dhaaga -->
+                <img src="../public/img/sdpl4.png" alt="core2plusIcon" style="width: 10%; margin-left:-11%;">
+                <p style="font-size:8px; margin-top:6%; margin-left:-12%;">www.masterdhaga.com</p>
+                <!-- powered by core2plus -->
+                <p style="font-size:8px; margin-left:7%;">Powered By</p>
+                <img src="../public/img/core2plusIcon.jpg" alt="core2plusIcon" style="width: 5%; margin-left:7%; margin-top:2%;">
+                <p style="font-size:8px; margin-top:6%; margin-left:7%;" >core2plus.com</p>
+            </div> --}}
         </div>
-        <!-- logos -->
-        {{-- <div class="row text-center">
-            <!-- sui dhaaga -->
-            <div class="text-center" style="margin-right:4.8rem;">
-                <img src="../public/img/sdpl4.png" alt="core2plusIcon" style="width: 10%; margin-top:-0.08rem;">
-                <p style="font-size:8px;">www.masterdhaga.com</p>
-            </div>
-            <!-- powered by core2plus -->
-            <div class="text-center" style="margin-left:4.8rem;">
-                <p style="font-size:8px;">Powered By</p>
-                <img src="../public/img/core2plusIcon.jpg" alt="core2plusIcon" style="width: 6%; margin-top:-0.5rem;">
-                <p style="font-size:8px;">core2plus.com</p>
-            </div>
-        </div> --}}
-        <br>
-        <br>
-        <br>
-        <br>
-        {{-- customer pdf --}}
-        <div class="both_img">
-            <div class="master_img">
-                <img class="img-fluid" src="../public/pdf_img/mg-02.jpg" alt="Master">
-            </div>
 
-            <div class="gold_img">
-                <img class="img-fluid" src="../public/pdf_img/mg-01.jpg" alt="Gold">
-            </div>
+
+        {{-- CUSTOMER PDF --}}
+        <div class="both_img">
+            <img class="img-fluid master_img" src="../public/pdf_img/mg-02.jpg" alt="Master">
+            <img class="img-fluid gold_img" src="../public/pdf_img/mg-01.jpg" alt="Gold">
         </div>
 
         <div class="headin_gs">
-            <p style="font-size: 10px; margin-top:0%;">Plot 247, sector 16b, Malik Anwar goth, Gabol town, North Karachi.</p>
+            <p style="font-size: 10px;">Plot 247, sector 16b, Malik Anwar goth, Gabol town, North Karachi.</p>
         </div>
 
         <div class="row">
             <div>
-                <table class="table-sm table-condensed" align="right">
+                <table class="table-sm" align="right">
                     <tbody>
                         <tr>
                             <th class="text-left">Rider Name:</th>
@@ -293,13 +290,11 @@
                 </table>
             </div>
         </div>
-        <br>
-        <br>
-        <br>
-        <br>
-            <img src="../public/pdf_img/NULK.png" alt="" style="width: 25%; position:absolute; z-index:-111; left:35%; opacity:0.4; top:52%;">
-            <div class="mt-5">
-                <table class="table3">
+        <div class="nulki_img2">
+            <img src="../public/pdf_img/NULK.png" alt="">
+        </div>
+        <div class="">
+            <table class="table4">
                     <tr>
                     <th class="tbl_3">Qty.</th>
                     <th class="tbl_3">Details</th>
@@ -341,9 +336,9 @@
                     <tr>
                         <td style="border: none"></td>
                         <td style="border: none">
-                            <input type="text" style="display:none;">
+                            <input type="text" style="display: none;">
                             <br>
-                            <label  style="margin-left:5%; display:none;" for="">Customer Receiving</label>
+                            <label for="" style="display: none;">Customer Receiving</label>
                         </td>
                         <td style="border: none; font-size: 10px; font-weight:700;">Amount Received</td>
                         <td class="tbl_3" style="text-align: right">{{($invoice->amount_pay != 0) ? number_format(intval($invoice->amount_pay)) : ""}}</td>
@@ -357,22 +352,19 @@
                 </table>
             </div>
 
-        <!-- message -->
-        <div class="row text-center">
-            <p style="font-size:12px;">This is a computer generated invoice and requires no signature</p>
-        </div>
-        <!-- logos -->
-        <div class="row text-center">
-            <!-- sui dhaaga -->
-            <div class="text-center" style="margin-right:4.8rem;">
-                <img src="../public/img/sdpl4.png" alt="core2plusIcon" style="width: 10%; margin-top:-0.08rem;">
-                <p style="font-size:8px;">www.masterdhaga.com</p>
+            <!-- message -->
+            <div class="row text-center">
+                <p style="font-size:12px; margin-top:1%;">This is a computer generated invoice and requires no signature</p>
             </div>
-            <!-- powered by core2plus -->
-            <div class="text-center" style="margin-left:4.8rem;">
-                <p style="font-size:8px;">Powered By</p>
-                <img src="../public/img/core2plusIcon.jpg" alt="core2plusIcon" style="width: 6%; margin-top:-0.5rem;">
-                <p style="font-size:8px;">core2plus.com</p>
+            <!-- logos -->
+            <div class="row text-center">
+                <!-- sui dhaaga -->
+                <img src="../public/img/sdpl4.png" alt="core2plusIcon" style="width: 10%; margin-left:-11%;">
+                <p style="font-size:8px; margin-top:10%; margin-left:-12%;">www.masterdhaga.com</p>
+                <!-- powered by core2plus -->
+                <p style="font-size:8px; margin-left:7%;">Powered By</p>
+                <img src="../public/img/core2plusIcon.jpg" alt="core2plusIcon" style="width: 5%; margin-left:7%; margin-top:2%;">
+                <p style="font-size:8px; margin-top:10%; margin-left:7%;" >core2plus.com</p>
             </div>
         </div>
 
