@@ -119,5 +119,10 @@ class Customer extends Model
     {
         return $this->hasMany('App\Models\CustomerImage');
     }
+    
+    public function expenses()
+    {
+        return $this->hasMany('App\Models\Expense');
+    }
 
 }

@@ -85,7 +85,7 @@ abstract class ExpenseRepository implements RepositoryInterface
     {
         try 
         {
-            $expense = $this->model::with('area', 'ledgers', 'payments', 'stock_ins')->find($id);
+            $expense = $this->model::with('area', 'ledgers', 'payments', 'stock_ins', 'customer')->find($id);
             if(!$expense)
             {
                 return [

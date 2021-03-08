@@ -34,7 +34,9 @@ class InvoiceProduct extends Model
         });
 
         static::deleting(function ($query) {
-            $stock_out = StockOut::where('customer_id', $query->customer_id)
+            $invoice = Invoice::find($query->invoice_id);
+            $customer_id = $invoice->customer_id;
+            $stock_out = StockOut::where('customer_id', $customer_id)
                                 ->where('product_id', $query->product_id)
                                 ->where('quantity', $query->quantity)
                                 ->where('price', $query->price)

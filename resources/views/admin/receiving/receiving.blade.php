@@ -46,7 +46,7 @@
                 <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1">Customer Name</th>
                 <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1">Invoice Total</th>
                 <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1">Payment Received</th>
-                <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1">Approved</th>
+                <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1">Status</th>
                 <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1">Created By</th>
                 <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1">Modified By</th>
                 <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1">Actions</th>
@@ -64,6 +64,8 @@
                     <td class="{{'is_received'.$receiving->id}} text-center">
                       @if ($receiving->is_received == 1)
                           <span class="badge badge-pill badge-success" style="font-size: 0.9rem; color: white;">Approved</span>
+                      @else
+                        <span class="badge badge-pill badge-warning" style="font-size: 0.9rem; color: white;">Pending</span>
                       @endif
                     </td>
                     <td class="{{'created_by'.$receiving->id}}">{{return_user_name($receiving->created_by)}}</td>
