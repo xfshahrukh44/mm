@@ -33,12 +33,11 @@
             margin-bottom: 0%;
         }
         .both_img{
-            margin-top: -5%;
+            margin-top: -2%;
         }
         .headin_gs{
             /* font-family: inherit !important; */
             text-align: center;
-            margin-top: -2%;
         }
         h5{
             margin-bottom: -3px;
@@ -66,7 +65,7 @@
         </div>
 
         <div class="headin_gs">
-            <p style="font-size: 10px;  margin-top:-2%;">Plot 247, sector 16b, Malik Anwar goth, Gabol town, North Karachi.</p>
+            <p style="font-size: 10px;  margin-top:0%;">Plot 247, sector 16b, Malik Anwar goth, Gabol town, North Karachi.</p>
         </div>
 
         <div class="row">
@@ -135,7 +134,7 @@
         <br>
         <br>
         <br>
-            <img src="../public/pdf_img/NULK.png" alt="" style="width: 25%; position:absolute; z-index:-111; left:35%; opacity:0.4; top:16%;">
+            <img src="../public/pdf_img/NULK.png" alt="" style="width: 25%; position:absolute; z-index:-111; left:38%; opacity:0.4; top:11%;">
             <div class="mt-5">
                 <table class="table3">
                     <tr>
@@ -216,6 +215,7 @@
         <br>
         <br>
         <br>
+        <br>
         {{-- customer pdf --}}
         <div class="both_img">
             <div class="master_img">
@@ -228,7 +228,7 @@
         </div>
 
         <div class="headin_gs">
-            <p style="font-size: 10px;  margin-top:-3%;">Plot 247, sector 16b, Malik Anwar goth, Gabol town, North Karachi.</p>
+            <p style="font-size: 10px; margin-top:0%;">Plot 247, sector 16b, Malik Anwar goth, Gabol town, North Karachi.</p>
         </div>
 
         <div class="row">
@@ -297,7 +297,7 @@
         <br>
         <br>
         <br>
-            <img src="../public/pdf_img/NULK.png" alt="" style="width: 25%; position:absolute; z-index:-111; left:35%; opacity:0.4; top:58%;">
+            <img src="../public/pdf_img/NULK.png" alt="" style="width: 25%; position:absolute; z-index:-111; left:35%; opacity:0.4; top:52%;">
             <div class="mt-5">
                 <table class="table3">
                     <tr>
