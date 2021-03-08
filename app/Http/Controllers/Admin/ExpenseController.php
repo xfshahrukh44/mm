@@ -51,18 +51,7 @@ class ExpenseController extends Controller
 
         // $this->expenseService->create($request->all());
         $expense = Expense::create($request->all());
-
-        // if bad debt or cus discount
-        if(array_key_exists('customer_id', $request->all())){
-            $this->ledgerService->create([
-                'expense_id' => $expense->id,
-                'customer_id' => $request->customer_id,
-                'type' => 'credit',
-                'amount' => $request->amount
-            ]);
-        }
-
-
+        
         return redirect()->back();
     }
     

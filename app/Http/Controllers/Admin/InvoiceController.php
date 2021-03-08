@@ -159,6 +159,17 @@ class InvoiceController extends Controller
     {
         $id = $request->hidden;
 
+        // find invoice
+        if(!(array_key_exists('invoice_id', $request->all()))){
+            $request['invoice_id'] = $id;
+        }
+        $invoice = ($this->show($request, $id))['invoice'];
+
+        // delete children items
+        foreach($invoice->invoice_products as $invoice_product){
+            $invoice_product->delete();
+        }
+
         $this->invoiceService->delete($id);
 
         return redirect()->back();

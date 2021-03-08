@@ -28,10 +28,15 @@
             width: 10%;
         }
         .both_img{
+<<<<<<< HEAD
             text-align: center;
+=======
+            margin-top: -5%;
+>>>>>>> 479f6c528571d10d3d73a07d22b3d7378d75fd60
         }
         .headin_gs{
             text-align: center;
+            margin-top: -2%;
         }
         h5{
             font-size: 18px;
@@ -74,7 +79,11 @@
         </div>
 
         <div class="headin_gs">
+<<<<<<< HEAD
             <p style="font-size: 10px;">Plot 247, sector 16b, Malik Anwar goth, Gabol town, North Karachi.</p>
+=======
+            <p style="font-size: 10px;  margin-top:-2%;">Plot 247, sector 16b, Malik Anwar goth, Gabol town, North Karachi.</p>
+>>>>>>> 479f6c528571d10d3d73a07d22b3d7378d75fd60
         </div>
 
         <div class="row">
@@ -139,11 +148,21 @@
                 </table>
             </div>
         </div>
+<<<<<<< HEAD
         <div class="nulki_img ">
             <img src="../public/pdf_img/NULK.png" alt="">
         </div>
         <div class="">
             <table class="table3">
+=======
+        <br>
+        <br>
+        <br>
+        <br>
+            <img src="../public/pdf_img/NULK.png" alt="" style="width: 25%; position:absolute; z-index:-111; left:35%; opacity:0.4; top:16%;">
+            <div class="mt-5">
+                <table class="table3">
+>>>>>>> 479f6c528571d10d3d73a07d22b3d7378d75fd60
                     <tr>
                     <th class="tbl_3">Qty.</th>
                     <th class="tbl_3">Details</th>
@@ -201,9 +220,37 @@
                 </table>
             </div>
 
+<<<<<<< HEAD
             <!-- message -->
             <div class="row text-center">
                 <p style="font-size:12px; margin-top:-3%;">Discription</p>
+=======
+        <!-- message -->
+        <div class="row text-center">
+            <p style="font-size:12px;">Discription</p>
+        </div>
+        <!-- logos -->
+        {{-- <div class="row text-center">
+            <!-- sui dhaaga -->
+            <div class="text-center" style="margin-right:4.8rem;">
+                <img src="../public/img/sdpl4.png" alt="core2plusIcon" style="width: 10%; margin-top:-0.08rem;">
+                <p style="font-size:8px;">www.masterdhaga.com</p>
+            </div>
+            <!-- powered by core2plus -->
+            <div class="text-center" style="margin-left:4.8rem;">
+                <p style="font-size:8px;">Powered By</p>
+                <img src="../public/img/core2plusIcon.jpg" alt="core2plusIcon" style="width: 6%; margin-top:-0.5rem;">
+                <p style="font-size:8px;">core2plus.com</p>
+            </div>
+        </div> --}}
+        <br>
+        <br>
+        <br>
+        {{-- customer pdf --}}
+        <div class="both_img">
+            <div class="master_img">
+                <img class="img-fluid" src="../public/pdf_img/mg-02.jpg" alt="Master">
+>>>>>>> 479f6c528571d10d3d73a07d22b3d7378d75fd60
             </div>
             <!-- logos -->
             {{-- <div class="row text-center">
@@ -225,7 +272,11 @@
         </div>
 
         <div class="headin_gs">
+<<<<<<< HEAD
             <p style="font-size: 10px;">Plot 247, sector 16b, Malik Anwar goth, Gabol town, North Karachi.</p>
+=======
+            <p style="font-size: 10px;  margin-top:-3%;">Plot 247, sector 16b, Malik Anwar goth, Gabol town, North Karachi.</p>
+>>>>>>> 479f6c528571d10d3d73a07d22b3d7378d75fd60
         </div>
 
         <div class="row">
@@ -290,11 +341,21 @@
                 </table>
             </div>
         </div>
+<<<<<<< HEAD
         <div class="nulki_img2">
             <img src="../public/pdf_img/NULK.png" alt="">
         </div>
         <div class="">
             <table class="table4">
+=======
+        <br>
+        <br>
+        <br>
+        <br>
+            <img src="../public/pdf_img/NULK.png" alt="" style="width: 25%; position:absolute; z-index:-111; left:35%; opacity:0.4; top:58%;">
+            <div class="mt-5">
+                <table class="table3">
+>>>>>>> 479f6c528571d10d3d73a07d22b3d7378d75fd60
                     <tr>
                     <th class="tbl_3">Qty.</th>
                     <th class="tbl_3">Details</th>
