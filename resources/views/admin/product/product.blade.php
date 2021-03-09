@@ -422,18 +422,38 @@ $(document).ready(function(){
 
   // fetch product
   function fetch_product(id){
-        // fetch product
-        $.ajax({
-            url: "<?php echo(route('product.show', 1)); ?>",
-            type: 'GET',
-            async: false,
-            data: {id: id},
-            dataType: 'JSON',
-            success: function (data) {
-                product = data.product;
-            }
-        });
-    }
+      // fetch product
+      $.ajax({
+          url: "<?php echo(route('product.show', 1)); ?>",
+          type: 'GET',
+          async: false,
+          data: {id: id},
+          dataType: 'JSON',
+          success: function (data) {
+              product = data.product;
+          }
+      });
+  }
+
+  // delete_product_image
+  function delete_product_image(product_image_id, image_container){
+    var temp_route = "<?php echo(route('product_image.destroy', ':id')); ?>";
+    temp_route = temp_route.replace(':id', product_image_id);
+
+    $.ajax({
+        url: temp_route,
+        type: 'DELETE',
+        data: {
+          "_token": "{{ csrf_token() }}",
+          product_image_id: product_image_id
+        },
+        dataType: 'JSON',
+        async: false,
+        success: function (data) {
+          image_container.remove();
+        }
+    });
+  }
 
   // create
   $('#add_product').on('click', function(){
@@ -497,7 +517,7 @@ $(document).ready(function(){
     $('.gallery_wrapper').html('');
     if(product.product_images.length > 0){
       for(var i = 0; i < product.product_images.length; i++){
-        $('.gallery_wrapper').append(`<a target="_blank" href="{{asset('img/product_images')}}/`+product.product_images[i].location+`" class="col-md-4 mb-3"><img class="col-md-12 shop_keeper_picture" src="{{asset('img/product_images')}}/`+product.product_images[i].location+`"></a>`);
+        $('.gallery_wrapper').append(`<div class="col-md-4 mb-3"><a target="_blank" href="{{asset('img/product_images')}}/`+product.product_images[i].location+`" class="col-md-12"><img class="col-md-12 shop_keeper_picture" src="{{asset('img/product_images')}}/`+product.product_images[i].location+`"></a><button class="btn btn_del_product_image" value="`+product.product_images[i].id+`" type="button"><i class="fas fa-trash red ml-1"></i></button></div>`);
       }
     }
 
@@ -595,6 +615,13 @@ $(document).ready(function(){
             $('#unitName').val("");
           }
       });
+  });
+
+  // on btn_del_product_image click
+  $('#viewProductModal').on('click', '.btn_del_product_image', function(){
+    var product_image_id = $(this).val();
+    var image_container = $(this).parent();
+    delete_product_image(product_image_id, image_container);
   });
 
 });

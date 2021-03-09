@@ -64,6 +64,8 @@ Route::group(['middleware' => 'auth', 'prefix' => 'admin'], function() {
     Route::apiResources(['payment'=>'Admin\PaymentController']);
     Route::apiResources(['expense'=>'Admin\ExpenseController']);
     Route::apiResources(['marketing'=>'Admin\MarketingController']);
+    Route::apiResources(['customer_image'=>'Admin\CustomerImageController']);
+    Route::apiResources(['product_image'=>'Admin\ProductImageController']);
     // --------------------------------------------------------------
 
     // SEARCH ROUTES--------------------------------------------------------------------------------------------

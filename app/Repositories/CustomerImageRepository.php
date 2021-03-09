@@ -8,6 +8,7 @@ use App\Exceptions\CustomerImage\UpdateCustomerImageException;
 use App\Exceptions\CustomerImage\DeleteCustomerImageException;
 use App\Models\CustomerImage;
 use App\Models\Customer;
+use Storage;
 
 abstract class CustomerImageRepository implements RepositoryInterface
 {
@@ -44,7 +45,10 @@ abstract class CustomerImageRepository implements RepositoryInterface
                 ];
             }
 
+            // delete record
             $this->model->destroy($id);
+            // delete image
+            Storage::disk('customer_images')->delete($temp->location);
 
             return [
                 'success' => true,

@@ -449,6 +449,26 @@ $(document).ready(function(){
     });
   }
 
+  // delete_customer_image
+  function delete_customer_image(customer_image_id, image_container){
+    var temp_route = "<?php echo(route('customer_image.destroy', ':id')); ?>";
+    temp_route = temp_route.replace(':id', customer_image_id);
+
+    $.ajax({
+        url: temp_route,
+        type: 'DELETE',
+        data: {
+          "_token": "{{ csrf_token() }}",
+          customer_image_id: customer_image_id
+        },
+        dataType: 'JSON',
+        async: false,
+        success: function (data) {
+          image_container.remove();
+        }
+    });
+  }
+
   // create
   $('#add_customer').on('click', function(){
     // market_id
@@ -544,7 +564,7 @@ $(document).ready(function(){
     $('.gallery_wrapper').html('');
     if(customer.customer_images.length > 0){
       for(var i = 0; i < customer.customer_images.length; i++){
-        $('.gallery_wrapper').append(`<a target="_blank" href="{{asset('img/customer_images')}}/`+customer.customer_images[i].location+`" class="col-md-4 mb-3"><img class="col-md-12 shop_keeper_picture" src="{{asset('img/customer_images')}}/`+customer.customer_images[i].location+`"></a>`);
+        $('.gallery_wrapper').append(`<div class="col-md-4 mb-3"><a target="_blank" href="{{asset('img/customer_images')}}/`+customer.customer_images[i].location+`" class="col-md-12"><img class="col-md-12 shop_keeper_picture" src="{{asset('img/customer_images')}}/`+customer.customer_images[i].location+`"></a><button class="btn btn_del_customer_image" value="`+customer.customer_images[i].id+`" type="button"><i class="fas fa-trash red ml-1"></i></button></div>`);
       }
     }
 
@@ -573,6 +593,13 @@ $(document).ready(function(){
   $('.area_id').on('change', function(){
     var area_id = $(this).val();
     fetch_specific_markets(area_id);
+  });
+
+  // on btn_del_customer_image click
+  $('#viewCustomerModal').on('click', '.btn_del_customer_image', function(){
+    var customer_image_id = $(this).val();
+    var image_container = $(this).parent();
+    delete_customer_image(customer_image_id, image_container);
   });
 
   //Once add button is clicked on create*

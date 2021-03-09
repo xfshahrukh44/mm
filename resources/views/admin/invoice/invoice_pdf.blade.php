@@ -137,7 +137,7 @@
                         <tr>
                             <th class="text-left">Market & area:</th>
                             <td class="text-left" value="{{($invoice->customer && $invoice->customer->market && $invoice->customer->market->area) ? $invoice->customer->market->name.'-'.$invoice->customer->market->area->name : NULL}}">
-                            {{($invoice->customer && $invoice->customer->market && $invoice->customer->market->area) ? $invoice->customer->market->name.'-'.$invoice->customer->market->area->name : NULL}}
+                            {{($invoice->customer && $invoice->customer->market && $invoice->customer->market->area) ? $invoice->customer->market->name.','.$invoice->customer->market->area->name : NULL}}
                             </td>
                         </tr>
 
@@ -209,7 +209,7 @@
 
             <!-- message -->
             <div class="row text-center">
-                <p class="discription">Discription</p>
+                <p class="discription">{{($invoice->description) ? ($invoice->description) : ''}}</p>
             </div>
             <!-- logos -->
             {{-- <div class="row text-center">

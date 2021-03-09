@@ -8,6 +8,7 @@ use App\Exceptions\ProductImage\UpdateProductImageException;
 use App\Exceptions\ProductImage\DeleteProductImageException;
 use App\Models\ProductImage;
 use App\Models\Product;
+use Storage;
 
 abstract class ProductImageRepository implements RepositoryInterface
 {
@@ -44,7 +45,10 @@ abstract class ProductImageRepository implements RepositoryInterface
                 ];
             }
 
+            // delete record
             $this->model->destroy($id);
+            // delete image
+            Storage::disk('product_images')->delete($temp->location);
 
             return [
                 'success' => true,
