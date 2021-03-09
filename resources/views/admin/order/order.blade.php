@@ -88,9 +88,12 @@
                                         <td class="{{'address'.$order->id}}">{{$order->customer ? ($order->customer->shop_name . ' - ' . ($order->customer->market ? $order->customer->market->name : NULL) . ' - ' . ($order->customer->market && $order->customer->market->area ? $order->customer->market->area->name : NULL)) : NULL}}</td>
                                         <td class="{{'total'.$order->id}}">RS.{{number_format($order->total)}}</td>
                                         <td class="{{'status'.$order->id}} text-center">
-
-                                            @if ($order->status == "pending")
-                                                <span class="badge badge-pill badge-warning" style="font-size: 0.9rem; color: white;">Pending</span>
+                                            @if($order->status == "pending")
+                                                <span class="badge badge-pill bg-orange" style="font-size: 0.9rem; color: white!important;">Pending</span>
+                                            @elseif($order->status == "incomplete")
+                                                <span class="badge badge-pill bg-yellow" style="font-size: 0.9rem; color: white!important;">Incomplete</span>
+                                            @elseif($order->status == "ready_to_dispatch")
+                                                <span class="badge badge-pill bg-lime" style="font-size: 0.9rem; color: white!important;">Ready to Dispatch</span>
                                             @else
                                                 <span class="badge badge-pill badge-success" style="font-size: 0.9rem; color: white;">Completed</span>
                                             @endif
@@ -335,6 +338,7 @@
                     </div>
                 </div>
                 <div class="modal-footer">
+                    <button class="btn bg-lime button_rtd_detail" type="button" style="color:white!important;" hidden>Ready</button>
                     <button class="btn btn-primary" data-dismiss="modal">Close</button>
                 </div>
             </form>
@@ -390,6 +394,7 @@
 <script>
 
   $(document).ready(function(){
+    
     $.urlParam = function(name){
         var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
         if (results==null) {
@@ -533,6 +538,20 @@
                 else{
                     special_discount = 0;
                 }
+            }
+        });
+    }
+
+    function ready_to_dispatch(order_id){
+        // fetch order
+        $.ajax({
+            url: "<?php echo(route('ready_to_dispatch')); ?>",
+            type: 'GET',
+            async: false,
+            data: {order_id: order_id},
+            dataType: 'JSON',
+            success: function (data) {
+                // 
             }
         });
     }
@@ -809,6 +828,8 @@
             $('.order_image_wrapper').attr('href', image_path);
             // order_image_wrapper
         }
+
+        // master details
         $('#order_id').text(order.id);
         $('#customer_name').text(order.customer ? order.customer.name : '');
         $('#contact_number').text(order.customer ? order.customer.contact_number : '');
@@ -816,6 +837,16 @@
         $('#detailTotal').text(order.total);
         $('#status').text(order.status);
         $('#description').text(order.description);
+
+        // ready to dispatch button
+        if(order.status != 'ready_to_dispatch'){
+            // show
+            $('#detailOrderModal .button_rtd_detail').removeAttr('hidden');
+        }
+        else{
+            // hide
+            $('#detailOrderModal .button_rtd_detail').attr('hidden', 'hidden');
+        }
 
         $('#detailOrderModal').modal('show');
 
@@ -837,6 +868,12 @@
         $("#addOrderModal .rider_id").prop("required", false);
 
         $('#addOrderModal').modal('show');
+    });
+
+    // on button_rtd_detail click
+    $('#detailOrderModal').on('click', '.button_rtd_detail', function(){
+        ready_to_dispatch(order.id);
+        $('#detailOrderModal .button_rtd_detail').attr('hidden', 'hidden');
     });
 
     // on is_available click

@@ -168,4 +168,17 @@ abstract class OrderRepository implements RepositoryInterface
     {
         return $this->model->with('order_products.product')->where('status', 'pending')->get();
     }
+
+    public function ready_to_dispatch($order_id)
+    {
+        $order = $this->model->find($order_id);
+
+        if(!$order){
+            return '';
+        }
+
+        $order->status = 'ready_to_dispatch';
+        $order->save();
+        return '';
+    }
 }

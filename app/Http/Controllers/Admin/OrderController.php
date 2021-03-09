@@ -193,4 +193,9 @@ class OrderController extends Controller
 
         return $order->order_products;
     }
+
+    public function ready_to_dispatch(Request $request)
+    {
+        return $this->orderService->ready_to_dispatch($request->order_id);
+    }
 }
