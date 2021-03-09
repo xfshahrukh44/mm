@@ -120,7 +120,7 @@
                                                     <i class="fas fa-trash red ml-1"></i>
                                                 </a>
                                             @endcan
-                                            @if($order->invoiced_items < count($order->order_products))
+                                            @if($order->status != 'completed' && $order->status != NULL)
                                                 <!-- Generate Invoice -->
                                                 <a href="#" class="invoiceButton" data-id="{{$order->id}}" data-type="{{$order->id}}">
                                                     <i class="fas fa-file-invoice-dollar"></i>
@@ -395,6 +395,7 @@
 
   $(document).ready(function(){
     
+    // get url params
     $.urlParam = function(name){
         var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
         if (results==null) {

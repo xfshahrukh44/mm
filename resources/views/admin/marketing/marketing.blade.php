@@ -95,7 +95,7 @@
                                 <tr>
                                     <td>
                                         {{$customer->name ? $customer->name : ''}}
-                                        <input class="customer_id" type="hidden" value="{{$customer->id}}"></input>
+                                        <input class="customer_id2" type="hidden" value="{{$customer->id}}"></input>
                                         <input class="date" type="hidden" value="{{$ymd}}"}}></input>
                                     </td>
                                     <td>{{$customer->contact_number ? $customer->contact_number : ''}}</td>
@@ -145,7 +145,7 @@
                                 <tr>
                                     <td>
                                         {{$receiving->customer ? $receiving->customer->name : ''}}
-                                        <input class="receiving_id" type="hidden" value="{{$receiving->id}}"></input>
+                                        <input class="receiving_id2" type="hidden" value="{{$receiving->id}}"></input>
                                         <input class="date" type="hidden" value="{{$ymd}}"></input>
                                     </td>
                                     <td>{{$receiving->customer ? $receiving->customer->contact_number : ''}}</td>
@@ -199,7 +199,7 @@
                                 <tr>
                                     <td>
                                         {{$invoice->customer ? $invoice->customer->name : ''}}
-                                        <input class="invoice_id" type="hidden" value="{{$invoice->id}}"></input>
+                                        <input class="invoice_id2" type="hidden" value="{{$invoice->id}}"></input>
                                         <input class="date" type="hidden" value="{{$ymd}}"></input>
                                     </td>
                                     <td>{{$invoice->customer ? $invoice->customer->contact_number : ''}}</td>
@@ -297,10 +297,6 @@
             var element = $('li a[href*="'+ window.location.pathname +'"]');
             element.parent().addClass('menu-open');
 
-            $('.customer_id').select2();
-            $('.receiving_id').select2();
-            $('.invoice_id').select2();
-
             // global vars
             var customer = "";
             var receiving = "";
@@ -362,7 +358,7 @@
             // customers_to_visit
             $('.customers_to_visit').on('change', '.rider_selections', function(){
                 var tr = $(this).parent().parent().parent();
-                var customer_id = tr.find('.customer_id');
+                var customer_id = tr.find('.customer_id2');
                 var date = tr.find('.date');
                 var designated_rider = tr.find('.designated_rider')
                 customer_id = customer_id.val();
@@ -388,7 +384,7 @@
             // payments_to_receive
             $('.payments_to_receive').on('change', '.rider_selections', function(){
                 var tr = $(this).parent().parent().parent();
-                var receiving_id = tr.find('.receiving_id');
+                var receiving_id = tr.find('.receiving_id2');
                 var date = tr.find('.date');
                 var designated_rider = tr.find('.designated_rider')
                 receiving_id = receiving_id.val();
@@ -414,7 +410,7 @@
             // orders_to_dispatch
             $('.orders_to_dispatch').on('change', '.rider_selections', function(){
                 var tr = $(this).parent().parent().parent();
-                var invoice_id = tr.find('.invoice_id');
+                var invoice_id = tr.find('.invoice_id2');
                 var date = tr.find('.date');
                 var designated_rider = tr.find('.designated_rider')
                 invoice_id = invoice_id.val();
@@ -453,6 +449,7 @@
                 if($(this).val() == 'ctv'){
                     // unhide fields
                     $('.customer_wrapper').removeAttr('hidden');
+                    $('.customer_id').select2();
                     // hide fields
                     $('.receiving_wrapper').attr('hidden', 'hidden');
                     $('.invoice_wrapper').attr('hidden', 'hidden');
@@ -461,6 +458,7 @@
                 if($(this).val() == 'ptr'){
                     // unhide fields
                     $('.receiving_wrapper').removeAttr('hidden');
+                    $('.receiving_id').select2();
                     // hide fields
                     $('.customer_wrapper').attr('hidden', 'hidden');
                     $('.invoice_wrapper').attr('hidden', 'hidden');
@@ -469,6 +467,7 @@
                 if($(this).val() == 'otd'){
                     // unhide fields
                     $('.invoice_wrapper').removeAttr('hidden');
+                    $('.invoice_id').select2();
                     // hide fields
                     $('.customer_wrapper').attr('hidden', 'hidden');
                     $('.receiving_wrapper').attr('hidden', 'hidden');

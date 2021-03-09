@@ -93,16 +93,16 @@ function last_order_dispatched_at($customer_id){
 }
 
 function set_status_by_invoiced_items($order_id){
-    $order = Customer::find($order_id);
+    $order = Order::with('order_products')->find($order_id);
 
     if(!$order){
         return '';
     }
 
-    $item_count = count($order->order_items);
+    $item_count = count($order->order_products);
     $invoiced_count = 0;
-    foreach($order->order_items as $order_item){
-        if($order_item->invoiced == 1){
+    foreach($order->order_products as $order_product){
+        if($order_product->invoiced == 1){
             $invoiced_count += 1;
         }
     }
@@ -110,11 +110,13 @@ function set_status_by_invoiced_items($order_id){
     if($invoiced_count < $item_count){
         // incomplete
         $order->status = 'incomplete';
+        $order->invoiced_items = $invoiced_count;
         $order->save();
     }
     else{
         // complete
         $order->status = 'completed';
+        $order->invoiced_items = $invoiced_count;
         $order->save();
     }
 }

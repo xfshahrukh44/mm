@@ -221,7 +221,7 @@ class HomeController extends Controller
     {
         // fetch all stock_outs by product_id and customer_id
         $stock_outs = StockOut::whereIn('customer_id', $request['customer_id'])
-                                ->orWhereIn('product_id', $request['product_id'])
+                                ->whereIn('product_id', $request['product_id'])
                                 ->where('transaction_date', '>=', $request['date_from'])
                                 ->where('transaction_date', '<=', $request['date_to'])
                                 ->get();

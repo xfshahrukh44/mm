@@ -207,7 +207,7 @@
                 // append entries
                 $('.ledger_wrapper').html('');
                 if(special_discounts.length < 1){
-                    $('.ledger_wrapper').prepend('<tr class="table-warning"><td class="text-center" colspan=6>No Ledger Entries</td></tr>');
+                    $('.ledger_wrapper').prepend('<tr class="table-warning"><td class="text-center" colspan=6>No special discounts found</td></tr>');
                 }
                 else{
                     console.log(special_discounts);

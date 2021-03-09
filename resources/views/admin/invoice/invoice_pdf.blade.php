@@ -89,19 +89,19 @@
                     <tbody>
                         <tr>
                             <th class="text-left">Rider Name:</th>
-                            <td class="text-left" value="{{$invoice->rider_id ? return_user_name($invoice->rider_id) : NULL}}">{{$invoice->rider_id ? return_user_name($invoice->rider_id) : NULL}}</td>
+                            <td class="text-left">{{$invoice->rider_id ? return_user_name($invoice->rider_id) : NULL}}</td>
                         </tr>
                         <tr>
                             <th class="text-left">Supplier:</th>
-                            <td class="text-left" value="Master material">Master material</td>
+                            <td class="text-left">Master material</td>
                         </tr>
                         <tr>
                             <th class="text-left">Contact:</th>
-                            <td class="text-left" value="0311-1039785">0311-1039785</td>
+                            <td class="text-left">0311-1039785</td>
                         </tr>
                         <tr>
                             <th class="text-left">Date:</th>
-                            <td class="text-left" value="{{return_date_pdf($invoice->created_at)}}">{{return_date_pdf($invoice->created_at)}}</td>
+                            <td class="text-left">{{return_date_pdf($invoice->created_at)}}</td>
                         </tr>
                     </tbody>
                 </table>
@@ -112,31 +112,31 @@
                     <tbody>
                         <tr>
                             <th class="text-left">Id:</th>
-                            <td class="text-left" value="{{$invoice->id}}">{{$invoice->id}}</td>
+                            <td class="text-left">{{$invoice->id}}</td>
                         </tr>
                         <tr>
                             <th class="text-left">Customer Name:</th>
-                            <td class="text-left" value="{{$invoice->customer ? $invoice->customer->name : NULL}}">{{$invoice->customer ? $invoice->customer->name : NULL}}</td>
+                            <td class="text-left">{{$invoice->customer ? $invoice->customer->name : NULL}}</td>
                         </tr>
                         <tr>
                             <th class="text-left">Order:</th>
-                            <td class="text-left" value="{{$invoice->order ? $invoice->order->id : NULL}}">{{$invoice->order ? $invoice->order->id : NULL}}</td>
+                            <td class="text-left">{{$invoice->order ? $invoice->order->id : NULL}}</td>
                         </tr>
                         <tr>
                             <th class="text-left">Shop Name:</th>
-                            <td class="text-left" value="{{$invoice->customer ? $invoice->customer->shop_name . ' - ' . $invoice->customer->shop_number : NULL}}">
+                            <td class="text-left">
                             {{$invoice->customer ? $invoice->customer->shop_name . ' - ' . $invoice->customer->shop_number : NULL}}
                             </td>
                         </tr>
                         <tr>
                             <th class="text-left">Contact Number:</th>
-                            <td class="text-left" value="{{$invoice->customer ? $invoice->customer->contact_number : NULL}}">
+                            <td class="text-left">
                             {{$invoice->customer ? $invoice->customer->contact_number : NULL}}
                             </td>
                         </tr>
                         <tr>
                             <th class="text-left">Market & area:</th>
-                            <td class="text-left" value="{{($invoice->customer && $invoice->customer->market && $invoice->customer->market->area) ? $invoice->customer->market->name.'-'.$invoice->customer->market->area->name : NULL}}">
+                            <td class="text-left">
                             {{($invoice->customer && $invoice->customer->market && $invoice->customer->market->area) ? $invoice->customer->market->name.','.$invoice->customer->market->area->name : NULL}}
                             </td>
                         </tr>
@@ -209,7 +209,7 @@
 
             <!-- message -->
             <div class="row text-center">
-                <p class="discription">{{($invoice->description) ? ($invoice->description) : ''}}</p>
+                <p class="discription">{{($invoice->description) ? ('Description: ' . $invoice->description) : ''}}</p>
             </div>
             <!-- logos -->
             {{-- <div class="row text-center">
@@ -240,19 +240,19 @@
                     <tbody>
                         <tr>
                             <th class="text-left">Rider Name:</th>
-                            <td class="text-left" value="{{$invoice->rider_id ? return_user_name($invoice->rider_id) : NULL}}">{{$invoice->rider_id ? return_user_name($invoice->rider_id) : NULL}}</td>
+                            <td class="text-left">{{$invoice->rider_id ? return_user_name($invoice->rider_id) : NULL}}</td>
                         </tr>
                         <tr>
                             <th class="text-left">Supplier:</th>
-                            <td class="text-left" value="Master material">Master material</td>
+                            <td class="text-left">Master material</td>
                         </tr>
                         <tr>
                             <th class="text-left">Contact:</th>
-                            <td class="text-left" value="0311-1039785">0311-1039785</td>
+                            <td class="text-left">0311-1039785</td>
                         </tr>
                         <tr>
                             <th class="text-left">Date:</th>
-                            <td class="text-left" value="{{return_date_pdf($invoice->created_at)}}">{{return_date_pdf($invoice->created_at)}}</td>
+                            <td class="text-left">{{return_date_pdf($invoice->created_at)}}</td>
                         </tr>
                     </tbody>
                 </table>
@@ -263,32 +263,32 @@
                     <tbody>
                         <tr>
                             <th class="text-left">Id:</th>
-                            <td class="text-left" value="{{$invoice->id}}">{{$invoice->id}}</td>
+                            <td class="text-left">{{$invoice->id}}</td>
                         </tr>
                         <tr>
                             <th class="text-left">Customer Name:</th>
-                            <td class="text-left" value="{{$invoice->customer ? $invoice->customer->name : NULL}}">{{$invoice->customer ? $invoice->customer->name : NULL}}</td>
+                            <td class="text-left">{{$invoice->customer ? $invoice->customer->name : NULL}}</td>
                         </tr>
                         <tr>
                             <th class="text-left">Order:</th>
-                            <td class="text-left" value="{{$invoice->order ? $invoice->order->id : NULL}}">{{$invoice->order ? $invoice->order->id : NULL}}</td>
+                            <td class="text-left">{{$invoice->order ? $invoice->order->id : NULL}}</td>
                         </tr>
                         <tr>
                             <th class="text-left">Shop Name:</th>
-                            <td class="text-left" value="{{$invoice->customer ? $invoice->customer->shop_name . ' - ' . $invoice->customer->shop_number : NULL}}">
+                            <td class="text-left">
                             {{$invoice->customer ? $invoice->customer->shop_name . ' - ' . $invoice->customer->shop_number : NULL}}
                             </td>
                         </tr>
                         <tr>
                             <th class="text-left">Contact Number:</th>
-                            <td class="text-left" value="{{$invoice->customer ? $invoice->customer->contact_number : NULL}}">
+                            <td class="text-left">
                             {{$invoice->customer ? $invoice->customer->contact_number : NULL}}
                             </td>
                         </tr>
                         <tr>
                             <th class="text-left">Market & area:</th>
-                            <td class="text-left" value="{{($invoice->customer && $invoice->customer->market && $invoice->customer->market->area) ? $invoice->customer->market->name.'-'.$invoice->customer->market->area->name : NULL}}">
-                            {{($invoice->customer && $invoice->customer->market && $invoice->customer->market->area) ? $invoice->customer->market->name.'-'.$invoice->customer->market->area->name : NULL}}
+                            <td class="text-left">
+                            {{($invoice->customer && $invoice->customer->market && $invoice->customer->market->area) ? $invoice->customer->market->name.', '.$invoice->customer->market->area->name : NULL}}
                             </td>
                         </tr>
 

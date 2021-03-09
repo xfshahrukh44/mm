@@ -182,7 +182,7 @@
                 // if no entries
                 if(receivings.length == 0){
                     // no entries row
-                    $('.ledger_wrapper').prepend('<tr class="table-warning"><td class="text-center" colspan=6>No Receipt Logs</td></tr>');
+                    $('.ledger_wrapper').prepend('<tr class="table-warning"><td class="text-center" colspan=7>No Receipt Logs</td></tr>');
                     // set total amount
                     $('.detail_total').html('Rs. 0');
                 }
