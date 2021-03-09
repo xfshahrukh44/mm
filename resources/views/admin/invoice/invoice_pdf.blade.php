@@ -28,15 +28,11 @@
             width: 10%;
         }
         .both_img{
-<<<<<<< HEAD
             text-align: center;
-=======
-            margin-top: -5%;
->>>>>>> 479f6c528571d10d3d73a07d22b3d7378d75fd60
         }
         .headin_gs{
             text-align: center;
-            margin-top: -2%;
+            margin-top: 0%;
         }
         h5{
             font-size: 18px;
@@ -53,7 +49,7 @@
         }
         .table4{
             width: 100%;
-            margin-top:-14%
+            margin-top:-7%
         }
         .nulki_img{
             text-align: center;
@@ -68,8 +64,13 @@
         }
         .nulki_img2 img{
             width: 25%;
-            margin-top: 13%;
             opacity: 0.6;
+            margin-top: 14%;
+        }
+        .discription
+        {
+            font-size:12px;
+            margin-top:-4%;
         }
     </style>
     <body>
@@ -79,11 +80,7 @@
         </div>
 
         <div class="headin_gs">
-<<<<<<< HEAD
             <p style="font-size: 10px;">Plot 247, sector 16b, Malik Anwar goth, Gabol town, North Karachi.</p>
-=======
-            <p style="font-size: 10px;  margin-top:-2%;">Plot 247, sector 16b, Malik Anwar goth, Gabol town, North Karachi.</p>
->>>>>>> 479f6c528571d10d3d73a07d22b3d7378d75fd60
         </div>
 
         <div class="row">
@@ -148,21 +145,11 @@
                 </table>
             </div>
         </div>
-<<<<<<< HEAD
         <div class="nulki_img ">
             <img src="../public/pdf_img/NULK.png" alt="">
         </div>
         <div class="">
             <table class="table3">
-=======
-        <br>
-        <br>
-        <br>
-        <br>
-            <img src="../public/pdf_img/NULK.png" alt="" style="width: 25%; position:absolute; z-index:-111; left:35%; opacity:0.4; top:16%;">
-            <div class="mt-5">
-                <table class="table3">
->>>>>>> 479f6c528571d10d3d73a07d22b3d7378d75fd60
                     <tr>
                     <th class="tbl_3">Qty.</th>
                     <th class="tbl_3">Details</th>
@@ -220,37 +207,9 @@
                 </table>
             </div>
 
-<<<<<<< HEAD
             <!-- message -->
             <div class="row text-center">
-                <p style="font-size:12px; margin-top:-3%;">Discription</p>
-=======
-        <!-- message -->
-        <div class="row text-center">
-            <p style="font-size:12px;">Discription</p>
-        </div>
-        <!-- logos -->
-        {{-- <div class="row text-center">
-            <!-- sui dhaaga -->
-            <div class="text-center" style="margin-right:4.8rem;">
-                <img src="../public/img/sdpl4.png" alt="core2plusIcon" style="width: 10%; margin-top:-0.08rem;">
-                <p style="font-size:8px;">www.masterdhaga.com</p>
-            </div>
-            <!-- powered by core2plus -->
-            <div class="text-center" style="margin-left:4.8rem;">
-                <p style="font-size:8px;">Powered By</p>
-                <img src="../public/img/core2plusIcon.jpg" alt="core2plusIcon" style="width: 6%; margin-top:-0.5rem;">
-                <p style="font-size:8px;">core2plus.com</p>
-            </div>
-        </div> --}}
-        <br>
-        <br>
-        <br>
-        {{-- customer pdf --}}
-        <div class="both_img">
-            <div class="master_img">
-                <img class="img-fluid" src="../public/pdf_img/mg-02.jpg" alt="Master">
->>>>>>> 479f6c528571d10d3d73a07d22b3d7378d75fd60
+                <p class="discription">Discription</p>
             </div>
             <!-- logos -->
             {{-- <div class="row text-center">
@@ -272,11 +231,7 @@
         </div>
 
         <div class="headin_gs">
-<<<<<<< HEAD
             <p style="font-size: 10px;">Plot 247, sector 16b, Malik Anwar goth, Gabol town, North Karachi.</p>
-=======
-            <p style="font-size: 10px;  margin-top:-3%;">Plot 247, sector 16b, Malik Anwar goth, Gabol town, North Karachi.</p>
->>>>>>> 479f6c528571d10d3d73a07d22b3d7378d75fd60
         </div>
 
         <div class="row">
@@ -341,92 +296,99 @@
                 </table>
             </div>
         </div>
-<<<<<<< HEAD
         <div class="nulki_img2">
             <img src="../public/pdf_img/NULK.png" alt="">
         </div>
-        <div class="">
             <table class="table4">
-=======
-        <br>
-        <br>
-        <br>
-        <br>
-            <img src="../public/pdf_img/NULK.png" alt="" style="width: 25%; position:absolute; z-index:-111; left:35%; opacity:0.4; top:58%;">
-            <div class="mt-5">
-                <table class="table3">
->>>>>>> 479f6c528571d10d3d73a07d22b3d7378d75fd60
+                <tr>
+                <th class="tbl_3">Qty.</th>
+                <th class="tbl_3">Details</th>
+                <th class="tbl_3">Rate</th>
+                <th class="tbl_3">Amount</th>
+                </tr>
+                @foreach($invoice->invoice_products as $invoice_product)
                     <tr>
-                    <th class="tbl_3">Qty.</th>
-                    <th class="tbl_3">Details</th>
-                    <th class="tbl_3">Rate</th>
-                    <th class="tbl_3">Amount</th>
+                        <td class="tbl_3" style="text-align: center">{{number_format(intval($invoice_product->quantity))}}</td>
+                        <td class="tbl_3" style="text-align: center">{{$invoice_product->product ? ($invoice_product->product->category->name . ' - ' . $invoice_product->product->brand->name . ' - ' . $invoice_product->product->article) : NULL}}</td>
+                        <td class="tbl_3" style="text-align: center">{{number_format(intval($invoice_product->price))}}</td>
+                        <td class="tbl_3" style="text-align: center">{{number_format(intval($invoice_product->quantity * $invoice_product->price))}}</td>
                     </tr>
-                    @foreach($invoice->invoice_products as $invoice_product)
-                        <tr>
-                            <td class="tbl_3" style="text-align: center">{{number_format(intval($invoice_product->quantity))}}</td>
-                            <td class="tbl_3" style="text-align: center">{{$invoice_product->product ? ($invoice_product->product->category->name . ' - ' . $invoice_product->product->brand->name . ' - ' . $invoice_product->product->article) : NULL}}</td>
-                            <td class="tbl_3" style="text-align: center">{{number_format(intval($invoice_product->price))}}</td>
-                            <td class="tbl_3" style="text-align: center">{{number_format(intval($invoice_product->quantity * $invoice_product->price))}}</td>
-                        </tr>
-                    @endforeach
-                    <tr>
-                        <td class="tbl_3" style="border: none"></td>
-                        <td class="tbl_3" style="border: none"></td>
-                        <td class="tbl_3" style="border: none; font-size: 10px; font-weight:700;">Total</td>
-                        <td class="tbl_3" style="text-align: right">{{number_format(intval($invoice->total))}}</td>
-                    </tr>
-                    <tr>
-                        <td style="border: none"></td>
-                        <td style="border: none"></td>
-                        <td style="border: none; font-size: 10px; font-weight:700;">Previous Bal.</td>
-                        <td class="tbl_3" style="text-align: right">{{number_format(intval($invoice->previous_balance))}}</td>
-                    </tr>
-                    <tr>
-                        <td style="border: none"></td>
-                        <td style="border: none"></td>
-                        <td style="border: none; font-size: 10px; font-weight:700;">Discount</td>
-                        <td class="tbl_3" style="text-align: right">{{number_format(intval($invoice->discount))}}</td>
-                    </tr>
-                    <tr>
-                        <td style="border: none"></td>
-                        <td style="border: none"></td>
-                        <td style="border: none; font-size: 10px; font-weight:700;">Total Due</td>
-                        <td class="tbl_3" style="text-align: right">{{number_format(intval($invoice->total + $invoice->previous_balance - $invoice->discount))}}</td>
-                    </tr>
-                    <tr>
-                        <td style="border: none"></td>
-                        <td style="border: none">
-                            <input type="text" style="display: none;">
-                            <br>
-                            <label for="" style="display: none;">Customer Receiving</label>
-                        </td>
-                        <td style="border: none; font-size: 10px; font-weight:700;">Amount Received</td>
-                        <td class="tbl_3" style="text-align: right">{{($invoice->amount_pay != 0) ? number_format(intval($invoice->amount_pay)) : ""}}</td>
-                    </tr>
-                    <tr>
-                        <td style="border: none"></td>
-                        <td style="border: none"></td>
-                        <td style="border: none; font-size: 10px; font-weight:700;">Balance Due</td>
-                        <td class="tbl_3" style="text-align: right">{{(($invoice->amount_pay != 0) ? number_format(intval(($invoice->total + $invoice->previous_balance) - $invoice->amount_pay)) : number_format(intval(($invoice->total + $invoice->previous_balance) - 0)))}}</td>
-                    </tr>
-                </table>
-            </div>
+                @endforeach
+                <tr>
+                    <td class="tbl_3" style="border: none"></td>
+                    <td class="tbl_3" style="border: none"></td>
+                    <td class="tbl_3" style="border: none; font-size: 10px; font-weight:700;">Total</td>
+                    <td class="tbl_3" style="text-align: right">{{number_format(intval($invoice->total))}}</td>
+                </tr>
+                <tr>
+                    <td style="border: none"></td>
+                    <td style="border: none"></td>
+                    <td style="border: none; font-size: 10px; font-weight:700;">Previous Bal.</td>
+                    <td class="tbl_3" style="text-align: right">{{number_format(intval($invoice->previous_balance))}}</td>
+                </tr>
+                <tr>
+                    <td style="border: none"></td>
+                    <td style="border: none"></td>
+                    <td style="border: none; font-size: 10px; font-weight:700;">Discount</td>
+                    <td class="tbl_3" style="text-align: right">{{number_format(intval($invoice->discount))}}</td>
+                </tr>
+                <tr>
+                    <td style="border: none"></td>
+                    <td style="border: none"></td>
+                    <td style="border: none; font-size: 10px; font-weight:700;">Total Due</td>
+                    <td class="tbl_3" style="text-align: right">{{number_format(intval($invoice->total + $invoice->previous_balance - $invoice->discount))}}</td>
+                </tr>
+                <tr>
+                    <td style="border: none"></td>
+                    <td style="border: none">
+                        <input type="text" style="display: none;">
+                        <br>
+                        <label for="" style="display: none;">Customer Receiving</label>
+                    </td>
+                    <td style="border: none; font-size: 10px; font-weight:700;">Amount Received</td>
+                    <td class="tbl_3" style="text-align: right">{{($invoice->amount_pay != 0) ? number_format(intval($invoice->amount_pay)) : ""}}</td>
+                </tr>
+                <tr>
+                    <td style="border: none"></td>
+                    <td style="border: none"></td>
+                    <td style="border: none; font-size: 10px; font-weight:700;">Balance Due</td>
+                    <td class="tbl_3" style="text-align: right">{{(($invoice->amount_pay != 0) ? number_format(intval(($invoice->total + $invoice->previous_balance) - $invoice->amount_pay)) : number_format(intval(($invoice->total + $invoice->previous_balance) - 0)))}}</td>
+                </tr>
+            </table>
+        </div>
 
-            <!-- message -->
-            <div class="row text-center">
-                <p style="font-size:12px; margin-top:1%;">This is a computer generated invoice and requires no signature</p>
-            </div>
-            <!-- logos -->
-            <div class="row text-center">
-                <!-- sui dhaaga -->
-                <img src="../public/img/sdpl4.png" alt="core2plusIcon" style="width: 10%; margin-left:-11%;">
-                <p style="font-size:8px; margin-top:10%; margin-left:-12%;">www.masterdhaga.com</p>
-                <!-- powered by core2plus -->
-                <p style="font-size:8px; margin-left:7%;">Powered By</p>
-                <img src="../public/img/core2plusIcon.jpg" alt="core2plusIcon" style="width: 5%; margin-left:7%; margin-top:2%;">
-                <p style="font-size:8px; margin-top:10%; margin-left:7%;" >core2plus.com</p>
-            </div>
+        <!-- message -->
+        <div class="row text-center">
+            <p style="font-size:12px; margin-top:1%;">This is a computer generated invoice and requires no signature</p>
+        </div>
+        <!-- logos -->
+        {{-- <div class="row text-center">
+            <!-- sui dhaaga -->
+            <img src="../public/img/sdpl4.png" alt="core2plusIcon" style="width: 10%; margin-left:-11%;">
+            <p style="font-size:8px; margin-top:10%; margin-left:-12%;">www.masterdhaga.com</p>
+            <!-- powered by core2plus -->
+            <p style="font-size:8px; margin-left:7%;">Powered By</p>
+            <img src="../public/img/core2plusIcon.jpg" alt="core2plusIcon" style="width: 5%; margin-left:7%; margin-top:2%;">
+            <p style="font-size:8px; margin-top:10%; margin-left:7%;" >core2plus.com</p>
+        </div> --}}
+
+        <div class="logo_imgs">
+            <table class="table table-sm">
+                <tbody>
+                    <tr>
+                        <td style="border:0;">
+                            <img src="../public/img/Untitled-1-02.png" alt="SuiDhagaIcon"  style="width: 8%; margin-top:1%; margin-left:78%;">
+                            <p class="text-right">www.masterdhaga.com</p>
+
+                        </td>
+                        <td style="border:0;">
+                            <p class="text-left" style="margin-left:6%;">Powered By</p>
+                            <img src="../public/img/core2plusIcon.jpg" alt="core2plusIcon" style="width: 4%; margin-left:10%;">
+                            <p class="text-left">www.core2plus.com</p>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
 
     </body>
