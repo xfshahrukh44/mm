@@ -8,6 +8,7 @@ use App\Models\Customer;
 use App\Models\StockOut;
 use App\Models\Order;
 use App\Models\Invoice;
+use App\Models\InvoiceProduct;
 use App\Models\Marketing;
 use App\Models\Receiving;
 use App\User;
@@ -60,15 +61,15 @@ class HomeController extends Controller
 
     public function plug_n_play(Request $request)
     {
-        $invoices = (Invoice::all());
-        dd($invoices);
-        foreach($invoices as $invoice){
-            if($invoice->date != NULL || !($invoice->order)){
-                continue;
-            }
-            $invoice->date = Carbon::parse($invoice->order->dispatch_date)->format('Y-m-d');
-            $invoice->saveQuietly();
-        }
+        // $order = Order::find(40);
+        // $customer->deleted_at = NULL;
+        // $customer = Customer::with('invoices.invoice_products', 'orders')->where('name', 'LIKE', '%maqbool%')->get();
+        // 86
+        // dd($customer);
+        // $invoice->deleted_at = NULL;
+        // $invoice = Invoice::withTrashed()->find(83);
+        // $invoice->deleted_at = NULL;
+        // $invoice->saveQuietly();
     }
 
     public function generate_invoice_pdf($id)

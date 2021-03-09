@@ -147,6 +147,8 @@ Route::group(['middleware' => 'auth', 'prefix' => 'admin'], function() {
     Route::get('/fetch_receivings', 'Admin\ReceivingController@fetch_receivings')->name('fetch_receivings');
     // toggle_is_received
     Route::get('/toggle_is_received', 'Admin\ReceivingController@toggle_is_received')->name('toggle_is_received');
+    // toggle_is_available
+    Route::get('/toggle_is_available', 'Admin\OrderProductController@toggle_is_available')->name('toggle_is_available');
     // ----------------------------------------------------------------------------------------------------------------------
     
     

@@ -102,13 +102,13 @@ class InvoiceController extends Controller
         }
 
         // update order with invoiced_items if order_id given
-        if($request->order_id != NULL){
-            $this->orderService->update([
-                'invoiced_items' => $invoiced_items,
-                'invoiced_from' => 1,
-                'status' => 'completed'
-            ], $request->order_id);
-        }
+        // if($request->order_id != NULL){
+        //     $this->orderService->update([
+        //         'invoiced_items' => $invoiced_items,
+        //         'invoiced_from' => 1,
+        //         'status' => 'completed'
+        //     ], $request->order_id);
+        // }
 
         return redirect()->back();
     }

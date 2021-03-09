@@ -91,3 +91,30 @@ function last_order_dispatched_at($customer_id){
     $order = Order::where('customer_id', $customer_id)->where('deleted_at', NULL)->latest()->first();
     return ($order ? return_date_wo_time($order->dispatch_date) : '');
 }
+
+function set_status_by_invoiced_items($order_id){
+    $order = Customer::find($order_id);
+
+    if(!$order){
+        return '';
+    }
+
+    $item_count = count($order->order_items);
+    $invoiced_count = 0;
+    foreach($order->order_items as $order_item){
+        if($order_item->invoiced == 1){
+            $invoiced_count += 1;
+        }
+    }
+
+    if($invoiced_count < $item_count){
+        // incomplete
+        $order->status = 'incomplete';
+        $order->save();
+    }
+    else{
+        // complete
+        $order->status = 'completed';
+        $order->save();
+    }
+}

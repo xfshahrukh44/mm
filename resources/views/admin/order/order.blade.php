@@ -261,6 +261,8 @@
                     <a href="{{asset('img/logo.png')}}" target="_blank" class="order_image_wrapper">
                         <img class="image" src="{{asset('img/logo.png')}}" width="150">
                     </a>
+                    <br>
+                    <br>
                     <table class=" table-bordered table-striped p-2" style="width:100%; border: 1px solid black;height: 20px;">
                         <tr role="row">
                             <th>Order id:</th>
@@ -295,11 +297,9 @@
                         <!-- MASTER INFO -->
                         <!-- Order id -->
                         <br>
-                        <a href="#" class="addItem float-right " data-id="">
+                        <!-- <a href="#" class="addItem float-right " data-id="">
                             <i class="fas fa-plus-circle blue ml-1"></i> Add Item
-                        </a>
-                        <br>
-                        <br>
+                        </a> -->
                         <div class="row" style="overflow-x:auto;">
                             <!-- CHILD INFO -->
                             <table id="itemTable" class="table table-bordered table-hover dtr-inline" role="grid" aria-describedby="example2_info">
@@ -312,6 +312,7 @@
                                         <th class="sorting" tabindex="0" rowspan="1" colspan="1" >Quantity</th>
                                         <th class="sorting" tabindex="0" rowspan="1" colspan="1" >Price</th>
                                         <th class="sorting" tabindex="0" rowspan="1" colspan="1" >Unit</th>
+                                        <th class="sorting" tabindex="0" rowspan="1" colspan="1" >Available?</th>
                                     </tr>
                                 </thead>
 
@@ -324,6 +325,7 @@
                                         <td class="">'+order.order_products[i].quantity+'</td>
                                         <td class="">'+order.order_products[i].price+'</td>
                                         <td class="">'+order.order_products[i].product.unit.name+'</td>
+                                        <td><input type="checkbox"></td>
                                     </tr>
                                 </tbody>
                                 <tfoot>
@@ -567,7 +569,7 @@
     $('.customer_id').on('change', function(){
         var user_id = $(this).val();
         fetch_customer(user_id);
-        $('.previous_amount').val(customer.outstanding_balance);
+        $('.previous_amount').val(customer ? customer.outstanding_balance : '');
         get_order_total('#editOrderModal');
         get_order_total('#addOrderModal');
         get_order_total('#invoiceOrderModal');
@@ -668,7 +670,7 @@
         $('#editOrderModal .description').val(order.description);
 
         // select customer
-        $('#editOrderModal .customer_id option[value="'+ order.customer_id +'"]').prop('selected', true);
+        $('#editOrderModal .customer_id option[value="'+ (order.customer ? order.customer_id : '') +'"]').prop('selected', true);
         $('#editOrderModal .customer_id').trigger('change.select2');
         $('#editOrderModal .customer_id').change();
         $('#editOrderModal .dispatch_date').val(order.dispatch_date);
@@ -743,9 +745,10 @@
 
         for(var i = 0; i < order.order_products.length; i++){
             if(order.order_products[i].invoiced == 0){
-                var productDiv = '<div class="col-md-4"><div class="ui-widget"><input name="order_products_ids[]" type="hidden" value="'+ order.order_products[i].id +'"><input class="form-control product_search" name="products[]" value="'+ order.order_products[i].product.category.name + ' - ' + order.order_products[i].product.brand.name + ' - ' + order.order_products[i].product.article +'"><input class="hidden_product_search" type="hidden" name="hidden_product_ids[]" value="'+ order.order_products[i].product.id +'"></div></div>';
-                var priceDiv = '<div class="form-group col-md-4"><input type="number" class="form-control prices" name="prices[]" required min=0 step="0.01" value="'+ order.order_products[i].price +'"></div>';
-                var quantityDiv = '<div class="form-group col-md-3"><input type="number" class="form-control quantities" name="quantities[]" required step="0.01" value="'+ order.order_products[i].quantity +'"></div>';
+                var style_div = (order.order_products[i].is_available == 0) ? ('style = "border-color:red;"') : '';
+                var productDiv = '<div class="col-md-4"><div class="ui-widget"><input name="order_products_ids[]" type="hidden" value="'+ order.order_products[i].id +'"><input '+style_div+' class="form-control product_search" name="products[]" value="'+ order.order_products[i].product.category.name + ' - ' + order.order_products[i].product.brand.name + ' - ' + order.order_products[i].product.article +'"><input class="hidden_product_search" type="hidden" name="hidden_product_ids[]" value="'+ order.order_products[i].product.id +'"></div></div>';
+                var priceDiv = '<div class="form-group col-md-4"><input '+style_div+' type="number" class="form-control prices" name="prices[]" required min=0 step="0.01" value="'+ order.order_products[i].price +'"></div>';
+                var quantityDiv = '<div class="form-group col-md-3"><input '+style_div+' type="number" class="form-control quantities" name="quantities[]" required step="0.01" value="'+ order.order_products[i].quantity +'"></div>';
                 var fieldHTML = startDiv + productDiv + priceDiv + quantityDiv + removeChildDiv + endDiv;
 
                 $('.field_wrapper').prepend(fieldHTML);
@@ -789,8 +792,9 @@
         for(var i = 0; i < order.order_products.length; i++)
         {
             var invoiced = 0;
+            var is_available_input = (order.order_products[i].is_available == 0) ? ('<input value="'+order.order_products[i].id+'" class="is_available" type="checkbox">') : ('<input value="'+order.order_products[i].id+'" class="is_available" type="checkbox" checked>');
             order.order_products[i].invoiced == 1 ? invoiced = '<i class="fas fa-check green"></i>' : invoiced = '<i class="fas fa-times red"></i>';
-            $('#table_row_wrapper').append(' <tr role="row" class="odd"><td>'+ invoiced +'</td><td class="">'+order.order_products[i].product.category.name+'</td><td class="">'+order.order_products[i].product.brand.name+'</td><td class="">'+order.order_products[i].product.article+'</td><td class="">'+order.order_products[i].quantity+'</td><td class="">'+order.order_products[i].price+'</td><td class="">'+order.order_products[i].product.unit.name+'</td></tr>');
+            $('#table_row_wrapper').append(' <tr role="row" class="odd"><td>'+ invoiced +'</td><td class="">'+order.order_products[i].product.category.name+'</td><td class="">'+order.order_products[i].product.brand.name+'</td><td class="">'+order.order_products[i].product.article+'</td><td class="">'+order.order_products[i].quantity+'</td><td class="">'+order.order_products[i].price+'</td><td class="">'+order.order_products[i].product.unit.name+'</td><td>'+is_available_input+'</td></tr>');
         }
 
         if(order.image){
@@ -806,9 +810,9 @@
             // order_image_wrapper
         }
         $('#order_id').text(order.id);
-        $('#customer_name').text(order.customer.name);
-        $('#contact_number').text(order.customer.contact_number);
-        $('#address').text(order.customer.shop_name + ' - Shop # ' + order.customer.shop_number + ' - Floor # ' + order.customer.floor + ((customer.market && customer.market.area) ? (' - ' + order.customer.market.name + ' - ' + order.customer.market.area.name) : ''));
+        $('#customer_name').text(order.customer ? order.customer.name : '');
+        $('#contact_number').text(order.customer ? order.customer.contact_number : '');
+        $('#address').text((order.customer ? order.customer.shop_name : '') + ' - Shop # ' + (order.customer ? order.customer.shop_number : '') + ' - Floor # ' + (order.customer ? order.customer.floor : '') + ((order.customer && order.customer.market && order.customer.market.area) ? (' - ' + order.customer.market.name + ' - ' + order.customer.market.area.name) : ''));
         $('#detailTotal').text(order.total);
         $('#status').text(order.status);
         $('#description').text(order.description);
@@ -833,6 +837,22 @@
         $("#addOrderModal .rider_id").prop("required", false);
 
         $('#addOrderModal').modal('show');
+    });
+
+    // on is_available click
+    $('#detailOrderModal').on('click', '.is_available', function(){
+        var order_product_id = $(this).val();
+        $.ajax({
+            url: "<?php echo(route('toggle_is_available')); ?>",
+            type: 'GET',
+            async: false,
+            data: {order_product_id: order_product_id},
+            dataType: 'JSON',
+            success: function (data) {
+                $(this).prop("checked", !$(this).prop("checked"));
+            }
+        });
+
     });
 
     //Once add button is clicked on create*

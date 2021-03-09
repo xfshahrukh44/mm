@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Models\Ledger;
+use App\Models\Expense;
 
 class Invoice extends Model
 {
@@ -42,6 +43,10 @@ class Invoice extends Model
             $new_payment = $query->payment;
             $old_amount_pay = $query->getOriginal('amount_pay');
             $new_amount_pay = $query->amount_pay;
+            $old_customer_id = $query->getOriginal('customer_id');
+            $new_customer_id = $query->customer_id;
+            $old_discount = $query->getOriginal('discount');
+            $new_discount = $query->discount;
 
             $ledger = Ledger::where('customer_id', $query->customer_id)
                             ->where('invoice_id', $query->id)
@@ -61,6 +66,16 @@ class Invoice extends Model
                 
                 if($ledger){
                     $ledger->delete();
+                }
+            }
+            // discount
+            if($old_discount){
+                $expense = Expense::where('customer_id', $old_customer_id)
+                                ->where('amount', $old_amount_pay)
+                                ->where('detail', 'customer discount')
+                                ->first();
+                if($expense){
+                    $expense->delete();
                 }
             }
 
@@ -86,6 +101,15 @@ class Invoice extends Model
                     'transaction_date' => return_todays_date()
                 ]);
             }
+            // discount
+            if($new_discount > 0){
+                Expense::create([
+                    'customer_id' => $new_customer_id,
+                    'amount' => $new_amount_pay,
+                    'detail' => 'customer discount',
+                    'date' => return_todays_date()
+                ]);
+            }
 
         });
 
@@ -108,6 +132,17 @@ class Invoice extends Model
                     $ledger->delete();
                 }
             }
+
+            // discount
+            if($query->discount > 0){
+                $expense = Expense::where('customer_id', $query->customer_id)
+                                ->where('amount', $query->discount)
+                                ->where('detail', 'customer discount')
+                                ->first();
+                if($expense){
+                    $expense->delete();
+                }
+            }
         });
 
         static::created(function ($query) {
@@ -128,6 +163,16 @@ class Invoice extends Model
                     'amount' => $query->amount_pay,
                     'type' => 'credit',
                     'transaction_date' => return_todays_date()
+                ]);
+            }
+
+            // discount
+            if($query->discount > 0){
+                Expense::create([
+                    'customer_id' => $query->customer_id,
+                    'amount' => $query->discount,
+                    'detail' => 'customer discount',
+                    'date' => return_todays_date()
                 ]);
             }
         });

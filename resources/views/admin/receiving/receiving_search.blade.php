@@ -232,9 +232,10 @@
                 $('#dummy_form').submit();
             });
 
+            // on is_received click
             $('#detailLedgerModal').on('click', '.is_received', function(){
                 // alert($(this).is(':checked'));
-                console.log($(this).val());
+                // console.log($(this).val());
                 var receiving_id = $(this).val();
                 $.ajax({
                     url: "<?php echo(route('toggle_is_received')); ?>",

@@ -112,4 +112,16 @@ abstract class OrderProductRepository implements RepositoryInterface
             throw new AllOrderProductException($exception->getMessage());
         }
     }
+
+    public function toggle_is_available($id)
+    {
+        $order_product = $this->model->find($id);
+        
+        if(!$order_product){
+            return '';
+        }
+        
+        $order_product->is_available = ($order_product->is_available == 1) ? 0 : 1;
+        $order_product->saveQuietly();
+    }
 }
