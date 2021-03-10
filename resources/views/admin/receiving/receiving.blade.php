@@ -58,7 +58,7 @@
                   <tr role="row" class="odd">
                     <td class="{{'invoice_id'.$receiving->id}}">{{$receiving->invoice ? $receiving->invoice->id : NULL}}</td>
                     <td class="{{'order_id'.$receiving->id}}">{{$receiving->invoice && $receiving->invoice->order ? $receiving->invoice->order->id : NULL}}</td>
-                    <td class="{{'customer'.$receiving->id}}">{{$receiving->customer? $receiving->customer->name : NULL}}</td>
+                    <td class="{{'customer'.$receiving->id}}">{{$receiving->customer? customer_shop_name($receiving->customer->id) : NULL}}</td>
                     <td class="{{'total'.$receiving->id}}">{{$receiving->invoice ? 'Rs.' . number_format($receiving->invoice->total) : NULL}}</td>
                     <td class="{{'amount'.$receiving->id}}">{{$receiving->amount ? 'Rs.' . number_format($receiving->amount) : NULL}}</td>
                     <td class="{{'is_received'.$receiving->id}} text-center">

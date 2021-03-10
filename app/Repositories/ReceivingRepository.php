@@ -7,6 +7,7 @@ use App\Exceptions\Receiving\CreateReceivingException;
 use App\Exceptions\Receiving\UpdateReceivingException;
 use App\Exceptions\Receiving\DeleteReceivingException;
 use App\Models\Receiving;
+use App\Models\Customer;
 
 abstract class ReceivingRepository implements RepositoryInterface
 {
@@ -136,11 +137,40 @@ abstract class ReceivingRepository implements RepositoryInterface
     public function search_receivings($query)
     {
         // foreign fields
+        // customers
+        $customers = Customer::where('name', 'LIKE', '%'. $query .'%')->get();
+        $customer_ids = [];
+        foreach($customers as $customer){
+            array_push($customer_ids, $customer->id);
+        }
 
         // search block
-        $receivings = Receiving::where('invoice_id', 'LIKE', '%'.$query.'%')
+        $receivings = Receiving::whereIn('customer_id', $customer_ids)
+                        ->orWhere('invoice_id', 'LIKE', '%'.$query.'%')
                         ->orWhere('amount', 'LIKE', '%'.$query.'%')
                         ->paginate(env('PAGINATION'));
+
+        return $receivings;
+    }
+
+    public function search_receivings_by_user_id($query, $user_id)
+    {
+        // foreign fields
+        // customers
+        $customers = Customer::where('name', 'LIKE', '%'. $query .'%')->get();
+        $customer_ids = [];
+        foreach($customers as $customer){
+            array_push($customer_ids, $customer->id);
+        }
+
+        // search block
+        $receivings = Receiving::where('created_at', $user_id)
+                                ->where(function($q){
+                                    $q->orWhereIn('customer_id', $customer_ids);
+                                    $q->orWhere('invoice_id', 'LIKE', '%'.$query.'%');
+                                    $q->orWhere('amount', 'LIKE', '%'.$query.'%');
+                                })
+                                ->paginate(env('PAGINATION'));
 
         return $receivings;
     }

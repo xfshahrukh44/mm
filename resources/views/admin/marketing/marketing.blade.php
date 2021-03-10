@@ -249,6 +249,7 @@
                     <table class="table table-striped table-bordered col-md-12 table-sm">
                     <thead>
                             <tr>
+                                <th>Rider Name</th>
                                 <th>Customer Name</th>
                                 <th>Contact</th>
                                 <th>Shop</th>
@@ -259,6 +260,7 @@
                         <tbody>
                             @foreach($customer_marketings as $customer_marketing)
                                 <tr>
+                                    <td>{{return_user_name($customer_marketing->user_id)}}</td>
                                     <td>{{$customer_marketing->customer ? $customer_marketing->customer->name : ''}}</td>
                                     <td>{{$customer_marketing->customer && $customer_marketing->customer->contact_number ? $customer_marketing->customer->contact_number : ''}}</td>
                                     <td>{{$customer_marketing->customer && $customer_marketing->customer->shop_name ? $customer_marketing->customer->shop_name : ''}}</td>
@@ -278,6 +280,7 @@
                     <table class="table table-striped table-bordered col-md-12 table-sm">
                     <thead>
                             <tr>
+                                <th>Rider Name</th>
                                 <th>Customer Name</th>
                                 <th>Contact</th>
                                 <th>Shop</th>
@@ -292,6 +295,7 @@
                         <tbody>
                             @foreach($receiving_marketings as $receiving_marketing)
                                 <tr>
+                                    <td>{{return_user_name($customer_marketing->user_id)}}</td>
                                     <td>{{$receiving_marketing->receiving->customer ? $receiving_marketing->receiving->customer->name : ''}}</td>
                                     <td>{{$receiving_marketing->receiving->customer ? $receiving_marketing->receiving->customer->contact_number : ''}}</td>
                                     <td>{{$receiving_marketing->receiving->customer ? $receiving_marketing->receiving->customer->shop_name : ''}}</td>
@@ -315,6 +319,7 @@
                     <table class="table table-striped table-bordered col-md-12 table-sm">
                     <thead>
                             <tr>
+                                <th>Rider Name</th>
                                 <th>Customer Name</th>
                                 <th>Contact</th>
                                 <th>Shop</th>
@@ -329,6 +334,7 @@
                         <tbody>
                             @foreach($invoice_marketings as $invoice_marketing)
                                 <tr>
+                                    <td>{{return_user_name($customer_marketing->user_id)}}</td>
                                     <td>{{$invoice_marketing->invoice->customer ? $invoice_marketing->invoice->customer->name : ''}}</td>
                                     <td>{{$invoice_marketing->invoice->customer ? $invoice_marketing->invoice->customer->contact_number : ''}}</td>
                                     <td>{{$invoice_marketing->invoice->customer ? $invoice_marketing->invoice->customer->shop_name : ''}}</td>
@@ -394,6 +400,15 @@
                             @endforeach
                         </select>
                     </div>
+                    <!-- rider_id -->
+                    <div class="form-group col-md-12 rider_wrapper" hidden>
+                        <select class="form-control rider_id" style="width: 100%;">
+                            <option value="">Select rider</option>
+                            @foreach($riders as $rider)
+                                <option value="{{$rider->id}}">{{$rider->name}}</option>
+                            @endforeach
+                        </select>
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="submit" class="btn btn-primary button_save_custom_marketing">Add</button>
@@ -414,10 +429,43 @@
             var element = $('li a[href*="'+ window.location.pathname +'"]');
             element.parent().addClass('menu-open');
 
+            // get url params
+            $.urlParam = function(name){
+                var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
+                if (results==null) {
+                    return null;
+                }
+                return decodeURI(results[1]) || 0;
+            }
+            if($.urlParam('date')){
+                $('.date').val($.urlParam('date',));
+            }
+            else{
+                d = new Date();
+                date = d.getDate();
+                month = d.getMonth()+1;
+                year = d.getFullYear();
+                $('.date').val(year+'-'+((month < 10) ? ('0' + month) : month)+'-'+((date < 10) ? ('0' + date) : date));
+            }
+
             // global vars
             var customer = "";
             var receiving = "";
             var invoice = "";
+
+            // create marketing
+            function create_marketing(data, route){
+                $.ajax({
+                    url: route,
+                    type: 'GET',
+                    data: data,
+                    dataType: 'JSON',
+                    async: false,
+                    success: function (data) {
+                        // 
+                    }
+                });
+            }
 
             // fetch customer
             function fetch_customer(id){
@@ -556,6 +604,7 @@
                 $('.customer_wrapper').attr('hidden', 'hidden');
                 $('.receiving_wrapper').attr('hidden', 'hidden');
                 $('.invoice_wrapper').attr('hidden', 'hidden');
+                $('.rider_wrapper').attr('hidden', 'hidden');
 
                 $('#customMarketingModal').modal('show');
             });
@@ -566,7 +615,9 @@
                 if($(this).val() == 'ctv'){
                     // unhide fields
                     $('.customer_wrapper').removeAttr('hidden');
+                    $('.rider_wrapper').removeAttr('hidden');
                     $('.customer_id').select2();
+                    $('.rider_id').select2();
                     // hide fields
                     $('.receiving_wrapper').attr('hidden', 'hidden');
                     $('.invoice_wrapper').attr('hidden', 'hidden');
@@ -575,7 +626,9 @@
                 if($(this).val() == 'ptr'){
                     // unhide fields
                     $('.receiving_wrapper').removeAttr('hidden');
+                    $('.rider_wrapper').removeAttr('hidden');
                     $('.receiving_id').select2();
+                    $('.rider_id').select2();
                     // hide fields
                     $('.customer_wrapper').attr('hidden', 'hidden');
                     $('.invoice_wrapper').attr('hidden', 'hidden');
@@ -584,7 +637,9 @@
                 if($(this).val() == 'otd'){
                     // unhide fields
                     $('.invoice_wrapper').removeAttr('hidden');
+                    $('.rider_wrapper').removeAttr('hidden');
                     $('.invoice_id').select2();
+                    $('.rider_id').select2();
                     // hide fields
                     $('.customer_wrapper').attr('hidden', 'hidden');
                     $('.receiving_wrapper').attr('hidden', 'hidden');
@@ -594,66 +649,94 @@
             // on button_save_custom_marketing click
             $('.button_save_custom_marketing').on('click', function(){
                 var type = $('.type').val();
+                var date = $('.date').val();
+                rider_id = $('.rider_id').val();
 
                 // customers to visit
                 if(type == 'ctv'){
                     id = $('.customer_id').val();
-                    fetch_customer(id);
 
-                    var customer_td = '<td>'+(customer.name ? customer.name : '')+'<input class="customer_id2" type="hidden" value="'+customer.id+'"></input><input class="date" type="hidden" value="{{$ymd}}"}}></input></td>';
-                    var contact_td = '<td>'+(customer.contact_number ? customer.contact_number : '')+'</td>';
-                    var shop_td = '<td>'+(customer.shop_name ? customer.shop_name : '')+'</td>';
-                    var market_td = '<td>'+(customer.market ? customer.market.name : '')+'</td>';
-                    var area_td = '<td>'+((customer.market && customer.market.area) ? customer.market.area.name : '')+'</td>';
-                    var designated_rider_td = '<td class="designated_rider">{{return_marketing_rider_for_customer('+customer.id+', $ymd)}}</td>';
-                    var assign_rider_td = '<td><div class="form-group"><select name="riders[]" class="form-control rider_selections"><option value="">Select rider</option>@foreach($riders as $rider)<option value="{{$rider->id}}">{{$rider->name}}</option>@endforeach</select></div></td>';
+                    data = {
+                        customer_id: id,
+                        rider_id: rider_id,
+                        date: date
+                    };
+
+                    create_marketing(data, "{{route('assign_marketing_rider_for_customer')}}");
+                    // fetch_customer(id);
+
+                    // var customer_td = '<td>'+(customer.name ? customer.name : '')+'<input class="customer_id2" type="hidden" value="'+customer.id+'"></input><input class="date" type="hidden" value="{{$ymd}}"}}></input></td>';
+                    // var contact_td = '<td>'+(customer.contact_number ? customer.contact_number : '')+'</td>';
+                    // var shop_td = '<td>'+(customer.shop_name ? customer.shop_name : '')+'</td>';
+                    // var market_td = '<td>'+(customer.market ? customer.market.name : '')+'</td>';
+                    // var area_td = '<td>'+((customer.market && customer.market.area) ? customer.market.area.name : '')+'</td>';
+                    // var designated_rider_td = '<td class="designated_rider">{{return_marketing_rider_for_customer('+customer.id+', $ymd)}}</td>';
+                    // var assign_rider_td = '<td><div class="form-group"><select name="riders[]" class="form-control rider_selections"><option value="">Select rider</option>@foreach($riders as $rider)<option value="{{$rider->id}}">{{$rider->name}}</option>@endforeach</select></div></td>';
                     
-                    var fieldHTML = customer_td + contact_td + shop_td + market_td + area_td + designated_rider_td + assign_rider_td;
-                    $('.tb_ctv').append('<tr>' + fieldHTML + '</tr>');
+                    // var fieldHTML = customer_td + contact_td + shop_td + market_td + area_td + designated_rider_td + assign_rider_td;
+                    // $('.tb_ctv').append('<tr>' + fieldHTML + '</tr>');
                 }
                 // payments to receive
                 if(type == 'ptr'){
                     id = $('.receiving_id').val();
-                    fetch_receiving(id);
 
-                    var receiving_td = '<td>'+(receiving.customer ? receiving.customer.name : '')+'<input class="receiving_id2" type="hidden" value="'+receiving.id+'"></input><input class="date" type="hidden" value="{{$ymd}}"></input></td>';
-                    var contact_td = '<td>'+(receiving.customer ? receiving.customer.contact_number : '')+'</td>';
-                    var shop_td = '<td>'+(receiving.customer ? receiving.customer.shop_name : '')+'</td>';
-                    var market_td = '<td>'+((receiving.customer && receiving.customer.market) ? receiving.customer.market.name : '')+'</td>';
-                    var area_td = '<td>'+((receiving.customer && receiving.customer.market && receiving.customer.market.area) ? receiving.customer.market.area.name : '')+'</td>';
-                    var invoice_td = '<td>'+(receiving.invoice ? receiving.invoice.id : '')+'</td>';
-                    var invoice_total_td = '<td>Rs. '+(receiving.invoice ? receiving.invoice.total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") : '')+'</td>';
-                    var invoice_amount_pay_td = '<td>Rs. '+(receiving.invoice ? receiving.invoice.amount_pay.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") : '')+'</td>';
-                    var invoice_due_td = '<td>Rs. '+(receiving.invoice ? (receiving.invoice.total - receiving.invoice.amount_pay).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") : '')+'</td>';
-                    var designated_rider_td = '<td class="designated_rider">{{return_marketing_rider_for_receiving('+receiving.id+', $ymd)}}</td>';
-                    var assign_rider_td = '<td><div class="form-group"><select name="riders[]" class="form-control rider_selections"><option value="">Select rider</option>@foreach($riders as $rider)<option value="{{$rider->id}}">{{$rider->name}}</option>@endforeach</select></div></td>';
+                    data = {
+                        receiving_id: id,
+                        rider_id: rider_id,
+                        date: date
+                    };
 
-                    var fieldHTML = receiving_td + contact_td + shop_td + market_td + area_td + invoice_td + invoice_total_td + invoice_amount_pay_td + invoice_due_td + designated_rider_td + assign_rider_td;
-                    $('.tb_ptr').append('<tr>' + fieldHTML + '</tr>');                    
+                    create_marketing(data, "{{route('assign_marketing_rider_for_receiving')}}");
+
+                    // fetch_receiving(id);
+
+                    // var receiving_td = '<td>'+(receiving.customer ? receiving.customer.name : '')+'<input class="receiving_id2" type="hidden" value="'+receiving.id+'"></input><input class="date" type="hidden" value="{{$ymd}}"></input></td>';
+                    // var contact_td = '<td>'+(receiving.customer ? receiving.customer.contact_number : '')+'</td>';
+                    // var shop_td = '<td>'+(receiving.customer ? receiving.customer.shop_name : '')+'</td>';
+                    // var market_td = '<td>'+((receiving.customer && receiving.customer.market) ? receiving.customer.market.name : '')+'</td>';
+                    // var area_td = '<td>'+((receiving.customer && receiving.customer.market && receiving.customer.market.area) ? receiving.customer.market.area.name : '')+'</td>';
+                    // var invoice_td = '<td>'+(receiving.invoice ? receiving.invoice.id : '')+'</td>';
+                    // var invoice_total_td = '<td>Rs. '+(receiving.invoice ? receiving.invoice.total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") : '')+'</td>';
+                    // var invoice_amount_pay_td = '<td>Rs. '+(receiving.invoice ? receiving.invoice.amount_pay.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") : '')+'</td>';
+                    // var invoice_due_td = '<td>Rs. '+(receiving.invoice ? (receiving.invoice.total - receiving.invoice.amount_pay).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") : '')+'</td>';
+                    // var designated_rider_td = '<td class="designated_rider">{{return_marketing_rider_for_receiving('+receiving.id+', $ymd)}}</td>';
+                    // var assign_rider_td = '<td><div class="form-group"><select name="riders[]" class="form-control rider_selections"><option value="">Select rider</option>@foreach($riders as $rider)<option value="{{$rider->id}}">{{$rider->name}}</option>@endforeach</select></div></td>';
+
+                    // var fieldHTML = receiving_td + contact_td + shop_td + market_td + area_td + invoice_td + invoice_total_td + invoice_amount_pay_td + invoice_due_td + designated_rider_td + assign_rider_td;
+                    // $('.tb_ptr').append('<tr>' + fieldHTML + '</tr>');                    
 
                 }
                 // orders to dispatch
                 if(type == 'otd'){
                     id = $('.invoice_id').val();
-                    fetch_invoice(id);
+                    
+                    data = {
+                        invoice_id: id,
+                        rider_id: rider_id,
+                        date: date
+                    };
 
-                    var customer_td = '<td>'+(invoice.customer ? invoice.customer.name : '')+'<input class="invoice_id2" type="hidden" value="'+(invoice.id)+'"></input><input class="date" type="hidden" value="{{$ymd}}"></input></td>';
-                    var contact_td = '<td>'+(invoice.customer ? invoice.customer.contact_number : '')+'</td>';
-                    var shop_td = '<td>'+(invoice.customer ? invoice.customer.shop_name : '')+'</td>';
-                    var market_td = '<td>'+((invoice.customer && invoice.customer.market) ? invoice.customer.market.name : '')+'</td>';
-                    var area_td = '<td>'+((invoice.customer && invoice.customer.market && invoice.customer.market.area) ? invoice.customer.market.area.name : '')+'</td>';
-                    var invoice_td = '<td>'+(invoice.id)+'</td>';
-                    var invoice_total_td = '<td>Rs. '+(invoice.total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","))+'</td>';
-                    var invoice_amount_pay_td = '<td>Rs. '+(invoice.amount_pay.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","))+'</td>';
-                    var invoice_due_td = '<td>Rs. '+((invoice.total - invoice.amount_pay).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","))+'</td>';
-                    var designated_rider_td = '<td class="designated_rider">{{return_marketing_rider_for_invoice('+invoice.id+', $ymd)}}</td>';
-                    var assign_rider_td = '<td><div class="form-group"><select name="riders[]" class="form-control rider_selections"><option value="">Select rider</option>@foreach($riders as $rider)<option value="{{$rider->id}}">{{$rider->name}}</option>@endforeach</select></div></td>';
+                    create_marketing(data, "{{route('assign_marketing_rider_for_invoice')}}");
 
-                    var fieldHTML = customer_td + contact_td + shop_td + market_td + area_td + invoice_td + invoice_total_td + invoice_amount_pay_td + invoice_due_td + designated_rider_td + assign_rider_td;
-                    $('.tb_otd').append('<tr>' + fieldHTML + '</tr>');
+                    // var customer_td = '<td>'+(invoice.customer ? invoice.customer.name : '')+'<input class="invoice_id2" type="hidden" value="'+(invoice.id)+'"></input><input class="date" type="hidden" value="{{$ymd}}"></input></td>';
+                    // var contact_td = '<td>'+(invoice.customer ? invoice.customer.contact_number : '')+'</td>';
+                    // var shop_td = '<td>'+(invoice.customer ? invoice.customer.shop_name : '')+'</td>';
+                    // var market_td = '<td>'+((invoice.customer && invoice.customer.market) ? invoice.customer.market.name : '')+'</td>';
+                    // var area_td = '<td>'+((invoice.customer && invoice.customer.market && invoice.customer.market.area) ? invoice.customer.market.area.name : '')+'</td>';
+                    // var invoice_td = '<td>'+(invoice.id)+'</td>';
+                    // var invoice_total_td = '<td>Rs. '+(invoice.total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","))+'</td>';
+                    // var invoice_amount_pay_td = '<td>Rs. '+(invoice.amount_pay.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","))+'</td>';
+                    // var invoice_due_td = '<td>Rs. '+((invoice.total - invoice.amount_pay).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","))+'</td>';
+                    // var designated_rider_td = '<td class="designated_rider">{{return_marketing_rider_for_invoice('+invoice.id+', $ymd)}}</td>';
+                    // var assign_rider_td = '<td><div class="form-group"><select name="riders[]" class="form-control rider_selections"><option value="">Select rider</option>@foreach($riders as $rider)<option value="{{$rider->id}}">{{$rider->name}}</option>@endforeach</select></div></td>';
+
+                    // var fieldHTML = customer_td + contact_td + shop_td + market_td + area_td + invoice_td + invoice_total_td + invoice_amount_pay_td + invoice_due_td + designated_rider_td + assign_rider_td;
+                    // $('.tb_otd').append('<tr>' + fieldHTML + '</tr>');
                 }
 
                 $('#customMarketingModal').modal('hide');
+
+                window.location.href = window.location.href;
             });
         });
     </script>

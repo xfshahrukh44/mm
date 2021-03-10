@@ -404,6 +404,7 @@
         return decodeURI(results[1]) || 0;
     }
     // console.log($.urlParam('query'));
+    
     $('.query').val($.urlParam('query') ? $.urlParam('query') : '');
     $('.dispatch_date2').val($.urlParam('dispatch_date') ? $.urlParam('dispatch_date') : '');
     

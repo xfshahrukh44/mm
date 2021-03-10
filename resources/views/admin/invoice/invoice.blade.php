@@ -481,11 +481,20 @@
     $('#addInvoiceModal').on('change', '.quantities', function(){
         get_order_total('#addInvoiceModal');
     });
+    $('#editInvoiceModal').on('change', '.quantities', function(){
+        get_order_total('#editInvoiceModal');
+    });
     $('#addInvoiceModal').on('change', '.prices', function(){
         get_order_total('#addInvoiceModal');
     });
+    $('#editInvoiceModal').on('change', '.prices', function(){
+        get_order_total('#editInvoiceModal');
+    });
     $('#addInvoiceModal').on('change', '.discount', function(){
         get_order_total('#addInvoiceModal');
+    });
+    $('#editInvoiceModal').on('change', '.discount', function(){
+        get_order_total('#editInvoiceModal');
     });
     // on customer change
     $('.customer_id').on('change', function(){
