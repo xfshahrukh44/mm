@@ -115,6 +115,16 @@ abstract class CustomerRepository implements RepositoryInterface
         }
     }
 
+    public function all_by_status($status)
+    {
+        try {
+            return $this->model::with('market.area')->where('status', $status)->get();
+        }
+        catch (\Exception $exception) {
+            throw new AllCustomerException($exception->getMessage());
+        }
+    }
+
     public function paginate($pagination)
     {
         try {

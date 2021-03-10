@@ -406,6 +406,7 @@
     // console.log($.urlParam('query'));
     $('.query').val($.urlParam('query') ? $.urlParam('query') : '');
     $('.dispatch_date2').val($.urlParam('dispatch_date') ? $.urlParam('dispatch_date') : '');
+    
     // persistent active sidebar
     var element = $('li a[href*="'+ window.location.pathname +'"]');
     element.parent().parent().parent().addClass('menu-open');

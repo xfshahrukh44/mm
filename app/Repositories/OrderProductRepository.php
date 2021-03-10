@@ -58,7 +58,7 @@ abstract class OrderProductRepository implements RepositoryInterface
     
     public function update(array $data, $id)
     {
-        // try {
+        try {
             if(!$temp = $this->model->find($id))
             {
                 return [
@@ -75,10 +75,10 @@ abstract class OrderProductRepository implements RepositoryInterface
                 'message' => 'Updated successfully!',
                 'updated_orderProduct' => $this->find($temp->id),
             ];
-        // }
-        // catch (\Exception $exception) {
-        //     throw new UpdateOrderProductException($exception->getMessage());
-        // }
+        }
+        catch (\Exception $exception) {
+            throw new UpdateOrderProductException($exception->getMessage());
+        }
     }
     
     public function find($id)

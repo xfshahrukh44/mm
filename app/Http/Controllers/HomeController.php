@@ -70,6 +70,8 @@ class HomeController extends Controller
         // $invoice = Invoice::withTrashed()->find(83);
         // $invoice->deleted_at = NULL;
         // $invoice->saveQuietly();
+        // $customers = Customer::where('status', '*')->get();
+        dd($request->ip());
     }
 
     public function generate_invoice_pdf($id)
@@ -336,21 +338,27 @@ class HomeController extends Controller
 
     public function generate_customers_excel(Request $request)
     {
-        $customers = $this->customerService->all();
+        // dd($request->all());
+        if($request->status != NULL){
+            $customers = $this->customerService->all_by_status($request->status);
+        }
+        else{
+            $customers = $this->customerService->all();
+        }
         $main_array = [];
         foreach($customers as $customer){
             array_push($main_array, [
                 'Name' => $customer->name,
                 'Address' => ($customer->shop_name ? $customer->shop_name . ', ' : '') . (($customer->market && $customer->market->area) ? $customer->market->area->name . ', ' : '') . ($customer->market ? $customer->market->name . '.' : ''),
                 'Contact' => $customer->contact_number,
-                'Business to Date' => number_format(intval($customer->business_to_date)),
-                'Outstanding Balance' => number_format(intval($customer->outstanding_balance)),
+                'Business to Date' => (intval($customer->business_to_date)),
+                'Outstanding Balance' => (intval($customer->outstanding_balance)),
             ]);
         }
         
         $export = new CustomerExport($main_array);
 
-        return Excel::download($export, 'Customers - ' . return_date_pdf(Carbon::now()) . '.xls');
+        return Excel::download($export, 'Customers - ' . return_date_pdf(Carbon::now()) . (($request->status != NULL) ? ('('.$request->status.')') : '') . '.xls');
     }
 
     public function generate_vendors_excel(Request $request)
@@ -414,21 +422,20 @@ class HomeController extends Controller
         // $tomorrow =lcfirst(Carbon::tomorrow()->format('l'));
 
         $riders = User::where('type', 'rider')->get();
+        
         $customers = Customer::where('visiting_days', $today)->get();
         $customers_all = Customer::all();
+        $customer_marketings = Marketing::whereNotNull('customer_id')->where('date', $date)->get();
+
         $receivings = Receiving::where('payment_date', $date)->get();
         $receivings_all = Receiving::whereNotNull('payment_date')->get();
-        // $orders = Order::where('dispatch_date', Carbon::now()->format('Y-m-d'))->get();
-        // $invoices = [];
-        // foreach($orders as $order){
-        //     foreach($order->invoices as $invoice){
-        //         array_push($invoices, $invoice);
-        //     }
-        // }
+        $receiving_marketings = Marketing::whereNotNull('receiving_id')->where('date', $date)->get();
+
         $invoices = Invoice::where('date', $ymd)->get();
         $invoices_all = Invoice::all();
+        $invoice_marketings = Marketing::whereNotNull('invoice_id')->where('date', $date)->get();
 
-        return view('admin.marketing.marketing', compact('customers', 'customers_all', 'receivings', 'receivings_all', 'invoices', 'invoices_all', 'riders', 'date', 'ymd'));
+        return view('admin.marketing.marketing', compact('customers', 'customers_all', 'customer_marketings', 'receivings', 'receivings_all', 'receiving_marketings', 'invoices', 'invoices_all', 'invoice_marketings', 'riders', 'date', 'ymd'));
     }
 
     public function assign_marketing_rider_for_customer(Request $request)

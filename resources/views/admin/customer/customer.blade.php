@@ -25,6 +25,7 @@
                 <i class="fas fa-file-excel"></i>
 
             </button>
+            <input type="hidden" name="status" class="input_status_excel" value="">
             <button class="btn btn-success" type="button" id="add_customer" data-toggle="modal" data-target="#addCustomerModal">
               <i class="fas fa-plus"></i>
 
@@ -384,6 +385,20 @@ $(document).ready(function(){
   //   "bInfo": false,
   //   "searching":false
   // });
+
+  // get url params
+  $.urlParam = function(name){
+      var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
+      if (results==null) {
+          return null;
+      }
+      return decodeURI(results[1]) || 0;
+  }
+  if($.urlParam('status_button')){
+    $('.input_status_excel').val($.urlParam('status_button'));
+  }
+  // alert($.urlParam('status_button'));
+  // console.log($.urlParam('status_button'));
 
   // persistent active sidebar
   var element = $('li a[href*="'+ window.location.pathname +'"]');

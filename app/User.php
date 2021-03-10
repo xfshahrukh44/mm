@@ -19,7 +19,7 @@ class User extends Authenticatable implements JWTSubject
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'phone', 'type', 'created_by', 'modified_by'
+        'name', 'email', 'password', 'phone', 'type', 'registration_ip', 'created_by', 'modified_by'
     ];
 
     protected static function boot()
@@ -27,6 +27,7 @@ class User extends Authenticatable implements JWTSubject
         parent::boot();
 
         static::creating(function ($query) {
+            dd($query);
             $query->created_by = (auth()->user() ? auth()->user()->id : 1);
         });
 

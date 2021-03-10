@@ -152,7 +152,7 @@
 <script>
     $(document).ready(function(){
         // persistent active sidebar
-        var element = $('li a[href*="'+ window.location.pathname +'"]');
+        var element = $('li a[href*="dashboard"]');
         element.parent().addClass('menu-open');
     });
 </script>
