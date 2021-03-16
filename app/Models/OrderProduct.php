@@ -53,7 +53,7 @@ class OrderProduct extends Model
         });
 
         static::created(function ($query) {
-            set_status_by_invoiced_items($query->order_id);
+            // set_status_by_invoiced_items($query->order_id);
         });
     }
 

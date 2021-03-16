@@ -29,7 +29,7 @@ class MarketingController extends Controller
         $this->orderService = $orderService;
         $this->receivingService = $receivingService;
         $this->userService = $userService;
-        $this->middleware('auth:api');
+        $this->middleware('auth');
     }
 
     public function index()
@@ -132,5 +132,10 @@ class MarketingController extends Controller
         $users = $this->userService->all();
 
         return view('admin.marketing.marketing', compact('marketings', 'customers', 'invoices', 'orders', 'receivings', 'users'));
+    }
+
+    public function toggle_is_done(Request $request)
+    {
+        return $this->marketingService->toggle_is_done($request->marketing_id);
     }
 }

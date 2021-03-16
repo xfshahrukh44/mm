@@ -723,29 +723,33 @@
             $('.generate_sales_excel').on('click', function(){
                 // identify source form
                 var form_id = '#' + $(this).data('form');
+
                 // empty wrapper
                 $('#dummy_form').html('@csrf');
 
                 // transaction_dates
-                $(form_id + ' .transaction_dates').each(function(){
-                    $('#dummy_form').append('<input name="transaction_dates[]" value="'+$(this).text()+'"></input>')
-                });
+                var transaction_dates = $(form_id + ' .transaction_dates');
                 // customers
-                $(form_id + ' .customers').each(function(){
-                    $('#dummy_form').append('<input name="customers[]" value="'+$(this).text()+'"></input>')
-                });
+                var customers = $(form_id + ' .customers');
                 // products
-                $(form_id + ' .products').each(function(){
-                    $('#dummy_form').append('<input name="products[]" value="'+$(this).text()+'"></input>')
-                });
+                var products = $(form_id + ' .products');
                 // prices
-                $(form_id + ' .prices').each(function(){
-                    $('#dummy_form').append('<input name="prices[]" value="'+$(this).text()+'"></input>')
-                });
+                var prices = $(form_id + ' .prices');
                 // quantities
-                $(form_id + ' .quantities').each(function(){
-                    $('#dummy_form').append('<input name="quantities[]" value="'+$(this).text()+'"></input>')
-                });
+                var quantities = $(form_id + ' .quantities');
+
+                // preparing records csv string
+                var records = "";
+                for(var i = 0; i < transaction_dates.length; i++){
+                    records += transaction_dates[i].innerText + 'ayycolumnendayy' + customers[i].innerText + 'ayycolumnendayy' + products[i].innerText + 'ayycolumnendayy' + parseFloat((prices[i].innerText).replace('Rs.', '')) + 'ayycolumnendayy' + parseFloat((quantities[i].innerText)) + 'ayyrecordendayy';
+                }
+                records = records.slice(0,-15);
+                records = records.replace(/"/g, "`");
+                records = records.replace(/'/g, "`");
+
+                // appending fields
+                // records
+                $('#dummy_form').append("<input name='records' value='"+records+"'></input>");
                 // title
                 $('#dummy_form').append('<input name="title" value="'+$(form_id + ' .title').text()+'"></input>')
                 // total

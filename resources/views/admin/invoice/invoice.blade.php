@@ -436,6 +436,7 @@
             dataType: 'JSON',
             success: function (data) {
                 customer = data.customer;
+                (customer.type == 'distributor') ? rider_not_required() : rider_required();
             }
         });
     }
@@ -481,42 +482,63 @@
     $('#addInvoiceModal').on('change', '.quantities', function(){
         get_order_total('#addInvoiceModal');
     });
-    $('#editInvoiceModal').on('change', '.quantities', function(){
-        get_order_total('#editInvoiceModal');
-    });
     $('#addInvoiceModal').on('change', '.prices', function(){
         get_order_total('#addInvoiceModal');
-    });
-    $('#editInvoiceModal').on('change', '.prices', function(){
-        get_order_total('#editInvoiceModal');
     });
     $('#addInvoiceModal').on('change', '.discount', function(){
         get_order_total('#addInvoiceModal');
     });
+    $('#addInvoiceModal').on('change', '.amount_pay', function(){
+        get_order_total('#addInvoiceModal');
+    });
+    $('#editInvoiceModal').on('change', '.quantities', function(){
+        get_order_total('#editInvoiceModal');
+    });
+    $('#editInvoiceModal').on('change', '.prices', function(){
+        get_order_total('#editInvoiceModal');
+    });
     $('#editInvoiceModal').on('change', '.discount', function(){
         get_order_total('#editInvoiceModal');
     });
+    $('#editInvoiceModal').on('change', '.amount_pay', function(){
+        get_order_total('#editInvoiceModal');
+    });
     // on customer change
-    $('.customer_id').on('change', function(){
+    $('#addInvoiceModal .customer_id').on('change', function(){
         var user_id = $(this).val();
         fetch_customer(user_id);
-        $('.previous_amount').val(customer.outstanding_balance);
+        $('#addInvoiceModal .previous_amount').val(customer.outstanding_balance);
         get_order_total('#addInvoiceModal');
-    })
+    });
+    $('#editInvoiceModal .customer_id').on('change', function(){
+        var user_id = $(this).val();
+        fetch_customer(user_id);
+        $('#editInvoiceModal .previous_amount').val(customer.outstanding_balance);
+        get_order_total('#editInvoiceModal');
+    });
     // on payment change
-    $('.payment').on('change', function(){
+    $('#addInvoiceModal .payment').on('change', function(){
         if($(this).val() == 'credit'){
-            $('.amount_pay').val(0);
-            $('.amount_pay').prop('readonly', true);
-            $('.amount_pay').change();
+            $('#addInvoiceModal .amount_pay').val(0);
+            $('#addInvoiceModal .amount_pay').prop('readonly', true);
+            $('#addInvoiceModal .amount_pay').change();
             return 0;
         }
-        $('.amount_pay').prop('readonly', false);
-    })
+        $('#addInvoiceModal .amount_pay').prop('readonly', false);
+    });
+    $('#editInvoiceModal .payment').on('change', function(){
+        if($(this).val() == 'credit'){
+            $('#editInvoiceModal .amount_pay').val(0);
+            $('#editInvoiceModal .amount_pay').prop('readonly', true);
+            $('#editInvoiceModal .amount_pay').change();
+            return 0;
+        }
+        $('#editInvoiceModal .amount_pay').prop('readonly', false);
+    });
     // on amount_pay change
-    $('.amount_pay').on('change', function(){
-        $('.balance_due').val(parseInt($('.final_amount').val()) - parseInt($('.amount_pay').val()));
-    })
+    // $('.amount_pay').on('change', function(){
+    //     $('.balance_due').val(parseInt($('.final_amount').val()) - parseInt($('.amount_pay').val()));
+    // });
 
     // autocomplete items only
     function initAutocompleteItems(input, wrapper, source){
@@ -547,6 +569,19 @@
                 return false;
             },
         });
+    }
+
+    // add required attribute from rider
+    function rider_required(){
+        // rider_id
+        $("#addInvoiceModal .rider_id").prop("required", true);
+        $("#editInvoiceModal .rider_id").prop("required", true);
+    }
+
+    // remove required attribute from rider
+    function rider_not_required(){
+        $("#addInvoiceModal .rider_id").prop("required", false);
+        $("#editInvoiceModal .rider_id").prop("required", false);
     }
 
     //Add Items

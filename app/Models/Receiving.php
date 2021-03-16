@@ -130,4 +130,9 @@ class Receiving extends Model
     {
         return $this->hasMany('App\Models\Marketing');
     }
+
+    public function user()
+    {
+        return $this->belongsTo('App\User', 'created_by');
+    }
 }

@@ -26,6 +26,7 @@
                             
                             <select class="form-control user_id" name="user_id">
                                 <option value="">Select user</option>
+                                <option value="All">All</option>
                                 @foreach($users as $user)
                                     <option value="{{$user->id}}">{{$user->name . ' ('.$user->type.')'}}</option>
                                 @endforeach
@@ -78,11 +79,13 @@
                     <td></td>
                     <td></td>
                     <td></td>
+                    <td></td>
                     <td class="text-bold">Total</td>
                     <td class="detail_total"></td>
                     </tr>
                     <!-- headers -->
                     <tr>
+                    <th>Collected by</th>
                     <th>Customer</th>
                     <th>Market</th>
                     <th>Area</th>
@@ -94,6 +97,7 @@
                 </thead>
                 <tbody class="ledger_wrapper">
                     <tr>
+                        <td>rider 1</td>
                         <td>cus</td>
                         <td>market</td>
                         <td>area</td>
@@ -191,14 +195,15 @@
                     // append ledger entries
                     for(var i = 0; i < receivings.length; i++){
                         var receiving_id = receivings[i].id;
-                        var customer_name = (receivings[i].customer ? receivings[i].customer.name : '');
+                        var collected_by = (receivings[i].user ? receivings[i].user.name : '');
+                        var customer_name = (receivings[i].customer ? (receivings[i].customer.name + ((receivings[i].customer.shop_name) ? (' | ' + receivings[i].customer.shop_name) : '') + ((receivings[i].customer.market && receivings[i].customer.market.name) ? (' | ' + receivings[i].customer.market.name) : '') + ((receivings[i].customer.market && receivings[i].customer.market.area &&  receivings[i].customer.market.area.name) ? (' | ' + receivings[i].customer.market.area.name) : '')) : '');
                         var market = ((receivings[i].customer && receivings[i].customer.market) ? receivings[i].customer.market.name : '');
                         var area = ((receivings[i].customer && receivings[i].customer.market && receivings[i].customer.market.area) ? receivings[i].customer.market.area.name : '');
                         var invoice_id = ((receivings[i].invoice) ? receivings[i].invoice.id : '');
                         var order_id = ((receivings[i].invoice && receivings[i].invoice.order) ? receivings[i].invoice.order.id : '');
                         var amount = ((receivings[i].amount) ? receivings[i].amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") : '');
                         var is_received_input = (receivings[i].is_received == 0) ? ('<input value="'+receiving_id+'" class="is_received" type="checkbox">') : ('<input value="'+receiving_id+'" class="is_received" type="checkbox" checked>');
-                        $('.ledger_wrapper').prepend('<tr><td>'+customer_name+'</td><td>'+market+'</td><td>'+area+'</td><td>'+invoice_id+'</td><td>'+order_id+'</td><td>Rs. '+amount+'</td><td>'+is_received_input+'</td></tr>');
+                        $('.ledger_wrapper').prepend('<tr><td>'+collected_by+'</td><td>'+customer_name+'</td><td>'+market+'</td><td>'+area+'</td><td>'+invoice_id+'</td><td>'+order_id+'</td><td>Rs. '+amount+'</td><td>'+is_received_input+'</td></tr>');
                         // <tr><td>cus</td><td>market</td><td>area</td><td>1</td><td>2</td><td>Rs. 440</td></tr>
                     }
                     // set total amount

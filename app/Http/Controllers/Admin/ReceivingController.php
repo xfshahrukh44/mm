@@ -111,12 +111,12 @@ class ReceivingController extends Controller
 
     public function search_receivings(Request $request)
     {
-        $query = $request['query'];
+        // $query = $request['query'];
         if(Gate::allows('isSuperAdmin')){
-            $receivings = $this->receivingService->search_receivings($query);
+            $receivings = $this->receivingService->search_receivings($request->all());
         }
         else{
-            $receivings = $this->receivingService->search_receivings_by_user_id($query, auth()->user()->id);
+            $receivings = $this->receivingService->search_receivings_by_user_id($request->all(), auth()->user()->id);
         }
         
         $invoices = $this->invoiceService->all();

@@ -139,6 +139,8 @@ Route::group(['middleware' => 'auth', 'prefix' => 'admin'], function() {
     Route::post('/generate_vendors_excel', 'HomeController@generate_vendors_excel')->name('generate_vendors_excel');
     // generate_products_excel
     Route::post('/generate_products_excel', 'HomeController@generate_products_excel')->name('generate_products_excel');
+    // generate_orders_excel
+    Route::post('/generate_orders_excel', 'HomeController@generate_orders_excel')->name('generate_orders_excel');
     // assign_marketing_rider_for_customer
     Route::get('/assign_marketing_rider_for_customer', 'HomeController@assign_marketing_rider_for_customer')->name('assign_marketing_rider_for_customer');
     // assign_marketing_rider_for_receiving
@@ -149,6 +151,8 @@ Route::group(['middleware' => 'auth', 'prefix' => 'admin'], function() {
     Route::get('/fetch_receivings', 'Admin\ReceivingController@fetch_receivings')->name('fetch_receivings');
     // toggle_is_received
     Route::get('/toggle_is_received', 'Admin\ReceivingController@toggle_is_received')->name('toggle_is_received');
+    // toggle_is_done
+    Route::get('/toggle_is_done', 'Admin\MarketingController@toggle_is_done')->name('toggle_is_done');
     // toggle_is_available
     Route::get('/toggle_is_available', 'Admin\OrderProductController@toggle_is_available')->name('toggle_is_available');
     // ready_to_dispatch

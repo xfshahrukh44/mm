@@ -25,7 +25,7 @@ class Marketing extends Model
     }
 
     protected $fillable = [
-        'customer_id', 'invoice_id', 'order_id', 'receiving_id', 'user_id', 'date', 'created_by', 'modified_by',
+        'customer_id', 'invoice_id', 'order_id', 'receiving_id', 'user_id', 'date', 'is_done', 'created_by', 'modified_by',
     ];
 
     protected $dates = ['created_at', 'updated_at', 'deleted_at'];

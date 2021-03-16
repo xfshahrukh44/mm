@@ -173,4 +173,11 @@ abstract class MarketingRepository implements RepositoryInterface
 
         return $marketings;
     }
+
+    public function toggle_is_done($id)
+    {
+        $marketing = $this->model->find($id);
+        $marketing->is_done = ($marketing->is_done == 0) ? 1 : 0;
+        $marketing->save();
+    }
 }

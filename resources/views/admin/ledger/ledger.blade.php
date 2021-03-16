@@ -360,7 +360,6 @@ $(document).ready(function(){
         else{
           var detail = "";
         }
-        console.log(client.ledgers[i]);
 
         // check if record has invoice_id
         if(client.ledgers[i].invoice_id){
@@ -389,21 +388,38 @@ $(document).ready(function(){
   // on generate_ledgers_excel click
   $('.generate_ledgers_excel').on('click', function(){
       // transaction_dates
-      $('.transaction_dates').each(function(){
-          $('#dummy_form').append('<input name="transaction_dates[]" value="'+$(this).text()+'"></input>')
-      });
+      var transaction_dates = $('.transaction_dates');
+      // $('.transaction_dates').each(function(){
+      //     $('#dummy_form').append('<input name="transaction_dates[]" value="'+$(this).text()+'"></input>')
+      // });
       // details
-      $('.details').each(function(){
-          $('#dummy_form').append('<input name="details[]" value="'+$(this).text()+'"></input>')
-      });
+      var details = $('.details');
+      // $('.details').each(function(){
+      //     $('#dummy_form').append('<input name="details[]" value="'+$(this).text()+'"></input>')
+      // });
       // amounts
-      $('.amounts').each(function(){
-          $('#dummy_form').append('<input name="amounts[]" value="'+$(this).text()+'"></input>')
-      });
+      var amounts = $('.amounts');
+      // $('.amounts').each(function(){
+      //     $('#dummy_form').append('<input name="amounts[]" value="'+$(this).text()+'"></input>')
+      // });
       // types
-      $('.types').each(function(){
-          $('#dummy_form').append('<input name="types[]" value="'+$(this).text()+'"></input>')
-      });
+      var types = $('.types');
+      // $('.types').each(function(){
+      //     $('#dummy_form').append('<input name="types[]" value="'+$(this).text()+'"></input>')
+      // });
+
+      // preparing records csv string
+      var records = "";
+      for(var i = 0; i < transaction_dates.length; i++){
+          records += transaction_dates[i].innerText + 'ayycolumnendayy' + details[i].innerText + 'ayycolumnendayy' + parseFloat((amounts[i].innerText).replace('Rs. ', '')) + 'ayycolumnendayy' + types[i].innerText + 'ayyrecordendayy';
+      }
+      records = records.slice(0,-15);
+      records = records.replace('"', '`');
+      records = records.replace("'", '`');
+
+      // appending fields
+      // records
+      $('#dummy_form').append("<input name='records' value='"+records+"'></input>");
       // title
       $('#dummy_form').append('<input name="title" value="'+$('#detailLedgerModalLabel').text()+'"></input>')
       // total

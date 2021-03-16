@@ -121,7 +121,7 @@ abstract class OrderRepository implements RepositoryInterface
     public function paginate($pagination)
     {
         try {
-            return $this->model::with('customer')->orderBy('created_at', 'DESC')->paginate($pagination);
+            return $this->model::with('customer')->orderBy('status', 'DESC')->orderBy('created_at', 'DESC')->paginate($pagination);
         }
         catch (\Exception $exception) {
             throw new AllOrderException($exception->getMessage());
@@ -146,6 +146,8 @@ abstract class OrderRepository implements RepositoryInterface
                             ->orWhere('id', 'LIKE', '%'.$query.'%')
                             ->orWhere('total', 'LIKE', '%'.$query.'%')
                             ->orWhere('status', 'LIKE', '%'.$query.'%')
+                            ->orderBy('status', 'DESC')
+                            ->orderBy('created_at', 'DESC')
                             ->paginate(env('PAGINATION'));
         }
         else{
@@ -158,7 +160,49 @@ abstract class OrderRepository implements RepositoryInterface
                                 $q->orWhere('total', 'LIKE', '%'.$query.'%');
                                 $q->orWhere('status', 'LIKE', '%'.$query.'%');
                             })
+                            ->orderBy('status', 'DESC')
+                            ->orderBy('created_at', 'DESC')
                             ->paginate(env('PAGINATION'));
+        }
+
+        return $orders;
+    }
+
+    public function search_orders_all($data)
+    {
+        $query = $data['query'];
+
+        // foreign fields
+        // customers
+        $customers = $this->customerService->search_customers_all($query);
+        $customer_ids = [];
+        foreach($customers as $customer){
+            array_push($customer_ids, $customer->id);
+        }
+
+        // search block
+        if($data['dispatch_date'] == NULL){
+            $orders = Order::whereIn('customer_id', $customer_ids)
+                            ->orWhere('id', 'LIKE', '%'.$query.'%')
+                            ->orWhere('total', 'LIKE', '%'.$query.'%')
+                            ->orWhere('status', 'LIKE', '%'.$query.'%')
+                            ->orderBy('status', 'DESC')
+                            ->orderBy('created_at', 'DESC')
+                            ->get();
+        }
+        else{
+            $dispatch_date = $data['dispatch_date'];
+
+            $orders = Order::whereDate('dispatch_date', $dispatch_date)
+                            ->where(function($q) use($customer_ids, $query){
+                                $q->orWhereIn('customer_id', $customer_ids);
+                                $q->orWhere('id', 'LIKE', '%'.$query.'%');
+                                $q->orWhere('total', 'LIKE', '%'.$query.'%');
+                                $q->orWhere('status', 'LIKE', '%'.$query.'%');
+                            })
+                            ->orderBy('status', 'DESC')
+                            ->orderBy('created_at', 'DESC')
+                            ->get();
         }
 
         return $orders;

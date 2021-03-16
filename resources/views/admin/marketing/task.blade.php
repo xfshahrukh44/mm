@@ -78,6 +78,7 @@
                                 <th>Shop</th>
                                 <th>Market</th>
                                 <th>Area</th>
+                                <th>Done?</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -88,6 +89,14 @@
                                     <td>{{$customer_marketing->customer && $customer_marketing->customer->shop_name ? $customer_marketing->customer->shop_name : ''}}</td>
                                     <td>{{$customer_marketing->customer && $customer_marketing->customer->market ? $customer_marketing->customer->market->name : ''}}</td>
                                     <td>{{($customer_marketing->customer && $customer_marketing->customer->market && $customer_marketing->customer->market->area) ? $customer_marketing->customer->market->area->name : ''}}</td>
+                                    <td>
+                                        @if($customer_marketing->is_done == 0)
+                                            <input value="{{$customer_marketing->id}}" class="is_done" type="checkbox">
+                                        @endif
+                                        @if($customer_marketing->is_done == 1)
+                                            <input value="{{$customer_marketing->id}}" class="is_done" type="checkbox" checked>
+                                        @endif
+                                    </td>
                                 </tr>
                             @endforeach
                         </tbody>
@@ -111,6 +120,7 @@
                                 <th>Total</th>
                                 <th>Paid</th>
                                 <th>Due</th>
+                                <th>Done?</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -125,6 +135,14 @@
                                     <td>Rs. {{$receiving_marketing->receiving->invoice ? number_format($receiving_marketing->receiving->invoice->total) : ''}}</td>
                                     <td>Rs. {{$receiving_marketing->receiving->invoice ? number_format($receiving_marketing->receiving->invoice->amount_pay) : ''}}</td>
                                     <td>Rs. {{$receiving_marketing->receiving->invoice ? number_format($receiving_marketing->receiving->invoice->total - $receiving_marketing->receiving->invoice->amount_pay) : ''}}</td>
+                                    <td>
+                                        @if($receiving_marketing->is_done == 0)
+                                            <input value="{{$receiving_marketing->id}}" class="is_done" type="checkbox">
+                                        @endif
+                                        @if($receiving_marketing->is_done == 1)
+                                            <input value="{{$receiving_marketing->id}}" class="is_done" type="checkbox" checked>
+                                        @endif
+                                    </td>
                                 </tr>
                             @endforeach
                         </tbody>
@@ -148,6 +166,7 @@
                                 <th>Total</th>
                                 <th>Paid</th>
                                 <th>Due</th>
+                                <th>Done?</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -162,6 +181,14 @@
                                     <td>Rs. {{$invoice_marketing->invoice->total ? number_format($invoice_marketing->invoice->total) : ''}}</td>
                                     <td>Rs. {{$invoice_marketing->invoice->amount_pay ? number_format($invoice_marketing->invoice->amount_pay) : ''}}</td>
                                     <td>Rs. {{($invoice_marketing->invoice->total && $invoice_marketing->invoice->amount_pay) ? number_format($invoice_marketing->invoice->total - $invoice_marketing->invoice->amount_pay) : ''}}</td>
+                                    <td>
+                                        @if($invoice_marketing->is_done == 0)
+                                            <input value="{{$invoice_marketing->id}}" class="is_done" type="checkbox">
+                                        @endif
+                                        @if($invoice_marketing->is_done == 1)
+                                            <input value="{{$invoice_marketing->id}}" class="is_done" type="checkbox" checked>
+                                        @endif
+                                    </td>
                                 </tr>
                             @endforeach
                         </tbody>
@@ -186,6 +213,22 @@
                     $('.fetch_marketing_tasks').prop('disabled', true);
                 }
             })
+
+            // on is_done click
+            $('.is_done').on('click', function(){
+                var marketing_id = $(this).val();
+                $.ajax({
+                    url: "<?php echo(route('toggle_is_done')); ?>",
+                    type: 'GET',
+                    async: false,
+                    data: {marketing_id: marketing_id},
+                    dataType: 'JSON',
+                    success: function (data) {
+                        $(this).prop("checked", !$(this).prop("checked"));
+                    }
+                });
+
+            });
         });
     </script>
 

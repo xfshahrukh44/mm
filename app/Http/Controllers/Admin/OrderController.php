@@ -38,7 +38,8 @@ class OrderController extends Controller
         $orders = $this->orderService->paginate(env('PAGINATE'));
         $customers = $this->customerService->all();
         $products = $this->productService->all();
-        $riders = $this->userService->all_riders();
+        // $riders = $this->userService->all_riders();
+        $riders = $this->userService->all();
         return view('admin.order.order', compact('orders', 'customers', 'products', 'riders'));
     }
 
@@ -182,7 +183,8 @@ class OrderController extends Controller
         $orders = $this->orderService->search_orders($data);
         $customers = $this->customerService->all();
         $products = $this->productService->all();
-        $riders = $this->userService->all_riders();
+        // $riders = $this->userService->all_riders();
+        $riders = $this->userService->all();
 
         return view('admin.order.order', compact('orders', 'customers', 'products', 'riders'));
     }

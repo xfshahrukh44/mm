@@ -17,11 +17,13 @@ use App\Services\InvoiceProductService;
 use App\Services\ProductService;
 use App\Services\CustomerService;
 use App\Services\VendorService;
+use App\Services\OrderService;
 use Excel;
 use App\Exports\ExpensesExport;
 use App\Exports\LedgersExport;
 use App\Exports\SalesExport;
 use App\Exports\CustomerExport;
+use App\Exports\OrderExport;
 use App\Exports\VendorExport;
 use App\Exports\ProductExport;
 use Carbon\Carbon;
@@ -34,12 +36,13 @@ class HomeController extends Controller
     private $productService;
     private $customerService;
     private $vendorService;
+    private $orderService;
     /**
      * Create a new controller instance.
      *
      * @return void
      */
-    public function __construct(InvoiceService $invoiceService, InvoiceProductService $invoiceProductService, ProductService $productService, CustomerService $customerService, VendorService $vendorService)
+    public function __construct(InvoiceService $invoiceService, InvoiceProductService $invoiceProductService, ProductService $productService, CustomerService $customerService, VendorService $vendorService, OrderService $orderService)
     {
         $this->middleware('auth');
         $this->invoiceService = $invoiceService;
@@ -47,6 +50,7 @@ class HomeController extends Controller
         $this->productService = $productService;
         $this->customerService = $customerService;
         $this->vendorService = $vendorService;
+        $this->orderService = $orderService;
     }
 
     /**
@@ -221,6 +225,7 @@ class HomeController extends Controller
 
     public function combined_sales(Request $request)
     {
+        // dd($request->all());
         // fetch all stock_outs by product_id and customer_id
         $stock_outs = StockOut::whereIn('customer_id', $request['customer_id'])
                                 ->whereIn('product_id', $request['product_id'])
@@ -267,13 +272,11 @@ class HomeController extends Controller
     public function generate_expenses_excel(Request $request)
     {
         // dd($request->all());
+        $records = explode('ayyrecordendayy', $request->records);
         $main_array = [];
-        for($i = 0; $i < count($request->transaction_dates); $i++){
-            array_push($main_array, [
-                'Transaction Date' => $request->transaction_dates[$i],
-                'Amount' => $request->amounts[$i],
-                'Details' => $request->details[$i]
-            ]);
+        foreach($records as $record){
+            $array = explode('ayycolumnendayy', $record);
+            array_push($main_array, $array);
         }
         array_push($main_array, [
             'Transaction Date' => "Total",
@@ -289,14 +292,11 @@ class HomeController extends Controller
     public function generate_ledgers_excel(Request $request)
     {
         // dd($request->all());
+        $records = explode('ayyrecordendayy', $request->records);
         $main_array = [];
-        for($i = 0; $i < count($request->transaction_dates); $i++){
-            array_push($main_array, [
-                'Transaction Date' => $request->transaction_dates[$i],
-                'Details' => $request->details[$i],
-                'Amount' => $request->amounts[$i],
-                'Type' => $request->types[$i]
-            ]);
+        foreach($records as $record){
+            $array = explode('ayycolumnendayy', $record);
+            array_push($main_array, $array);
         }
         array_push($main_array, [
             'Transaction Date' => "",
@@ -313,15 +313,11 @@ class HomeController extends Controller
     public function generate_sales_excel(Request $request)
     {
         // dd($request->all());
+        $records = explode('ayyrecordendayy', $request->records);
         $main_array = [];
-        for($i = 0; $i < count($request->transaction_dates); $i++){
-            array_push($main_array, [
-                'Transaction Date' => $request->transaction_dates[$i],
-                'Customer' => $request->customers[$i],
-                'Product' => $request->products[$i],
-                'Price' => $request->prices[$i],
-                'Quantity' => $request->quantities[$i]
-            ]);
+        foreach($records as $record){
+            $array = explode('ayycolumnendayy', $record);
+            array_push($main_array, $array);
         }
         array_push($main_array, [
             'Transaction Date' => "",
@@ -349,10 +345,12 @@ class HomeController extends Controller
         foreach($customers as $customer){
             array_push($main_array, [
                 'Name' => $customer->name,
+                'Type' => $customer->type,
                 'Address' => ($customer->shop_name ? $customer->shop_name . ', ' : '') . (($customer->market && $customer->market->area) ? $customer->market->area->name . ', ' : '') . ($customer->market ? $customer->market->name . '.' : ''),
                 'Contact' => $customer->contact_number,
                 'Business to Date' => (intval($customer->business_to_date)),
                 'Outstanding Balance' => (intval($customer->outstanding_balance)),
+                'Last Order On' => last_order_dispatched_at($customer->id),
             ]);
         }
         
@@ -370,8 +368,8 @@ class HomeController extends Controller
                 'Name' => $vendor->name,
                 'Address' => ($vendor->shop_name ? $vendor->shop_name . ', ' : '') . ($vendor->area ? $vendor->area->name . '.' : ''),
                 'Contact' => $vendor->contact_number,
-                'Business to Date' => number_format(intval($vendor->business_to_date)),
-                'Outstanding Balance' => number_format(intval($vendor->outstanding_balance)),
+                'Business to Date' => (intval($vendor->business_to_date)),
+                'Outstanding Balance' => (intval($vendor->outstanding_balance)),
             ]);
         }
         
@@ -391,19 +389,49 @@ class HomeController extends Controller
                 'Article' => $product->article,
                 'Unit' => ($product->unit ? $product->unit->name : ''),
                 'Gender' => $product->gender,
-                'Purchase Price' => number_format(intval($product->purchase_price)),
-                'Consumer Selling Price' => number_format(intval($product->consumer_selling_price)),
-                'Retailer Selling Price' => number_format(intval($product->retailer_selling_price)),
-                'Quantity in Hand' => number_format(intval($product->quantity_in_hand)),
-                'Cost Value' => number_format(intval($product->cost_value)),
-                'Sales Value' => number_format(intval($product->sales_value)),
-                'Minimum Ordering Quanitity' => number_format(intval($product->moq))
+                'Purchase Price' => (intval($product->purchase_price)),
+                'Consumer Selling Price' => (intval($product->consumer_selling_price)),
+                'Retailer Selling Price' => (intval($product->retailer_selling_price)),
+                'Quantity in Hand' => (intval($product->quantity_in_hand)),
+                'Cost Value' => (intval($product->cost_value)),
+                'Sales Value' => (intval($product->sales_value)),
+                'Minimum Ordering Quanitity' => (intval($product->moq))
             ]);
         }
         
         $export = new ProductExport($main_array);
 
         return Excel::download($export, 'Products - ' . return_date_pdf(Carbon::now()) . '.xls');
+    }
+
+    public function generate_orders_excel(Request $request)
+    {
+        // prepare dataset for search
+        $data = [];
+        $data['query'] = $request->excel_query;
+        $data['dispatch_date'] = $request->excel_date;
+
+        $orders = $this->orderService->search_orders_all($data);
+
+        $main_array = [];
+        foreach($orders as $order){
+            array_push($main_array, [
+                'ID' => $order->id,
+                'Date Punched' => $order->created_at,
+                'Dispatch Date' => ($order->dispatch_date ? return_date_wo_time($order->dispatch_date) : ''),
+                'Customer Name' => ($order->customer ? $order->customer->name : ''),
+                'Phone' => ($order->customer ? $order->customer->contact_number : ''),
+                'Address' => ($order->customer ? ($order->customer->shop_name . ' - ' . ($order->customer->market ? $order->customer->market->name : '') . ' - ' . ($order->customer->market && $order->customer->market->area ? $order->customer->market->area->name : '')) : ''),
+                'Total' => ($order->total ? ($order->total) : ''),
+                'Status' => ($order->status ? ($order->status) : ''),
+                'Punched By' => ($order->created_by ? (return_user_name($order->created_by)) : ''),
+                'Modified By' => ($order->modified_by ? (return_user_name($order->modified_by)) : '')
+            ]);
+        }
+        
+        $export = new OrderExport($main_array);
+
+        return Excel::download($export, 'Orders - ' . return_date_pdf(Carbon::now()) . (($data['dispatch_date'] != NULL) ? ('('.$data['dispatch_date'].')') : '') . '.xls');
     }
 
     public function search_marketing(Request $request)
@@ -421,7 +449,8 @@ class HomeController extends Controller
         $ymd = $date->format('Y-m-d');
         // $tomorrow =lcfirst(Carbon::tomorrow()->format('l'));
 
-        $riders = User::where('type', 'rider')->get();
+        // $riders = User::where('type', 'rider')->get();
+        $riders = User::all();
         
         $customers = Customer::where('visiting_days', $today)->get();
         $customers_all = Customer::all();

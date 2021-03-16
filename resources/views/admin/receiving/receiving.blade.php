@@ -28,6 +28,14 @@
               <div class="topnav col-md-4">
                 <input name="query" class="form-control" id="search_content" type="text" placeholder="Search..">
               </div>
+              <!-- status-->
+              <div class="topnav col-md-1">
+                <select type="submit" class="form-control" id="search_status" name="status">
+                  <option value="">All</option>
+                  <option value="0">Pending</option>
+                  <option value="1">Approved</option>
+                </select>
+              </div>
               <!-- search button-->
               <button type="submit" class="btn btn-primary col-md-0 justify-content-start" id="search_button">
                 <i class="fas fa-search"></i>
@@ -43,6 +51,7 @@
               <tr role="row">
                 <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1">Invoice ID</th>
                 <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1">Order ID</th>
+                <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1">Date Punched</th>
                 <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1">Customer Name</th>
                 <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1">Invoice Total</th>
                 <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1">Payment Received</th>
@@ -58,6 +67,7 @@
                   <tr role="row" class="odd">
                     <td class="{{'invoice_id'.$receiving->id}}">{{$receiving->invoice ? $receiving->invoice->id : NULL}}</td>
                     <td class="{{'order_id'.$receiving->id}}">{{$receiving->invoice && $receiving->invoice->order ? $receiving->invoice->order->id : NULL}}</td>
+                    <td class="{{'created_at'.$receiving->id}}">{{$receiving->created_at ? return_date($receiving->created_at) : NULL}}</td>
                     <td class="{{'customer'.$receiving->id}}">{{$receiving->customer? customer_shop_name($receiving->customer->id) : NULL}}</td>
                     <td class="{{'total'.$receiving->id}}">{{$receiving->invoice ? 'Rs.' . number_format($receiving->invoice->total) : NULL}}</td>
                     <td class="{{'amount'.$receiving->id}}">{{$receiving->amount ? 'Rs.' . number_format($receiving->amount) : NULL}}</td>

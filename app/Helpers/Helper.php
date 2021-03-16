@@ -85,6 +85,11 @@ function count_by_status($status)
     return count(Customer::where('status', $status)->get());
 }
 
+function order_count_by_status($status)
+{
+    return count(Order::where('status', $status)->get());
+}
+
 function last_order_dispatched_at($customer_id){
     $customer = Customer::find($customer_id);
     $customer_name = customer_shop_name($customer_id);
@@ -110,6 +115,12 @@ function set_status_by_invoiced_items($order_id){
     if($invoiced_count < $item_count){
         // incomplete
         $order->status = 'incomplete';
+        $order->invoiced_items = $invoiced_count;
+        $order->save();
+    }
+    else if($invoiced_count == 0){
+        // pending
+        $order->status = 'pending';
         $order->invoiced_items = $invoiced_count;
         $order->save();
     }

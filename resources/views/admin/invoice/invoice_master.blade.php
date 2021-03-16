@@ -69,7 +69,7 @@
         <div class="col-md-3 p-3 amount_pay_wrapper">
             <div class="form-group">
                 <label>Amount Pay</label>
-                <input type="number" name="amount_pay" class="amount_pay form-control" min=0 style="background-color: white;" value=0 step="0.01">
+                <input type="number" name="amount_pay" class="amount_pay form-control" min=0 style="background-color: white;" value=0 step="0.01" readonly>
             </div>
         </div>
         <!-- discount -->

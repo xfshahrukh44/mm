@@ -7,10 +7,10 @@ use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\Exportable;
 use Excel;
 
-class CustomerExport implements FromArray, WithHeadings
+class OrderExport implements FromArray, WithHeadings
 {
     use Exportable;
-
+    
     private $writerType = \Maatwebsite\Excel\Excel::CSV;
 
     protected $main_array;
@@ -23,13 +23,16 @@ class CustomerExport implements FromArray, WithHeadings
     public function headings(): array
     {
         return [
-            'Name',
-            'Type',
+            'ID',
+            'Date Punched',
+            'Dispatch Date',
+            'Customer Name',
+            'Phone',
             'Address',
-            'Contact',
-            'Business to Date',
-            'Outstanding Balance',
-            'Last Order On'
+            'Total',
+            'Status',
+            'Punched By',
+            'Modified By'
         ];
     }
 

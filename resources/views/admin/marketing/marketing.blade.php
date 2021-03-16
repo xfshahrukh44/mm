@@ -2,29 +2,35 @@
 
 @section('content_header')
     <style>
-    .collapsible {
-    background-color: #777;
-    color: white;
-    cursor: pointer;
-    padding: 8px;
-    width: 100%;
-    border: none;
-    box-shadow: none;
-    text-align: left;
-    outline: none;
-    font-size: 15px;
-    }
+        .collapsible {
+        background-color: #777;
+        color: white;
+        cursor: pointer;
+        padding: 8px;
+        width: 100%;
+        border: none;
+        box-shadow: none;
+        text-align: left;
+        outline: none;
+        font-size: 15px;
+        }
 
-    .active, .collapsible:hover {
-    background-color: #555;
-    }
+        .active, .collapsible:hover {
+        background-color: #555;
+        }
 
-    .cntnt {
-    padding: 0 18px;
-    display: none;
-    overflow: hidden;
-    background-color: #f1f1f1;
-    }
+        .cntnt {
+        padding: 0 18px;
+        display: none;
+        overflow: hidden;
+        background-color: #f1f1f1;
+        }
+        .red_row{
+            color: red;
+        }
+        .green_row{
+            color: green;
+        }
     </style>
 <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
@@ -247,7 +253,7 @@
                 <div class="col-md-12 cntnt customers_to_visit" style="overflow-x:auto;">
                     <!-- <h5>Customers to Visit: {{count($customers)}}</h5> -->
                     <table class="table table-striped table-bordered col-md-12 table-sm">
-                    <thead>
+                        <thead>
                             <tr>
                                 <th>Rider Name</th>
                                 <th>Customer Name</th>
@@ -259,7 +265,7 @@
                         </thead>
                         <tbody>
                             @foreach($customer_marketings as $customer_marketing)
-                                <tr>
+                                <tr class="{{($customer_marketing->is_done == 0) ? 'red_row' : 'green_row'}}">
                                     <td>{{return_user_name($customer_marketing->user_id)}}</td>
                                     <td>{{$customer_marketing->customer ? $customer_marketing->customer->name : ''}}</td>
                                     <td>{{$customer_marketing->customer && $customer_marketing->customer->contact_number ? $customer_marketing->customer->contact_number : ''}}</td>
@@ -294,8 +300,8 @@
                         </thead>
                         <tbody>
                             @foreach($receiving_marketings as $receiving_marketing)
-                                <tr>
-                                    <td>{{return_user_name($customer_marketing->user_id)}}</td>
+                                <tr class="{{($receiving_marketing->is_done == 0) ? 'red_row' : 'green_row'}}">
+                                    <td>{{return_user_name($receiving_marketing->user_id)}}</td>
                                     <td>{{$receiving_marketing->receiving->customer ? $receiving_marketing->receiving->customer->name : ''}}</td>
                                     <td>{{$receiving_marketing->receiving->customer ? $receiving_marketing->receiving->customer->contact_number : ''}}</td>
                                     <td>{{$receiving_marketing->receiving->customer ? $receiving_marketing->receiving->customer->shop_name : ''}}</td>
@@ -333,8 +339,8 @@
                         </thead>
                         <tbody>
                             @foreach($invoice_marketings as $invoice_marketing)
-                                <tr>
-                                    <td>{{return_user_name($customer_marketing->user_id)}}</td>
+                                <tr class="{{($invoice_marketing->is_done == 0) ? 'red_row' : 'green_row'}}">
+                                    <td>{{return_user_name($invoice_marketing->user_id)}}</td>
                                     <td>{{$invoice_marketing->invoice->customer ? $invoice_marketing->invoice->customer->name : ''}}</td>
                                     <td>{{$invoice_marketing->invoice->customer ? $invoice_marketing->invoice->customer->contact_number : ''}}</td>
                                     <td>{{$invoice_marketing->invoice->customer ? $invoice_marketing->invoice->customer->shop_name : ''}}</td>

@@ -117,7 +117,7 @@ abstract class ReceivingRepository implements RepositoryInterface
     public function paginate($pagination)
     {
         try {
-            return $this->model::orderBy('created_at', 'DESC')->paginate($pagination);
+            return $this->model::orderBy('is_received', 'ASC')->orderBy('created_at', 'DESC')->paginate($pagination);
         }
         catch (\Exception $exception) {
             throw new AllReceivingException($exception->getMessage());
@@ -127,15 +127,18 @@ abstract class ReceivingRepository implements RepositoryInterface
     public function paginate_by_user_id($pagination, $user_id)
     {
         try {
-            return $this->model->where('created_by', $user_id)->orderBy('created_at', 'DESC')->paginate($pagination);
+            return $this->model->where('created_by', $user_id)->orderBy('is_received', 'ASC')->orderBy('created_at', 'DESC')->paginate($pagination);
         }
         catch (\Exception $exception) {
             throw new AllReceivingException($exception->getMessage());
         }
     }
 
-    public function search_receivings($query)
+    public function search_receivings($data)
     {
+        $query = $data['query'];
+        $status = $data['status'];
+
         // foreign fields
         // customers
         $customers = Customer::where('name', 'LIKE', '%'. $query .'%')->get();
@@ -145,16 +148,36 @@ abstract class ReceivingRepository implements RepositoryInterface
         }
 
         // search block
-        $receivings = Receiving::whereIn('customer_id', $customer_ids)
-                        ->orWhere('invoice_id', 'LIKE', '%'.$query.'%')
-                        ->orWhere('amount', 'LIKE', '%'.$query.'%')
-                        ->paginate(env('PAGINATION'));
+        if($status != NULL){
+            $receivings = Receiving::where(function($q) use($query, $customer_ids){
+                                        $q->whereIn('customer_id', $customer_ids);
+                                        $q->orWhere('invoice_id', 'LIKE', '%'.$query.'%');
+                                        $q->orWhere('amount', 'LIKE', '%'.$query.'%');
+                                    })
+                                    ->where('is_received', $status)
+                                    ->orderBy('is_received', 'ASC')
+                                    ->orderBy('created_at', 'DESC')
+                                    ->paginate(env('PAGINATION'));
+        }
+        else{
+            $receivings = Receiving::whereIn('customer_id', $customer_ids)
+                                    ->orWhere('invoice_id', 'LIKE', '%'.$query.'%')
+                                    ->orWhere('amount', 'LIKE', '%'.$query.'%')
+                                    ->orderBy('is_received', 'ASC')
+                                    ->orderBy('created_at', 'DESC')
+                                    ->paginate(env('PAGINATION'));
+        }
+
+        
 
         return $receivings;
     }
 
-    public function search_receivings_by_user_id($query, $user_id)
+    public function search_receivings_by_user_id($data, $user_id)
     {
+        $query = $data['query'];
+        $status = $data['status'];
+
         // foreign fields
         // customers
         $customers = Customer::where('name', 'LIKE', '%'. $query .'%')->get();
@@ -164,19 +187,41 @@ abstract class ReceivingRepository implements RepositoryInterface
         }
 
         // search block
-        $receivings = Receiving::where('created_at', $user_id)
+        if($status != NULL){
+            $receivings = Receiving::where('created_at', $user_id)
                                 ->where(function($q){
                                     $q->orWhereIn('customer_id', $customer_ids);
                                     $q->orWhere('invoice_id', 'LIKE', '%'.$query.'%');
                                     $q->orWhere('amount', 'LIKE', '%'.$query.'%');
                                 })
+                                ->where('is_received', $status)
+                                ->orderBy('is_received', 'ASC')
+                                ->orderBy('created_at', 'DESC')
                                 ->paginate(env('PAGINATION'));
+        }
+        else{
+            $receivings = Receiving::where('created_at', $user_id)
+                                ->where(function($q){
+                                    $q->orWhereIn('customer_id', $customer_ids);
+                                    $q->orWhere('invoice_id', 'LIKE', '%'.$query.'%');
+                                    $q->orWhere('amount', 'LIKE', '%'.$query.'%');
+                                })
+                                ->orderBy('is_received', 'ASC')
+                                ->orderBy('created_at', 'DESC')
+                                ->paginate(env('PAGINATION'));
+        }
+        
 
         return $receivings;
     }
 
     public function fetch_receivings(array $data){
-        $receivings = $this->model->with('customer.market.area', 'invoice.order')->where('created_by', $data['user_id'])->whereDate('created_at', $data['date'])->get();
+        if($data['user_id'] == 'All'){
+            $receivings = $this->model->with('customer.market.area', 'invoice.order', 'user')->whereDate('created_at', $data['date'])->orderBy('is_received', 'ASC')->orderBy('created_at', 'DESC')->get();
+        }
+        else{
+            $receivings = $this->model->with('customer.market.area', 'invoice.order', 'user')->where('created_by', $data['user_id'])->whereDate('created_at', $data['date'])->orderBy('is_received', 'ASC')->orderBy('created_at', 'DESC')->get();
+        }
         $total = 0;
         foreach($receivings as $receiving){
             $total += $receiving->amount;

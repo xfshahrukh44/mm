@@ -196,13 +196,15 @@
                             <label for="">Customer Receiving</label>
                         </td>
                         <td style="border: none; font-size: 10px; font-weight:700;">Amount Received</td>
-                        <td class="tbl_3" style="text-align: right">{{($invoice->amount_pay != 0) ? number_format(intval($invoice->amount_pay)) : ""}}</td>
+                        <td class="tbl_3" style="text-align: right"></td>
+                        <!-- <td class="tbl_3" style="text-align: right">{{($invoice->amount_pay != 0) ? number_format(intval($invoice->amount_pay)) : ""}}</td> -->
                     </tr>
                     <tr>
                         <td style="border: none"></td>
                         <td style="border: none"></td>
                         <td style="border: none; font-size: 10px; font-weight:700;">Balance Due</td>
-                        <td class="tbl_3" style="text-align: right">{{(($invoice->amount_pay != 0) ? number_format(intval(($invoice->total + $invoice->previous_balance) - $invoice->amount_pay)) : number_format(intval(($invoice->total + $invoice->previous_balance) - 0)))}}</td>
+                        <td class="tbl_3" style="text-align: right"></td>
+                        <!-- <td class="tbl_3" style="text-align: right">{{(($invoice->amount_pay != 0) ? number_format(intval(($invoice->total + $invoice->previous_balance) - $invoice->amount_pay)) : number_format(intval(($invoice->total + $invoice->previous_balance) - 0)))}}</td> -->
                     </tr>
                 </table>
             </div>
@@ -346,13 +348,15 @@
                         <label for="" style="display: none;">Customer Receiving</label>
                     </td>
                     <td style="border: none; font-size: 10px; font-weight:700;">Amount Received</td>
-                    <td class="tbl_3" style="text-align: right">{{($invoice->amount_pay != 0) ? number_format(intval($invoice->amount_pay)) : ""}}</td>
+                    <td class="tbl_3" style="text-align: right"></td>
+                    <!-- <td class="tbl_3" style="text-align: right">{{($invoice->amount_pay != 0) ? number_format(intval($invoice->amount_pay)) : ""}}</td> -->
                 </tr>
                 <tr>
                     <td style="border: none"></td>
                     <td style="border: none"></td>
                     <td style="border: none; font-size: 10px; font-weight:700;">Balance Due</td>
-                    <td class="tbl_3" style="text-align: right">{{(($invoice->amount_pay != 0) ? number_format(intval(($invoice->total + $invoice->previous_balance) - $invoice->amount_pay)) : number_format(intval(($invoice->total + $invoice->previous_balance) - 0)))}}</td>
+                    <td class="tbl_3" style="text-align: right"></td>
+                    <!-- <td class="tbl_3" style="text-align: right">{{(($invoice->amount_pay != 0) ? number_format(intval(($invoice->total + $invoice->previous_balance) - $invoice->amount_pay)) : number_format(intval(($invoice->total + $invoice->previous_balance) - 0)))}}</td> -->
                 </tr>
             </table>
         </div>

@@ -209,17 +209,33 @@
             // on generate_expenses_excel click
             $('.generate_expenses_excel').on('click', function(){
                 // transaction_dates
-                $('.transaction_dates').each(function(){
-                    $('#dummy_form').append('<input name="transaction_dates[]" value="'+$(this).text()+'"></input>')
-                });
+                var transaction_dates = $('.transaction_dates');
+                // $('.transaction_dates').each(function(){
+                //     $('#dummy_form').append('<input name="transaction_dates[]" value="'+$(this).text()+'"></input>')
+                // });
                 // amounts
-                $('.amounts').each(function(){
-                    $('#dummy_form').append('<input name="amounts[]" value="'+$(this).text()+'"></input>')
-                });
+                var amounts = $('.amounts');
+                // $('.amounts').each(function(){
+                //     $('#dummy_form').append('<input name="amounts[]" value="'+$(this).text()+'"></input>')
+                // });
                 // details
-                $('.details').each(function(){
-                    $('#dummy_form').append('<input name="details[]" value="'+$(this).text()+'"></input>')
-                });
+                var details = $('.details');
+                // $('.details').each(function(){
+                //     $('#dummy_form').append('<input name="details[]" value="'+$(this).text()+'"></input>')
+                // });
+
+                // preparing records csv string
+                var records = "";
+                for(var i = 0; i < transaction_dates.length; i++){
+                    records += transaction_dates[i].innerText + 'ayycolumnendayy' + parseFloat((amounts[i].innerText).replace('Rs.', '')) + 'ayycolumnendayy' + details[i].innerText + 'ayyrecordendayy';
+                }
+                records = records.slice(0,-15);
+                records = records.replace('"', '`');
+                records = records.replace("'", '`');
+
+                // appending fields
+                // records
+                $('#dummy_form').append("<input name='records' value='"+records+"'></input>");
                 // title
                 $('#dummy_form').append('<input name="title" value="'+$('#detailLedgerModalLabel').text()+'"></input>')
                 // total

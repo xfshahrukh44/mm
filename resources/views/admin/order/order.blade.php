@@ -27,9 +27,18 @@
         <div class="card">
             <div class="card-header">
                 <div class="card-tools">
-                    <button class="btn btn-success testbtn" id="add_program" data-route="{{route('order.store')}}">
-                        <i class="fas fa-plus"></i>
-                    </button>
+                <!-- generate excel -->
+                    <form action="{{route('generate_orders_excel')}}" target="_blank" method="post">
+                        @csrf
+                        <button type="submit" class="btn btn-success generate_ledgers_excel">
+                            <i class="fas fa-file-excel"></i>
+                        </button>
+                        <input type="hidden" name="excel_query" class="excel_query" value="">
+                        <input type="hidden" name="excel_date" class="excel_date" value="">
+                        <button class="btn btn-success" type="button" id="add_program" data-route="{{route('order.store')}}">
+                            <i class="fas fa-plus"></i>
+                        </button>
+                    </form>
                 </div>
                 <!-- search bar -->
                 <form action="{{route('search_orders')}}" class="form-wrapper">
@@ -406,7 +415,9 @@
     // console.log($.urlParam('query'));
     
     $('.query').val($.urlParam('query') ? $.urlParam('query') : '');
+    $('.excel_query').val($.urlParam('query') ? $.urlParam('query') : '');
     $('.dispatch_date2').val($.urlParam('dispatch_date') ? $.urlParam('dispatch_date') : '');
+    $('.excel_date').val($.urlParam('dispatch_date') ? $.urlParam('dispatch_date') : '');
     
     // persistent active sidebar
     var element = $('li a[href*="'+ window.location.pathname +'"]');
@@ -566,16 +577,10 @@
     $('#addOrderModal').on('change', '.prices', function(){
         get_order_total('#addOrderModal');
     });
-    $('#addOrderModal').on('change', '.discount', function(){
-        get_order_total('#addOrderModal');
-    });
     $('#editOrderModal').on('change', '.quantities', function(){
         get_order_total('#editOrderModal');
     });
     $('#editOrderModal').on('change', '.prices', function(){
-        get_order_total('#editOrderModal');
-    });
-    $('#editOrderModal').on('change', '.discount', function(){
         get_order_total('#editOrderModal');
     });
     $('#invoiceOrderModal').on('change', '.quantities', function(){
@@ -587,6 +592,9 @@
     $('#invoiceOrderModal').on('change', '.discount', function(){
         get_order_total('#invoiceOrderModal');
     });
+    $('#invoiceOrderModal').on('change', '.amount_pay', function(){
+        get_order_total('#invoiceOrderModal');
+    });
     // on customer change
     $('.customer_id').on('change', function(){
         var user_id = $(this).val();
@@ -595,7 +603,7 @@
         get_order_total('#editOrderModal');
         get_order_total('#addOrderModal');
         get_order_total('#invoiceOrderModal');
-    })
+    });
     // on payment change on invoice
     $('#invoiceOrderModal .payment').on('change', function(){
         if($(this).val() == 'credit'){
@@ -605,11 +613,11 @@
             return 0;
         }
         $('#invoiceOrderModal .amount_pay').prop('readonly', false);
-    })
+    });
     // on amount_pay change on invoice
     $('#invoiceOrderModal .amount_pay').on('change', function(){
         $('#invoiceOrderModal .balance_due').val(parseInt($('#invoiceOrderModal .final_amount').val()) - parseInt($('#invoiceOrderModal .amount_pay').val()));
-    })
+    });
 
     // autocomplete
     function initAutocomplete(input, wrapper, source){
@@ -842,7 +850,7 @@
         $('#description').text(order.description);
 
         // ready to dispatch button
-        if(order.status != 'ready_to_dispatch'){
+        if(order.status != 'ready_to_dispatch' && order.status != 'completed'){
             // show
             $('#detailOrderModal .button_rtd_detail').removeAttr('hidden');
         }

@@ -45,7 +45,8 @@ class InvoiceController extends Controller
         $invoices = $this->invoiceService->paginate(env('PAGINATE'));
         $customers = $this->customerService->all();
         $products = $this->productService->all();
-        $riders = $this->userService->all_riders();
+        // $riders = $this->userService->all_riders();
+        $riders = $this->userService->all();
         return view('admin.invoice.invoice', compact('invoices', 'customers', 'products', 'riders'));
     }
 
@@ -182,7 +183,8 @@ class InvoiceController extends Controller
         $invoices = $this->invoiceService->search_invoices($query);
         $customers = $this->customerService->all();
         $products = $this->productService->all();
-        $riders = $this->userService->all_riders();
+        // $riders = $this->userService->all_riders();
+        $riders = $this->userService->all();
 
         return view('admin.invoice.invoice', compact('invoices', 'customers', 'products', 'riders'));
     }

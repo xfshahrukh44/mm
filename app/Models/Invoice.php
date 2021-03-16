@@ -72,7 +72,7 @@ class Invoice extends Model
             if($old_discount){
                 $expense = Expense::where('customer_id', $old_customer_id)
                                 ->where('amount', $old_amount_pay)
-                                ->where('detail', 'customer discount')
+                                ->where('type', 'Customer discount')
                                 ->first();
                 if($expense){
                     $expense->delete();
@@ -106,7 +106,8 @@ class Invoice extends Model
                 Expense::create([
                     'customer_id' => $new_customer_id,
                     'amount' => $new_amount_pay,
-                    'detail' => 'customer discount',
+                    'type' => 'Customer discount',
+                    'detail' => 'Invoice # ' . $query->id . (($new_customer_id != NULL) ? (customer_shop_name($new_customer_id)) : ''),
                     'date' => return_todays_date()
                 ]);
             }
@@ -137,7 +138,7 @@ class Invoice extends Model
             if($query->discount > 0){
                 $expense = Expense::where('customer_id', $query->customer_id)
                                 ->where('amount', $query->discount)
-                                ->where('detail', 'customer discount')
+                                ->where('type', 'Customer discount')
                                 ->first();
                 if($expense){
                     $expense->delete();
@@ -171,7 +172,8 @@ class Invoice extends Model
                 Expense::create([
                     'customer_id' => $query->customer_id,
                     'amount' => $query->discount,
-                    'detail' => 'customer discount',
+                    'type' => 'Customer discount',
+                    'detail' => 'Invoice # ' . $query->id . (($query->customer_id) ? (customer_shop_name($query->customer_id)) : ''),
                     'date' => return_todays_date()
                 ]);
             }
