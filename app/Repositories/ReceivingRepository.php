@@ -217,10 +217,21 @@ abstract class ReceivingRepository implements RepositoryInterface
 
     public function fetch_receivings(array $data){
         if($data['user_id'] == 'All'){
-            $receivings = $this->model->with('customer.market.area', 'invoice.order', 'user')->whereDate('created_at', $data['date'])->orderBy('is_received', 'ASC')->orderBy('created_at', 'DESC')->get();
+            $receivings = $this->model->with('customer.market.area', 'invoice.order', 'user')
+                        ->whereDate('created_at', '>=', $data['date_from'])
+                        ->whereDate('created_at', '<=', $data['date_to'])
+                        ->orderBy('is_received', 'ASC')
+                        ->orderBy('created_at', 'DESC')
+                        ->get();
         }
         else{
-            $receivings = $this->model->with('customer.market.area', 'invoice.order', 'user')->where('created_by', $data['user_id'])->whereDate('created_at', $data['date'])->orderBy('is_received', 'ASC')->orderBy('created_at', 'DESC')->get();
+            $receivings = $this->model->with('customer.market.area', 'invoice.order', 'user')
+                        ->where('created_by', $data['user_id'])
+                        ->whereDate('created_at', '>=', $data['date_from'])
+                        ->whereDate('created_at', '<=', $data['date_to'])
+                        ->orderBy('is_received', 'ASC')
+                        ->orderBy('created_at', 'DESC')
+                        ->get();
         }
         $total = 0;
         foreach($receivings as $receiving){

@@ -112,22 +112,21 @@ function set_status_by_invoiced_items($order_id){
         }
     }
 
-    if($invoiced_count < $item_count){
+    if($invoiced_count == 0){
         // incomplete
         $order->status = 'incomplete';
         $order->invoiced_items = $invoiced_count;
-        $order->save();
     }
-    else if($invoiced_count == 0){
+    else if($invoiced_count < $item_count){
         // pending
         $order->status = 'pending';
         $order->invoiced_items = $invoiced_count;
-        $order->save();
     }
     else{
         // complete
         $order->status = 'completed';
         $order->invoiced_items = $invoiced_count;
-        $order->save();
     }
+    
+    $order->saveQuietly();
 }

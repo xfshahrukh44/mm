@@ -130,8 +130,8 @@ class HomeController extends Controller
 
         return [
             'sales' => $sales,
-            'total' => $total,
-            'total_qty' => $total_qty
+            'total' => number_format($total, 2),
+            'total_qty' => number_format($total_qty, 2)
         ];
     }
 
@@ -174,8 +174,8 @@ class HomeController extends Controller
         
         return [
             'sales' => $sales,
-            'total' => $total,
-            'total_qty' => $total_qty
+            'total' => number_format($total, 2),
+            'total_qty' => number_format($total_qty, 2)
         ];
     }
 
@@ -218,8 +218,8 @@ class HomeController extends Controller
 
         return [
             'sales' => $sales,
-            'total' => $total,
-            'total_qty' => $total_qty
+            'total' => number_format($total, 2),
+            'total_qty' => number_format($total_qty, 2)
         ];
     }
 
@@ -264,8 +264,8 @@ class HomeController extends Controller
 
         return [
             'sales' => $sales,
-            'total' => $total,
-            'total_qty' => $total_qty
+            'total' => number_format($total, 2),
+            'total_qty' => number_format($total_qty, 2)
         ];
     }
 

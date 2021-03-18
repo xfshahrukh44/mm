@@ -20,7 +20,7 @@
             <div class="col-md-10 offset-md-1" data-select2-id="11">
                 <div class="row" data-select2-id="10" style="border: 1px solid #dee2e6; border-radius: 8px; padding: 10px;">
                     <!-- User -->
-                    <div class="col-md-6 col-sm-12">
+                    <div class="col-md-5 col-sm-12">
                         <div class="form-group">
                             <label>User:</label>
                             
@@ -33,11 +33,18 @@
                             </select>
                         </div>
                     </div>
-                    <!-- date -->
-                    <div class="col-md-5 col-sm-12">
+                    <!-- date_from -->
+                    <div class="col-md-3 col-sm-12">
                         <div class="form-group">
-                            <label>Date:</label>
-                            <input type="date" class="form-control date" name="date">
+                            <label>Date(from):</label>
+                            <input type="date" class="form-control date_from" name="date_from">
+                        </div>
+                    </div>
+                    <!-- date_to -->
+                    <div class="col-md-3 col-sm-12">
+                        <div class="form-group">
+                            <label>Date(to):</label>
+                            <input type="date" class="form-control date_to" name="date_to">
                         </div>
                     </div>
                     <!-- search button -->
@@ -80,11 +87,13 @@
                     <td></td>
                     <td></td>
                     <td></td>
+                    <td></td>
                     <td class="text-bold">Total</td>
                     <td class="detail_total"></td>
                     </tr>
                     <!-- headers -->
                     <tr>
+                    <th>Date Punched</th>
                     <th>Collected by</th>
                     <th>Customer</th>
                     <th>Market</th>
@@ -134,15 +143,14 @@
             var wild_card = 0;
 
             // fetch receiving
-            function fetch_receivings(user_id, date){
+            function fetch_receivings(user_id, date_from, date_to){
                 $.ajax({
                     url: "<?php echo(route('fetch_receivings')); ?>",
                     type: 'GET',
                     async: false,
-                    data: {user_id: user_id, date: date},
+                    data: {user_id: user_id, date_from: date_from, date_to: date_to},
                     dataType: 'JSON',
                     success: function (data) {
-                        console.log(data);
                         receivings = data.receivings;
                         total = data.total;
                     }
@@ -153,9 +161,10 @@
             function check_fields(){
                 // get all parameteres
                 var user_id = $('.user_id').val();
-                var date = $('.date').val();
+                var date_from = $('.date_from').val();
+                var date_to = $('.date_to').val();
 
-                if(user_id && date){
+                if(user_id && date_from && date_to){
                     $('.fetch_receivings').removeAttr('disabled');
                 }
                 else{
@@ -165,20 +174,22 @@
 
             // on type change
             $('.user_id').on('change', function(){check_fields();})
-            $('.date').on('change', function(){check_fields();})
+            $('.date_from').on('change', function(){check_fields();})
+            $('.date_to').on('change', function(){check_fields();})
 
             // on search receivings click
             $('.fetch_receivings').on('click', function(){
                 // get all parameteres
                 var user_id = $('.user_id').val();
-                var date = $('.date').val();
+                var date_from = $('.date_from').val();
+                var date_to = $('.date_to').val();
                 var user_name = $( ".user_id option:selected" ).text();
 
                 // fetch filtered receivings
-                fetch_receivings(user_id, date);
+                fetch_receivings(user_id, date_from, date_to);
 
                 // set ledger modal title
-                $('#detailLedgerModalLabel').html('Receipt(s) collected by: '+user_name+' <small>(' + new Date(date).toDateString() + ')</small>');
+                $('#detailLedgerModalLabel').html('Receipt(s) collected by: '+user_name+' <small>(' + new Date(date_from).toDateString() + ' - ' + new Date(date_to).toDateString() + ')</small>');
 
                 // empty wrapper
                 $('.ledger_wrapper').html('');
@@ -186,16 +197,18 @@
                 // if no entries
                 if(receivings.length == 0){
                     // no entries row
-                    $('.ledger_wrapper').prepend('<tr class="table-warning"><td class="text-center" colspan=7>No Receipt Logs</td></tr>');
+                    $('.ledger_wrapper').prepend('<tr class="table-warning"><td class="text-center" colspan=9>No Receipt Logs</td></tr>');
                     // set total amount
                     $('.detail_total').html('Rs. 0');
                 }
                 // else
                 else{
                     // append ledger entries
+                    // new Date(date_from).toDateString()
                     for(var i = 0; i < receivings.length; i++){
                         var receiving_id = receivings[i].id;
-                        var collected_by = (receivings[i].user ? receivings[i].user.name : '');
+                        var collected_by = ((receivings[i].created_at) ? (new Date(receivings[i].created_at).toDateString()) : '');
+                        var date_punched = (new Date(date_from).toDateString());
                         var customer_name = (receivings[i].customer ? (receivings[i].customer.name + ((receivings[i].customer.shop_name) ? (' | ' + receivings[i].customer.shop_name) : '') + ((receivings[i].customer.market && receivings[i].customer.market.name) ? (' | ' + receivings[i].customer.market.name) : '') + ((receivings[i].customer.market && receivings[i].customer.market.area &&  receivings[i].customer.market.area.name) ? (' | ' + receivings[i].customer.market.area.name) : '')) : '');
                         var market = ((receivings[i].customer && receivings[i].customer.market) ? receivings[i].customer.market.name : '');
                         var area = ((receivings[i].customer && receivings[i].customer.market && receivings[i].customer.market.area) ? receivings[i].customer.market.area.name : '');
@@ -203,7 +216,7 @@
                         var order_id = ((receivings[i].invoice && receivings[i].invoice.order) ? receivings[i].invoice.order.id : '');
                         var amount = ((receivings[i].amount) ? receivings[i].amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") : '');
                         var is_received_input = (receivings[i].is_received == 0) ? ('<input value="'+receiving_id+'" class="is_received" type="checkbox">') : ('<input value="'+receiving_id+'" class="is_received" type="checkbox" checked>');
-                        $('.ledger_wrapper').prepend('<tr><td>'+collected_by+'</td><td>'+customer_name+'</td><td>'+market+'</td><td>'+area+'</td><td>'+invoice_id+'</td><td>'+order_id+'</td><td>Rs. '+amount+'</td><td>'+is_received_input+'</td></tr>');
+                        $('.ledger_wrapper').prepend('<tr><td>'+date_punched+'</td><td>'+collected_by+'</td><td>'+customer_name+'</td><td>'+market+'</td><td>'+area+'</td><td>'+invoice_id+'</td><td>'+order_id+'</td><td>Rs. '+amount+'</td><td>'+is_received_input+'</td></tr>');
                         // <tr><td>cus</td><td>market</td><td>area</td><td>1</td><td>2</td><td>Rs. 440</td></tr>
                     }
                     // set total amount

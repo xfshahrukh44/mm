@@ -78,6 +78,7 @@
                                 <th>Shop</th>
                                 <th>Market</th>
                                 <th>Area</th>
+                                <th>Outstanding Balance</th>
                                 <th>Done?</th>
                             </tr>
                         </thead>
@@ -89,6 +90,7 @@
                                     <td>{{$customer_marketing->customer && $customer_marketing->customer->shop_name ? $customer_marketing->customer->shop_name : ''}}</td>
                                     <td>{{$customer_marketing->customer && $customer_marketing->customer->market ? $customer_marketing->customer->market->name : ''}}</td>
                                     <td>{{($customer_marketing->customer && $customer_marketing->customer->market && $customer_marketing->customer->market->area) ? $customer_marketing->customer->market->area->name : ''}}</td>
+                                    <td>{{($customer_marketing->customer && $customer_marketing->customer->outstanding_balance) ? ('Rs. ' . number_format($customer_marketing->customer->outstanding_balance, 2)) : ''}}</td>
                                     <td>
                                         @if($customer_marketing->is_done == 0)
                                             <input value="{{$customer_marketing->id}}" class="is_done" type="checkbox">
@@ -119,7 +121,8 @@
                                 <th>Invoice ID</th>
                                 <th>Total</th>
                                 <th>Paid</th>
-                                <th>Due</th>
+                                <th>Invoice Due</th>
+                                <th>Outstanding Balance</th>
                                 <th>Done?</th>
                             </tr>
                         </thead>
@@ -135,6 +138,7 @@
                                     <td>Rs. {{$receiving_marketing->receiving->invoice ? number_format($receiving_marketing->receiving->invoice->total) : ''}}</td>
                                     <td>Rs. {{$receiving_marketing->receiving->invoice ? number_format($receiving_marketing->receiving->invoice->amount_pay) : ''}}</td>
                                     <td>Rs. {{$receiving_marketing->receiving->invoice ? number_format($receiving_marketing->receiving->invoice->total - $receiving_marketing->receiving->invoice->amount_pay) : ''}}</td>
+                                    <td>{{($receiving_marketing->receiving && $receiving_marketing->receiving->customer && $receiving_marketing->receiving->customer->outstanding_balance) ? ('Rs. ' . number_format($receiving_marketing->receiving->customer->outstanding_balance, 2)) : ''}}</td>
                                     <td>
                                         @if($receiving_marketing->is_done == 0)
                                             <input value="{{$receiving_marketing->id}}" class="is_done" type="checkbox">
@@ -165,7 +169,8 @@
                                 <th>Invoice ID</th>
                                 <th>Total</th>
                                 <th>Paid</th>
-                                <th>Due</th>
+                                <th>Invoice Due</th>
+                                <th>Outstanding Balance</th>
                                 <th>Done?</th>
                             </tr>
                         </thead>
@@ -181,6 +186,7 @@
                                     <td>Rs. {{$invoice_marketing->invoice->total ? number_format($invoice_marketing->invoice->total) : ''}}</td>
                                     <td>Rs. {{$invoice_marketing->invoice->amount_pay ? number_format($invoice_marketing->invoice->amount_pay) : ''}}</td>
                                     <td>Rs. {{($invoice_marketing->invoice->total && $invoice_marketing->invoice->amount_pay) ? number_format($invoice_marketing->invoice->total - $invoice_marketing->invoice->amount_pay) : ''}}</td>
+                                    <td>{{($invoice_marketing->invoice && $invoice_marketing->invoice->customer && $invoice_marketing->invoice->customer->outstanding_balance) ? ('Rs. ' . number_format($invoice_marketing->invoice->customer->outstanding_balance, 2)) : ''}}</td>
                                     <td>
                                         @if($invoice_marketing->is_done == 0)
                                             <input value="{{$invoice_marketing->id}}" class="is_done" type="checkbox">

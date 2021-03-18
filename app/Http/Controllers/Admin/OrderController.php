@@ -149,7 +149,9 @@ class OrderController extends Controller
         if($request->products){
             // delete old
             foreach($order->order_products as $order_product){
-                $order_product->delete();
+                if($order_product->invoiced == 0){
+                    $order_product->delete();
+                }
             }
             // create new
             for($i = 0; $i < count($request->products); $i++){

@@ -60,7 +60,7 @@ class Product extends Model
             $product = Product::find($query->id);
             $product->cost_value = $product->quantity_in_hand * $product->purchase_price;
             $product->sales_value = $product->quantity_in_hand * $product->consumer_selling_price;
-            $product->save();
+            $product->saveQuietly();
 
 
             // pusher
@@ -92,6 +92,13 @@ class Product extends Model
     }
 
     protected $dates = ['created_at', 'updated_at', 'deleted_at'];
+
+    public function saveQuietly(array $options = [])
+    {
+        return static::withoutEvents(function () use ($options) {
+            return $this->save($options);
+        });
+    }
 
     public function category()
     {

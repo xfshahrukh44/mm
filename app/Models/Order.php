@@ -34,6 +34,7 @@ class Order extends Model
 
         static::updating(function ($query) {
             $query->modified_by = auth()->user()->id;
+            set_status_by_invoiced_items($query->id);
         });
 
         static::deleting(function ($query) {
@@ -46,6 +47,13 @@ class Order extends Model
     }
 
     protected $dates = ['created_at', 'updated_at', 'deleted_at'];
+
+    public function saveQuietly(array $options = [])
+    {
+        return static::withoutEvents(function () use ($options) {
+            return $this->save($options);
+        });
+    }
 
     public function customer()
     {

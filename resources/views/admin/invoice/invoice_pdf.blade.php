@@ -158,35 +158,35 @@
                     </tr>
                     @foreach($invoice->invoice_products as $invoice_product)
                         <tr>
-                            <td class="tbl_3" style="text-align: center">{{number_format(intval($invoice_product->quantity))}}</td>
+                            <td class="tbl_3" style="text-align: center">{{number_format(floatval($invoice_product->quantity), 2)}}</td>
                             <td class="tbl_3" style="text-align: center">{{$invoice_product->product ? ($invoice_product->product->category->name . ' - ' . $invoice_product->product->brand->name . ' - ' . $invoice_product->product->article) : NULL}}</td>
-                            <td class="tbl_3" style="text-align: center">{{number_format(intval($invoice_product->price))}}</td>
-                            <td class="tbl_3" style="text-align: center">{{number_format(intval($invoice_product->quantity * $invoice_product->price))}}</td>
+                            <td class="tbl_3" style="text-align: center">{{number_format(floatval($invoice_product->price), 2)}}</td>
+                            <td class="tbl_3" style="text-align: center">{{number_format(floatval($invoice_product->quantity * $invoice_product->price), 2)}}</td>
                         </tr>
                     @endforeach
                     <tr>
                         <td class="tbl_3" style="border: none"></td>
                         <td class="tbl_3" style="border: none"></td>
                         <td class="tbl_3" style="border: none; font-size: 10px; font-weight:700;">Total</td>
-                        <td class="tbl_3" style="text-align: right">{{number_format(intval($invoice->total))}}</td>
+                        <td class="tbl_3" style="text-align: right">{{number_format(floatval($invoice->total), 2)}}</td>
                     </tr>
                     <tr>
                         <td style="border: none"></td>
                         <td style="border: none"></td>
                         <td style="border: none; font-size: 10px; font-weight:700;">Previous Bal.</td>
-                        <td class="tbl_3" style="text-align: right">{{number_format(intval($invoice->previous_balance))}}</td>
+                        <td class="tbl_3" style="text-align: right">{{number_format(floatval($invoice->previous_balance), 2)}}</td>
                     </tr>
                     <tr>
                         <td style="border: none"></td>
                         <td style="border: none"></td>
                         <td style="border: none; font-size: 10px; font-weight:700;">Discount</td>
-                        <td class="tbl_3" style="text-align: right">{{number_format(intval($invoice->discount))}}</td>
+                        <td class="tbl_3" style="text-align: right">{{number_format(floatval($invoice->discount), 2)}}</td>
                     </tr>
                     <tr>
                         <td style="border: none"></td>
                         <td style="border: none"></td>
                         <td style="border: none; font-size: 10px; font-weight:700;">Total Due</td>
-                        <td class="tbl_3" style="text-align: right">{{number_format(intval($invoice->total + $invoice->previous_balance - $invoice->discount))}}</td>
+                        <td class="tbl_3" style="text-align: right">{{number_format(floatval($invoice->total + $invoice->previous_balance - $invoice->discount), 2)}}</td>
                     </tr>
                     <tr>
                         <td style="border: none"></td>
@@ -310,35 +310,35 @@
                 </tr>
                 @foreach($invoice->invoice_products as $invoice_product)
                     <tr>
-                        <td class="tbl_3" style="text-align: center">{{number_format(intval($invoice_product->quantity))}}</td>
+                        <td class="tbl_3" style="text-align: center">{{number_format(floatval($invoice_product->quantity), 2)}}</td>
                         <td class="tbl_3" style="text-align: center">{{$invoice_product->product ? ($invoice_product->product->category->name . ' - ' . $invoice_product->product->brand->name . ' - ' . $invoice_product->product->article) : NULL}}</td>
-                        <td class="tbl_3" style="text-align: center">{{number_format(intval($invoice_product->price))}}</td>
-                        <td class="tbl_3" style="text-align: center">{{number_format(intval($invoice_product->quantity * $invoice_product->price))}}</td>
+                        <td class="tbl_3" style="text-align: center">{{number_format(floatval($invoice_product->price), 2)}}</td>
+                        <td class="tbl_3" style="text-align: center">{{number_format(floatval($invoice_product->quantity * $invoice_product->price), 2)}}</td>
                     </tr>
                 @endforeach
                 <tr>
                     <td class="tbl_3" style="border: none"></td>
                     <td class="tbl_3" style="border: none"></td>
                     <td class="tbl_3" style="border: none; font-size: 10px; font-weight:700;">Total</td>
-                    <td class="tbl_3" style="text-align: right">{{number_format(intval($invoice->total))}}</td>
+                    <td class="tbl_3" style="text-align: right">{{number_format(floatval($invoice->total), 2)}}</td>
                 </tr>
                 <tr>
                     <td style="border: none"></td>
                     <td style="border: none"></td>
                     <td style="border: none; font-size: 10px; font-weight:700;">Previous Bal.</td>
-                    <td class="tbl_3" style="text-align: right">{{number_format(intval($invoice->previous_balance))}}</td>
+                    <td class="tbl_3" style="text-align: right">{{number_format(floatval($invoice->previous_balance), 2)}}</td>
                 </tr>
                 <tr>
                     <td style="border: none"></td>
                     <td style="border: none"></td>
                     <td style="border: none; font-size: 10px; font-weight:700;">Discount</td>
-                    <td class="tbl_3" style="text-align: right">{{number_format(intval($invoice->discount))}}</td>
+                    <td class="tbl_3" style="text-align: right">{{number_format(floatval($invoice->discount), 2)}}</td>
                 </tr>
                 <tr>
                     <td style="border: none"></td>
                     <td style="border: none"></td>
                     <td style="border: none; font-size: 10px; font-weight:700;">Total Due</td>
-                    <td class="tbl_3" style="text-align: right">{{number_format(intval($invoice->total + $invoice->previous_balance - $invoice->discount))}}</td>
+                    <td class="tbl_3" style="text-align: right">{{number_format(floatval($invoice->total + $invoice->previous_balance - $invoice->discount), 2)}}</td>
                 </tr>
                 <tr>
                     <td style="border: none"></td>

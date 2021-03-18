@@ -581,8 +581,8 @@
                 }
 
                 // set total
-                $('#all_modal .total').html('Rs.'+all_sales.total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
-                $('#all_modal .total_qty').html(all_sales.total_qty.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + ' units.');
+                $('#all_modal .total').html('Rs.'+all_sales.total);
+                $('#all_modal .total_qty').html(all_sales.total_qty + ' units.');
 
                 $('#all_modal').modal('show');
 
@@ -622,8 +622,8 @@
                 }
 
                 // set total
-                $('#customer_wise_modal .total').html('Rs.'+customer_wise_sales.total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
-                $('#customer_wise_modal .total_qty').html(customer_wise_sales.total_qty.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + ' units.');
+                $('#customer_wise_modal .total').html('Rs.'+customer_wise_sales.total);
+                $('#customer_wise_modal .total_qty').html(customer_wise_sales.total_qty + ' units.');
 
                 $('#customer_wise_modal').modal('show');
             });
@@ -662,8 +662,8 @@
                 }
 
                 // set total
-                $('#product_wise_modal .total').html('Rs.'+product_wise_sales.total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
-                $('#product_wise_modal .total_qty').html(product_wise_sales.total_qty.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + ' units.');
+                $('#product_wise_modal .total').html('Rs.'+product_wise_sales.total);
+                $('#product_wise_modal .total_qty').html(product_wise_sales.total_qty + ' units.');
 
                 $('#product_wise_modal').modal('show');
 
@@ -712,8 +712,8 @@
                 }
 
                 // set total
-                $('#combined_modal .total').html('Rs.'+combined_sales.total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
-                $('#combined_modal .total_qty').html(combined_sales.total_qty.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + ' units.');
+                $('#combined_modal .total').html('Rs.'+combined_sales.total);
+                $('#combined_modal .total_qty').html(combined_sales.total_qty + ' units.');
 
                 $('#combined_modal').modal('show');
 
@@ -741,7 +741,7 @@
                 // preparing records csv string
                 var records = "";
                 for(var i = 0; i < transaction_dates.length; i++){
-                    records += transaction_dates[i].innerText + 'ayycolumnendayy' + customers[i].innerText + 'ayycolumnendayy' + products[i].innerText + 'ayycolumnendayy' + parseFloat((prices[i].innerText).replace('Rs.', '')) + 'ayycolumnendayy' + parseFloat((quantities[i].innerText)) + 'ayyrecordendayy';
+                    records += transaction_dates[i].innerText + 'ayycolumnendayy' + customers[i].innerText + 'ayycolumnendayy' + products[i].innerText + 'ayycolumnendayy' + parseFloat((prices[i].innerText).replace('Rs.', '').replace(',', '')) + 'ayycolumnendayy' + parseFloat(quantities[i].innerText.replace(',', '')) + 'ayyrecordendayy';
                 }
                 records = records.slice(0,-15);
                 records = records.replace(/"/g, "`");

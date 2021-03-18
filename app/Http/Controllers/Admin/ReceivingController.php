@@ -136,7 +136,8 @@ class ReceivingController extends Controller
             return redirect()->route('search_marketing_tasks');
         }
         $data['user_id'] = $request->user_id;
-        $data['date'] = $request->date;
+        $data['date_from'] = $request->date_from;
+        $data['date_to'] = $request->date_to;
 
         return $this->receivingService->fetch_receivings($data);
     }

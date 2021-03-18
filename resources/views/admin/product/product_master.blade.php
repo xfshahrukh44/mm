@@ -94,7 +94,7 @@
     <!-- opening_quantity -->
     <div class="form-group col-md-6">
         <label for="">Opening Quantity</label>
-        <input type="number" min=0 name="opening_quantity" placeholder="Enter Opening Quantity" class="form-control opening_quantity" required value=0>
+        <input type="number" min=0 name="opening_quantity" placeholder="Enter Opening Quantity" class="form-control opening_quantity" required value=0 step="0.01">
     </div>
     <!-- moq -->
     <div class="form-group col-md-6">

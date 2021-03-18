@@ -712,13 +712,15 @@
         $('.field_wrapper').html('');
 
         for(var i = 0; i < order.order_products.length; i++){
-            var productDiv = '<div class="col-md-4"><div class="ui-widget"><input class="form-control product_search" name="products[]" value="'+ order.order_products[i].product.article +'"><input class="hidden_product_search" type="hidden" name="hidden_product_ids[]" value="'+ order.order_products[i].product.id +'"></div></div>';
-            var priceDiv = '<div class="form-group col-md-4"><input type="number" class="form-control prices" name="prices[]" required min=0 step="0.01" value="'+ order.order_products[i].price +'"></div>';
-            var quantityDiv = '<div class="form-group col-md-3"><input type="number" class="form-control quantities" name="quantities[]" required min=0 step="0.01" value="'+ order.order_products[i].quantity +'"></div>';
-            var fieldHTML = startDiv + productDiv + priceDiv + quantityDiv + removeChildDiv + endDiv;
+            if(order.order_products[i].invoiced == 0){
+                var productDiv = '<div class="col-md-4"><div class="ui-widget"><input class="form-control product_search" name="products[]" value="'+ order.order_products[i].product.article +'"><input class="hidden_product_search" type="hidden" name="hidden_product_ids[]" value="'+ order.order_products[i].product.id +'"></div></div>';
+                var priceDiv = '<div class="form-group col-md-4"><input type="number" class="form-control prices" name="prices[]" required min=0 step="0.01" value="'+ order.order_products[i].price +'"></div>';
+                var quantityDiv = '<div class="form-group col-md-3"><input type="number" class="form-control quantities" name="quantities[]" required min=0 step="0.01" value="'+ order.order_products[i].quantity +'"></div>';
+                var fieldHTML = startDiv + productDiv + priceDiv + quantityDiv + removeChildDiv + endDiv;
 
-            $('.field_wrapper').prepend(fieldHTML);
-            x++;
+                $('.field_wrapper').prepend(fieldHTML);
+                x++;
+            }
         }
 
         initAutocompleteItems(".product_search", "#editOrderModal .ui-widget", product_labels);

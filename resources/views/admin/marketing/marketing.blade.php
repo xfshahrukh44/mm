@@ -92,6 +92,7 @@
                                 <th>Shop</th>
                                 <th>Market</th>
                                 <th>Area</th>
+                                <th>Outstanding Balance</th>
                                 <th>Designated Rider</th>
                                 <th>Assign Rider</th>
                             </tr>
@@ -108,6 +109,7 @@
                                     <td>{{$customer->shop_name ? $customer->shop_name : ''}}</td>
                                     <td>{{$customer->market ? $customer->market->name : ''}}</td>
                                     <td>{{($customer->market && $customer->market->area) ? $customer->market->area->name : ''}}</td>
+                                    <td>{{($customer->outstanding_balance) ? ('Rs. ' . number_format($customer->outstanding_balance, 2)) : ''}}</td>
                                     <td class="designated_rider">{{return_marketing_rider_for_customer($customer->id, $ymd)}}</td>
                                     <td>
                                         <div class="form-group">
@@ -141,7 +143,8 @@
                                 <th>Invoice ID</th>
                                 <th>Total</th>
                                 <th>Paid</th>
-                                <th>Due</th>
+                                <th>Invoice Due</th>
+                                <th>Outstanding Balance</th>
                                 <th>Designated Rider</th>
                                 <th>Assign Rider</th>
                             </tr>
@@ -162,6 +165,7 @@
                                     <td>Rs. {{$receiving->invoice ? number_format($receiving->invoice->total) : ''}}</td>
                                     <td>Rs. {{$receiving->invoice ? number_format($receiving->invoice->amount_pay) : ''}}</td>
                                     <td>Rs. {{$receiving->invoice ? number_format($receiving->invoice->total - $receiving->invoice->amount_pay) : ''}}</td>
+                                    <td>{{($receiving->customer && $receiving->customer->outstanding_balance) ? ('Rs. ' . number_format($receiving->customer->outstanding_balance, 2)) : ''}}</td>
                                     <td class="designated_rider">{{return_marketing_rider_for_receiving($receiving->id, $ymd)}}</td>
                                     <td>
                                         <div class="form-group">
@@ -195,7 +199,8 @@
                                 <th>Invoice ID</th>
                                 <th>Total</th>
                                 <th>Paid</th>
-                                <th>Due</th>
+                                <th>Invoice Due</th>
+                                <th>Outstanding Balance</th>
                                 <th>Designated Rider</th>
                                 <th>Assign Rider</th>
                             </tr>
@@ -216,6 +221,7 @@
                                     <td>Rs. {{$invoice->total ? number_format($invoice->total) : ''}}</td>
                                     <td>Rs. {{$invoice->amount_pay ? number_format($invoice->amount_pay) : ''}}</td>
                                     <td>Rs. {{($invoice->total && $invoice->amount_pay) ? number_format($invoice->total - $invoice->amount_pay) : ''}}</td>
+                                    <td>{{($invoice->customer && $invoice->customer->outstanding_balance) ? ('Rs. ' . number_format($invoice->customer->outstanding_balance, 2)) : ''}}</td>
                                     <td class="designated_rider">{{return_marketing_rider_for_invoice($invoice->id, $ymd)}}</td>
                                     <td>
                                         <div class="form-group">
@@ -261,6 +267,7 @@
                                 <th>Shop</th>
                                 <th>Market</th>
                                 <th>Area</th>
+                                <th>Outstanding Balance</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -272,6 +279,7 @@
                                     <td>{{$customer_marketing->customer && $customer_marketing->customer->shop_name ? $customer_marketing->customer->shop_name : ''}}</td>
                                     <td>{{$customer_marketing->customer && $customer_marketing->customer->market ? $customer_marketing->customer->market->name : ''}}</td>
                                     <td>{{($customer_marketing->customer && $customer_marketing->customer->market && $customer_marketing->customer->market->area) ? $customer_marketing->customer->market->area->name : ''}}</td>
+                                    <td>{{($customer_marketing->customer && $customer_marketing->customer->outstanding_balance) ? ('Rs. ' . number_format($customer_marketing->customer->outstanding_balance, 2)) : ''}}</td>
                                 </tr>
                             @endforeach
                         </tbody>
@@ -295,7 +303,8 @@
                                 <th>Invoice ID</th>
                                 <th>Total</th>
                                 <th>Paid</th>
-                                <th>Due</th>
+                                <th>Invoice Due</th>
+                                <th>Outstanding Balance</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -311,6 +320,7 @@
                                     <td>Rs. {{$receiving_marketing->receiving->invoice ? number_format($receiving_marketing->receiving->invoice->total) : ''}}</td>
                                     <td>Rs. {{$receiving_marketing->receiving->invoice ? number_format($receiving_marketing->receiving->invoice->amount_pay) : ''}}</td>
                                     <td>Rs. {{$receiving_marketing->receiving->invoice ? number_format($receiving_marketing->receiving->invoice->total - $receiving_marketing->receiving->invoice->amount_pay) : ''}}</td>
+                                    <td>{{($receiving_marketing->receiving && $receiving_marketing->receiving->customer && $receiving_marketing->receiving->customer->outstanding_balance) ? ('Rs. ' . number_format($receiving_marketing->receiving->customer->outstanding_balance, 2)) : ''}}</td>
                                 </tr>
                             @endforeach
                         </tbody>
@@ -334,7 +344,8 @@
                                 <th>Invoice ID</th>
                                 <th>Total</th>
                                 <th>Paid</th>
-                                <th>Due</th>
+                                <th>Invoice Due</th>
+                                <th>Outstanding Balance</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -350,6 +361,7 @@
                                     <td>Rs. {{$invoice_marketing->invoice->total ? number_format($invoice_marketing->invoice->total) : ''}}</td>
                                     <td>Rs. {{$invoice_marketing->invoice->amount_pay ? number_format($invoice_marketing->invoice->amount_pay) : ''}}</td>
                                     <td>Rs. {{($invoice_marketing->invoice->total && $invoice_marketing->invoice->amount_pay) ? number_format($invoice_marketing->invoice->total - $invoice_marketing->invoice->amount_pay) : ''}}</td>
+                                    <td>{{($invoice_marketing->invoice && $invoice_marketing->invoice->customer && $invoice_marketing->invoice->customer->outstanding_balance) ? ('Rs. ' . number_format($invoice_marketing->invoice->customer->outstanding_balance, 2)) : ''}}</td>
                                 </tr>
                             @endforeach
                         </tbody>

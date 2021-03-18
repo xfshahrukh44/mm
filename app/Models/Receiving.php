@@ -38,7 +38,7 @@ class Receiving extends Model
                 $ledger->delete();
             }
             // if any amount paid or not
-            if($old_invoice_id != NULL && $old_amount != NULL && $old_payment_date !=NULL){
+            if($old_invoice_id != NULL && $old_amount != NULL){
                 $invoice = Invoice::withTrashed()->find($old_invoice_id);
                 $invoice->amount_pay -= intval($old_amount);
                 $invoice->saveQuietly();
@@ -54,7 +54,7 @@ class Receiving extends Model
                 'transaction_date' => return_todays_date()
             ]);
             // if any amount paid or not
-            if($new_invoice_id != NULL && $new_amount != NULL && $new_payment_date !=NULL){
+            if($new_invoice_id != NULL && $new_amount != NULL){
                 $invoice = Invoice::withTrashed()->find($new_invoice_id);
                 $invoice->amount_pay += intval($new_amount);
                 $invoice->saveQuietly();
@@ -71,7 +71,7 @@ class Receiving extends Model
             }
 
             // if any amount paid or not
-            if($query->invoice_id != NULL && $query->amount != NULL && $query->payment_date !=NULL){
+            if($query->invoice_id != NULL && $query->amount != NULL){
                 $invoice = Invoice::withTrashed()->find($query->invoice_id);
                 $invoice->amount_pay -= intval($query->amount);
                 $invoice->saveQuietly();
@@ -90,7 +90,7 @@ class Receiving extends Model
             ]);
 
             // if any amount paid or not
-            if($query->invoice_id != NULL && $query->amount != NULL && $query->payment_date !=NULL){
+            if($query->invoice_id != NULL && $query->amount != NULL){
                 $invoice = Invoice::withTrashed()->find($query->invoice_id);
                 $invoice->amount_pay += intval($query->amount);
                 $invoice->saveQuietly();
