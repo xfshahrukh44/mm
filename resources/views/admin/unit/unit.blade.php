@@ -18,9 +18,11 @@
             <div class="card-header">
                 <div class="card-tools">
                     <!-- <h3 class="">Units</h3> -->
-                    <button class="btn btn-success" id="add_program" data-toggle="modal" data-target="#addUnitModal">
-                        <i class="fas fa-plus"></i> Add New Unit
-                    </button>
+                    @can('can_add_units')
+                        <button class="btn btn-success" id="add_program" data-toggle="modal" data-target="#addUnitModal">
+                            <i class="fas fa-plus"></i> Add New Unit
+                        </button>
+                    @endcan
                 </div>
             </div>
             <!-- /.card-header -->
@@ -40,11 +42,13 @@
                             <tr role="row" class="odd">
                                 <td class="{{'name'.$unit->id}}">{{$unit->name}}</td>
                                 <td>
-                                    @can('isSuperAdmin')
+                                    @can('can_edit_units')
                                         <!-- Edit -->
                                         <a href="#" class="editButton" data-id="{{$unit->id}}">
                                             <i class="fas fa-edit blue ml-1"></i>
                                         </a>
+                                    @endcan
+                                    @can('can_delete_units')
                                         <!-- Delete -->
                                         <a href="#" class="deleteButton" data-id="{{$unit->id}}">
                                             <i class="fas fa-trash red ml-1"></i>

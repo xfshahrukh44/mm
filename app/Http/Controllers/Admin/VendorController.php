@@ -35,7 +35,7 @@ class VendorController extends Controller
 
     public function index()
     {
-        if(!Gate::allows('isSuperAdmin') && !Gate::allows('isUser')){
+        if(!Gate::allows('can_vendors')){
             return redirect()->route('search_marketing_tasks');
         }
         $vendors = $this->vendorService->paginate(env('PAGINATE'));
@@ -52,6 +52,9 @@ class VendorController extends Controller
     
     public function store(Request $request)
     {
+        if(!Gate::allows('can_add_vendors')){
+            return redirect()->route('search_marketing_tasks');
+        }
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
             'area_id' => 'sometimes',
@@ -95,6 +98,7 @@ class VendorController extends Controller
             $req['shop_keeper_picture'] = $imageName;
         }
         
+use Illuminate\Support\Facades\Gate;
         $this->vendorService->create($req);
 
         return redirect()->back();
@@ -110,6 +114,9 @@ class VendorController extends Controller
     
     public function update(Request $request, $id)
     {
+        if(!Gate::allows('can_edit_vendors')){
+            return redirect()->route('search_marketing_tasks');
+        }
         $id = $request->hidden;
         $vendor = ($this->show($id))['vendor'];
 
@@ -138,6 +145,7 @@ class VendorController extends Controller
             'payment_terms' => 'sometimes',
             'cash_on_delivery' => 'sometimes',
             'visiting_days' => 'sometimes',
+            use Illuminate\Support\Facades\Gate;
             'status' => 'sometimes',
             'opening_balance' => 'sometimes',
             'special_discount' => 'sometimes',
@@ -175,6 +183,9 @@ class VendorController extends Controller
     
     public function destroy(Request $request, $id)
     {
+        if(!Gate::allows('can_delete_vendors')){
+            return redirect()->route('search_marketing_tasks');
+        }
         $id = $request->hidden;
 
         $this->vendorService->delete($id);

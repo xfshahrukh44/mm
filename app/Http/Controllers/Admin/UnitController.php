@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Services\UnitService;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Gate;
 
 class UnitController extends Controller
 {
@@ -19,12 +20,18 @@ class UnitController extends Controller
     
     public function index()
     {
+        if(!Gate::allows('can_units')){
+            return redirect()->route('search_marketing_tasks');
+        }
         $units = $this->unitService->paginate(env('PAGINATE'));
         return view('admin.unit.unit', compact('units'));
     }
     
     public function store(Request $request)
     {
+        if(!Gate::allows('can_add_units')){
+            return redirect()->route('search_marketing_tasks');
+        }
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255'
         ]);
@@ -45,6 +52,9 @@ class UnitController extends Controller
     
     public function update(Request $request, $id)
     {
+        if(!Gate::allows('can_edit_units')){
+            return redirect()->route('search_marketing_tasks');
+        }
         $id = $request->hidden;
 
         if(!(auth()->user()->id == $id || auth()->user()->type == "superadmin"))
@@ -69,6 +79,9 @@ class UnitController extends Controller
     
     public function destroy(Request $request, $id)
     {
+        if(!Gate::allows('can_delete_units')){
+            return redirect()->route('search_marketing_tasks');
+        }
         $id = $request->hidden;
 
         $this->unitService->delete($id);

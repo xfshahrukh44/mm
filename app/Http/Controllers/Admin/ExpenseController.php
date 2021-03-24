@@ -27,7 +27,7 @@ class ExpenseController extends Controller
     
     public function index()
     {
-        if(!Gate::allows('isSuperAdmin')){
+        if(!Gate::allows('can_expenses')){
             return redirect()->route('search_marketing_tasks');
         }
         $customers = $this->customerService->all();
@@ -37,6 +37,9 @@ class ExpenseController extends Controller
     
     public function store(Request $request)
     {
+        if(!Gate::allows('can_add_expenses')){
+            return redirect()->route('search_marketing_tasks');
+        }
         // dd($request->all());
         $validator = Validator::make($request->all(), [
             'detail' => 'sometimes',
@@ -63,6 +66,9 @@ class ExpenseController extends Controller
     
     public function update(Request $request, $id)
     {
+        if(!Gate::allows('can_edit_expenses')){
+            return redirect()->route('search_marketing_tasks');
+        }
         $id = $request->hidden;
 
         if(!(auth()->user()->id == $id || auth()->user()->type == "superadmin"))
@@ -90,6 +96,9 @@ class ExpenseController extends Controller
     
     public function destroy(Request $request, $id)
     {
+        if(!Gate::allows('can_delete_expenses')){
+            return redirect()->route('search_marketing_tasks');
+        }
         $id = $request->hidden;
 
         $this->expenseService->delete($id);

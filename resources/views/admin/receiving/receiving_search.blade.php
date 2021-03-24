@@ -207,8 +207,8 @@
                     // new Date(date_from).toDateString()
                     for(var i = 0; i < receivings.length; i++){
                         var receiving_id = receivings[i].id;
-                        var collected_by = ((receivings[i].created_at) ? (new Date(receivings[i].created_at).toDateString()) : '');
-                        var date_punched = (new Date(date_from).toDateString());
+                        var collected_by = (receivings[i].user ? receivings[i].user.name : '');
+                        var date_punched = ((receivings[i].created_at) ? (new Date(receivings[i].created_at).toDateString()) : '');
                         var customer_name = (receivings[i].customer ? (receivings[i].customer.name + ((receivings[i].customer.shop_name) ? (' | ' + receivings[i].customer.shop_name) : '') + ((receivings[i].customer.market && receivings[i].customer.market.name) ? (' | ' + receivings[i].customer.market.name) : '') + ((receivings[i].customer.market && receivings[i].customer.market.area &&  receivings[i].customer.market.area.name) ? (' | ' + receivings[i].customer.market.area.name) : '')) : '');
                         var market = ((receivings[i].customer && receivings[i].customer.market) ? receivings[i].customer.market.name : '');
                         var area = ((receivings[i].customer && receivings[i].customer.market && receivings[i].customer.market.area) ? receivings[i].customer.market.area.name : '');

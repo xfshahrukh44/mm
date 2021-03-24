@@ -23,7 +23,7 @@ class PaymentController extends Controller
     
     public function index()
     {
-        if(!Gate::allows('isSuperAdmin') && !Gate::allows('isUser')){
+        if(!Gate::allows('can_payments')){
             return redirect()->route('search_marketing_tasks');
         }
         $payments = $this->paymentService->paginate(env('PAGINATE'));
@@ -33,6 +33,9 @@ class PaymentController extends Controller
     
     public function store(Request $request)
     {
+        if(!Gate::allows('can_add_payments')){
+            return redirect()->route('search_marketing_tasks');
+        }
         $validator = Validator::make($request->all(), [
             'vendor_id' => 'sometimes',
             'amount' => 'sometimes'
@@ -54,6 +57,9 @@ class PaymentController extends Controller
     
     public function update(Request $request, $id)
     {
+        if(!Gate::allows('can_edit_payments')){
+            return redirect()->route('search_marketing_tasks');
+        }
         $id = $request->hidden;
         $payment = ($this->show($id))['payment'];
 
@@ -80,6 +86,9 @@ class PaymentController extends Controller
     
     public function destroy(Request $request, $id)
     {
+        if(!Gate::allows('can_delete_payments')){
+            return redirect()->route('search_marketing_tasks');
+        }
         $id = $request->hidden;
 
         $this->paymentService->delete($id);

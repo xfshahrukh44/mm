@@ -130,3 +130,311 @@ function set_status_by_invoiced_items($order_id){
     
     $order->saveQuietly();
 }
+
+function revoke_all_rights($user_id){
+    $user = User::find($user_id);
+    if(!$user){
+        return 0;
+    }
+
+    $user->can_dashboard = 0;
+    $user->can_client_database = 0;
+    $user->can_customers = 0;
+    $user->can_customer_schedule = 0;
+    $user->can_vendors = 0;
+    $user->can_areas_and_markets = 0;
+    $user->can_stock_management = 0;
+    $user->can_products = 0;
+    $user->can_stock_in = 0;
+    $user->can_stock_out = 0;
+    $user->can_special_discounts = 0;
+    $user->can_categories = 0;
+    $user->can_brands = 0;
+    $user->can_units = 0;
+    $user->can_accounting = 0;
+    $user->can_customer_ledgers = 0;
+    $user->can_vendor_ledgers = 0;
+    $user->can_sales_ledgers = 0;
+    $user->can_receipts = 0;
+    $user->can_receipt_logs = 0;
+    $user->can_payments = 0;
+    $user->can_expenses = 0;
+    $user->can_expense_ledgers = 0;
+    $user->can_order_management = 0;
+    $user->can_orders = 0;
+    $user->can_invoices = 0;
+    $user->can_marketing_plan = 0;
+    $user->can_marketing_tasks = 0;
+    $user->can_security_shell = 0;
+    $user->can_user_management = 0;
+    $user->can_staff = 0;
+    $user->can_riders = 0;
+    // -----------------------------------------
+    $user->can_add_customers = 0;
+    $user->can_edit_customers = 0;
+    $user->can_view_customers = 0;
+    $user->can_delete_customers = 0;
+    $user->can_excel_customers = 0;
+    $user->can_add_vendors = 0;
+    $user->can_edit_vendors = 0;
+    $user->can_view_vendors = 0;
+    $user->can_delete_vendors = 0;
+    $user->can_excel_vendors = 0;
+    $user->can_add_areas = 0;
+    $user->can_edit_areas = 0;
+    $user->can_delete_areas = 0;
+    $user->can_add_products = 0;
+    $user->can_edit_products = 0;
+    $user->can_view_products = 0;
+    $user->can_delete_products = 0;
+    $user->can_excel_products = 0;
+    $user->can_add_stock_ins = 0;
+    $user->can_edit_stock_ins = 0;
+    $user->can_delete_stock_ins = 0;
+    $user->can_add_stock_outs = 0;
+    $user->can_edit_stock_outs = 0;
+    $user->can_delete_stock_outs = 0;
+    $user->can_add_categories = 0;
+    $user->can_edit_categories = 0;
+    $user->can_delete_categories = 0;
+    $user->can_add_brands = 0;
+    $user->can_edit_brands = 0;
+    $user->can_delete_brands = 0;
+    $user->can_add_units = 0;
+    $user->can_edit_units = 0;
+    $user->can_delete_units = 0;
+    $user->can_add_receivings = 0;
+    $user->can_edit_receivings = 0;
+    $user->can_delete_receivings = 0;
+    $user->can_add_payments = 0;
+    $user->can_edit_payments = 0;
+    $user->can_delete_payments = 0;
+    $user->can_add_expenses = 0;
+    $user->can_edit_expenses = 0;
+    $user->can_delete_expenses = 0;
+    $user->can_add_orders = 0;
+    $user->can_edit_orders = 0;
+    $user->can_view_orders = 0;
+    $user->can_delete_orders = 0;
+    $user->can_excel_orders = 0;
+    $user->can_invoice_orders = 0;
+    $user->can_add_invoices = 0;
+    $user->can_edit_invoices = 0;
+    $user->can_view_invoices = 0;
+    $user->can_delete_invoices = 0;
+    $user->can_print_invoices = 0;
+    $user->can_add_users = 0;
+    $user->can_edit_users = 0;
+    $user->can_delete_users = 0;
+
+    $user->saveQuietly();
+    return 0;
+}
+
+function set_basic_rights($user_id){
+    $user = User::find($user_id);
+    if(!$user){
+        return 0;
+    }
+
+    // revoke all rights first
+    revoke_all_rights($user_id);
+
+    $user->can_client_database = 1;
+    $user->can_customers = 1;
+    $user->can_areas_and_markets = 1;
+    $user->can_stock_management = 1;
+    $user->can_products = 1;
+    $user->can_categories = 1;
+    $user->can_brands = 1;
+    $user->can_units = 1;
+    $user->can_accounting = 1;
+    $user->can_customer_ledgers = 1;
+    $user->can_receipts = 1;
+    $user->can_order_management = 1;
+    $user->can_orders = 1;
+    $user->can_marketing_tasks = 1;
+    // -----------------------------------------
+    $user->can_add_customers = 1;
+    $user->can_view_customers = 1;
+    $user->can_excel_customers = 1;
+    $user->can_add_areas = 1;
+    $user->can_add_products = 1;
+    $user->can_view_products = 1;
+    $user->can_excel_products = 1;
+    $user->can_add_categories = 1;
+    $user->can_add_brands = 1;
+    $user->can_add_units = 1;
+    $user->can_add_receivings = 1;
+    $user->can_add_orders = 1;
+    $user->can_view_orders = 1;
+    $user->can_excel_orders = 1;
+    $user->can_invoice_orders = 1;
+
+    $user->saveQuietly();
+}
+
+function set_user_rights($user_id){
+    $user = User::find($user_id);
+    if(!$user){
+        return 0;
+    }
+
+    // revoke all rights first
+    revoke_all_rights($user_id);
+
+    $user->can_dashboard = 1;
+    $user->can_client_database = 1;
+    $user->can_customers = 1;
+    $user->can_vendors = 1;
+    $user->can_areas_and_markets = 1;
+    $user->can_stock_management = 1;
+    $user->can_products = 1;
+    $user->can_stock_in = 1;
+    $user->can_categories = 1;
+    $user->can_brands = 1;
+    $user->can_units = 1;
+    $user->can_accounting = 1;
+    $user->can_customer_ledgers = 1;
+    $user->can_sales_ledgers = 1;
+    $user->can_receipts = 1;
+    $user->can_receipt_logs = 1;
+    $user->can_payments = 1;
+    $user->can_order_management = 1;
+    $user->can_orders = 1;
+    $user->can_invoices = 1;
+    $user->can_marketing_tasks = 1;
+    // -----------------------------------------
+    $user->can_add_customers = 1;
+    $user->can_view_customers = 1;
+    $user->can_excel_customers = 1;
+    $user->can_add_vendors = 1;
+    $user->can_edit_vendors = 1;
+    $user->can_view_vendors = 1;
+    $user->can_delete_vendors = 1;
+    $user->can_excel_vendors = 1;
+    $user->can_add_areas = 1;
+    $user->can_add_products = 1;
+    $user->can_view_products = 1;
+    $user->can_excel_products = 1;
+    $user->can_add_stock_ins = 1;
+    $user->can_edit_stock_ins = 1;
+    $user->can_delete_stock_ins = 1;
+    $user->can_add_categories = 1;
+    $user->can_add_brands = 1;
+    $user->can_add_units = 1;
+    $user->can_add_receivings = 1;
+    $user->can_add_payments = 1;
+    $user->can_edit_payments = 1;
+    $user->can_delete_payments = 1;
+    $user->can_add_orders = 1;
+    $user->can_view_orders = 1;
+    $user->can_excel_orders = 1;
+    $user->can_invoice_orders = 1;
+    $user->can_add_invoices = 1;
+    $user->can_view_invoices = 1;
+    $user->can_print_invoices = 1;
+
+    $user->saveQuietly();
+    return 0;
+}
+
+function set_superadmin_rights($user_id){
+    $user = User::find($user_id);
+    if(!$user){
+        return 0;
+    }
+
+    $user->can_dashboard = 1;
+    $user->can_client_database = 1;
+    $user->can_customers = 1;
+    $user->can_customer_schedule = 1;
+    $user->can_vendors = 1;
+    $user->can_areas_and_markets = 1;
+    $user->can_stock_management = 1;
+    $user->can_products = 1;
+    $user->can_stock_in = 1;
+    $user->can_stock_out = 1;
+    $user->can_special_discounts = 1;
+    $user->can_categories = 1;
+    $user->can_brands = 1;
+    $user->can_units = 1;
+    $user->can_accounting = 1;
+    $user->can_customer_ledgers = 1;
+    $user->can_vendor_ledgers = 1;
+    $user->can_sales_ledgers = 1;
+    $user->can_receipts = 1;
+    $user->can_receipt_logs = 1;
+    $user->can_payments = 1;
+    $user->can_expenses = 1;
+    $user->can_expense_ledgers = 1;
+    $user->can_order_management = 1;
+    $user->can_orders = 1;
+    $user->can_invoices = 1;
+    $user->can_marketing_plan = 1;
+    $user->can_marketing_tasks = 1;
+    $user->can_security_shell = 1;
+    $user->can_user_management = 1;
+    $user->can_staff = 1;
+    $user->can_riders = 1;
+    // -----------------------------------------
+    $user->can_add_customers = 1;
+    $user->can_edit_customers = 1;
+    $user->can_view_customers = 1;
+    $user->can_delete_customers = 1;
+    $user->can_excel_customers = 1;
+    $user->can_add_vendors = 1;
+    $user->can_edit_vendors = 1;
+    $user->can_view_vendors = 1;
+    $user->can_delete_vendors = 1;
+    $user->can_excel_vendors = 1;
+    $user->can_add_areas = 1;
+    $user->can_edit_areas = 1;
+    $user->can_delete_areas = 1;
+    $user->can_add_products = 1;
+    $user->can_edit_products = 1;
+    $user->can_view_products = 1;
+    $user->can_delete_products = 1;
+    $user->can_excel_products = 1;
+    $user->can_add_stock_ins = 1;
+    $user->can_edit_stock_ins = 1;
+    $user->can_delete_stock_ins = 1;
+    $user->can_add_stock_outs = 1;
+    $user->can_edit_stock_outs = 1;
+    $user->can_delete_stock_outs = 1;
+    $user->can_add_categories = 1;
+    $user->can_edit_categories = 1;
+    $user->can_delete_categories = 1;
+    $user->can_add_brands = 1;
+    $user->can_edit_brands = 1;
+    $user->can_delete_brands = 1;
+    $user->can_add_units = 1;
+    $user->can_edit_units = 1;
+    $user->can_delete_units = 1;
+    $user->can_add_receivings = 1;
+    $user->can_edit_receivings = 1;
+    $user->can_delete_receivings = 1;
+    $user->can_add_payments = 1;
+    $user->can_edit_payments = 1;
+    $user->can_delete_payments = 1;
+    $user->can_add_expenses = 1;
+    $user->can_edit_expenses = 1;
+    $user->can_delete_expenses = 1;
+    $user->can_add_orders = 1;
+    $user->can_edit_orders = 1;
+    $user->can_view_orders = 1;
+    $user->can_delete_orders = 1;
+    $user->can_excel_orders = 1;
+    $user->can_invoice_orders = 1;
+    $user->can_add_invoices = 1;
+    $user->can_edit_invoices = 1;
+    $user->can_view_invoices = 1;
+    $user->can_delete_invoices = 1;
+    $user->can_print_invoices = 1;
+    $user->can_add_users = 1;
+    $user->can_edit_users = 1;
+    $user->can_delete_users = 1;
+
+    $user->saveQuietly();
+    return 0;
+}

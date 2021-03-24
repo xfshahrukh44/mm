@@ -26,7 +26,7 @@ class StockInController extends Controller
     
     public function index()
     {
-        if(!Gate::allows('isSuperAdmin') && !Gate::allows('isUser')){
+        if(!Gate::allows('can_stock_in')){
             return redirect()->route('search_marketing_tasks');
         }
         $stockIns = $this->stockInService->paginate(env('PAGINATE'));
@@ -37,6 +37,9 @@ class StockInController extends Controller
     
     public function store(Request $request)
     {
+        if(!Gate::allows('can_add_stock_ins')){
+            return redirect()->route('search_marketing_tasks');
+        }
         $validator = Validator::make($request->all(), [
             'product_id' => 'required|int',
             'vendor_id' => 'sometimes',
@@ -61,6 +64,9 @@ class StockInController extends Controller
     
     public function update(Request $request, $id)
     {
+        if(!Gate::allows('can_edit_stock_ins')){
+            return redirect()->route('search_marketing_tasks');
+        }
         $id = $request->hidden;
         $stockIn = ($this->show($id))['stockIn'];
 
@@ -91,6 +97,9 @@ class StockInController extends Controller
     
     public function destroy(Request $request, $id)
     {
+        if(!Gate::allows('can_delete_stock_ins')){
+            return redirect()->route('search_marketing_tasks');
+        }
         $id = $request->hidden;
 
         $this->stockInService->delete($id);

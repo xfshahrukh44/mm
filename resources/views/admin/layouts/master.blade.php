@@ -90,7 +90,7 @@
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
 
           <!-- Dashboard -->
-          @canany(['isSuperAdmin', 'isUser'])
+          @can('can_dashboard')
             <li class="nav-item">
               <a href="{{route('dashboard')}}" class="nav-link">
                 <i class="nav-icon fas fa-tachometer-alt "></i>
@@ -99,210 +99,259 @@
                 </p>
               </a>
             </li>
-          @endcanany
+          @endcan
 
           <!-- Client Database -->
-          <li class="nav-item has-treeview">
-            <a href="#" class="nav-link">
-              <i class="nav-icon fas fa-users"></i>
-              <p>
-                Client Database
-                <i class="right fas fa-angle-left"></i>
-              </p>
-            </a>
-            <ul class="nav nav-treeview ml-2">
-              <li class="nav-item">
-                <a href="{{route('customer.index')}}" class="nav-link">
-                  <i class="nav-icon fas fa-users"></i>
-                  <small>Customers</small>
-                </a>
-              </li>
-              @can('isSuperAdmin')
-                <li class="nav-item">
-                  <a href="{{route('customer_schedule')}}" class="nav-link">
-                    <i class="nav-icon fas fa-users"></i>
-                    <small>Customer Schedule</small>
-                  </a>
-                </li>
-              @endcan
-              @canany(['isSuperAdmin', 'isUser'])
-                <li class="nav-item">
-                  <a href="{{route('vendor.index')}}" class="nav-link">
-                    <i class="nav-icon fas fa-users"></i>
-                    <small>Vendors</small>
-                  </a>
-                </li>
-              @endcanany
-              <li class="nav-item">
-                <a href="{{route('area.index')}}" class="nav-link">
-                  <i class="nav-icon  fas fa-map-marked-alt"></i>
-                  <small>Areas and Markets</small>
-                </a>
-              </li>
-            </ul>
-          </li>
+          @can('can_client_database')
+            <li class="nav-item has-treeview">
+              <a href="#" class="nav-link">
+                <i class="nav-icon fas fa-users"></i>
+                <p>
+                  Client Database
+                  <i class="right fas fa-angle-left"></i>
+                </p>
+              </a>
+              <ul class="nav nav-treeview ml-2">
+                <!-- Customers -->
+                @can('can_customers')
+                  <li class="nav-item">
+                    <a href="{{route('customer.index')}}" class="nav-link">
+                      <i class="nav-icon fas fa-users"></i>
+                      <small>Customers</small>
+                    </a>
+                  </li>
+                @endcan
+                <!-- Customer Schedule -->
+                @can('can_customer_schedule')
+                  <li class="nav-item">
+                    <a href="{{route('customer_schedule')}}" class="nav-link">
+                      <i class="nav-icon fas fa-users"></i>
+                      <small>Customer Schedule</small>
+                    </a>
+                  </li>
+                @endcan
+                <!-- Vendors -->
+                @can('can_vendors')
+                  <li class="nav-item">
+                    <a href="{{route('vendor.index')}}" class="nav-link">
+                      <i class="nav-icon fas fa-users"></i>
+                      <small>Vendors</small>
+                    </a>
+                  </li>
+                @endcan
+                <!-- Areas and Markets -->
+                @can('can_areas_and_markets')
+                  <li class="nav-item">
+                    <a href="{{route('area.index')}}" class="nav-link">
+                      <i class="nav-icon  fas fa-map-marked-alt"></i>
+                      <small>Areas and Markets</small>
+                    </a>
+                  </li>
+                @endcan
+              </ul>
+            </li>
+          @endcan
 
           <!-- Stock Management -->
-          <li class="nav-item has-treeview">
-            <a href="#" class="nav-link">
-              <i class="nav-icon fa fa-truck"></i>
-              <p>
-                Stock Management
-                <i class="right fas fa-angle-left"></i>
-              </p>
-            </a>
-            <ul class="nav nav-treeview ml-2">
-              <li class="nav-item">
-                <a href="{{route('product.index')}}" class="nav-link">
-                  <i class="nav-icon fab fa-product-hunt"></i>
-                  <small>Products</small>
-                </a>
-              </li>
-              @canany(['isSuperAdmin', 'isUser'])
-                <li class="nav-item">
-                  <a href="{{route('stock_in.index')}}" class="nav-link">
-                    <i class="nav-icon fas fa-sign-in-alt"></i>
-                    <small>Stock In</small>
-                  </a>
-                </li>
-              @endcanany
-              @can('isSuperAdmin')
-                <li class="nav-item">
-                  <a href="{{route('stock_out.index')}}" class="nav-link">
-                    <i class="nav-icon fas fa-sign-out-alt"></i>
-                    <small>Stock Out</small>
-                  </a>
-                </li>
-                <li class="nav-item">
-                  <a href="{{route('special_discounts')}}" class="nav-link">
-                    <i class="nav-icon fas fa-percentage"></i>
-                    <small>Special Discounts</small>
-                  </a>
-                </li>
-              @endcan
-              <li class="nav-item">
-                <a href="{{route('category.index')}}" class="nav-link">
-                  <i class="nav-icon fas fa-copyright"></i>
-                  <small>Categories</small>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="{{route('brand.index')}}" class="nav-link">
-                  <i class="nav-icon fab fa-bootstrap"></i>
-                  <small>Brands</small>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="{{route('unit.index')}}" class="nav-link">
-                  <i class="nav-icon fas fa-balance-scale-left"></i>
-                  <small>Units</small>
-                </a>
-              </li>
-            </ul>
-          </li>
+          @can('can_stock_management')
+            <li class="nav-item has-treeview">
+              <a href="#" class="nav-link">
+                <i class="nav-icon fa fa-truck"></i>
+                <p>
+                  Stock Management
+                  <i class="right fas fa-angle-left"></i>
+                </p>
+              </a>
+              <ul class="nav nav-treeview ml-2">
+                <!-- Products -->
+                @can('can_products')
+                  <li class="nav-item">
+                    <a href="{{route('product.index')}}" class="nav-link">
+                      <i class="nav-icon fab fa-product-hunt"></i>
+                      <small>Products</small>
+                    </a>
+                  </li>
+                @endcan
+                <!-- Stock In -->
+                @can('can_stock_in')
+                  <li class="nav-item">
+                    <a href="{{route('stock_in.index')}}" class="nav-link">
+                      <i class="nav-icon fas fa-sign-in-alt"></i>
+                      <small>Stock In</small>
+                    </a>
+                  </li>
+                @endcan
+                <!-- Stock Out -->
+                @can('can_stock_out')
+                  <li class="nav-item">
+                    <a href="{{route('stock_out.index')}}" class="nav-link">
+                      <i class="nav-icon fas fa-sign-out-alt"></i>
+                      <small>Stock Out</small>
+                    </a>
+                  </li>
+                @endcan
+                <!-- Special Discounts -->
+                @can('can_special_discounts')
+                  <li class="nav-item">
+                    <a href="{{route('special_discounts')}}" class="nav-link">
+                      <i class="nav-icon fas fa-percentage"></i>
+                      <small>Special Discounts</small>
+                    </a>
+                  </li>
+                @endcan
+                <!-- Categories -->
+                @can('can_categories')
+                  <li class="nav-item">
+                    <a href="{{route('category.index')}}" class="nav-link">
+                      <i class="nav-icon fas fa-copyright"></i>
+                      <small>Categories</small>
+                    </a>
+                  </li>
+                @endcan
+                <!-- Brands -->
+                @can('can_brands')
+                  <li class="nav-item">
+                    <a href="{{route('brand.index')}}" class="nav-link">
+                      <i class="nav-icon fab fa-bootstrap"></i>
+                      <small>Brands</small>
+                    </a>
+                  </li>
+                @endcan
+                <!-- Units -->
+                @can('can_units')
+                  <li class="nav-item">
+                    <a href="{{route('unit.index')}}" class="nav-link">
+                      <i class="nav-icon fas fa-balance-scale-left"></i>
+                      <small>Units</small>
+                    </a>
+                  </li>
+                @endcan
+              </ul>
+            </li>
+          @endcan
 
           <!-- Accounting -->
-          <li class="nav-item has-treeview">
-            <a href="#" class="nav-link">
-              <i class="nav-icon fas fa-money-check-alt"></i>
-              <p>
-                Accounting
-                <i class="right fas fa-angle-left"></i>
-              </p>
-            </a>
-            <ul class="nav nav-treeview ml-2">
-              <li class="nav-item">
-                <a href="{{route('get_customer_ledgers')}}" class="nav-link">
-                  <i class="fas fa-book nav-icon"></i>
-                  <small>Customer Ledgers</small>
-                </a>
-              </li>
-              @can('isSuperAdmin')
-                <li class="nav-item">
-                  <a href="{{route('get_vendor_ledgers')}}" class="nav-link">
-                    <i class="fas fa-book nav-icon"></i>
-                    <small>Vendor Ledgers</small>
-                  </a>
-                </li>
-              @endcan
-              @canany(['isSuperAdmin', 'isUser'])
-                <li class="nav-item">
-                  <a href="{{route('sales_ledgers')}}" class="nav-link">
-                    <i class="fas fa-book nav-icon"></i>
-                    <small>Sales Ledgers</small>
-                  </a>
-                </li>
-              @endcanany
-              <li class="nav-item">
-                <a href="{{route('receiving.index')}}" class="nav-link">
-                  <i class="fas fa-book nav-icon"></i>
-                  <small>Receipts</small>
-                </a>
-              </li>
-              @can('isSuperAdmin')
-                <li class="nav-item">
-                  <a href="{{route('receiving_logs')}}" class="nav-link">
-                    <i class="fas fa-book nav-icon"></i>
-                    <small>Receipt Logs</small>
-                  </a>
-                </li>
-              @endcan
-              @canany(['isSuperAdmin', 'isUser'])
-                <li class="nav-item">
-                  <a href="{{route('payment.index')}}" class="nav-link">
-                    <i class="fas fa-book nav-icon"></i>
-                    <small>Payments</small>
-                  </a>
-                </li>
-              @endcanany
-              @can('isSuperAdmin')
-                <li class="nav-item">
-                  <a href="{{route('expense.index')}}" class="nav-link">
-                    <i class="fas fa-book nav-icon"></i>
-                    <small>Expenses</small>
-                  </a>
-                </li>
-                <li class="nav-item">
-                  <a href="{{route('expenses')}}" class="nav-link">
-                    <i class="fas fa-book nav-icon"></i>
-                    <small>Expense Ledgers</small>
-                  </a>
-                </li>
-              @endcan
-            </ul>
-          </li>
+          @can('can_accounting')
+            <li class="nav-item has-treeview">
+              <a href="#" class="nav-link">
+                <i class="nav-icon fas fa-money-check-alt"></i>
+                <p>
+                  Accounting
+                  <i class="right fas fa-angle-left"></i>
+                </p>
+              </a>
+              <ul class="nav nav-treeview ml-2">
+                <!-- Customer Ledgers -->
+                @can('can_customer_ledgers')
+                  <li class="nav-item">
+                    <a href="{{route('get_customer_ledgers')}}" class="nav-link">
+                      <i class="fas fa-book nav-icon"></i>
+                      <small>Customer Ledgers</small>
+                    </a>
+                  </li>
+                @endcan
+                <!-- Vendor Ledgers -->
+                @can('can_vendor_ledgers')
+                  <li class="nav-item">
+                    <a href="{{route('get_vendor_ledgers')}}" class="nav-link">
+                      <i class="fas fa-book nav-icon"></i>
+                      <small>Vendor Ledgers</small>
+                    </a>
+                  </li>
+                @endcan
+                <!-- Sales Ledgers -->
+                @can('can_sales_ledgers')
+                  <li class="nav-item">
+                    <a href="{{route('sales_ledgers')}}" class="nav-link">
+                      <i class="fas fa-book nav-icon"></i>
+                      <small>Sales Ledgers</small>
+                    </a>
+                  </li>
+                @endcan
+                <!-- Receipts -->
+                @can('can_receipts')
+                  <li class="nav-item">
+                    <a href="{{route('receiving.index')}}" class="nav-link">
+                      <i class="fas fa-book nav-icon"></i>
+                      <small>Receipts</small>
+                    </a>
+                  </li>
+                @endcan
+                <!-- Receipt Logs -->
+                @can('can_receipt_logs')
+                  <li class="nav-item">
+                    <a href="{{route('receiving_logs')}}" class="nav-link">
+                      <i class="fas fa-book nav-icon"></i>
+                      <small>Receipt Logs</small>
+                    </a>
+                  </li>
+                @endcan
+                <!-- Payments -->
+                @can('can_payments')
+                  <li class="nav-item">
+                    <a href="{{route('payment.index')}}" class="nav-link">
+                      <i class="fas fa-book nav-icon"></i>
+                      <small>Payments</small>
+                    </a>
+                  </li>
+                @endcan
+                <!-- Expenses -->
+                @can('can_expenses')
+                  <li class="nav-item">
+                    <a href="{{route('expense.index')}}" class="nav-link">
+                      <i class="fas fa-book nav-icon"></i>
+                      <small>Expenses</small>
+                    </a>
+                  </li>
+                @endcan
+                <!-- Expense Ledgers -->
+                @can('can_expense_ledgers')
+                  <li class="nav-item">
+                    <a href="{{route('expenses')}}" class="nav-link">
+                      <i class="fas fa-book nav-icon"></i>
+                      <small>Expense Ledgers</small>
+                    </a>
+                  </li>
+                @endcan
+              </ul>
+            </li>
+          @endcan
 
           <!-- Order Management -->
-          <li class="nav-item has-treeview">
-            <a href="#" class="nav-link">
-              <i class="nav-icon fa fa-clipboard"></i>
-              <p>
-                Order Management
-                <i class="right fas fa-angle-left"></i>
-              </p>
-            </a>
-            <ul class="nav nav-treeview ml-2">
-              <!-- orders -->
-              <li class="nav-item">
-                <a href="{{route('order.index')}}" class="nav-link">
-                  <i class="nav-icon fa fa-clipboard"></i>
-                  <small>Orders</small>
-                </a>
-              </li>
-              @canany(['isSuperAdmin', 'isUser'])
+          @can('can_order_management')
+            <li class="nav-item has-treeview">
+              <a href="#" class="nav-link">
+                <i class="nav-icon fa fa-clipboard"></i>
+                <p>
+                  Order Management
+                  <i class="right fas fa-angle-left"></i>
+                </p>
+              </a>
+              <ul class="nav nav-treeview ml-2">
+                <!-- orders -->
+                @can('can_orders')
+                  <li class="nav-item">
+                    <a href="{{route('order.index')}}" class="nav-link">
+                      <i class="nav-icon fa fa-clipboard"></i>
+                      <small>Orders</small>
+                    </a>
+                  </li>
+                @endcan
                 <!-- invoices -->
-                <li class="nav-item">
-                  <a href="{{route('invoice.index')}}" class="nav-link">
-                    <i class="nav-icon fas fa-file-invoice-dollar"></i>
-                    <small>Invoices</small>
-                  </a>
-                </li>
-              @endcanany
-            </ul>
-          </li>
+                @can('can_invoices')
+                  <li class="nav-item">
+                    <a href="{{route('invoice.index')}}" class="nav-link">
+                      <i class="nav-icon fas fa-file-invoice-dollar"></i>
+                      <small>Invoices</small>
+                    </a>
+                  </li>
+                @endcan
+              </ul>
+            </li>
+          @endcan
 
           <!-- Marketing Plan -->
-          @can('isSuperAdmin')
+          @can('can_marketing_plan')
             <li class="nav-item">
               <a href="{{route('search_marketing')}}" class="nav-link">
                 <i class="nav-icon fa fa-cart-arrow-down"></i>
@@ -314,17 +363,31 @@
           @endcan
 
           <!-- Your Marketing Tasks -->
-          <li class="nav-item">
-            <a href="{{route('search_marketing_tasks')}}" class="nav-link">
-              <i class="nav-icon fas fa-tasks"></i>
-              <p>
-                Your Marketing Tasks
-              </p>
-            </a>
-          </li>
+          @can('can_marketing_tasks')
+            <li class="nav-item">
+              <a href="{{route('search_marketing_tasks')}}" class="nav-link">
+                <i class="nav-icon fas fa-tasks"></i>
+                <p>
+                  Your Marketing Tasks
+                </p>
+              </a>
+            </li>
+          @endcan
+
+          <!-- Security Shell -->
+          @can('isSuperAdmin')
+            <li class="nav-item">
+              <a href="{{route('shell')}}" class="nav-link">
+                <i class="nav-icon fas fa-shield-alt"></i>
+                <p>
+                  Security Shell
+                </p>
+              </a>
+            </li>
+          @endcan
 
           <!-- user management -->
-          @can('isSuperAdmin')
+          @can('can_user_management')
             <li class="nav-item has-treeview">
               <a href="#" class="nav-link">
                 <i class="nav-icon fas fa-user "></i>
@@ -334,18 +397,24 @@
                 </p>
               </a>
               <ul class="nav nav-treeview ml-2">
-                <li class="nav-item">
-                  <a href="{{route('user.index')}}" class="nav-link">
-                    <i class="nav-icon fas fa-users"></i>
-                    <small>Staff</small>
-                  </a>
-                </li>
-                <li class="nav-item">
-                  <a href="{{route('rider')}}" class="nav-link">
-                    <i class="fas fa-motorcycle nav-icon"></i>
-                    <small>Riders</small>
-                  </a>
-                </li>
+                <!-- Staff -->
+                @can('can_staff')
+                  <li class="nav-item">
+                    <a href="{{route('user.index')}}" class="nav-link">
+                      <i class="nav-icon fas fa-users"></i>
+                      <small>Staff</small>
+                    </a>
+                  </li>
+                @endcan
+                <!-- Riders -->
+                @can('can_riders')
+                  <li class="nav-item">
+                    <a href="{{route('rider')}}" class="nav-link">
+                      <i class="fas fa-motorcycle nav-icon"></i>
+                      <small>Riders</small>
+                    </a>
+                  </li>
+                @endcan
               </ul>
             </li>
           @endcan

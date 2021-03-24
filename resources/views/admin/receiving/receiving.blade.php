@@ -18,8 +18,10 @@
     <div class="card">
       <div class="card-header">
         <div class="card-tools">
-          <button class="btn btn-success" id="add_receiving" data-toggle="modal" data-target="#addReceivingModal">
-            <i class="fas fa-plus"></i></button>
+          @can('can_add_receivings')
+            <button class="btn btn-success" id="add_receiving" data-toggle="modal" data-target="#addReceivingModal">
+              <i class="fas fa-plus"></i></button>
+          @endcan
         </div>
         <!-- search bar -->
         <form action="{{route('search_receivings')}}" class="form-wrapper">
@@ -81,16 +83,18 @@
                     <td class="{{'created_by'.$receiving->id}}">{{return_user_name($receiving->created_by)}}</td>
                     <td class="{{'modified_by'.$receiving->id}}">{{return_user_name($receiving->modified_by)}}</td>
                     <td>
-                      @can('isSuperAdmin')
                         <!-- Edit -->
-                        <a href="#" class="editButton" data-id="{{$receiving->id}}">
-                          <i class="fas fa-edit blue ml-1"></i>
-                        </a>
-                        <!-- Delete -->
-                        <a href="#" class="deleteButton" data-id="{{$receiving->id}}">
-                          <i class="fas fa-trash red ml-1"></i>
-                        </a>
-                      @endcan
+                        @can('can_edit_receivings')
+                          <a href="#" class="editButton" data-id="{{$receiving->id}}">
+                            <i class="fas fa-edit blue ml-1"></i>
+                          </a>
+                        @endcan
+                        @can('can_delete_receivings')
+                          <!-- Delete -->
+                          <a href="#" class="deleteButton" data-id="{{$receiving->id}}">
+                            <i class="fas fa-trash red ml-1"></i>
+                          </a>
+                        @endcan
                     </td>
                   </tr>
                 @endforeach

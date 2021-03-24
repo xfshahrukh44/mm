@@ -17,9 +17,11 @@
         <div class="card">
             <div class="card-header">
                 <div class="card-tools">
-                    <button class="btn btn-success" id="add_program" data-toggle="modal" data-target="#addCategoryModal">
-                        <i class="fas fa-plus"></i> Add New Category
-                    </button>
+                    @can('can_add_categories')
+                        <button class="btn btn-success" id="add_program" data-toggle="modal" data-target="#addCategoryModal">
+                            <i class="fas fa-plus"></i> Add New Category
+                        </button>
+                    @endcan
                 </div>
             </div>
             <!-- /.card-header -->
@@ -39,12 +41,14 @@
                             <tr role="row" class="odd">
                                 <td class="{{'name'.$category->id}}">{{$category->name}}</td>
                                 <td>
-                                    @can('isSuperAdmin')
-                                        <!-- Edit -->
+                                    <!-- Edit -->
+                                    @can('can_edit_categories')
                                         <a href="#" class="editButton" data-id="{{$category->id}}">
                                             <i class="fas fa-edit blue ml-1"></i>
                                         </a>
-                                        <!-- Delete -->
+                                    @endcan
+                                    <!-- Delete -->
+                                    @can('can_delete_categories')
                                         <a href="#" class="deleteButton" data-id="{{$category->id}}">
                                             <i class="fas fa-trash red ml-1"></i>
                                         </a>

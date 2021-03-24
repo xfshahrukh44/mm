@@ -23,17 +23,17 @@
         <div class="card">
             <div class="card-header">
               <div class="card-tools">
-                @if($user_type == 'staff')
-                    @can('isSuperAdmin')
+                @can('can_add_users')
+                    @if($user_type == 'staff')
                         <button class="btn btn-success" id="add_item" data-toggle="modal" data-target="#addUserModal">
                             <i class="fas fa-plus"></i>
                         </button>
-                    @endcan
-                @else
-                    <button class="btn btn-success" id="add_item" data-toggle="modal" data-target="#addUserModal">
-                        <i class="fas fa-plus"></i>
-                    </button>
-                @endif
+                    @else
+                        <button class="btn btn-success" id="add_item" data-toggle="modal" data-target="#addUserModal">
+                            <i class="fas fa-plus"></i>
+                        </button>
+                    @endif
+                @endcan
              </div>
              <!-- search bar -->
              <form action="{{route('search_users')}}" class="form-wrapper">
@@ -111,27 +111,31 @@
                                     <i class="fas fa-user green ml-1"></i>
                                 </a>
                                 @if($user_type == 'staff')
-                                    @if($user->id == Auth::user()->id || Gate::check('isSuperAdmin'))
-                                        <!-- Edit -->
+                                    <!-- Edit -->
+                                    @if($user->id == Auth::user()->id || Gate::check('can_edit_users'))
                                         <a href="#" class="editButton" data-id="{{$user->id}}" data-type="{{$user_type}}">
                                             <i class="fas fa-edit blue ml-1"></i>
                                         </a>
-                                        <!-- Delete -->
+                                    @endif
+                                    <!-- Delete -->
+                                    @if($user->id == Auth::user()->id || Gate::check('can_delete_users'))
                                         <a href="#" class="deleteButton" data-id="{{$user->id}}" data-type="{{$user_type}}">
                                             <i class="fas fa-trash red ml-1"></i>
                                         </a>
                                     @endif
                                 @else
-                                        <!-- Edit -->
+                                    <!-- Edit -->
+                                    @can('can_edit_users')
                                         <a href="#" class="editButton" data-id="{{$user->id}}" data-type="{{$user_type}}">
                                             <i class="fas fa-edit blue ml-1"></i>
                                         </a>
-                                        @can('isSuperAdmin')
-                                            <!-- Delete -->
-                                            <a href="#" class="deleteButton" data-id="{{$user->id}}" data-type="{{$user_type}}">
-                                                <i class="fas fa-trash red ml-1"></i>
-                                            </a>
-                                        @endcan
+                                    @endcan
+                                    <!-- Delete -->
+                                    @can('can_delete_users')
+                                        <a href="#" class="deleteButton" data-id="{{$user->id}}" data-type="{{$user_type}}">
+                                            <i class="fas fa-trash red ml-1"></i>
+                                        </a>
+                                    @endcan
                                 @endif
                             </td>
                         </tr>

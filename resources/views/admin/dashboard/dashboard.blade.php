@@ -119,10 +119,7 @@
             <div class="info-box top-left">
                 <span class="info-box-icon bg-success elevation-1"><i class="fas fa-file-invoice-dollar" aria-hidden="true"></i></span>
                 <div class="info-box-content">
-                <span class="info-box-text text-dark">Invoices</span>
-                <span class="info-box-number text-dark">
-                    {{$total_invoices}}
-                </span>
+                <span class="info-box-text text-dark">Invoices | {{$total_invoices}}</span>
                 </div>
             </div>
         </a>
@@ -133,10 +130,7 @@
             <div class="info-box top-top">
                 <span class="info-box-icon bg-success elevation-1"><i class="fas fa-book" aria-hidden="true"></i></span>
                 <div class="info-box-content">
-                <span class="info-box-text text-dark">Receipts</span>
-                <span class="info-box-number text-dark">
-                    {{$total_receivings}}
-                </span>
+                <span class="info-box-text text-dark">Receipts | {{$total_receivings}}</span>
                 </div>
             </div>
         </a>
@@ -147,10 +141,7 @@
             <div class="info-box top-top">
                 <span class="info-box-icon bg-success elevation-1"><i class="fas fa-book" aria-hidden="true"></i></span>
                 <div class="info-box-content">
-                <span class="info-box-text text-dark">Payments</span>
-                <span class="info-box-number text-dark">
-                    {{$total_payments}}
-                </span>
+                <span class="info-box-text text-dark">Payments | {{$total_payments}}</span>
                 </div>
             </div>
         </a>

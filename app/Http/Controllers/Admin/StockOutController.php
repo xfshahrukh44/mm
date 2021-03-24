@@ -26,7 +26,7 @@ class StockOutController extends Controller
     
     public function index()
     {
-        if(!Gate::allows('isSuperAdmin')){
+        if(!Gate::allows('can_stock_out')){
             return redirect()->route('search_marketing_tasks');
         }
         $stockOuts = $this->stockOutService->paginate(env('PAGINATE'));
@@ -37,6 +37,9 @@ class StockOutController extends Controller
     
     public function store(Request $request)
     {
+        if(!Gate::allows('can_add_stock_outs')){
+            return redirect()->route('search_marketing_tasks');
+        }
         $validator = Validator::make($request->all(), [
             'customer_id' => 'sometimes',
             'product_id' => 'sometimes',
@@ -65,6 +68,9 @@ class StockOutController extends Controller
     
     public function update(Request $request, $id)
     {
+        if(!Gate::allows('can_edit_stock_outs')){
+            return redirect()->route('search_marketing_tasks');
+        }
         $id = $request->hidden;
         $stockOut = ($this->show($id))['stockOut'];
 
@@ -96,6 +102,9 @@ class StockOutController extends Controller
     
     public function destroy(Request $request, $id)
     {
+        if(!Gate::allows('can_delete_stock_outs')){
+            return redirect()->route('search_marketing_tasks');
+        }
         $id = $request->hidden;
 
         $this->stockOutService->delete($id);

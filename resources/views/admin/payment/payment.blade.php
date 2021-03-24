@@ -18,8 +18,10 @@
     <div class="card">
       <div class="card-header">
         <div class="card-tools">
-          <button class="btn btn-success" id="add_payment" data-toggle="modal" data-target="#addPaymentModal">
-            <i class="fas fa-plus"></i></button>
+          @can('can_add_payments')
+            <button class="btn btn-success" id="add_payment" data-toggle="modal" data-target="#addPaymentModal">
+              <i class="fas fa-plus"></i></button>
+          @endcan
         </div>
         <!-- search bar -->
         <form action="{{route('search_payments')}}" class="form-wrapper">
@@ -60,13 +62,17 @@
                     <td class="{{'modified_by'.$payment->id}}">{{return_user_name($payment->modified_by)}}</td>
                     <td>
                       <!-- Edit -->
-                      <a href="#" class="editButton" data-id="{{$payment->id}}">
-                        <i class="fas fa-edit blue ml-1"></i>
-                      </a>
+                      @can('can_edit_payments')
+                        <a href="#" class="editButton" data-id="{{$payment->id}}">
+                          <i class="fas fa-edit blue ml-1"></i>
+                        </a>
+                      @endcan
                       <!-- Delete -->
-                      <a href="#" class="deleteButton" data-id="{{$payment->id}}">
-                        <i class="fas fa-trash red ml-1"></i>
-                      </a>
+                      @can('can_delete_payments')
+                        <a href="#" class="deleteButton" data-id="{{$payment->id}}">
+                          <i class="fas fa-trash red ml-1"></i>
+                        </a>
+                      @endcan
                     </td>
                   </tr>
                 @endforeach

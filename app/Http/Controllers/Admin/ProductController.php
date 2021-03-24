@@ -35,6 +35,9 @@ class ProductController extends Controller
     
     public function index()
     {
+        if(!Gate::allows('can_products')){
+            return redirect()->route('search_marketing_tasks');
+        }
         $products = $this->productService->paginate(env('PAGINATE'));
         $categories = $this->categoryService->all();
         $brands = $this->brandService->all();
@@ -49,6 +52,9 @@ class ProductController extends Controller
     
     public function store(Request $request)
     {
+        if(!Gate::allows('can_add_products')){
+            return redirect()->route('search_marketing_tasks');
+        }
         $validator = Validator::make($request->all(), [
             'category_id' => 'required|int',
             'brand_id' => 'required|int',
@@ -111,6 +117,9 @@ class ProductController extends Controller
     
     public function update(Request $request, $id)
     {
+        if(!Gate::allows('can_edit_products')){
+            return redirect()->route('search_marketing_tasks');
+        }
         $id = $request->hidden;
         $product = ($this->show($id))['product'];
 
@@ -184,6 +193,9 @@ class ProductController extends Controller
     
     public function destroy(Request $request, $id)
     {
+        if(!Gate::allows('can_delete_products')){
+            return redirect()->route('search_marketing_tasks');
+        }
         $id = $request->hidden;
 
         $this->productService->delete($id);
@@ -237,7 +249,7 @@ class ProductController extends Controller
 
     public function special_discounts()
     {
-        if(!Gate::allows('isSuperAdmin')){
+        if(!Gate::allows('can_special_discounts')){
             return redirect()->route('search_marketing_tasks');
         }
         $categories = $this->categoryService->all();

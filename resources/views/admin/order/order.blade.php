@@ -30,14 +30,18 @@
                 <!-- generate excel -->
                     <form action="{{route('generate_orders_excel')}}" target="_blank" method="post">
                         @csrf
-                        <button type="submit" class="btn btn-success generate_ledgers_excel">
-                            <i class="fas fa-file-excel"></i>
-                        </button>
+                        @can('can_excel_orders')
+                            <button type="submit" class="btn btn-success generate_ledgers_excel">
+                                <i class="fas fa-file-excel"></i>
+                            </button>
+                        @endcan
                         <input type="hidden" name="excel_query" class="excel_query" value="">
                         <input type="hidden" name="excel_date" class="excel_date" value="">
-                        <button class="btn btn-success" type="button" id="add_program" data-route="{{route('order.store')}}">
-                            <i class="fas fa-plus"></i>
-                        </button>
+                        @can('can_add_orders')
+                            <button class="btn btn-success" type="button" id="add_program" data-route="{{route('order.store')}}">
+                                <i class="fas fa-plus"></i>
+                            </button>
+                        @endcan
                     </form>
                 </div>
                 <!-- search bar -->
@@ -114,27 +118,33 @@
                                         @endcan
                                         <td>
                                             <!-- Detail -->
-                                            <a href="#" class="detailButton" data-id="{{$order->id}}" data-type="{{$order->id}}" data-image="{{asset('img/order_images') . '/' . $order->image}}">
-                                                <i class="fas fa-shopping-basket blue ml-1"></i>
-                                            </a>
-                                            @can('isSuperAdmin')
+                                            @can('can_view_orders')
+                                                <a href="#" class="detailButton" data-id="{{$order->id}}" data-type="{{$order->id}}" data-image="{{asset('img/order_images') . '/' . $order->image}}">
+                                                    <i class="fas fa-shopping-basket blue ml-1"></i>
+                                                </a>
+                                            @endcan
+                                            <!-- Edit -->
+                                            @can('can_edit_orders')
                                                 @if($order->invoiced_from != 1)
-                                                    <!-- Edit -->
                                                     <a href="#" class="editButton" data-id="{{$order->id}}" data-type="{{$order->id}}">
                                                         <i class="fas fa-edit blue ml-1"></i>
                                                     </a>
                                                 @endif
-                                                <!-- Delete -->
+                                            @endcan
+                                            <!-- Delete -->
+                                            @can('can_delete_orders')
                                                 <a href="#" class="deleteButton" data-id="{{$order->id}}" data-type="{{$order->id}}">
                                                     <i class="fas fa-trash red ml-1"></i>
                                                 </a>
                                             @endcan
-                                            @if($order->status != 'completed' && $order->status != NULL)
-                                                <!-- Generate Invoice -->
-                                                <a href="#" class="invoiceButton" data-id="{{$order->id}}" data-type="{{$order->id}}">
-                                                    <i class="fas fa-file-invoice-dollar"></i>
-                                                </a>
-                                            @endif
+                                            <!-- Generate Invoice -->
+                                            @can('can_invoice_orders')
+                                                @if($order->status != 'completed' && $order->status != NULL)
+                                                    <a href="#" class="invoiceButton" data-id="{{$order->id}}" data-type="{{$order->id}}">
+                                                        <i class="fas fa-file-invoice-dollar"></i>
+                                                    </a>
+                                                @endif
+                                            @endcan
                                         </td>
                                     </tr>
                                 @endforeach

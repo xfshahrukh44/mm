@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Services\CategoryService;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Gate;
 
 class CategoryController extends Controller
 {
@@ -20,12 +21,18 @@ class CategoryController extends Controller
     
     public function index()
     {
+        if(!Gate::allows('can_categories')){
+            return redirect()->route('search_marketing_tasks');
+        }
         $categories = $this->categoryService->paginate(env('PAGINATE'));
         return view('admin.category.category', compact('categories'));
     }
     
     public function store(Request $request)
     {
+        if(!Gate::allows('can_add_categories')){
+            return redirect()->route('search_marketing_tasks');
+        }
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255'
         ]);
@@ -46,6 +53,9 @@ class CategoryController extends Controller
     
     public function update(Request $request, $id)
     {
+        if(!Gate::allows('can_edit_categories')){
+            return redirect()->route('search_marketing_tasks');
+        }
         $id = $request->hidden;
 
         if(!(auth()->user()->id == $id || auth()->user()->type == "superadmin"))
@@ -70,6 +80,9 @@ class CategoryController extends Controller
     
     public function destroy(Request $request, $id)
     {
+        if(!Gate::allows('can_delete_categories')){
+            return redirect()->route('search_marketing_tasks');
+        }
         $id = $request->hidden;
 
         $this->categoryService->delete($id);

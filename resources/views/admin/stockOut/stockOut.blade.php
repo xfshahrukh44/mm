@@ -18,8 +18,10 @@
     <div class="card">
       <div class="card-header">
         <div class="card-tools">
-          <button class="btn btn-success" id="add_stockOut" data-toggle="modal" data-target="#addStockOutModal">
-            <i class="fas fa-plus"></i></button>
+          @can('can_add_stock_outs')
+            <button class="btn btn-success" id="add_stockOut" data-toggle="modal" data-target="#addStockOutModal">
+              <i class="fas fa-plus"></i></button>
+          @endcan
         </div>
         <!-- search bar -->
         <form action="{{route('search_stockOuts')}}" class="form-wrapper">
@@ -62,13 +64,17 @@
                     <td class="{{'modified_by'.$stockOut->id}}">{{return_user_name($stockOut->modified_by)}}</td>
                     <td>
                       <!-- Edit -->
-                      <a href="#" class="editButton" data-id="{{$stockOut->id}}" data-object="{{$stockOut}}">
-                        <i class="fas fa-edit blue ml-1"></i>
-                      </a>
+                      @can('can_edit_stock_outs')
+                        <a href="#" class="editButton" data-id="{{$stockOut->id}}" data-object="{{$stockOut}}">
+                          <i class="fas fa-edit blue ml-1"></i>
+                        </a>
+                      @endcan
                       <!-- Delete -->
-                      <a href="#" class="deleteButton" data-id="{{$stockOut->id}}" data-object="{{$stockOut}}">
-                        <i class="fas fa-trash red ml-1"></i>
-                      </a>
+                      @can('can_delete_stock_outs')
+                        <a href="#" class="deleteButton" data-id="{{$stockOut->id}}" data-object="{{$stockOut}}">
+                          <i class="fas fa-trash red ml-1"></i>
+                        </a>
+                      @endcan
                     </td>
                   </tr>
                 @endforeach

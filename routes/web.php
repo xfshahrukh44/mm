@@ -36,6 +36,8 @@ Route::group(['middleware' => 'auth', 'prefix' => 'admin'], function() {
     // return receipt logs blade
     Route::get('/rlogs', 'Admin\ReceivingController@receiving_logs')->name('receiving_logs');
     Route::get('/special_discounts', 'Admin\ProductController@special_discounts')->name('special_discounts');
+    // shell
+    Route::get('/shell', 'Admin\ShellController@shell')->name('shell');
     // -----------------------------------------------------------------------------
 
     // all() ROUTES-------------------------------------------------------------------
@@ -109,7 +111,7 @@ Route::group(['middleware' => 'auth', 'prefix' => 'admin'], function() {
     Route::get('/plug_n_play', 'HomeController@plug_n_play')->name('plug_n_play');
     // expenses view
     Route::get('/e><penses', function(){
-        if(!\Illuminate\Support\Facades\Gate::allows('isSuperAdmin')){
+        if(!\Illuminate\Support\Facades\Gate::allows('can_expense_ledgers')){
             return redirect('/login')->route('search_marketing_tasks');
         }
         return view('admin.expense.expense_search');
@@ -157,6 +159,8 @@ Route::group(['middleware' => 'auth', 'prefix' => 'admin'], function() {
     Route::get('/toggle_is_available', 'Admin\OrderProductController@toggle_is_available')->name('toggle_is_available');
     // ready_to_dispatch
     Route::get('/ready_to_dispatch', 'Admin\OrderController@ready_to_dispatch')->name('ready_to_dispatch');
+    // set_rights
+    Route::get('/set_rights', 'Admin\ShellController@set_rights')->name('set_rights');
     // ----------------------------------------------------------------------------------------------------------------------
     
     

@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Services\AreaService;
 use App\Services\MarketService;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Gate;
 
 class AreaController extends Controller
 {
@@ -22,12 +23,18 @@ class AreaController extends Controller
     
     public function index()
     {
+        if(!Gate::allows('can_areas_and_markets')){
+            return redirect()->route('search_marketing_tasks');
+        }
         $areas = $this->areaService->paginate(env('PAGINATE'));
         return view('admin.area.area', compact('areas'));
     }
     
     public function store(Request $request)
     {
+        if(!Gate::allows('can_add_areas')){
+            return redirect()->route('search_marketing_tasks');
+        }
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255'
         ]);
@@ -63,6 +70,9 @@ class AreaController extends Controller
     public function update(Request $request, $id)
     {
         // dd($request->all());
+        if(!Gate::allows('can_edit_areas')){
+            return redirect()->route('search_marketing_tasks');
+        }
         $id = $request->hidden;
 
         if(!(auth()->user()->id == $id || auth()->user()->type == "superadmin"))
@@ -117,6 +127,9 @@ class AreaController extends Controller
     
     public function destroy(Request $request, $id)
     {
+        if(!Gate::allows('can_delete_areas')){
+            return redirect()->route('search_marketing_tasks');
+        }
         $id = $request->hidden;
 
         $this->areaService->delete($id);

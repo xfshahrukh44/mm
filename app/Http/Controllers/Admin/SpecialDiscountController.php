@@ -47,8 +47,8 @@ class SpecialDiscountController extends Controller
     
     public function update(Request $request, $id)
     {
+        // dd($request->all());
         if(array_key_exists('special_discount_id', $request->all())){
-            // dd($request->all());
             $id = $request->special_discount_id;
         }
         else{

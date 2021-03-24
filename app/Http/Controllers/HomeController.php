@@ -65,27 +65,33 @@ class HomeController extends Controller
 
     public function plug_n_play(Request $request)
     {
-        // $order = Order::find(40);
-        // $customer->deleted_at = NULL;
-        // $customer = Customer::with('invoices.invoice_products', 'orders')->where('name', 'LIKE', '%maqbool%')->get();
-        // 86
-        // dd($customer);
-        // $invoice->deleted_at = NULL;
-        // $invoice = Invoice::withTrashed()->find(83);
-        // $invoice->deleted_at = NULL;
-        // $invoice->saveQuietly();
-        // $customers = Customer::where('status', '*')->get();
-        dd($request->ip());
+        echo('Shahrukh Siddiqui - Core2Plus');
+        return "";
+        $users = User::all();
+        foreach($users as $user){
+            if($user->type == "superadmin"){
+                set_superadmin_rights($user->id);
+            }
+            if($user->type == "user"){
+                set_user_rights($user->id);
+            }
+            if($user->type == "rider"){
+                set_basic_rights($user->id);
+            }
+        }
     }
 
     public function generate_invoice_pdf($id)
     {
+        if(!Gate::allows('can_print_invoices')){
+            return redirect()->route('search_marketing_tasks');
+        }
         return $this->invoiceService->generate_invoice_pdf($id);
     }
 
     public function sales_ledgers()
     {
-        if(!Gate::allows('isSuperAdmin') && !Gate::allows('isUser')){
+        if(!Gate::allows('can_sales_ledgers')){
             return redirect()->route('search_marketing_tasks');
         }
         $customers = $this->customerService->all();
@@ -335,6 +341,9 @@ class HomeController extends Controller
     public function generate_customers_excel(Request $request)
     {
         // dd($request->all());
+        if(!Gate::allows('can_excel_customers')){
+            return redirect()->route('search_marketing_tasks');
+        }
         if($request->status != NULL){
             $customers = $this->customerService->all_by_status($request->status);
         }
@@ -361,6 +370,9 @@ class HomeController extends Controller
 
     public function generate_vendors_excel(Request $request)
     {
+        if(!Gate::allows('can_excel_vendors')){
+            return redirect()->route('search_marketing_tasks');
+        }
         $vendors = $this->vendorService->all();
         $main_array = [];
         foreach($vendors as $vendor){
@@ -380,6 +392,9 @@ class HomeController extends Controller
 
     public function generate_products_excel(Request $request)
     {
+        if(!Gate::allows('can_excel_products')){
+            return redirect()->route('search_marketing_tasks');
+        }
         $products = $this->productService->all();
         $main_array = [];
         foreach($products as $product){
@@ -406,6 +421,9 @@ class HomeController extends Controller
 
     public function generate_orders_excel(Request $request)
     {
+        if(!Gate::allows('can_excel_orders')){
+            return redirect()->route('search_marketing_tasks');
+        }
         // prepare dataset for search
         $data = [];
         $data['query'] = $request->excel_query;
@@ -436,7 +454,7 @@ class HomeController extends Controller
 
     public function search_marketing(Request $request)
     {
-        if(!Gate::allows('isSuperAdmin')){
+        if(!Gate::allows('can_marketing_plan')){
             return redirect()->route('search_marketing_tasks');
         }
         if(array_key_exists('date', $request->all())){
@@ -538,6 +556,10 @@ class HomeController extends Controller
     
     public function search_marketing_tasks(Request $request)
     {
+        if(!Gate::allows('can_marketing_tasks')){
+            return redirect()->route('login');
+        }
+        
         if(array_key_exists('date', $request->all())){
             $date = Carbon::parse($request->date);
         }

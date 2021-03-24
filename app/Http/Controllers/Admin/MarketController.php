@@ -55,6 +55,9 @@ class MarketController extends Controller
 
     public function set_customer_schedule(Request $request)
     {
+        if(!Gate::allows('can_customer_schedule')){
+            return redirect()->route('search_marketing_tasks');
+        }
         return $this->marketService->set_customer_schedule($request->all());
     }
 }

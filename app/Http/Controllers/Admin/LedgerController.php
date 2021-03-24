@@ -34,6 +34,9 @@ class LedgerController extends Controller
 
     public function get_customer_ledgers()
     {
+        if(!Gate::allows('can_customer_ledgers')){
+            return redirect()->route('search_marketing_tasks');
+        }
         $ledgers = $this->ledgerService->paginate_customer_ledgers(env('PAGINATE'));
         $customers = $this->customerService->all();
         $vendors = $this->vendorService->all();
@@ -43,7 +46,7 @@ class LedgerController extends Controller
 
     public function get_vendor_ledgers()
     {
-        if(!Gate::allows('isSuperAdmin')){
+        if(!Gate::allows('can_vendor_ledgers')){
             return redirect()->route('search_marketing_tasks');
         }
         $ledgers = $this->ledgerService->paginate_vendor_ledgers(env('PAGINATE'));

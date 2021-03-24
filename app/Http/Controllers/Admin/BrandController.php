@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Services\BrandService;
 use Illuminate\Support\Facades\Validator;
 use Storage;
+use Illuminate\Support\Facades\Gate;
 
 class BrandController extends Controller
 {
@@ -20,12 +21,19 @@ class BrandController extends Controller
     
     public function index()
     {
+        if(!Gate::allows('can_brands')){
+            return redirect()->route('search_marketing_tasks');
+        }
+
         $brands = $this->brandService->paginate(env('PAGINATE'));
         return view('admin.brand.brand', compact('brands'));
     }
     
     public function store(Request $request)
     {
+        if(!Gate::allows('can_add_categories')){
+            return redirect()->route('search_marketing_tasks');
+        }
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255'
         ]);
@@ -46,6 +54,9 @@ class BrandController extends Controller
     
     public function update(Request $request, $id)
     {
+        if(!Gate::allows('can_edit_categories')){
+            return redirect()->route('search_marketing_tasks');
+        }
         $id = $request->hidden;
 
         if(!(auth()->user()->id == $id || auth()->user()->type == "superadmin"))
@@ -70,6 +81,9 @@ class BrandController extends Controller
     
     public function destroy(Request $request, $id)
     {
+        if(!Gate::allows('can_delete_categories')){
+            return redirect()->route('search_marketing_tasks');
+        }
         $id = $request->hidden;
 
         $this->brandService->delete($id);

@@ -30,6 +30,9 @@ class ReceivingController extends Controller
     
     public function index()
     {
+        if(!Gate::allows('can_receipts')){
+            return redirect()->route('search_marketing_tasks');
+        }
         if(Gate::allows('isSuperAdmin')){
             $receivings = $this->receivingService->paginate(env('PAGINATE'));
         }
@@ -43,6 +46,9 @@ class ReceivingController extends Controller
     
     public function store(Request $request)
     {
+        if(!Gate::allows('can_add_receivings')){
+            return redirect()->route('search_marketing_tasks');
+        }
         $validator = Validator::make($request->all(), [
             'invoice_id' => 'sometimes',
             'customer_id' => 'sometimes',
@@ -73,6 +79,9 @@ class ReceivingController extends Controller
     
     public function update(Request $request, $id)
     {
+        if(!Gate::allows('can_edit_receivings')){
+            return redirect()->route('search_marketing_tasks');
+        }
         $id = $request->hidden;
         $request['receiving_id'] = $id;
         $receiving = ($this->show($request, $id))['receiving'];
@@ -102,6 +111,9 @@ class ReceivingController extends Controller
     
     public function destroy(Request $request, $id)
     {
+        if(!Gate::allows('can_delete_receivings')){
+            return redirect()->route('search_marketing_tasks');
+        }
         $id = $request->hidden;
 
         $this->receivingService->delete($id);
@@ -126,6 +138,9 @@ class ReceivingController extends Controller
     }
 
     public function receiving_logs(Request $request){
+        if(!Gate::allows('can_receipt_logs')){
+            return redirect()->route('search_marketing_tasks');
+        }
         $users = $this->userService->all();
         return view('admin.receiving.receiving_search', compact('users'));
     }

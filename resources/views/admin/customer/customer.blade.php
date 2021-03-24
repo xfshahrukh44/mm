@@ -21,15 +21,17 @@
           <!-- generate excel -->
           <form action="{{route('generate_customers_excel')}}" target="_blank" method="post">
             @csrf
-            <button type="submit" class="btn btn-success generate_ledgers_excel">
-                <i class="fas fa-file-excel"></i>
-
-            </button>
+            @can('can_excel_customers')
+              <button type="submit" class="btn btn-success generate_ledgers_excel">
+                  <i class="fas fa-file-excel"></i>
+              </button>
+            @endcan
             <input type="hidden" name="status" class="input_status_excel" value="">
-            <button class="btn btn-success" type="button" id="add_customer" data-toggle="modal" data-target="#addCustomerModal">
-              <i class="fas fa-plus"></i>
-
-            </button>
+            @can('can_add_customers')
+              <button class="btn btn-success" type="button" id="add_customer" data-toggle="modal" data-target="#addCustomerModal">
+                <i class="fas fa-plus"></i>
+              </button>
+            @endcan
           </form>
         </div>
         <!-- search bar -->
@@ -109,15 +111,19 @@
                     <td class="{{'outstanding_balance'.$customer->id}}">{{$customer->outstanding_balance ? 'Rs. ' . number_format($customer->outstanding_balance) : NULL}}</td>
                     <td class="">{{last_order_dispatched_at($customer->id)}}</td>
                     <td>
-                      <!-- Detail -->
-                      <a href="#" class="detailButton" data-id="{{$customer->id}}" data-object="{{$customer}}" data-shopkeeper="{{asset('img/shopkeepers') . '/' . $customer->shop_keeper_picture}}" data-shop="{{asset('img/shops') . '/' . $customer->shop_picture}}">
-                        <i class="fas fa-eye green ml-1"></i>
-                      </a>
-                      @can('isSuperAdmin')
+                      @can('can_view_customers')
+                        <!-- Detail -->
+                        <a href="#" class="detailButton" data-id="{{$customer->id}}" data-object="{{$customer}}" data-shopkeeper="{{asset('img/shopkeepers') . '/' . $customer->shop_keeper_picture}}" data-shop="{{asset('img/shops') . '/' . $customer->shop_picture}}">
+                          <i class="fas fa-eye green ml-1"></i>
+                        </a>
+                      @endcan
+                      @can('can_edit_customers')
                         <!-- Edit -->
                         <a href="#" class="editButton" data-id="{{$customer->id}}" data-object="{{$customer}}">
                           <i class="fas fa-edit blue ml-1"></i>
                         </a>
+                      @endcan
+                      @can('can_delete_customers')
                         <!-- Delete -->
                         <a href="#" class="deleteButton" data-id="{{$customer->id}}" data-object="{{$customer}}">
                           <i class="fas fa-trash red ml-1"></i>

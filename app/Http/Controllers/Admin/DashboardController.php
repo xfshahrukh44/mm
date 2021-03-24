@@ -40,7 +40,7 @@ class DashboardController extends Controller
 
     public function index()
     {
-        if(!Gate::allows('isSuperAdmin') && !Gate::allows('isUser')){
+        if(!Gate::allows('can_dashboard')){
             return redirect()->route('search_marketing_tasks');
         }
         $customers = $this->customerService->all();
@@ -57,13 +57,9 @@ class DashboardController extends Controller
         $total_cost_value = 0;
         $total_sales_value = 0;
         foreach($products as $product){
-            // $total_cost_value += $product->purchase_price;
             $total_cost_value += $product->cost_value;
-            // $total_sales_value += $product->consumer_selling_price;
             $total_sales_value += $product->sales_value;
         }
-        // $total_cost_value = $total_cost_value / ((count($products) > 0) ? count($products) : 1);
-        // $total_sales_value = $total_sales_value / ((count($products) > 0) ? count($products) : 1);
 
         // total receivables and total payables
         $total_receivables = 0;

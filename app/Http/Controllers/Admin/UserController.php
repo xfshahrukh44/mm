@@ -22,7 +22,7 @@ class UserController extends Controller
     
     public function index()
     {
-        if(!Gate::allows('isSuperAdmin')){
+        if(!Gate::allows('can_staff')){
             return redirect()->route('search_marketing_tasks');
         }
         $users = $this->userService->paginate_staff(env('PAGINATE'));
@@ -32,7 +32,7 @@ class UserController extends Controller
 
     public function getRiders(Request $request)
     {
-        if(!Gate::allows('isSuperAdmin')){
+        if(!Gate::allows('can_riders')){
             return redirect()->route('search_marketing_tasks');
         }
         // paginate_riders
@@ -43,6 +43,9 @@ class UserController extends Controller
     
     public function store(Request $request)
     {
+        if(!Gate::allows('can_add_users')){
+            return redirect()->route('search_marketing_tasks');
+        }
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
             'password' => 'required|string|min:4',
@@ -63,11 +66,17 @@ class UserController extends Controller
     
     public function show($id)
     {
+        if($_REQUEST['id']){
+            $id = $_REQUEST['id'];
+        }
         return $this->userService->find($id);
     }
     
     public function update(Request $request, $id)
     {
+        if(!Gate::allows('can_edit_users')){
+            return redirect()->route('search_marketing_tasks');
+        }
         $id = $request->hidden;
         
         if(!(auth()->user()->id == $id || auth()->user()->type == "superadmin"))
@@ -107,6 +116,9 @@ class UserController extends Controller
     
     public function destroy(Request $request, $id)
     {
+        if(!Gate::allows('can_delete_users')){
+            return redirect()->route('search_marketing_tasks');
+        }
         $id = $request->hidden;
 
         $this->userService->delete($id);

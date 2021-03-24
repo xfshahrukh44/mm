@@ -76,8 +76,9 @@ abstract class UserRepository implements RepositoryInterface
     public function update(array $data, $id)
     {
         try {
+            // dd($data);
             // password hashing
-            if($data['password'])
+            if(isset($data['password']))
             {
                 $data['password'] = Hash::make($data['password']);
             }

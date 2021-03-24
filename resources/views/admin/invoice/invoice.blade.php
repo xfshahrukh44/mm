@@ -28,9 +28,11 @@
             <div class="card-header">
                 <div class="card-tools">
                     <!-- <h3 class="">Invoices</h3> -->
-                    <button class="btn btn-success testbtn" id="add_program" data-route="{{route('invoice.store')}}"">
-                        <i class="fas fa-plus"></i>
-                    </button>
+                    @can('can_add_invoices')
+                        <button class="btn btn-success testbtn" id="add_program" data-route="{{route('invoice.store')}}"">
+                            <i class="fas fa-plus"></i>
+                        </button>
+                    @endcan
                 </div>
                 <!-- search bar -->
                 <form action="{{route('search_invoices')}}" class="form-wrapper">
@@ -91,19 +93,25 @@
                                         @endcan
                                         <td>
                                             <!-- Detail -->
-                                            <a href="#" class="detailButton" data-id="{{$invoice->id}}" data-type="{{$invoice->id}}">
-                                                <i class="fas fa-shopping-basket blue ml-1"></i>
-                                            </a>
+                                            @can('can_view_invoices')
+                                                <a href="#" class="detailButton" data-id="{{$invoice->id}}" data-type="{{$invoice->id}}">
+                                                    <i class="fas fa-shopping-basket blue ml-1"></i>
+                                                </a>
+                                            @endcan
                                             <!-- Edit -->
-                                            <a href="#" class="editButton" data-id="{{$invoice->id}}" data-object="{{$invoice}}">
-                                                <i class="fas fa-edit blue ml-1"></i>
-                                            </a>
+                                            @can('can_edit_invoices')
+                                                <a href="#" class="editButton" data-id="{{$invoice->id}}" data-object="{{$invoice}}">
+                                                    <i class="fas fa-edit blue ml-1"></i>
+                                                </a>
+                                            @endcan
                                             <!-- Print -->
-                                            <a href="{{route('generate_invoice_pdf', $invoice->id)}}" target="_blank">
-                                                <i class="fas fa-print"></i>
-                                            </a>
-                                            @can('isSuperAdmin')
-                                                <!-- Delete -->
+                                            @can('can_print_invoices')
+                                                <a href="{{route('generate_invoice_pdf', $invoice->id)}}" target="_blank">
+                                                    <i class="fas fa-print"></i>
+                                                </a>
+                                            @endcan
+                                            <!-- Delete -->
+                                            @can('can_delete_invoices')
                                                 <a href="#" class="deleteButton" data-id="{{$invoice->id}}" data-type="{{$invoice->id}}">
                                                     <i class="fas fa-trash red ml-1"></i>
                                                 </a>

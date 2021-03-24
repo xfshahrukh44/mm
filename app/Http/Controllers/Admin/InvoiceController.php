@@ -39,7 +39,7 @@ class InvoiceController extends Controller
     
     public function index()
     {
-        if(!Gate::allows('isSuperAdmin') && !Gate::allows('isUser')){
+        if(!Gate::allows('can_invoices')){
             return redirect()->route('search_marketing_tasks');
         }
         $invoices = $this->invoiceService->paginate(env('PAGINATE'));
@@ -58,6 +58,9 @@ class InvoiceController extends Controller
     public function store(Request $request)
     {
         // dd($request->all());
+        if(!Gate::allows('can_invoice_orders') || !Gate::allows('can_add_invoices')){
+            return redirect()->route('search_marketing_tasks');
+        }
         $validator = Validator::make($request->all(), [
             'customer_id' => 'required',
             'order_id' => 'sometimes',
@@ -125,6 +128,9 @@ class InvoiceController extends Controller
     
     public function update(Request $request, $id)
     {
+        if(!Gate::allows('can_edit_invoices')){
+            return redirect()->route('search_marketing_tasks');
+        }
         $id = $request->hidden;
         $invoice = ($this->show($id))['invoice'];
 
@@ -158,6 +164,9 @@ class InvoiceController extends Controller
     
     public function destroy(Request $request, $id)
     {
+        if(!Gate::allows('can_delete_invoices')){
+            return redirect()->route('search_marketing_tasks');
+        }
         $id = $request->hidden;
 
         // find invoice

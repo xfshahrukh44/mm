@@ -19,8 +19,10 @@
       <div class="card-header">
         <!-- <h3 class="card-title">Expenses</h3> -->
         <div class="card-tools">
-          <button class="btn btn-success" id="add_expense" data-toggle="modal" data-target="#addExpenseModal">
-            <i class="fas fa-plus"></i> Add New Expense</button>
+          @can('can_add_expenses')
+            <button class="btn btn-success" id="add_expense" data-toggle="modal" data-target="#addExpenseModal">
+              <i class="fas fa-plus"></i> Add New Expense</button>
+          @endcan
         </div>
       </div>
       <!-- /.card-header -->
@@ -50,13 +52,17 @@
                     <td class="{{'modified_by'.$expense->id}}">{{return_user_name($expense->modified_by)}}</td>
                     <td>
                       <!-- Edit -->
-                      <a href="#" class="editButton" data-id="{{$expense->id}}" data-object="{{$expense}}">
-                        <i class="fas fa-edit blue ml-1"></i>
-                      </a>
+                      @can('can_edit_expenses')
+                        <a href="#" class="editButton" data-id="{{$expense->id}}" data-object="{{$expense}}">
+                          <i class="fas fa-edit blue ml-1"></i>
+                        </a>
+                      @endcan
                       <!-- Delete -->
-                      <a href="#" class="deleteButton" data-id="{{$expense->id}}" data-object="{{$expense}}">
-                        <i class="fas fa-trash red ml-1"></i>
-                      </a>
+                      @can('can_delete_expenses')
+                        <a href="#" class="deleteButton" data-id="{{$expense->id}}" data-object="{{$expense}}">
+                          <i class="fas fa-trash red ml-1"></i>
+                        </a>
+                      @endcan
                     </td>
                   </tr>
                 @endforeach

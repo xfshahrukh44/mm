@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use Storage;
+use Illuminate\Support\Facades\Gate;
 
 class OrderController extends Controller
 {
@@ -35,6 +36,9 @@ class OrderController extends Controller
     
     public function index()
     {
+        if(!Gate::allows('can_orders')){
+            return redirect()->route('search_marketing_tasks');
+        }
         $orders = $this->orderService->paginate(env('PAGINATE'));
         $customers = $this->customerService->all();
         $products = $this->productService->all();
@@ -50,6 +54,9 @@ class OrderController extends Controller
     
     public function store(Request $request)
     {
+        if(!Gate::allows('can_add_orders')){
+            return redirect()->route('search_marketing_tasks');
+        }
         $validator = Validator::make($request->all(), [
             'customer_id' => 'required',
             'total' => 'sometimes',
@@ -106,6 +113,9 @@ class OrderController extends Controller
     
     public function update(Request $request, $id)
     {
+        if(!Gate::allows('can_edit_orders')){
+            return redirect()->route('search_marketing_tasks');
+        }
         $id = $request->hidden;
         $order = ($this->orderService->find($id))['order'];
 
@@ -169,6 +179,9 @@ class OrderController extends Controller
     
     public function destroy(Request $request, $id)
     {
+        if(!Gate::allows('can_delete_orders')){
+            return redirect()->route('search_marketing_tasks');
+        }
         $id = $request->hidden;
 
         $this->orderService->delete($id);

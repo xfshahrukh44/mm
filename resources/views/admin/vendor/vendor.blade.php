@@ -20,14 +20,17 @@
         <div class="card-tools">
           <form action="{{route('generate_vendors_excel')}}" target="_blank" method="post">
             @csrf
-            <button type="submit" class="btn btn-success generate_ledgers_excel">
-                <i class="fas fa-file-excel"></i>
 
-            </button>
-            <button class="btn btn-success" id="add_vendor" data-toggle="modal" data-target="#addVendorModal" type="button">
-              <i class="fas fa-plus"></i>
-
-            </button>
+            @can('can_excel_vendors')
+              <button type="submit" class="btn btn-success generate_ledgers_excel">
+                  <i class="fas fa-file-excel"></i>
+              </button>
+            @endcan
+            @can('can_add_vendors')
+              <button class="btn btn-success" id="add_vendor" data-toggle="modal" data-target="#addVendorModal" type="button">
+                <i class="fas fa-plus"></i>
+              </button>
+            @endcan
           </form>
         </div>
         <!-- search bar -->
@@ -74,18 +77,24 @@
                     <td class="{{'business_to_date'.$vendor->id}}">{{$vendor->business_to_date ? 'Rs. ' . number_format($vendor->business_to_date) : NULL}}</td>
                     <td class="{{'outstanding_balance'.$vendor->id}}">{{$vendor->outstanding_balance ? 'Rs. ' . number_format($vendor->outstanding_balance) : NULL}}</td>
                     <td>
-                      <!-- Detail -->
-                      <a href="#" class="detailButton" data-id="{{$vendor->id}}" data-object="{{$vendor}}" data-shopkeeper="{{asset('img/shopkeepers') . '/' . $vendor->shop_keeper_picture}}" data-shop="{{asset('img/shops') . '/' . $vendor->shop_picture}}">
-                        <i class="fas fa-eye green ml-1"></i>
-                      </a>
-                      <!-- Edit -->
-                      <a href="#" class="editButton" data-id="{{$vendor->id}}" data-object="{{$vendor}}">
-                        <i class="fas fa-edit blue ml-1"></i>
-                      </a>
-                      <!-- Delete -->
-                      <a href="#" class="deleteButton" data-id="{{$vendor->id}}" data-object="{{$vendor}}">
-                        <i class="fas fa-trash red ml-1"></i>
-                      </a>
+                      @can('can_view_vendors')
+                        <!-- Detail -->
+                        <a href="#" class="detailButton" data-id="{{$vendor->id}}" data-object="{{$vendor}}" data-shopkeeper="{{asset('img/shopkeepers') . '/' . $vendor->shop_keeper_picture}}" data-shop="{{asset('img/shops') . '/' . $vendor->shop_picture}}">
+                          <i class="fas fa-eye green ml-1"></i>
+                        </a>
+                      @endcan
+                      @can('can_edit_vendors')
+                        <!-- Edit -->
+                        <a href="#" class="editButton" data-id="{{$vendor->id}}" data-object="{{$vendor}}">
+                          <i class="fas fa-edit blue ml-1"></i>
+                        </a>
+                      @endcan
+                      @can('can_delete_vendors')
+                        <!-- Delete -->
+                        <a href="#" class="deleteButton" data-id="{{$vendor->id}}" data-object="{{$vendor}}">
+                          <i class="fas fa-trash red ml-1"></i>
+                        </a>
+                      @endcan
                     </td>
                   </tr>
                 @endforeach

@@ -23,9 +23,11 @@
             <div class="card-header">
                 <div class="card-tools">
                     <!-- <h3 class="">areas</h3> -->
-                    <button class="btn btn-success" id="add_program" data-toggle="modal" data-target="#addAreaModal">
-                        <i class="fas fa-plus"></i> Add New Area</button>
-                    </button>
+                    @can('can_add_areas')
+                        <button class="btn btn-success" id="add_program" data-toggle="modal" data-target="#addAreaModal">
+                            <i class="fas fa-plus"></i> Add New Area</button>
+                        </button>
+                    @endcan
                 </div>
             </div>
             <!-- /.card-header -->
@@ -52,11 +54,13 @@
                                             @endforeach
                                         </td>
                                         <td>
-                                            @can('isSuperAdmin')
-                                                <!-- Detail -->
+                                            @can('can_edit_areas')
+                                                <!-- Edit -->
                                                 <a href="#" class="editButton" data-id="{{$area->id}}" data-route="{{route('area.show', 0)}}">
                                                     <i class="fas fa-edit blue ml-1"></i>
                                                 </a>
+                                            @endcan
+                                            @can('can_delete_areas')
                                                 <!-- Delete -->
                                                 <a href="#" class="deleteButton" data-id="{{$area->id}}">
                                                     <i class="fas fa-trash red ml-1"></i>

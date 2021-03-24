@@ -21,14 +21,18 @@
           <!-- generate excel -->
           <form action="{{route('generate_products_excel')}}" target="_blank" method="post">
             @csrf
-            <button type="submit" class="btn btn-success generate_ledgers_excel">
-                <i class="fas fa-file-excel"></i>
-                {{-- Generate Excel --}}
-            </button>
-            <button class="btn btn-success" id="add_product" data-toggle="modal" data-target="#addProductModal" type="button">
-              <i class="fas fa-plus"></i>
-              {{-- Add New Product --}}
-            </button>
+            @can('can_excel_products')
+              <button type="submit" class="btn btn-success generate_ledgers_excel">
+                  <i class="fas fa-file-excel"></i>
+                  {{-- Generate Excel --}}
+              </button>
+            @endcan
+            @can('can_add_products')
+              <button class="btn btn-success" id="add_product" data-toggle="modal" data-target="#addProductModal" type="button">
+                <i class="fas fa-plus"></i>
+                {{-- Add New Product --}}
+              </button>
+            @endcan
           </form>
         </div>
         <!-- search bar -->
@@ -107,15 +111,19 @@
                     @endcan
                     <td>
                       <!-- Detail -->
-                      <a href="#" class="detailButton" data-id="{{$product->id}}" data-object="{{$product}}" data-product="{{asset('img/products') . '/' . $product->product_picture}}">
-                        <i class="fas fa-eye green ml-1"></i>
-                      </a>
-                      @can('isSuperAdmin')
-                        <!-- Edit -->
+                      @can('can_view_products')
+                        <a href="#" class="detailButton" data-id="{{$product->id}}" data-object="{{$product}}" data-product="{{asset('img/products') . '/' . $product->product_picture}}">
+                          <i class="fas fa-eye green ml-1"></i>
+                        </a>
+                      @endcan
+                      <!-- Edit -->
+                      @can('can_edit_products')
                         <a href="#" class="editButton" data-id="{{$product->id}}" data-object="{{$product}}">
                           <i class="fas fa-edit blue ml-1"></i>
                         </a>
-                        <!-- Delete -->
+                      @endcan
+                      <!-- Delete -->
+                      @can('can_delete_products')
                         <a href="#" class="deleteButton" data-id="{{$product->id}}" data-object="{{$product}}">
                           <i class="fas fa-trash red ml-1"></i>
                         </a>

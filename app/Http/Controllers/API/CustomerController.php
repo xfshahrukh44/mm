@@ -93,6 +93,9 @@ class CustomerController extends Controller
     
     public function update(Request $request, $id)
     {
+        if(!Gate::allows('can_edit_customers')){
+            return redirect()->route('search_marketing_tasks');
+        }
         if(auth()->user()->type != "superadmin")
         {
             return response()->json([
@@ -164,6 +167,9 @@ class CustomerController extends Controller
     
     public function destroy($id)
     {
+        if(!Gate::allows('can_delete_customers')){
+            return redirect()->route('search_marketing_tasks');
+        }
         return $this->customerService->delete($id);
     }
 }

@@ -38,6 +38,9 @@ class CustomerController extends Controller
 
     public function index()
     {
+        if(!Gate::allows('can_customers')){
+            return redirect()->route('search_marketing_tasks');
+        }
         // customer status buttons filters on top
         if(array_key_exists('status_button', $_REQUEST)){
             $customers = $this->customerService->paginate_by_status(env('PAGINATE'), $_REQUEST['status_button']);
@@ -59,6 +62,9 @@ class CustomerController extends Controller
     public function store(Request $request)
     {
         // dd($request->all());
+        if(!Gate::allows('can_add_customers')){
+            return redirect()->route('search_marketing_tasks');
+        }
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
             'market_id' => 'required|int',
