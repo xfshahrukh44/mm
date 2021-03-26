@@ -55,6 +55,7 @@
                 <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1">Order ID</th>
                 <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1">Date Punched</th>
                 <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1">Customer Name</th>
+                <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1">Outstanding Balance</th>
                 <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1">Invoice Total</th>
                 <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1">Payment Received</th>
                 <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1">Status</th>
@@ -71,6 +72,7 @@
                     <td class="{{'order_id'.$receiving->id}}">{{$receiving->invoice && $receiving->invoice->order ? $receiving->invoice->order->id : NULL}}</td>
                     <td class="{{'created_at'.$receiving->id}}">{{$receiving->created_at ? return_date($receiving->created_at) : NULL}}</td>
                     <td class="{{'customer'.$receiving->id}}">{{$receiving->customer? customer_shop_name($receiving->customer->id) : NULL}}</td>
+                    <td class="{{'outstanding_balance'.$receiving->id}}">{{($receiving->customer && $receiving->customer->outstanding_balance) ? ('Rs.' . number_format($receiving->customer->outstanding_balance)) : NULL}}</td>
                     <td class="{{'total'.$receiving->id}}">{{$receiving->invoice ? 'Rs.' . number_format($receiving->invoice->total) : NULL}}</td>
                     <td class="{{'amount'.$receiving->id}}">{{$receiving->amount ? 'Rs.' . number_format($receiving->amount) : NULL}}</td>
                     <td class="{{'is_received'.$receiving->id}} text-center">
@@ -99,7 +101,7 @@
                   </tr>
                 @endforeach
               @else
-                <tr><td colspan="9"><h6 align="center">No receiving(s) found</h6></td></tr>
+                <tr><td colspan="10"><h6 align="center">No receiving(s) found</h6></td></tr>
               @endif
             </tbody>
             <tfoot>

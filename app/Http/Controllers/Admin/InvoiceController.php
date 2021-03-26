@@ -87,7 +87,7 @@ class InvoiceController extends Controller
         if($request->products){
             for($i = 0; $i < count($request->products); $i++){
                 // mark order product as invoiced if order_id given
-                if($request->order_id != NULL){
+                if($request->order_id != NULL && isset($request->order_products_ids[$i])){
                     $this->orderProductService->update([
                         'invoiced' => 1
                     ], $request->order_products_ids[$i]);

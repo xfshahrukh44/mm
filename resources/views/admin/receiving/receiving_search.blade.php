@@ -88,6 +88,7 @@
                     <td></td>
                     <td></td>
                     <td></td>
+                    <td></td>
                     <td class="text-bold">Total</td>
                     <td class="detail_total"></td>
                     </tr>
@@ -102,6 +103,7 @@
                     <th>Order ID</th>
                     <th>Amount</th>
                     <th>Received</th>
+                    <th>Outstanding Balance</th>
                     </tr>
                 </thead>
                 <tbody class="ledger_wrapper">
@@ -114,6 +116,7 @@
                         <td>2</td>
                         <td>Rs. 440</td>
                         <td><input type="checkbox"></td>
+                        <td>Rs. 444,123,444</td>
                     </tr>
                 </tbody>
                 </table>
@@ -197,7 +200,7 @@
                 // if no entries
                 if(receivings.length == 0){
                     // no entries row
-                    $('.ledger_wrapper').prepend('<tr class="table-warning"><td class="text-center" colspan=9>No Receipt Logs</td></tr>');
+                    $('.ledger_wrapper').prepend('<tr class="table-warning"><td class="text-center" colspan=10>No Receipt Logs</td></tr>');
                     // set total amount
                     $('.detail_total').html('Rs. 0');
                 }
@@ -216,7 +219,8 @@
                         var order_id = ((receivings[i].invoice && receivings[i].invoice.order) ? receivings[i].invoice.order.id : '');
                         var amount = ((receivings[i].amount) ? receivings[i].amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") : '');
                         var is_received_input = (receivings[i].is_received == 0) ? ('<input value="'+receiving_id+'" class="is_received" type="checkbox">') : ('<input value="'+receiving_id+'" class="is_received" type="checkbox" checked>');
-                        $('.ledger_wrapper').prepend('<tr><td>'+date_punched+'</td><td>'+collected_by+'</td><td>'+customer_name+'</td><td>'+market+'</td><td>'+area+'</td><td>'+invoice_id+'</td><td>'+order_id+'</td><td>Rs. '+amount+'</td><td>'+is_received_input+'</td></tr>');
+                        var outstanding_balance = ((receivings[i].customer && receivings[i].customer.outstanding_balance) ? receivings[i].customer.outstanding_balance.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") : '');
+                        $('.ledger_wrapper').prepend('<tr><td>'+date_punched+'</td><td>'+collected_by+'</td><td>'+customer_name+'</td><td>'+market+'</td><td>'+area+'</td><td>'+invoice_id+'</td><td>'+order_id+'</td><td>Rs. '+amount+'</td><td>'+is_received_input+'</td><td>Rs. '+outstanding_balance+'</td></tr>');
                         // <tr><td>cus</td><td>market</td><td>area</td><td>1</td><td>2</td><td>Rs. 440</td></tr>
                     }
                     // set total amount

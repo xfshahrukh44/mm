@@ -97,8 +97,6 @@ class VendorController extends Controller
             Storage::disk('public_shopkeepers')->put($imageName, \File::get($image));
             $req['shop_keeper_picture'] = $imageName;
         }
-        
-use Illuminate\Support\Facades\Gate;
         $this->vendorService->create($req);
 
         return redirect()->back();
@@ -145,7 +143,6 @@ use Illuminate\Support\Facades\Gate;
             'payment_terms' => 'sometimes',
             'cash_on_delivery' => 'sometimes',
             'visiting_days' => 'sometimes',
-            use Illuminate\Support\Facades\Gate;
             'status' => 'sometimes',
             'opening_balance' => 'sometimes',
             'special_discount' => 'sometimes',
