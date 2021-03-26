@@ -93,6 +93,11 @@ function order_count_by_status($status)
 function order_total_count_by_status($status)
 {
     $orders = Order::where('status', $status)->get();
+    $total = 0;
+    foreach($orders as $order){
+        $total += (($order->total) ? ($order->total) : 0);
+    }
+    return number_format($total, 2);
 }
 
 function last_order_dispatched_at($customer_id){

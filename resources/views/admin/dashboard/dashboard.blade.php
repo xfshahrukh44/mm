@@ -98,6 +98,8 @@
                 <div class="row mt-1">
                     <span class="badge badge-pill small bg-lime ml-1" style="color:black !important;">
                         Ready: {{order_count_by_status('ready_to_dispatch')}}
+                        <br>
+                        total: {{'Rs. ' . order_total_count_by_status('ready_to_dispatch')}}
                     </span>
                     <span class="badge badge-pill small bg-orange ml-1" style="color:black !important;">
                         Pending: {{order_count_by_status('pending')}}
