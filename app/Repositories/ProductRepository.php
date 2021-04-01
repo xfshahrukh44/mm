@@ -208,5 +208,16 @@ abstract class ProductRepository implements RepositoryInterface
 
         return $products;
     }
+
+    public function toggle_is_published($id)
+    {
+        if(!$product = $this->model->find($id)){
+            return '';
+        }
+
+        $product->is_published = (($product->is_published == 0) ? (1) : 0);
+        $product->saveQuietly();
+        return '';
+    }
     
 }

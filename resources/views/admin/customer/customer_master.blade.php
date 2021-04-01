@@ -154,7 +154,7 @@
             </div>
             <!-- amount -->
             <div class="form-group col-md-5">
-                <input type="number" class="form-control amounts" name="amounts[]" min=0>
+                <input type="number" class="form-control amounts" name="amounts[]" min=0 step="0.01">
             </div>
             <!-- remove child -->
             <div class="form-group col-md-0 remove_button ml-1" style="display: table; vertical-align: middle;">

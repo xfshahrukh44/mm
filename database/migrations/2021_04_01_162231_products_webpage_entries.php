@@ -1,0 +1,34 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+class ProductsWebpageEntries extends Migration
+{
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
+    public function up()
+    {
+        Schema::table('products', function (Blueprint $table) {
+            
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        Schema::table('products', function (Blueprint $table) {
+            $table->string('webpage_name')->nullable();
+            $table->longText('webpage_description')->nullable();
+            $table->decimal('webpage_price', 20, 2)->nullable()->default(0);
+        });
+    }
+}

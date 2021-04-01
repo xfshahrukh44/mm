@@ -28,6 +28,10 @@ class Product extends Model
         'product_picture',
         'cost_value',
         'sales_value',
+        'is_published',
+        'webpage_name',
+        'webpage_description',
+        'webpage_price',
         'created_by',
         'modified_by'
     ];

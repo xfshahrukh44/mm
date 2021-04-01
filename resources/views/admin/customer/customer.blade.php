@@ -428,7 +428,7 @@ $(document).ready(function(){
   // div strings
   var startDiv = '<div class="row">';
   var productDiv = '<div class="col-md-6 col-sm-6 col-sm-6 form-group"><select name="products[]" class="form-control products" style="width: 100%; max-height: 20px;"><option value="">Select Product</option>@foreach($products as $product)<option value="{{$product->id}}">{{$product->article}}</option>@endforeach</select></div>';
-  var amountDiv = '<div class="form-group col-md-5 col-sm-5 col-sm-5"><input type="number" class="form-control amounts" name="amounts[]" min=0></div>';
+  var amountDiv = '<div class="form-group col-md-5 col-sm-5 col-sm-5"><input type="number" class="form-control amounts" name="amounts[]" min=0 step="0.01"></div>';
   var removeChildDiv = '<div class="form-group col-md-0 col-sm-0 col-sm-0 remove_button ml-1" style="display: table; vertical-align: middle;"><a class="btn btn-primary"><i class="fas fa-minus" style="color:white;"></i></a></div>';
   var endDiv = '</div>';
   var fieldHTML = startDiv + productDiv + amountDiv + removeChildDiv + endDiv;

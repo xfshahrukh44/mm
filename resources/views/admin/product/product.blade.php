@@ -70,6 +70,7 @@
                   <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1">Cost Value</th>
                   <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1">Sales Value</th>
                   <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1">M.O.Q</th>
+                  <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1">Published</th>
                 @endcan
                 <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1">Actions</th>
               </tr>
@@ -108,6 +109,17 @@
                         <td class="{{'cost_value'.$product->id}}">{{'Rs. ' .number_format($product->cost_value)}}</td>
                         <td class="{{'sales_value'.$product->id}}">{{'Rs. ' .number_format($product->sales_value)}}</td>
                         <td class="{{'moq'.$product->id}}">{{$product->moq}}</td>
+                        <!-- is published toggle -->
+                        <td class="{{'is_published'.$product->id}} text-center">
+                          <label class="switch">
+                            @if($product->is_published == 1)
+                              <input type="checkbox" data-id="{{$product->id}}" class="input_is_published" checked>
+                            @else
+                              <input type="checkbox" data-id="{{$product->id}}" class="input_is_published">
+                            @endif
+                            <span class="slider"></span>
+                          </label>
+                        </td>
                     @endcan
                     <td>
                       <!-- Detail -->
@@ -281,6 +293,18 @@
                           <tr role="row" class="odd">
                               <td class="">Minimum Ordering Quantity</td>
                               <td class="moq"></td>
+                          </tr>
+                          <tr role="row" class="odd">
+                              <td class="">Webpage Name</td>
+                              <td class="webpage_name"></td>
+                          </tr>
+                          <tr role="row" class="odd">
+                              <td class="">Webpage Price</td>
+                              <td class="webpage_price"></td>
+                          </tr>
+                          <tr role="row" class="odd">
+                              <td class="">Webpage Description</td>
+                              <td class="webpage_description"></td>
                           </tr>
                       </tbody>
                   </table>
@@ -463,6 +487,22 @@ $(document).ready(function(){
     });
   }
 
+  // toggle_is_published
+  function toggle_is_published(id){
+    $.ajax({
+        url: '<?php echo(route('toggle_is_published')); ?>',
+        type: 'GET',
+        data: {
+          id: id
+        },
+        dataType: 'JSON',
+        async: false,
+        success: function (data) {
+          
+        }
+    });
+  }
+
   // create
   $('#add_product').on('click', function(){
 
@@ -490,6 +530,10 @@ $(document).ready(function(){
     $('#editForm .opening_quantity').val(product.opening_quantity);
     $('#editForm .quantity_in_hand').val(product.quantity_in_hand);
     $('#editForm .moq').val(product.moq);
+
+    $('#editForm .webpage_name').val(product.webpage_name);
+    $('#editForm .webpage_price').val(product.webpage_price);
+    $('#editForm .webpage_description').val(product.webpage_description);
 
     $('#editProductModal').modal('show');
   });
@@ -547,7 +591,12 @@ $(document).ready(function(){
     else{
       $('.quantity_in_hand').html(product.quantity_in_hand);
     }
+    // moq
     $('.moq').html(product.moq);
+    // webpage entries
+    $('.webpage_name').html(product.webpage_name);
+    $('.webpage_price').html("Rs. " + product.webpage_price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
+    $('.webpage_description').html(product.webpage_description);
 
     $('#viewProductModal').modal('show');
   });
@@ -630,6 +679,12 @@ $(document).ready(function(){
     var product_image_id = $(this).val();
     var image_container = $(this).parent();
     delete_product_image(product_image_id, image_container);
+  });
+
+  // on .input_is_published click
+  $('.input_is_published').on('click', function(){
+    var id = $(this).data('id');
+    toggle_is_published(id);
   });
 
 });

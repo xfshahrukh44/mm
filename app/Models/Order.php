@@ -20,6 +20,7 @@ class Order extends Model
         'invoiced_from',
         'description',
         'image',
+        'is_from_webpage',
         'created_by',
         'modified_by'
     ];

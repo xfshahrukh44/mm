@@ -65,20 +65,26 @@ class HomeController extends Controller
 
     public function plug_n_play(Request $request)
     {
-        echo('Shahrukh Siddiqui - Core2Plus');
-        return "";
-        $users = User::all();
-        foreach($users as $user){
-            if($user->type == "superadmin"){
-                set_superadmin_rights($user->id);
-            }
-            if($user->type == "user"){
-                set_user_rights($user->id);
-            }
-            if($user->type == "rider"){
-                set_basic_rights($user->id);
-            }
-        }
+        // echo('Shahrukh Siddiqui - Core2Plus');
+        // return "";
+
+        $product = Product::where('article', '3R')->first();
+        $product->quantity_in_hand = -33840;
+        $product->cost_value = $product->quantity_in_hand * 60;
+        $product->sales_value = $product->quantity_in_hand * 75;
+        $product->saveQuietly();
+        // $users = User::all();
+        // foreach($users as $user){
+        //     if($user->type == "superadmin"){
+        //         set_superadmin_rights($user->id);
+        //     }
+        //     if($user->type == "user"){
+        //         set_user_rights($user->id);
+        //     }
+        //     if($user->type == "rider"){
+        //         set_basic_rights($user->id);
+        //     }
+        // }
     }
 
     public function generate_invoice_pdf($id)

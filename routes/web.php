@@ -14,7 +14,10 @@
 Auth::routes();
 Auth::routes(['register' => false]);
 
-Route::get('/', 'Admin\DashboardController@index')->name('home');
+// Route::get('/', 'Admin\DashboardController@index')->name('home');
+Route::get('/', function(){
+    return view('customer.coming_soon');
+});
 Route::get('/register', function(){
     return redirect('/login');
 });
@@ -97,6 +100,7 @@ Route::group(['middleware' => 'auth', 'prefix' => 'admin'], function() {
     Route::get('/create_unit', 'Admin\ProductController@create_unit')->name('create_unit');
     Route::get('/fetch_product_labels', 'Admin\ProductController@fetch_product_labels')->name('fetch_product_labels');
     Route::get('/fetch_by_category_and_brand', 'Admin\ProductController@fetch_by_category_and_brand')->name('fetch_by_category_and_brand');
+    Route::get('/toggle_is_published', 'Admin\ProductController@toggle_is_published')->name('toggle_is_published');
     Route::get('/fetch_customer_labels', 'Admin\CustomerController@fetch_customer_labels')->name('fetch_customer_labels');
     Route::get('/cschedule', 'Admin\CustomerController@customer_schedule')->name('customer_schedule');
     Route::get('/fetch_order_products', 'Admin\OrderController@fetch_order_products')->name('fetch_order_products');

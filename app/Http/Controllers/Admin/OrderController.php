@@ -119,13 +119,13 @@ class OrderController extends Controller
         $id = $request->hidden;
         $order = ($this->orderService->find($id))['order'];
 
-        if(!(auth()->user()->id == $id || auth()->user()->type == "superadmin"))
-        {
-            return response()->json([
-                'success' => FALSE,
-                'message' => 'Not allowed.'
-            ]);
-        }
+        // if(!(auth()->user()->id == $id || auth()->user()->type == "superadmin"))
+        // {
+        //     return response()->json([
+        //         'success' => FALSE,
+        //         'message' => 'Not allowed.'
+        //     ]);
+        // }
 
         $validator = Validator::make($request->all(), [
             'customer_id' => 'sometimes',

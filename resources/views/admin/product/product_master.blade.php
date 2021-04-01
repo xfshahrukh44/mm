@@ -107,4 +107,22 @@
         <label>Additional Images:</label> <br>
         <input type="file" name="product_images[]" class="form-control" multiple>
     </div>
+
+    <!-- webpage_name -->
+    <div class="form-group col-md-6">
+        <label for="">Webpage Name</label>
+        <input type="text" name="webpage_name" placeholder="Enter webpage_name" class="form-control webpage_name" required>
+    </div>
+
+    <!-- webpage_price -->
+    <div class="form-group col-md-6">
+        <label for="">Webpage Price</label>
+        <input type="number" min=0 name="webpage_price" placeholder="Enter Webpage Price" class="form-control webpage_price" value=0 step="0.01">
+    </div>
+
+    <!-- webpage_description -->
+    <div class="form-group col-md-12">
+        <label for="">Webpage Description</label>
+        <textarea type="text" name="webpage_description" placeholder="Enter Webpage Description" class="form-control webpage_description"></textarea>
+    </div>
 </div>

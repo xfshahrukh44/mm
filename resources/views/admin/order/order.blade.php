@@ -113,7 +113,12 @@
                                         </td>
                                         <td class="{{'rider'.$order->id}}">{{return_user_name($order->rider_id)}}</td>
                                         @can('isSuperAdmin')
-                                            <td>{{return_user_name($order->created_by)}}</td>
+                                            <td>
+                                                {{return_user_name($order->created_by)}}
+                                                @if($order->is_from_webpage == 1)
+                                                    <span class="badge badge-pill bg-green float-center" style="font-size: 0.6rem; color: white!important;">Online</span>
+                                                @endif
+                                            </td>
                                             <td>{{return_user_name($order->modified_by)}}</td>
                                         @endcan
                                         <td>
@@ -676,7 +681,7 @@
             },
         });
     }
-
+    
     // add required attribute from rider
     function rider_required(){
         // rider_id

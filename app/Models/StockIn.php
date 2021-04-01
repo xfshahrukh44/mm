@@ -48,7 +48,10 @@ class StockIn extends Model
 
             // new
             // update product purchase price
-            $product->purchase_price = ($product->cost_value - $old_amount + $new_amount) / ( $product->quantity_in_hand - $old_quantity + $new_quantity);
+            // if(!(($product->cost_value - $old_amount + $new_amount) == 0 && ($product->quantity_in_hand - $old_quantity + $new_quantity) == 0)){
+            //     $product->purchase_price = ($product->cost_value - $old_amount + $new_amount) / ($product->quantity_in_hand - $old_quantity + $new_quantity);
+            // }
+            $product->purchase_price = $new_rate;
             // update product quantity in hand
             $product->quantity_in_hand += $new_quantity;
 
@@ -72,7 +75,11 @@ class StockIn extends Model
             $product = Product::find($query->product_id);
 
             // update product purchase price
-            $product->purchase_price = ($product->cost_value - $query->amount) / ( $product->quantity_in_hand - $query->quantity);
+            // if(!(($product->cost_value - $query->amount) == 0 && ($product->quantity_in_hand - $query->quantity) == 0)){
+            //     $product->purchase_price = ($product->cost_value - $query->amount) / ($product->quantity_in_hand - $query->quantity);
+            // }
+            $stock_in = StockIn::orderBy('created_at', 'desc')->skip(1)->take(1)->first();
+            $product->purchase_price = $stock_in->rate;
 
             // update product quantity in hand
             $product->quantity_in_hand -= $query->quantity;
@@ -87,6 +94,7 @@ class StockIn extends Model
                             ->where('amount', $query->amount)
                             ->where('type', 'credit')
                             ->first();
+            // dd($ledger);
             if($ledger){
                 $ledger->delete();
             }
@@ -97,20 +105,22 @@ class StockIn extends Model
             $product = Product::find($query->product_id);
 
             // update product purchase price
-            $product->purchase_price = ($product->cost_value + $query->amount) / ( $product->quantity_in_hand + $query->quantity);
-            
+            // if(!(($product->cost_value + $query->amount) == 0 && ($product->quantity_in_hand + $query->quantity) == 0)){
+            //     $product->purchase_price = ($product->cost_value + $query->amount) / ($product->quantity_in_hand + $query->quantity);
+            // }
+            $product->purchase_price = $query->rate;
+
             // update product quantity in hand
             $product->quantity_in_hand += $query->quantity;
 
             // cost and sales value
             $product->cost_value = $product->quantity_in_hand * $product->purchase_price;
             $product->sales_value = $product->quantity_in_hand * $product->consumer_selling_price;
-            $product->saveQuietly();
+            $product->save();
 
             // update vendor ledger
             Ledger::create([
                 'vendor_id' => (($query->vendor_id) ? ($query->vendor_id) : NULL),
-                'customer_id' => 0,
                 'amount' => $query->amount,
                 'type' => 'credit',
                 'transaction_date' => return_todays_date()

@@ -261,4 +261,12 @@ class ProductController extends Controller
     {
         return $this->productService->fetch_by_category_and_brand($request->all());
     }
+
+    public function toggle_is_published(Request $request)
+    {
+        if(!(isset($request['id']))){
+            return '';
+        }
+        return $this->productService->toggle_is_published($request->id);
+    }
 }
