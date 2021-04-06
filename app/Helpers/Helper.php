@@ -6,6 +6,7 @@ use App\Models\Marketing;
 use App\Models\Customer;
 use App\Models\Product;
 use App\Models\Order;
+use App\Models\Invoice;
 
 function return_date($date)
 {
@@ -105,6 +106,13 @@ function last_order_dispatched_at($customer_id){
     $customer_name = customer_shop_name($customer_id);
     $order = Order::where('customer_id', $customer_id)->where('deleted_at', NULL)->latest()->first();
     return ($order ? return_date_wo_time($order->dispatch_date) : '');
+}
+
+function last_invoice_dispatched_at($customer_id){
+    $customer = Customer::find($customer_id);
+    $customer_name = customer_shop_name($customer_id);
+    $invoice = Invoice::where('customer_id', $customer_id)->where('deleted_at', NULL)->latest()->first();
+    return ($invoice ? return_date_wo_time($invoice->date) : '');
 }
 
 function set_status_by_invoiced_items($order_id){

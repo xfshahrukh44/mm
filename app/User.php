@@ -7,6 +7,8 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Tymon\JWTAuth\Contracts\JWTSubject;
+use App\Models\Cart;
+use App\Models\Customer;
 
 class User extends Authenticatable implements JWTSubject
 {
@@ -19,7 +21,7 @@ class User extends Authenticatable implements JWTSubject
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'phone', 'type', 'registration_ip', 'created_by', 'modified_by',
+        'name', 'email', 'password', 'phone', 'type', 'address', 'contact_number', 'registration_ip', 'created_by', 'modified_by',
         'can_dashboard',
         'can_client_database',
         'can_customers',
@@ -115,7 +117,7 @@ class User extends Authenticatable implements JWTSubject
         parent::boot();
 
         static::creating(function ($query) {
-            dd($query);
+            // dd($query);
             $query->created_by = (auth()->user() ? auth()->user()->id : 1);
         });
 
@@ -128,6 +130,26 @@ class User extends Authenticatable implements JWTSubject
             }
             if($query->type == "rider"){
                 set_basic_rights($query->id);
+            }
+            // if registered from store
+            if(!isset($query->type)){
+                // make it customer
+                $query->type = 'customer';
+                $query->saveQuietly();
+
+                // create their cart
+                Cart::create([
+                    'user_id' => $query->id,
+                    'total' => 0
+                ]);
+
+                // create their customer
+                Customer::create([
+                    'name' => $query->name,
+                    'user_id' => $query->id,
+                    'address' => $query->address,
+                    'contact_number' => $query->contact_number,
+                ]);
             }
         });
 
@@ -188,5 +210,15 @@ class User extends Authenticatable implements JWTSubject
     public function marketings()
     {
         return $this->hasMany('App\Models\Marketing');
+    }
+
+    public function cart()
+    {
+        return $this->hasOne('App\Models\Cart');
+    }
+
+    public function customer()
+    {
+        return $this->hasOne('App\Models\Cart');
     }
 }

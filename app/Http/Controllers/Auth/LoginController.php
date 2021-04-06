@@ -45,6 +45,29 @@ class LoginController extends Controller
     public function logout(Request $request)
     {
         $this->performLogout($request);
-        return redirect()->route('dashboard');
+        return redirect()->route('main');
+    }
+
+    public function login(Request $request)
+    {   
+        $input = $request->all();
+   
+        $this->validate($request, [
+            'email' => 'required',
+            'password' => 'required',
+        ]);
+   
+        if(auth()->attempt(array('email' => $input['email'], 'password' => $input['password'])))
+        {
+            if (auth()->user()->type != 'customer' && auth()->user()->type != NULL) {
+                return redirect()->route('dashboard');
+            }
+            else{
+                return redirect()->route('main');
+            }
+        }else{
+            return redirect()->route('login')
+                ->with('error','Email-Address And Password Are Wrong.');
+        }
     }
 }

@@ -94,7 +94,7 @@
                 <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Pre-defined sizes: activate to sort column ascending">Contact #</th>
                 <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">Business to Date</th>
                 <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">Outstanding Balance</th>
-                <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">Last order on</th>
+                <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">Last Invoice at</th>
                 <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">Actions</th>
               </tr>
             </thead>
@@ -109,7 +109,7 @@
                     <td class="{{'contact_number'.$customer->id}}">{{$customer->contact_number ? $customer->contact_number : NULL}}</td>
                     <td class="{{'business_to_date'.$customer->id}}">{{$customer->business_to_date ? 'Rs. ' . number_format($customer->business_to_date) : NULL}}</td>
                     <td class="{{'outstanding_balance'.$customer->id}}">{{$customer->outstanding_balance ? 'Rs. ' . number_format($customer->outstanding_balance) : NULL}}</td>
-                    <td class="">{{last_order_dispatched_at($customer->id)}}</td>
+                    <td class="">{{last_invoice_dispatched_at($customer->id)}}</td>
                     <td>
                       @can('can_view_customers')
                         <!-- Detail -->

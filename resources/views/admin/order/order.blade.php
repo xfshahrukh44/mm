@@ -345,14 +345,14 @@
 
                                 <tbody id="table_row_wrapper">
                                     <tr role="row" class="odd">
-                                        <td>yes/no</td>
+                                        <!-- <td>yes/no</td>
                                         <td class="">'+order.order_products[i].product.category.name+'</td>
                                         <td class="">'+order.order_products[i].product.brand.name+'</td>
                                         <td class="">'+order.order_products[i].product.article+'</td>
                                         <td class="">'+order.order_products[i].quantity+'</td>
                                         <td class="">'+order.order_products[i].price+'</td>
                                         <td class="">'+order.order_products[i].product.unit.name+'</td>
-                                        <td><input type="checkbox"></td>
+                                        <td><input type="checkbox"></td> -->
                                     </tr>
                                 </tbody>
                                 <tfoot>
@@ -793,7 +793,7 @@
         for(var i = 0; i < order.order_products.length; i++){
             if(order.order_products[i].invoiced == 0){
                 var style_div = (order.order_products[i].is_available == 0) ? ('style = "border-color:red;"') : '';
-                var productDiv = '<div class="col-md-4"><div class="ui-widget"><input name="order_products_ids[]" type="hidden" value="'+ order.order_products[i].id +'"><input '+style_div+' class="form-control product_search" name="products[]" value="'+ order.order_products[i].product.category.name + ' - ' + order.order_products[i].product.brand.name + ' - ' + order.order_products[i].product.article +'"><input class="hidden_product_search" type="hidden" name="hidden_product_ids[]" value="'+ order.order_products[i].product.id +'"></div></div>';
+                var productDiv = '<div class="col-md-4"><div class="ui-widget"><input name="order_products_ids[]" type="hidden" value="'+ order.order_products[i].id +'"><input '+style_div+' class="form-control product_search" name="products[]" value="'+ ((order.order_products[i].product && order.order_products[i].product.category) ? (order.order_products[i].product.category.name) : '') + ' - ' + ((order.order_products[i].product && order.order_products[i].product.brand) ? (order.order_products[i].product.brand.name) : '') + ' - ' + ((order.order_products[i].product) ? (order.order_products[i].product.article) : '') +'"><input class="hidden_product_search" type="hidden" name="hidden_product_ids[]" value="'+ ((order.order_products[i].product) ? (order.order_products[i].product.id) : '') +'"></div></div>';
                 var priceDiv = '<div class="form-group col-md-4"><input '+style_div+' type="number" class="form-control prices" name="prices[]" required min=0 step="0.01" value="'+ order.order_products[i].price +'"></div>';
                 var quantityDiv = '<div class="form-group col-md-3"><input '+style_div+' type="number" class="form-control quantities" name="quantities[]" required step="0.01" value="'+ order.order_products[i].quantity +'"></div>';
                 var fieldHTML = startDiv + productDiv + priceDiv + quantityDiv + removeChildDiv + endDiv;
@@ -841,7 +841,7 @@
             var invoiced = 0;
             var is_available_input = (order.order_products[i].is_available == 0) ? ('<input value="'+order.order_products[i].id+'" class="is_available" type="checkbox">') : ('<input value="'+order.order_products[i].id+'" class="is_available" type="checkbox" checked>');
             order.order_products[i].invoiced == 1 ? invoiced = '<i class="fas fa-check green"></i>' : invoiced = '<i class="fas fa-times red"></i>';
-            $('#table_row_wrapper').append(' <tr role="row" class="odd"><td>'+ invoiced +'</td><td class="">'+order.order_products[i].product.category.name+'</td><td class="">'+order.order_products[i].product.brand.name+'</td><td class="">'+order.order_products[i].product.article+'</td><td class="">'+order.order_products[i].quantity+'</td><td class="">'+order.order_products[i].price+'</td><td class="">'+order.order_products[i].product.unit.name+'</td><td>'+is_available_input+'</td></tr>');
+            $('#table_row_wrapper').append(' <tr role="row" class="odd"><td>'+ invoiced +'</td><td class="">'+((order.order_products[i].product && order.order_products[i].product.category) ? (order.order_products[i].product.category.name) : '')+'</td><td class="">'+((order.order_products[i].product && order.order_products[i].product.brand) ? (order.order_products[i].product.brand.name) : '')+'</td><td class="">'+((order.order_products[i].product) ? (order.order_products[i].product.article) : '')+'</td><td class="">'+order.order_products[i].quantity+'</td><td class="">'+order.order_products[i].price+'</td><td class="">'+((order.order_products[i].product && order.order_products[i].product.unit) ? (order.order_products[i].product.unit.name) : '')+'</td><td>'+is_available_input+'</td></tr>');
         }
 
         if(order.image){

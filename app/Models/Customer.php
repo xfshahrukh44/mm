@@ -13,6 +13,7 @@ class Customer extends Model
     protected $fillable = [
         'name',
         'market_id',
+        'user_id',
         'business_to_date',
         'outstanding_balance',
         'contact_number',
@@ -30,6 +31,7 @@ class Customer extends Model
         'opening_balance',
         'special_discount',
         'account_number',
+        'address',
         'created_by',
         'modified_by'
     ];
@@ -39,17 +41,17 @@ class Customer extends Model
         parent::boot();
 
         static::creating(function ($query) {
-            $query->created_by = auth()->user()->id;
+            $query->created_by = (auth()->user() ? auth()->user()->id : NULL);
             $query->outstanding_balance = 0;
         });
 
         static::updating(function ($query) {
-            $query->modified_by = auth()->user()->id;
+            $query->modified_by = (auth()->user() ? auth()->user()->id : NULL);
         });
 
         static::created(function ($query) {
             $query->account_number = '4010' . $query->id;
-            $query->save();
+            $query->saveQuietly();
             if($query->opening_balance != NULL){
                 if($query->opening_balance > 0){
                     $type = 'debit';
@@ -74,6 +76,13 @@ class Customer extends Model
     }
 
     protected $dates = ['created_at', 'updated_at', 'deleted_at'];
+
+    public function saveQuietly(array $options = [])
+    {
+        return static::withoutEvents(function () use ($options) {
+            return $this->save($options);
+        });
+    }
 
     public function market()
     {
@@ -125,4 +134,8 @@ class Customer extends Model
         return $this->hasMany('App\Models\Expense');
     }
 
+    public function user()
+    {
+        return $this->belongsTo('App\User');
+    }
 }

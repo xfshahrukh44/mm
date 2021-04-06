@@ -10,25 +10,39 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-
+// Route::group(['prefix' => 'admin'], function(){
+//     Auth::routes();
+//     Auth::routes(['register' => false]);
+// });
 Auth::routes();
-Auth::routes(['register' => false]);
+// Auth::routes(['register' => false]);
 
-// Route::get('/', 'Admin\DashboardController@index')->name('home');
-Route::get('/', function(){
-    return view('customer.coming_soon');
-});
-Route::get('/register', function(){
-    return redirect('/login');
+
+// Route::get('/', function(){
+//     return view('customer.main');
+// });
+// Route::get('/register', function(){
+//     return redirect('/login');
+// });
+
+// FRONT STORE ROUTES---------------------------------------
+Route::group([], function() {
+    Route::get('/', 'Customer\FrontController@main')->name('main');
+    Route::get('/order_history', 'Customer\FrontController@order_history')->name('order_history');
+    Route::get('/product/{id}', 'Customer\FrontController@individual_product')->name('individual_product');
+    Route::get('/about_us', 'Customer\FrontController@about_us')->name('about_us');
 });
 
 // ADMIN PANEL ROUTES---------------------------------------
 Route::group(['middleware' => 'auth', 'prefix' => 'admin'], function() {
 
     // DASHBOARD
-    // Route::get('/', function () {
-    //     return view('admin.layouts.master');
-    // })->name('home');
+    Route::get('/', function () {
+        if(auth()->user() && auth()->user()->type && auth()->user()->type != 'customer'){
+            return redirect()->route('dashboard');
+        }
+        return redirect()->route('main');
+    });
 
     // BLADE INDEXES----------------------------------------------------------------
     Route::get('/dashboard', 'Admin\DashboardController@index')->name('dashboard');
@@ -181,9 +195,9 @@ Route::get('/migrate', function () {
     Illuminate\Support\Facades\Artisan::call('migrate');
 });
 Route::get('/stepmigrate', function () {
-    // Illuminate\Support\Facades\Artisan::call('migrate:rollback', [
-    //     '--step' => 3
-    // ]);
+    Illuminate\Support\Facades\Artisan::call('migrate:rollback', [
+        '--step' => 1
+    ]);
 });
 Route::get('/clear', function () {
     Illuminate\Support\Facades\Artisan::call('cache:clear');
